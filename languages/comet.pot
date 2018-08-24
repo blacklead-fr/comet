@@ -1,0 +1,1541 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: comet\n"
+"POT-Creation-Date: 2018-07-20 16:27+0200\n"
+"PO-Revision-Date: 2018-07-20 16:28+0200\n"
+"Last-Translator: \n"
+"Language-Team: Blacklead <contact@blacklead.fr>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.9\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_x;_n;_ex;_nx;_n_noop;_nx_noop;"
+"translate_nooped_plural;esc_html__;esc_html_e;esc_html_x;esc_attr__;"
+"esc_attr_e;esc_attr_x;number_format_i18n;date_i18n\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/class-comet-admin.php:103
+msgid "Are you sure you want to delete permanently?"
+msgstr ""
+
+#: admin/class-comet-admin.php:104
+msgid "An error appears, please try again."
+msgstr ""
+
+#: admin/class-comet-admin.php:105
+msgid "Select one or multiple template to import."
+msgstr ""
+
+#: admin/class-comet-admin.php:106 admin/class-comet-post-edit.php:151
+msgid "Unreachable content."
+msgstr ""
+
+#: admin/class-comet-admin.php:107
+msgid "Failed to delete."
+msgstr ""
+
+#: admin/class-comet-admin.php:108
+msgid "Please wait while the operation is processing."
+msgstr ""
+
+#: admin/class-comet-admin.php:109
+msgid "The template has been correctly deleted."
+msgstr ""
+
+#: admin/class-comet-admin.php:110
+msgid "Select fonts to import."
+msgstr ""
+
+#: admin/class-comet-admin.php:111 admin/class-comet-post-edit.php:157
+msgid "The title is missing."
+msgstr ""
+
+#: admin/class-comet-admin.php:112
+msgid "The template has been correctly created."
+msgstr ""
+
+#: admin/class-comet-admin.php:113
+msgid ""
+"You will be redirected to the edit page automatically. If it fails please "
+"click the link:"
+msgstr ""
+
+#: admin/class-comet-admin.php:114
+msgid "Go to the edit page"
+msgstr ""
+
+#: admin/class-comet-admin.php:117 admin/class-comet-post-edit.php:146
+#: admin/comet-preview.php:32
+msgid "Previewing template"
+msgstr ""
+
+#: admin/class-comet-admin.php:118
+msgid "Delete template"
+msgstr ""
+
+#: admin/class-comet-admin.php:119
+msgid "Export template"
+msgstr ""
+
+#: admin/class-comet-admin.php:120
+msgid "Import template"
+msgstr ""
+
+#: admin/class-comet-admin.php:121
+msgid "Select fonts"
+msgstr ""
+
+#: admin/class-comet-admin.php:122
+msgid "Fonts"
+msgstr ""
+
+#: admin/class-comet-admin.php:123
+msgid "Create new template"
+msgstr ""
+
+#: admin/class-comet-admin.php:126 admin/class-comet-dashboard.php:80
+#: admin/class-comet-post-edit.php:123
+msgid "Close"
+msgstr ""
+
+#: admin/class-comet-admin.php:127 admin/class-comet-post-edit.php:119
+msgid "Cancel"
+msgstr ""
+
+#: admin/class-comet-admin.php:128 admin/class-comet-mytemplates.php:67
+#: admin/class-comet-post-edit.php:129
+msgid "Delete"
+msgstr ""
+
+#: admin/class-comet-admin.php:129 admin/class-comet-post-edit.php:120
+msgid "Done"
+msgstr ""
+
+#: admin/class-comet-admin.php:130 admin/class-comet-post-edit.php:121
+#: admin/class-comet-post-edit.php:287 admin/class-comet-settings.php:125
+msgid "Save"
+msgstr ""
+
+#: admin/class-comet-admin.php:131 admin/class-comet-mytemplates.php:34
+msgid "Import"
+msgstr ""
+
+#: admin/class-comet-admin.php:132 admin/class-comet-mytemplates.php:66
+msgid "Export"
+msgstr ""
+
+#: admin/class-comet-admin.php:133
+msgid "Search..."
+msgstr ""
+
+#: admin/class-comet-admin.php:134 admin/class-comet-post-edit.php:136
+msgid "Select"
+msgstr ""
+
+#: admin/class-comet-admin.php:135
+msgid "Download"
+msgstr ""
+
+#: admin/class-comet-admin.php:162 admin/class-comet-admin.php:164
+#: admin/class-comet-admin.php:165 admin/class-comet-admin.php:166
+#: admin/class-comet-admin.php:167 admin/class-comet-dashboard.php:20
+#: admin/class-comet-post-edit.php:145
+msgid "My templates"
+msgstr ""
+
+#: admin/class-comet-admin.php:163 admin/class-comet-admin.php:192
+msgid "My template"
+msgstr ""
+
+#: admin/class-comet-admin.php:168
+msgid "Parent template:"
+msgstr ""
+
+#: admin/class-comet-admin.php:169
+msgid "All templates"
+msgstr ""
+
+#: admin/class-comet-admin.php:170
+msgid "Add New template"
+msgstr ""
+
+#: admin/class-comet-admin.php:171
+msgid "Add New"
+msgstr ""
+
+#: admin/class-comet-admin.php:172
+msgid "New template"
+msgstr ""
+
+#: admin/class-comet-admin.php:173
+msgid "Edit template"
+msgstr ""
+
+#: admin/class-comet-admin.php:174
+msgid "Update template"
+msgstr ""
+
+#: admin/class-comet-admin.php:175
+msgid "View template"
+msgstr ""
+
+#: admin/class-comet-admin.php:176
+msgid "View templates"
+msgstr ""
+
+#: admin/class-comet-admin.php:177
+msgid "Search template"
+msgstr ""
+
+#: admin/class-comet-admin.php:178
+msgid "Not found"
+msgstr ""
+
+#: admin/class-comet-admin.php:179
+msgid "Not found in Trash"
+msgstr ""
+
+#: admin/class-comet-admin.php:180
+msgid "Featured Image"
+msgstr ""
+
+#: admin/class-comet-admin.php:181
+msgid "Set featured image"
+msgstr ""
+
+#: admin/class-comet-admin.php:182
+msgid "Remove featured image"
+msgstr ""
+
+#: admin/class-comet-admin.php:183
+msgid "Use as featured image"
+msgstr ""
+
+#: admin/class-comet-admin.php:184
+msgid "Insert into template"
+msgstr ""
+
+#: admin/class-comet-admin.php:185
+msgid "Uploaded to this template"
+msgstr ""
+
+#: admin/class-comet-admin.php:186
+msgid "templates list"
+msgstr ""
+
+#: admin/class-comet-admin.php:187
+msgid "templates list navigation"
+msgstr ""
+
+#: admin/class-comet-admin.php:188
+msgid "Filter templates list"
+msgstr ""
+
+#: admin/class-comet-admin.php:248
+#, php-format
+msgid "Edit &#8220;%s&#8221; with Comet"
+msgstr ""
+
+#: admin/class-comet-admin.php:253
+msgid "Edit with Comet"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:12 admin/class-comet-dashboard.php:13
+msgid "Dashboard"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:16
+msgid ""
+"Welcome to your Comet dashboard! This screen gives you access to the general "
+"features of Comet."
+msgstr ""
+
+#: admin/class-comet-dashboard.php:16
+msgid ""
+"The Comet logo at the top left is the main menu and provides links to all of "
+"the Comet administration screens."
+msgstr ""
+
+#: admin/class-comet-dashboard.php:16
+msgid "The cross at the top right allows you to close the Comet dashboard."
+msgstr ""
+
+#: admin/class-comet-dashboard.php:19 admin/class-comet-main.php:30
+#: admin/class-comet-main.php:49
+msgid "Templates"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:26 admin/class-comet-dashboard.php:27
+#: admin/class-comet-main.php:29 admin/class-comet-main.php:44
+#: includes/class-comet-elements.php:75
+msgid "Typography"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:31
+msgid ""
+"All the fonts you’ve downloaded are listed here and loaded on your site. "
+"Comet provides standard set of fonts but not listed on this screen."
+msgstr ""
+
+#: admin/class-comet-dashboard.php:31
+msgid ""
+"The fonts library allows you to select fonts to download from Google fonts "
+"and remove fonts of your list."
+msgstr ""
+
+#: admin/class-comet-dashboard.php:31
+msgid "Note that the fonts affect page load performance (load time)."
+msgstr ""
+
+#: admin/class-comet-dashboard.php:34 admin/class-comet-main.php:28
+#: includes/class-comet-editor-data.php:58
+#: includes/class-comet-elements.php:200
+msgid "Settings"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:35
+msgid "General settings"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:96
+msgid "Help"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:102
+msgid "Documentation"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:103
+msgid "Support"
+msgstr ""
+
+#: admin/class-comet-dashboard.php:118
+msgid "Access denied."
+msgstr ""
+
+#: admin/class-comet-main.php:28 admin/class-comet-main.php:29
+#: admin/class-comet-main.php:30
+msgid "Comet dashboard"
+msgstr ""
+
+#: admin/class-comet-main.php:28 admin/class-comet-main.php:29
+#: admin/class-comet-main.php:30
+msgid "Menu"
+msgstr ""
+
+#: admin/class-comet-main.php:35
+msgid "Getting started with Comet."
+msgstr ""
+
+#: admin/class-comet-main.php:39
+msgid "Setup"
+msgstr ""
+
+#: admin/class-comet-main.php:40
+#, php-format
+msgid ""
+"Comet requires only one step to get it fully ready. To setup the general "
+"settings go to %s."
+msgstr ""
+
+#: admin/class-comet-main.php:45
+#, php-format
+msgid ""
+"Comet allows you to import fonts from Google Fonts easily and use them on "
+"your projects. To manage your fonts go to %s."
+msgstr ""
+
+#: admin/class-comet-main.php:50
+#, php-format
+msgid ""
+"With Comet you can save your projects as templates for a later use. You can "
+"also edit, remove, export or import the templates. To manage your templates "
+"go to %s."
+msgstr ""
+
+#: admin/class-comet-main.php:84 admin/class-comet-post-edit.php:137
+msgid "Back"
+msgstr ""
+
+#: admin/class-comet-main.php:87
+msgid "Next"
+msgstr ""
+
+#: admin/class-comet-main.php:132
+msgid "Thank you for using Comet!"
+msgstr ""
+
+#: admin/class-comet-main.php:133
+msgid "Please tell us what you think about Comet."
+msgstr ""
+
+#: admin/class-comet-main.php:134
+msgid "Rate Comet"
+msgstr ""
+
+#: admin/class-comet-main.php:144
+msgid "Comet"
+msgstr ""
+
+#: admin/class-comet-main.php:145
+msgid "Know more about Comet and the features."
+msgstr ""
+
+#: admin/class-comet-main.php:149
+msgid "Dashboard overview"
+msgstr ""
+
+#: admin/class-comet-main.php:150
+msgid "Getting started with the major components of the UI."
+msgstr ""
+
+#: admin/class-comet-main.php:159
+msgid "Editor overview"
+msgstr ""
+
+#: admin/class-comet-main.php:160
+msgid "Learn to use the basic layout."
+msgstr ""
+
+#: admin/class-comet-main.php:187
+msgid "Read the documentation"
+msgstr ""
+
+#: admin/class-comet-mytemplates.php:28
+#, php-format
+msgid "%d template"
+msgstr ""
+
+#: admin/class-comet-mytemplates.php:31
+msgid "Create new"
+msgstr ""
+
+#: admin/class-comet-mytemplates.php:64 admin/class-comet-post-edit.php:130
+msgid "Edit"
+msgstr ""
+
+#: admin/class-comet-mytemplates.php:65 includes/class-comet-ajax.php:91
+msgid "Preview"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:117
+msgid "Locked"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:118
+msgid "Unlocked"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:122
+msgid "Update"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:124
+msgid "Desktop"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:125
+msgid "Tablet"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:126
+msgid "Mobile"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:127
+msgid "Browse"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:128
+msgid "Remove"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:131
+msgid "Bold"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:132
+msgid "Italic"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:133
+msgid "Strikethrough"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:134
+msgid "Insert link"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:135
+msgid "Template name"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:138
+msgid "Search"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:139 admin/class-comet-post-edit.php:140
+msgid "Underline"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:144
+msgid "Select an image"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:147
+msgid "Save as new template"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:148
+msgid "Item settings"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:152
+msgid "Are you sure you want to exit ?"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:153
+msgid "Are you sure you want to clear all?"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:154
+msgid ""
+"Save this page as new template and re-use it on any page or sites you want."
+msgstr ""
+
+#: admin/class-comet-post-edit.php:155
+msgid "Read more about templates"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:156
+msgid "Save operation has failed."
+msgstr ""
+
+#: admin/class-comet-post-edit.php:158
+msgid "Failed to save empty content."
+msgstr ""
+
+#: admin/class-comet-post-edit.php:160
+msgid "The post has been correctly saved."
+msgstr ""
+
+#: admin/class-comet-post-edit.php:163
+msgid "The post has not been saved."
+msgstr ""
+
+#: admin/class-comet-post-edit.php:168
+msgid "Section settings"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:169
+msgid "Move section"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:170
+msgid "Duplicate section"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:171
+msgid "Delete section"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:174
+msgid "Row settings"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:175
+msgid "Move row"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:176
+msgid "Duplicate row"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:177
+msgid "Delete row"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:180
+msgid "Column settings"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:181
+msgid "Move column"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:182
+msgid "Duplicate column"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:183
+msgid "Delete column"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:186
+msgid "Element settings"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:187
+msgid "Move element"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:188
+msgid "Duplicate element"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:189
+msgid "Delete element"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:219
+#, php-format
+msgid "%s &#8212; Comet"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:257
+msgid "Elements"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:259 admin/class-comet-post-edit.php:263
+msgid "Layout"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:288 admin/class-comet-post-edit.php:294
+msgid "Cockpit"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:295
+msgid "Close cockpit"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:296
+msgid "Clear notifications"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:324
+msgid "Save as template"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:329
+msgid "Templates library"
+msgstr ""
+
+#: admin/class-comet-post-edit.php:334
+msgid "Exit"
+msgstr ""
+
+#: admin/class-comet-settings.php:17
+msgid "Settings have not been saved."
+msgstr ""
+
+#: admin/class-comet-settings.php:20
+msgid "Settings have been saved successfully."
+msgstr ""
+
+#: admin/class-comet-settings.php:161
+msgid "Post Types"
+msgstr ""
+
+#: admin/class-comet-settings.php:162
+msgid "Check post types you want Comet works with."
+msgstr ""
+
+#: admin/class-comet-settings.php:188
+msgid "Google API key"
+msgstr ""
+
+#: admin/class-comet-settings.php:189
+msgid "Some Google products such Maps and Fonts require authentication."
+msgstr ""
+
+#: admin/class-comet-settings.php:189 includes/comet-elements.php:77
+msgid "Read more"
+msgstr ""
+
+#: admin/class-comet-settings.php:195
+msgid "Uninstall (Deep)"
+msgstr ""
+
+#: admin/class-comet-settings.php:196
+msgid "Check the box to completely remove all data on uninstall."
+msgstr ""
+
+#: admin/class-comet-settings.php:200
+msgid "Remove all data on uninstall ?"
+msgstr ""
+
+#: admin/class-comet-typography.php:47
+#, php-format
+msgid "%s font"
+msgstr ""
+
+#: admin/class-comet-typography.php:50
+msgid "Library"
+msgstr ""
+
+#: admin/comet-preview.php:16
+msgid "Unrechable template"
+msgstr ""
+
+#: admin/comet-preview.php:32
+msgid "WordPress"
+msgstr ""
+
+#: includes/class-comet-ajax.php:43
+msgid "Error on execution."
+msgstr ""
+
+#: includes/class-comet-ajax.php:50
+msgid "User not allowed."
+msgstr ""
+
+#: includes/class-comet-ajax.php:55
+msgid "This operation cannot be verified."
+msgstr ""
+
+#: includes/class-comet-ajax.php:69 includes/class-comet-ajax.php:104
+msgid "Nope"
+msgstr ""
+
+#: includes/class-comet-ajax.php:90
+msgid "Insert"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:20
+msgid "Align"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:24
+#: includes/class-comet-elements.php:594 includes/class-comet-utils.php:18
+msgid "Top"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:25 includes/class-comet-elements.php:54
+#: includes/class-comet-elements.php:283 includes/class-comet-elements.php:499
+#: includes/class-comet-elements.php:872 includes/class-comet-utils.php:91
+msgid "Center"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:26
+#: includes/class-comet-elements.php:596 includes/class-comet-utils.php:26
+msgid "Bottom"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:27
+msgid "Stretch (full height)"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:39
+#: includes/class-comet-editor-data.php:196
+#: includes/class-comet-editor-data.php:218
+#: includes/class-comet-elements.php:174 includes/class-comet-elements.php:383
+#: includes/class-comet-elements.php:696 includes/class-comet-elements.php:919
+#: includes/class-comet-elements.php:1122
+msgid "Width"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:61
+#: includes/class-comet-elements.php:159 includes/class-comet-elements.php:322
+#: includes/class-comet-elements.php:911
+msgid "Background"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:64
+#: includes/class-comet-elements.php:385 includes/class-comet-elements.php:681
+msgid "Type"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:73
+#: includes/class-comet-editor-data.php:79
+#: includes/class-comet-editor-data.php:187
+#: includes/class-comet-editor-data.php:201
+#: includes/class-comet-elements.php:78 includes/class-comet-elements.php:126
+#: includes/class-comet-elements.php:162 includes/class-comet-elements.php:171
+#: includes/class-comet-elements.php:535 includes/class-comet-elements.php:552
+#: includes/class-comet-elements.php:652 includes/class-comet-elements.php:759
+#: includes/class-comet-elements.php:927 includes/class-comet-elements.php:1104
+#: includes/class-comet-elements.php:1119
+msgid "Color"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:74
+#: includes/class-comet-editor-data.php:94
+#: includes/class-comet-elements.php:330
+msgid "Gradient"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:75
+#: includes/class-comet-elements.php:440 includes/class-comet-utils.php:120
+#: includes/class-comet-utils.php:155
+msgid "None"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:84
+msgid "Gradient type"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:89
+msgid "Linear"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:90
+msgid "Radial"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:99
+msgid "Shape"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:104
+msgid "Side"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:105
+msgid "Corner"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:109
+#: includes/class-comet-elements.php:350
+msgid "Angle"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:115
+#: includes/class-comet-elements.php:355
+msgid "deg"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:120
+#: includes/class-comet-editor-data.php:124
+#: includes/class-comet-elements.php:466 includes/class-comet-elements.php:473
+#: includes/class-comet-elements.php:476 includes/class-comet-elements.php:1064
+#: includes/class-comet-elements.php:1067
+msgid "Image"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:128
+#: includes/class-comet-elements.php:306
+msgid "Position"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:133 includes/class-comet-utils.php:101
+msgid "Repeat"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:138
+#: includes/class-comet-editor-data.php:231
+#: includes/class-comet-elements.php:88 includes/class-comet-elements.php:363
+#: includes/class-comet-elements.php:539 includes/class-comet-elements.php:644
+#: includes/class-comet-elements.php:855 includes/class-comet-elements.php:1096
+msgid "Size"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:141
+msgid "Auto"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:142
+#: includes/class-comet-elements.php:1013
+msgid "Cover"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:143
+msgid "Contain"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:148
+msgid "Attachment"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:151
+msgid "Scroll"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:152
+msgid "Fixed"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:158
+#: includes/class-comet-editor-data.php:161
+#: includes/class-comet-editor-data.php:169
+#: includes/class-comet-elements.php:671 includes/class-comet-elements.php:678
+#: includes/class-comet-elements.php:691
+msgid "Video"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:162
+msgid "Add a video on the background ?"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:170
+msgid ""
+"There are 3 supported video formats: MP4, WebM, and Ogg. But MP4 is "
+"supported by all modern browsers."
+msgstr ""
+
+#: includes/class-comet-editor-data.php:178
+#: includes/class-comet-editor-data.php:181
+msgid "Overlay"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:182
+msgid "Add an overlay on the background ?"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:193
+#: includes/class-comet-elements.php:168 includes/class-comet-elements.php:381
+#: includes/class-comet-elements.php:549 includes/class-comet-elements.php:555
+#: includes/class-comet-elements.php:917 includes/class-comet-elements.php:1110
+msgid "Border"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:197
+msgid ""
+"Set the width of the section's four borders. The values must be positive "
+"integers."
+msgstr ""
+
+#: includes/class-comet-editor-data.php:205
+#: includes/class-comet-elements.php:325 includes/class-comet-elements.php:616
+#: includes/class-comet-elements.php:921 includes/class-comet-elements.php:1113
+msgid "Style"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:209
+#: includes/class-comet-elements.php:175 includes/class-comet-elements.php:398
+#: includes/class-comet-elements.php:556 includes/class-comet-elements.php:930
+#: includes/class-comet-elements.php:1123
+msgid "Radius"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:214
+msgid "Sizing"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:225 includes/class-comet-utils.php:149
+msgid "Full"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:226
+#: includes/class-comet-elements.php:687 includes/class-comet-elements.php:1040
+msgid "Custom"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:242
+#: includes/class-comet-elements.php:179 includes/class-comet-elements.php:235
+#: includes/class-comet-elements.php:402 includes/class-comet-elements.php:560
+#: includes/class-comet-elements.php:658 includes/class-comet-elements.php:786
+#: includes/class-comet-elements.php:828 includes/class-comet-elements.php:934
+#: includes/class-comet-elements.php:972 includes/class-comet-elements.php:1127
+msgid "Spacing"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:245
+#: includes/class-comet-elements.php:181 includes/class-comet-elements.php:937
+msgid "Padding"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:246
+msgid ""
+"Padding properties are used to generate space around the content. The values "
+"must be positive integers."
+msgstr ""
+
+#: includes/class-comet-editor-data.php:251
+#: includes/class-comet-elements.php:182 includes/class-comet-elements.php:237
+#: includes/class-comet-elements.php:428 includes/class-comet-elements.php:562
+#: includes/class-comet-elements.php:660 includes/class-comet-elements.php:788
+#: includes/class-comet-elements.php:830 includes/class-comet-elements.php:944
+#: includes/class-comet-elements.php:974 includes/class-comet-elements.php:1129
+msgid "Margin"
+msgstr ""
+
+#: includes/class-comet-editor-data.php:252
+msgid ""
+"Margin properties are used to generate space around the section. The values "
+"must be integers."
+msgstr ""
+
+#: includes/class-comet-elements.php:18 includes/class-comet-elements.php:25
+#: includes/class-comet-elements.php:258 includes/class-comet-elements.php:360
+#: includes/class-comet-elements.php:600 includes/class-comet-elements.php:641
+msgid "Text"
+msgstr ""
+
+#: includes/class-comet-elements.php:22 includes/class-comet-elements.php:197
+#: includes/class-comet-elements.php:252 includes/class-comet-elements.php:470
+#: includes/class-comet-elements.php:580 includes/class-comet-elements.php:675
+#: includes/class-comet-elements.php:803 includes/class-comet-elements.php:845
+#: includes/class-comet-elements.php:959 includes/class-comet-elements.php:989
+#: includes/class-comet-elements.php:1061
+msgid "General"
+msgstr ""
+
+#: includes/class-comet-elements.php:28
+msgid "HTML Tag"
+msgstr ""
+
+#: includes/class-comet-elements.php:45 includes/class-comet-elements.php:274
+#: includes/class-comet-elements.php:490 includes/class-comet-elements.php:863
+msgid "Alignment"
+msgstr ""
+
+#: includes/class-comet-elements.php:50 includes/class-comet-elements.php:279
+#: includes/class-comet-elements.php:310 includes/class-comet-elements.php:446
+#: includes/class-comet-elements.php:495 includes/class-comet-elements.php:868
+#: includes/class-comet-utils.php:30
+msgid "Left"
+msgstr ""
+
+#: includes/class-comet-elements.php:58 includes/class-comet-elements.php:287
+#: includes/class-comet-elements.php:311 includes/class-comet-elements.php:447
+#: includes/class-comet-elements.php:503 includes/class-comet-elements.php:876
+#: includes/class-comet-utils.php:22
+msgid "Right"
+msgstr ""
+
+#: includes/class-comet-elements.php:64
+msgid "Content"
+msgstr ""
+
+#: includes/class-comet-elements.php:72 includes/class-comet-elements.php:319
+#: includes/class-comet-elements.php:529 includes/class-comet-elements.php:610
+#: includes/class-comet-elements.php:753 includes/class-comet-elements.php:901
+#: includes/class-comet-elements.php:1090
+msgid "Design"
+msgstr ""
+
+#: includes/class-comet-elements.php:82
+msgid "Font"
+msgstr ""
+
+#: includes/class-comet-elements.php:96
+msgid "Weight"
+msgstr ""
+
+#: includes/class-comet-elements.php:97
+msgid ""
+"If the exact weight given is unavailable, then the closest weight will be "
+"applied."
+msgstr ""
+
+#: includes/class-comet-elements.php:103
+msgid "Line height"
+msgstr ""
+
+#: includes/class-comet-elements.php:112
+msgid "Letter spacing"
+msgstr ""
+
+#: includes/class-comet-elements.php:123
+msgid "Text shadow"
+msgstr ""
+
+#: includes/class-comet-elements.php:130
+msgid "Blur"
+msgstr ""
+
+#: includes/class-comet-elements.php:139 includes/class-comet-elements.php:405
+msgid "Vertical"
+msgstr ""
+
+#: includes/class-comet-elements.php:148 includes/class-comet-elements.php:413
+msgid "Horizontal"
+msgstr ""
+
+#: includes/class-comet-elements.php:193
+msgid "Google map"
+msgstr ""
+
+#: includes/class-comet-elements.php:203
+msgid "Address"
+msgstr ""
+
+#: includes/class-comet-elements.php:208
+msgid "Zoom level"
+msgstr ""
+
+#: includes/class-comet-elements.php:209
+msgid ""
+"The initial resolution at which to display the map is set by the zoom "
+"property, where zoom 0 corresponds to a map of the Earth fully zoomed out, "
+"and higher zoom levels zoom in at a higher resolution."
+msgstr ""
+
+#: includes/class-comet-elements.php:216
+msgid "Map type"
+msgstr ""
+
+#: includes/class-comet-elements.php:220
+msgid "Roadmap"
+msgstr ""
+
+#: includes/class-comet-elements.php:221
+msgid "Satellite"
+msgstr ""
+
+#: includes/class-comet-elements.php:225 includes/class-comet-elements.php:704
+#: includes/class-comet-elements.php:1031
+msgid "Height"
+msgstr ""
+
+#: includes/class-comet-elements.php:248 includes/class-comet-elements.php:255
+#: includes/class-comet-elements.php:756
+msgid "Button"
+msgstr ""
+
+#: includes/class-comet-elements.php:260
+msgid "Hello"
+msgstr ""
+
+#: includes/class-comet-elements.php:263 includes/class-comet-elements.php:511
+#: includes/class-comet-elements.php:514 includes/class-comet-elements.php:884
+#: includes/class-comet-elements.php:887
+msgid "Link"
+msgstr ""
+
+#: includes/class-comet-elements.php:268 includes/class-comet-elements.php:519
+#: includes/class-comet-elements.php:891
+msgid "Target"
+msgstr ""
+
+#: includes/class-comet-elements.php:271 includes/class-comet-elements.php:522
+#: includes/class-comet-elements.php:892
+msgid "Open the link in a new tab ?"
+msgstr ""
+
+#: includes/class-comet-elements.php:291
+msgid "Justified"
+msgstr ""
+
+#: includes/class-comet-elements.php:299 includes/class-comet-elements.php:302
+#: includes/class-comet-elements.php:421 includes/class-comet-elements.php:586
+#: includes/class-comet-elements.php:841 includes/class-comet-elements.php:848
+#: includes/class-comet-elements.php:851 includes/class-comet-elements.php:907
+msgid "Icon"
+msgstr ""
+
+#: includes/class-comet-elements.php:329
+msgid "Flat"
+msgstr ""
+
+#: includes/class-comet-elements.php:334 includes/class-comet-elements.php:371
+#: includes/class-comet-elements.php:391
+msgid "Color (inactive)"
+msgstr ""
+
+#: includes/class-comet-elements.php:338 includes/class-comet-elements.php:375
+#: includes/class-comet-elements.php:395
+msgid "Color (active)"
+msgstr ""
+
+#: includes/class-comet-elements.php:342
+msgid "Gradient (inactive)"
+msgstr ""
+
+#: includes/class-comet-elements.php:346
+msgid "Gradient (active)"
+msgstr ""
+
+#: includes/class-comet-elements.php:432
+msgid "Animation"
+msgstr ""
+
+#: includes/class-comet-elements.php:435
+msgid "Effect"
+msgstr ""
+
+#: includes/class-comet-elements.php:436
+msgid "Play an effect on hovering the button."
+msgstr ""
+
+#: includes/class-comet-elements.php:441
+msgid "Zoom"
+msgstr ""
+
+#: includes/class-comet-elements.php:442
+msgid "Fade"
+msgstr ""
+
+#: includes/class-comet-elements.php:443
+msgid "Shrink"
+msgstr ""
+
+#: includes/class-comet-elements.php:444
+msgid "Pulse"
+msgstr ""
+
+#: includes/class-comet-elements.php:445
+msgid "Tada"
+msgstr ""
+
+#: includes/class-comet-elements.php:448
+msgid "Up"
+msgstr ""
+
+#: includes/class-comet-elements.php:449
+msgid "Down"
+msgstr ""
+
+#: includes/class-comet-elements.php:481 includes/class-comet-elements.php:532
+#: includes/class-comet-elements.php:1007
+#: includes/class-comet-elements.php:1076
+#: includes/class-comet-elements.php:1093
+msgid "Caption"
+msgstr ""
+
+#: includes/class-comet-elements.php:485 includes/class-comet-elements.php:1071
+msgid "Alternative text"
+msgstr ""
+
+#: includes/class-comet-elements.php:486 includes/class-comet-elements.php:1072
+msgid ""
+"Alternative text is required for SEO. By default it uses the image filename."
+msgstr ""
+
+#: includes/class-comet-elements.php:573 includes/class-comet-elements.php:613
+msgid "List"
+msgstr ""
+
+#: includes/class-comet-elements.php:577
+msgid "Items"
+msgstr ""
+
+#: includes/class-comet-elements.php:583
+msgid "Item"
+msgstr ""
+
+#: includes/class-comet-elements.php:590
+msgid "Vertical alignment"
+msgstr ""
+
+#: includes/class-comet-elements.php:595
+msgid "Middle"
+msgstr ""
+
+#: includes/class-comet-elements.php:622 includes/class-comet-elements.php:1023
+msgid "Gap"
+msgstr ""
+
+#: includes/class-comet-elements.php:623
+msgid "Define the gap between items."
+msgstr ""
+
+#: includes/class-comet-elements.php:631
+msgid "Text indent"
+msgstr ""
+
+#: includes/class-comet-elements.php:685
+msgid "YouTube"
+msgstr ""
+
+#: includes/class-comet-elements.php:686
+msgid "Vimeo"
+msgstr ""
+
+#: includes/class-comet-elements.php:692
+msgid "Filetypes supported for custom video: \"MP4\", \"WebM\" and \"Ogg\"."
+msgstr ""
+
+#: includes/class-comet-elements.php:714
+msgid "Options"
+msgstr ""
+
+#: includes/class-comet-elements.php:717 includes/class-comet-elements.php:814
+msgid "Autoplay"
+msgstr ""
+
+#: includes/class-comet-elements.php:718
+msgid "Enabling autoplay ?"
+msgstr ""
+
+#: includes/class-comet-elements.php:723
+msgid "Informations"
+msgstr ""
+
+#: includes/class-comet-elements.php:724
+msgid "Showing informations such as title, author, etc?"
+msgstr ""
+
+#: includes/class-comet-elements.php:729 includes/class-comet-elements.php:1001
+msgid "Lightbox"
+msgstr ""
+
+#: includes/class-comet-elements.php:730
+msgid "Play the video in lightbox"
+msgstr ""
+
+#: includes/class-comet-elements.php:739
+msgid "No"
+msgstr ""
+
+#: includes/class-comet-elements.php:740
+msgid "Yes"
+msgstr ""
+
+#: includes/class-comet-elements.php:744
+msgid "Poster"
+msgstr ""
+
+#: includes/class-comet-elements.php:764
+msgid "Background color"
+msgstr ""
+
+#: includes/class-comet-elements.php:769
+msgid "Border color"
+msgstr ""
+
+#: includes/class-comet-elements.php:774
+msgid "Border width"
+msgstr ""
+
+#: includes/class-comet-elements.php:782
+msgid "Border radius"
+msgstr ""
+
+#: includes/class-comet-elements.php:799 includes/class-comet-elements.php:806
+#: includes/class-comet-elements.php:809
+msgid "Audio"
+msgstr ""
+
+#: includes/class-comet-elements.php:810
+msgid "Filetypes supported: \"MP3\", \"Wav\" and \"Ogg\"."
+msgstr ""
+
+#: includes/class-comet-elements.php:817
+msgid "Playing as soon as audio player is ready ?"
+msgstr ""
+
+#: includes/class-comet-elements.php:820
+msgid "Loop"
+msgstr ""
+
+#: includes/class-comet-elements.php:823
+msgid "Start audio over again everytime it is finished ?"
+msgstr ""
+
+#: includes/class-comet-elements.php:904
+msgid "Colors"
+msgstr ""
+
+#: includes/class-comet-elements.php:955 includes/class-comet-elements.php:962
+#: includes/class-comet-elements.php:965
+msgid "Shortcode"
+msgstr ""
+
+#: includes/class-comet-elements.php:985 includes/class-comet-elements.php:992
+msgid "Gallery"
+msgstr ""
+
+#: includes/class-comet-elements.php:995
+msgid "Columns"
+msgstr ""
+
+#: includes/class-comet-elements.php:1002
+msgid "Open in a lightbox ?"
+msgstr ""
+
+#: includes/class-comet-elements.php:1011
+msgid "Hide"
+msgstr ""
+
+#: includes/class-comet-elements.php:1012
+msgid "Banner"
+msgstr ""
+
+#: includes/class-comet-elements.php:1014
+msgid "Under"
+msgstr ""
+
+#: includes/class-comet-elements.php:1020
+#: includes/class-comet-elements.php:1058
+msgid "Images"
+msgstr ""
+
+#: includes/class-comet-elements.php:1039 includes/class-comet-utils.php:183
+#: includes/class-comet-utils.php:209
+msgid "Default"
+msgstr ""
+
+#: includes/class-comet-elements.php:1044
+msgid "Custom height"
+msgstr ""
+
+#: includes/class-comet-elements.php:1080
+msgid "Author"
+msgstr ""
+
+#: includes/class-comet-includes.php:136
+msgid "Comet (full width)"
+msgstr ""
+
+#: includes/class-comet-utils.php:66
+msgid "Left top"
+msgstr ""
+
+#: includes/class-comet-utils.php:69
+msgid "Left center"
+msgstr ""
+
+#: includes/class-comet-utils.php:72
+msgid "Left bottom"
+msgstr ""
+
+#: includes/class-comet-utils.php:77
+msgid "Right top"
+msgstr ""
+
+#: includes/class-comet-utils.php:80
+msgid "Right center"
+msgstr ""
+
+#: includes/class-comet-utils.php:83
+msgid "Right bottom"
+msgstr ""
+
+#: includes/class-comet-utils.php:88
+msgid "Top center"
+msgstr ""
+
+#: includes/class-comet-utils.php:94
+msgid "Bottom center"
+msgstr ""
+
+#: includes/class-comet-utils.php:102
+msgid "Repeat horizontally"
+msgstr ""
+
+#: includes/class-comet-utils.php:103
+msgid "Repeat vertically"
+msgstr ""
+
+#: includes/class-comet-utils.php:104
+msgid "Space"
+msgstr ""
+
+#: includes/class-comet-utils.php:105
+msgid "Round"
+msgstr ""
+
+#: includes/class-comet-utils.php:106
+msgid "No repeat"
+msgstr ""
+
+#: includes/class-comet-utils.php:114
+msgid "Solid"
+msgstr ""
+
+#: includes/class-comet-utils.php:115
+msgid "Dotted"
+msgstr ""
+
+#: includes/class-comet-utils.php:116
+msgid "Dashed"
+msgstr ""
+
+#: includes/class-comet-utils.php:117
+msgid "Double"
+msgstr ""
+
+#: includes/class-comet-utils.php:118
+msgid "Inset"
+msgstr ""
+
+#: includes/class-comet-utils.php:119
+msgid "Outset"
+msgstr ""
+
+#: includes/class-comet-utils.php:128
+msgid "1 column"
+msgstr ""
+
+#: includes/class-comet-utils.php:156
+msgid "Custom image"
+msgstr ""
+
+#: includes/class-comet-utils.php:157
+msgid "Disc"
+msgstr ""
+
+#: includes/class-comet-utils.php:158
+msgid "Circle"
+msgstr ""
+
+#: includes/class-comet-utils.php:159
+msgid "Square"
+msgstr ""
+
+#: includes/class-comet-utils.php:160
+msgid "Armenian"
+msgstr ""
+
+#: includes/class-comet-utils.php:161
+msgid "Cjk ideographic"
+msgstr ""
+
+#: includes/class-comet-utils.php:162
+msgid "Decimal"
+msgstr ""
+
+#: includes/class-comet-utils.php:163
+msgid "Decimal leading zero"
+msgstr ""
+
+#: includes/class-comet-utils.php:164
+msgid "Georgian"
+msgstr ""
+
+#: includes/class-comet-utils.php:165
+msgid "Hebrew"
+msgstr ""
+
+#: includes/class-comet-utils.php:166
+msgid "Hiragana"
+msgstr ""
+
+#: includes/class-comet-utils.php:167
+msgid "Hiragana iroha"
+msgstr ""
+
+#: includes/class-comet-utils.php:168
+msgid "Katakana"
+msgstr ""
+
+#: includes/class-comet-utils.php:169
+msgid "Katakana iroha"
+msgstr ""
+
+#: includes/class-comet-utils.php:170
+msgid "Lower alpha"
+msgstr ""
+
+#: includes/class-comet-utils.php:171
+msgid "Lower greek"
+msgstr ""
+
+#: includes/class-comet-utils.php:172
+msgid "Lower latin"
+msgstr ""
+
+#: includes/class-comet-utils.php:173
+msgid "Lower roman"
+msgstr ""
+
+#: includes/class-comet-utils.php:174
+msgid "Upper alpha"
+msgstr ""
+
+#: includes/class-comet-utils.php:175
+msgid "Upper latin"
+msgstr ""
+
+#: includes/class-comet-utils.php:176
+msgid "Upper roman"
+msgstr ""
+
+#: includes/comet-elements.php:189
+msgid "No posts to show."
+msgstr ""

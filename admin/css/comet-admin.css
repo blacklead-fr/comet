@@ -1,0 +1,1018 @@
+@charset "UTF-8";
+
+#comet-dashboard,
+p, a, h1, h2, h3, h4, h5, h6 {
+  font: 300 15px/1.5 sans-serif;
+  text-decoration: none;
+  color: #404146;
+}
+
+h1 { font-size: 25px; }
+h2 { font-size: 22px; }
+h3 { font-size: 20px; }
+h4 { font-size: 17px; }
+h5 { font-size: 15px; }
+h6 { font-size: 13px; }
+
+a,
+a:focus,
+a:hover,
+a:active { text-decoration: underline; }
+
+a { font-weight: 500; }
+
+a:hover,
+a:focus,
+a:active { text-decoration: none; }
+
+a, button, input,
+a:focus, button:focus, input:focus,
+a:active, button:active, input:active {
+  box-shadow: none;
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+  outline: 0;
+}
+
+
+ul, li, ol, label { list-style: none; }
+
+
+div,
+form,
+figure,
+article, label, ul, li,
+ol, p, h1, h2, h3, h4, h5, h6 {
+  display: block;
+  background: none;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+body { overflow: hidden; }
+
+.comet-button {
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.comet-tooltip { position: relative; }
+
+.comet-tooltip.comet-active:after {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-top: 10px solid transparent;
+  border-right:10px solid #2C2D31;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin: -9px auto auto -9px;
+}
+
+.comet-tooltip .comet-innerTooltip {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #2C2D31;
+  width: 280px;
+  border-radius: 5px;
+  box-shadow: 0 3px 5px 0 #DAE5EE;
+  text-align: center;
+  z-index: 1;
+  color: white;
+  overflow: hidden;
+  display: none;
+}
+
+.comet-tooltip.comet-active > .comet-innerTooltip { display: block; }
+
+.comet-tooltip .comet-innerTooltip * { color: white; }
+
+.comet-innerTooltip .comet-blockTooltip {
+  display: block;
+  padding: 10px;
+}
+
+.comet-innerTooltip .comet-mainTooltip {
+  max-height: 280px;
+  overflow: auto;
+}
+
+#comet-dashboard .comet-mainTooltip a {
+  color: white;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.comet-footerTooltip.comet-blockTooltip { padding: 0; }
+
+#comet-dashboard .comet-footerTooltip a {
+  display: block;
+  padding: 10px 34px 10px 10px;
+  margin: 0;
+  border: 0;
+  text-align: left;
+  color: white;
+  text-decoration: none;
+  position: relative;
+  background: #404146;
+  transition: all ease-in-out .5s;
+}
+
+#comet-dashboard .comet-footerTooltip a:hover,
+#comet-dashboard .comet-footerTooltip a:active {
+  background: #006AFE;
+  background: linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
+  background: -moz-linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
+  background: -webkit-linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
+  background: -webkit-linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
+}
+
+.comet-footerTooltip a .dashicons {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  margin-top: -7px;
+  color: rgba( 255, 255, 255, .5 );
+  font-size: 14px;
+  height: 14px;
+  width: 14px;
+}
+/* Dashboard */
+
+#comet-dashboard {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #EDF5FB;
+	z-index: 99999;
+}
+
+#comet-dashboard a { color: #404146; }
+
+#comet-dashboard h1 {
+  font: 300 20px/50px sans-serif;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  color: #006AFE;
+}
+
+#comet-dashboardHeader {
+	position: relative;
+	width: 100%;
+	background: white;
+	height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #DAE5EE;
+}
+
+#comet-dashboardContent {
+  padding: 30px;
+  overflow: auto;
+  height: calc( 100% - 50px );
+  position: relative;
+}
+
+.comet-dashCtntBoxed {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.comet-dashTopBarMenuPop { position: relative; }
+
+.comet-dashTopBarItem,
+.comet-dashTopBarItem .comet-icon {
+  line-height: 50px;
+  color: #404146;
+  width: auto;
+  height: 50px;
+  text-decoration: none;
+  text-align: center;
+  font: 500 16px/50px sans-serif;
+  text-transform: uppercase;
+  display: block;
+}
+
+.comet-dashTopBarItem .comet-icon { width: 50px; }
+
+.comet-dashTopBarItem:hover,
+.comet-dashTopBarItem:hover .comet-icon {
+  text-decoration: none;
+  color: #006AFE;
+}
+
+#comet-doSidebarOpen .comet-icon { font-size: 30px; }
+
+#comet-dashboardSidebar {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	background: rgba( 0, 0, 0, .5 );
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: none;
+}
+
+#comet-dashboardSidebar > div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 300px;
+	background: #2C2D31;
+  padding: 20px;
+  line-height: 20px;
+}
+
+#comet-doSidebarClose .comet-icon {
+	line-height: 30px;
+	font-size: 13px;
+	width: 13px;
+	height: 30px;
+	margin-right: 10px;
+}
+
+#comet-dashboardSidebarMenu { margin: 20px 0; }
+
+#comet-dashboardSidebarMenu li a {
+  line-height: 20px;
+  color: #D6D7DB;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  padding: 10px 0;
+}
+
+#comet-dashboardSidebarMenu li a:hover { color: white; }
+
+/* Row / Column */
+
+.comet-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.comet-middleIb {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.comet-row.col3 .comet-column { width: 30%; }
+.comet-row.col2 .comet-column { width: 50%; }
+
+.comet-row.col3 .comet-column.col2 { width: 40%; }
+
+
+/* Button */
+
+.comet-button {
+  border: 0;
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+  margin: 0;
+  text-decoration: none;
+  border-radius: 5px;
+  box-shadow: none;
+	padding: 0 20px;
+	height: 30px;
+  font: 300 15px/30px sans-serif;
+  width: auto;
+  cursor: pointer;
+}
+
+.comet-button.comet-buttonPrimary {
+  background: #006AFE;
+  color: white;
+}
+
+.comet-button:hover {
+  transform: scale(1.05, 1.05);
+  -o-transform: scale(1.05, 1.05);
+  -ms-transform: scale(1.05, 1.05);
+  -moz-transform: scale(1.05, 1.05);
+  -webkit-transform: scale(1.05, 1.05);
+}
+
+.comet-button.dashicons { font-family: 'dashicons';}
+
+.comet-button.cico { font-family: 'cico';}
+
+/* Message */
+
+.comet-message,
+.comet-message p {
+  border: 0;
+  display: block;
+  text-align: left;
+  font: 300 15/20px sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.comet-message a {
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.comet-message a:hover,
+.comet-message a:active { text-decoration: underline; }
+
+.comet-message {
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px 0 5px 5px;
+}
+
+.comet-message.comet-messageSuccess { background: #DFFFE7; }
+
+.comet-message.comet-messageSuccess,
+.comet-message.comet-messageSuccess a,
+.comet-message.comet-messageSuccess a:hover,
+.comet-message.comet-messageSuccess a:active { color: #2CC265; }
+
+.comet-message.comet-messageError { background: #FFE8DF; }
+
+.comet-message.comet-messageError,
+.comet-message.comet-messageError a,
+.comet-message.comet-messageError a:hover,
+.comet-message.comet-messageError a:active { color: #E66E3F; }
+
+.comet-message.comet-messageWarning { background: #FFFDDF; }
+
+.comet-message.comet-messageWarning,
+.comet-message.comet-messageWarning a,
+.comet-message.comet-messageWarning a:hover,
+.comet-message.comet-messageWarning a:active { color: #C2A32C; }
+
+.comet-message.comet-messageNote { background: #404146; }
+
+.comet-message.comet-messageNote,
+.comet-message.comet-messageNote a,
+.comet-message.comet-messageNote a:hover,
+.comet-message.comet-messageNote a:active { color: #B4B6BE; }
+
+/* Templates */
+
+#comet-mytemplates .comet-button {
+  width: 30px;
+  vertical-align: middle;
+  margin: 0 5px;
+  padding: 0;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+#comet-mytemplates #comet-newTemplate {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  color: white;
+  line-height: 40px;
+  transform: rotate(45deg);
+  font-size: 15px;
+}
+
+#comet-mytemplates .comet-button.comet-templateEdit { 
+  padding: 0 10px;
+  color: white;
+  font-size: 15px;
+}
+
+#comet-map-templates > li {
+	display: block;
+  border: 1px solid #DAE5EE;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+  background: white;
+}
+
+#comet-map-templates > li:hover {
+  box-shadow: 0 0 10px 0 #DAE5EE;
+}
+
+#comet-map-templates > li h4 {
+  color: #006AFE;
+  margin-bottom: 10px;
+}
+
+#comet-map-templates > li .comet-templateInfo {
+  font: 300 14px/1.5 sans-serif;
+  color: #AAA;
+}
+
+#comet-map-templates > li .comet-templateInfo > span {
+  margin: 0 2px;
+  color: #404146;
+}
+
+#comet-map-templates > li .comet-templateAction {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  margin-top: -15px;
+}
+
+.comet-templateAction > a:hover { color: #9A9A9A; }
+
+#comet-importTemplateFile {
+  display: none;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+
+/* Dialogbox */
+
+.comet-dialog {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba( 0, 0, 0, .5 );
+  z-index: 99999;
+  padding: 50px;
+  font: 300 15px/20px sans-serif;
+  color: #404146;
+}
+
+.comet-dialog .comet-dialogbox {
+  display: block;
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 400px;
+  width: 100%;
+}
+
+.comet-dialog .comet-dialogHeader,
+.comet-dialog .comet-dialogContent {
+  display: block;
+  padding: 20px;
+  position: relative;
+  overflow: auto;
+  border: 0;
+  margin: 0;
+}
+
+.comet-dialog .comet-dialogContent { height: calc( 100% - 121px); }
+
+.comet-dialog .comet-dialogHeader { border-bottom: 1px solid #DAE5EE; }
+
+.comet-dialogHeader h4 {
+	padding: 0;
+	margin: 0;
+	font: 300 20px/30px sans-serif;
+	text-align: center;
+  color: #404146;
+}
+
+.comet-dialog .comet-dialogCloseButton {
+	position: fixed;
+	right: 5px;
+	top: 5px;
+	cursor: pointer;
+	background: rgba( 0, 0, 0, .5);
+	border: 0;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	font: 300 20px/35px sans-serif;
+	height: 35px;
+	width: 35px;
+	color: #DDD;
+	border-radius: 5px;
+}
+
+.comet-dialog .comet-dialogCloseButton:hover,
+.comet-dialog .comet-dialogCloseButton:active { color: white; }
+
+/* New template */
+
+#comet-newTemplateDialogContent,
+#comet-exportTemplateDialogContent { position: relative; }
+
+#comet-newTemplateName,
+#comet-exportNewTemplateName { padding-right: 35px; }
+
+#comet-saveNewTemplate,
+#comet-exportNewTemplate {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	border: 0;
+	border-radius: 5px;
+	overflow: hidden;
+  padding: 0;
+  margin: 0;
+  background: #006AFE;
+  cursor: pointer;
+}
+
+#comet-saveNewTemplate:hover,
+#comet-exportNewTemplate:hover { transform: scale( 1.05, 1.05 ); }
+
+#comet-saveNewTemplate,
+#comet-exportNewTemplate,
+#comet-saveNewTemplate .cico,
+#comet-exportNewTemplate .cico {
+  color: white;
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+}
+
+.comet-dialogContent,
+.comet-dialogContent div { text-align: center; }
+
+.comet-dialogContent .comet-dialogIconState {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 35px;
+  color: #404146;
+}
+
+.comet-waitWhileIcon {
+  animation: waitWhile 2s linear 0s infinite;
+  color: white;
+  text-align: center;
+}
+
+@keyframes waitWhile {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.comet-importTemplateItems {
+  padding: 0;
+  border: 0;
+  margin: 10px 0 0;
+  list-style: none;
+  text-align: left;
+}
+
+.comet-importTemplateItems li {
+  padding: 5px 0;
+  border: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.comet-importTemplateItems li .cico {
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  color: #006AFE;
+  vertical-align: middle;
+}
+
+#comet-previewTemplateDialogContent iframe {
+  width: 100%;
+  height: 100%;
+}
+
+#comet-previewTemplateDialogContent,
+#comet-previewTemplateDialog .comet-dialogContent {
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Settings */
+
+#comet-settings .comet-setting {
+  padding: 20px 0;
+  border-bottom: 2px solid #DAE5EE;
+}
+
+#comet-settings .comet-settingBlock { vertical-align: top; }
+
+.comet-settingBlock.last { padding-left: 20px; }
+
+.comet-settingBlock.first label {
+  font-weight: 500;
+  padding-bottom: 10px;
+}
+
+.comet-settingBlock.last .comet-fieldCheckbox { padding: 5px 0; }
+
+.comet-settingBlock.last label.comet-middleIb { margin-left: 5px; }
+
+.comet-adminDashboard input,
+.comet-adminDashboard .comet-field {
+  display: inline-block;
+  padding: 5px;
+  margin: 0;
+  border: 1px solid #DAE5EE;
+  background: white;
+  border-radius: 5px;
+  font: 300 15px/35px sans-serif;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #404146;
+}
+
+.comet-adminDashboard textarea,
+.comet-adminDashboard input[type="text"],
+.comet-adminDashboard input[type="select"] { width:  100%; }
+
+.comet-adminDashboard input[type="text"],
+.comet-adminDashboard input[type="select"],
+.comet-adminDashboard input[type="number"] { height: 35px; }
+
+.comet-adminDashboard textarea { height: 200px; }
+
+.comet-adminDashboard input[type="number"] { width: 100px; }
+
+.comet-adminDashboard input:hover,
+.comet-adminDashboard .comet-field:hover { box-shadow: 0 0 5px 0 #DAE5EE; }
+
+.comet-adminDashboard input:focus,
+.comet-adminDashboard .comet-field:focus {
+  border-color: #006AFE;
+  box-shadow: none;
+}
+
+#comet-settings input[type="checkbox"] { display: none; }
+
+.comet-fieldCheckbox label:before {
+	content: '';
+  display: inline-block;
+  vertical-align: middle;
+	background: #006AFE;
+	height: 20px;
+	width: 20px;
+	margin-right: 5px;
+	border-radius: 5px;
+	box-sizing: border-box;
+	border: 10px solid #DAE5EE;
+	transition: border .3s ease;
+}
+
+.comet-fieldCheckbox input:checked + label:before { border-width: 2px; }
+
+#comet-settings > .comet-button { margin: 30px 0; }
+
+/* Typographies */
+
+#comet-addFontDialogContent .comet-listFont {
+  display: inline-block;
+  vertical-align: top;
+  width: 31.33%;
+  background: white;
+  margin: 0 1% 20px;
+  padding: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.comet-listFontControls .comet-listFontWeight {
+  display: inline-block;
+  vertical-align: middle;
+  width: 130px;
+  border: 1px solid #EDF5FB;
+  background: white;
+  box-shadow: none;
+  border-radius: 5px;
+  height: 30px;
+  line-height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+#comet-addFontDialogContent .comet-listFont,
+#comet-addFontDialogContent .comet-listFont * { text-align: left; }
+
+#comet-addFontDialogContent .comet-listFontControls .comet-button {
+  padding: 0;
+  width: 30px;
+  text-align: center;
+  margin-left: 5px;
+}
+
+.comet-listFont .comet-listFontPreview {
+  font: 400 30px/1.10909 sans-serif;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 2px solid #EDF5FB;
+  height: 180px;
+  overflow: hidden;
+  text-overflow: '.';
+}
+
+#comet-addFontDialog .comet-dialogbox,
+#comet-previewTemplateDialog .comet-dialogbox {
+  max-width: 1500px;
+  width: 100%;
+  height: 100%;
+}
+
+#comet-addFontDialog .comet-dialogHeader { overflow: visible; }
+
+#comet-addFontsCollection {
+	position: relative;
+  z-index: 1;
+}
+
+#comet-addFontsCollection > header {
+	height: 30px;
+	background: #404146;
+	width: auto;
+	display: inline-block;
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: white;
+	line-height: 30px;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+#comet-addFontsCollectionCount {
+	background: #006AFE;
+	padding: 3px 5px;
+	border-radius: 5px;
+	margin-right: 5px;
+}
+
+#comet-addFontsCollectionContent {
+	position: absolute;
+	top: 100%;
+	right: 0;
+  background: white;
+  width: 250px;
+  padding: 10px;
+  z-index: 0;
+  border-radius: 5px 0 5px 5px;
+  box-shadow: 0 0 5px 0 #DAE5EE;
+  display: none;
+}
+
+#comet-addFontsCollectionList { padding: 10px 0; }
+
+#comet-addFontsCollection.comet-active #comet-addFontsCollectionContent { display: block; }
+
+#comet-addFontsCollection.comet-active header { border-radius: 5px 5px 0 0; }
+
+#comet-addFontsCollectionList ul {
+  text-align: left;
+  display: block;
+}
+
+#comet-addFontsCollectionList ul li {
+	background: #EDF5FB;
+	margin: 5px;
+	border-radius: 5px;
+	text-align: left;
+	padding: 0 10px;
+	box-sizing: border-box;
+	font: 300 13px/25px sans-serif;
+	height: 30px;
+	display: inline-block;
+	height: 25px;
+}
+
+#comet-addFontsCollectionList li .comet-aFCLItemDelete.comet-button {
+	height: 17px;
+	width: 17px;
+	border: 1px solid red;
+	padding: 0;
+	line-height: 17px;
+	font-size: 12px;
+	text-align: center;
+	border-radius: 100%;
+	margin-left: 10px;
+	color: red;
+}
+
+#comet-addFontsCollectionList li .comet-aFCLItemDelete.comet-button:hover {
+  background: red;
+  color: white;
+}
+
+#comet-mapFonts li {
+	margin: 20px 0;
+	background: white;
+	padding: 20px;
+	border-radius: 5px;
+	border: 1px solid #DAE5EE;
+}
+
+#comet-mapFonts li p {
+  font-size: 30px;
+  line-height: 1.5;
+}
+
+#comet-dashboard #comet-addFont {
+  color: white;
+  text-decoration: none;
+}
+
+#comet-addFontsFromCollection .dashicons {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+}
+
+/* Dashboard */
+
+#comet-mapDashboard .comet-column { vertical-align: top; }
+
+#comet-mapDashboard > .comet-row > .comet-column:first-child {
+  padding-right: 20px;
+}
+
+.comet-dashboardWidget {
+  display: block;
+  margin-bottom: 20px;
+}
+
+#comet-dashboardFeedback {
+	padding: 20px;
+	background: #404146;
+	color: white;
+}
+
+#comet-dashboardFeedback aside,
+#comet-dashboardFeedback figure {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#comet-dashboardFeedback figure {
+	width: 100px;
+	height: 100px;
+}
+
+#comet-dashboardFeedback aside {
+	width: calc( 100% - 120px );
+	margin-left: 20px;
+}
+
+#comet-dashboardFeedback aside * { color: white; }
+
+#comet-dashboardFeedback .comet-button {
+  background: white;
+  margin-top: 20px;
+  color: #404146;
+}
+
+#comet-dashboardLearn li {
+	background: white;
+  margin: 0 0 10px;
+  border: 1px solid white;
+}
+
+#comet-dashboardLearn li:hover,
+#comet-dashboardLearn li:active {
+  box-shadow: 0 0 5px 0 #DAE5EE;
+  border-color: #DAE5EE;
+}
+
+#comet-dashboardLearn li a {
+	display: block;
+	text-decoration: none;
+	padding: 10px;
+}
+
+#comet-dashboardReadDoc {
+  background: url('../img/comet-dashboard-img1.jpeg') repeat center center;
+  background-size: cover;
+}
+
+#comet-dashboardReadDoc a {
+  padding: 100px 20px;
+  background: rgba( 0, 106, 254, .8);
+	display: block;
+	font-size: 30px;
+	font-weight: 300;
+  text-decoration: none;
+  color: white;
+}
+
+#comet-dashboardReadDoc a:hover,
+#comet-dashboardReadDoc a:active {
+	background: rgba( 0,106,254, .4 );
+	transition: background-color ease-in-out .5s;
+}
+
+.comet-dashboardSlideCount > span {
+	background: rgba( 255, 255, 255, .5 );
+	display: inline-block;
+	padding: 5px 10px;
+	border-radius: 5px;
+	font: 500 13px/14px sans-serif;
+}
+
+.comet-dashboardSlide {
+  padding: 40px;
+  background: #006AFE;
+  background: linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
+  background: -moz-linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
+  background: -webkit-linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
+  display: none;
+}
+
+.comet-dashboardSlide:first-child{ display: block; }
+
+.comet-dashboardSlide > * {
+  margin: 0 0 120px;
+  color: white;
+}
+
+.comet-dashboardSlide > *:last-child { margin: 0; }
+
+
+.comet-dashboardSlide > h4 { margin-bottom: 10px; }
+
+.comet-dashboardSlide.comet-dashboardSlideStart h4 {
+  font-size: 30px;
+  margin-bottom: 120px;
+}
+
+.comet-dashboardSlide .comet-button {
+  color: white;
+  padding: 0;
+  margin-right: 10px;
+}
+
+.comet-dashboardSlide .comet-button.comet-next {
+  color: #006AFE;
+  background: white;
+  padding: 0 20px;
+  margin: 0;
+}
+
+/* Responsive */
+
+@media screen and ( max-width: 860px ) {
+  .comet-dashCtntBoxed { width: 100%; }
+
+  #comet-addFontDialogContent .comet-listFont { width: 48%; }
+}
+
+@media screen and ( max-width: 700px ) {
+  #comet-dashboard #comet-dashboardFeedback > * {
+    text-align: center;
+    width: 100%;
+    display: block;
+    margin: 0;
+  }
+}
+
+@media screen and ( max-width: 500px ) {
+  #comet-dashboard #comet-mapDashboard .comet-column{
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+
+  #comet-settings .comet-column {
+    display: block;
+    width: auto;
+    padding:0;
+  }
+
+  #comet-settings .comet-column.last { padding-top: 10px }
+
+  #comet-map-templates > li .comet-templateAction {
+    position: relative;
+    margin: 10px 0 0;
+    right: auto;
+    top: auto;
+  }
+
+  #comet-addFontDialogContent .comet-listFont {
+    width: 100%;
+    display: block;
+    margin: 0 0 20px; 
+  }
+}
