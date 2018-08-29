@@ -325,6 +325,11 @@ class Comet_Elements extends Comet_Utils {
                   'label'  => __( 'Style', 'comet' ),
                   'type'   => 'select',
                   'std'    => 'f',
+                  'switch' => 'true',
+                  'to'     => array(
+                    'f' => array( 'bg', 'hbg' ),
+                    'g' => array( 'gbg', 'ghbg', 'ang' ),
+                  ),
                   'values' => array(
                     'f' => __( 'Flat', 'comet' ),
                     'g' => __( 'Gradient', 'comet' ),
@@ -333,18 +338,22 @@ class Comet_Elements extends Comet_Utils {
                 'bg' => array(
                   'label' => __( 'Color (inactive)', 'comet' ),
                   'type'  => 'color',
+                  'check'    => 'sty:f',
                 ),
                 'hbg' => array(
                   'label' => __( 'Color (active)', 'comet' ),
                   'type'  => 'color',
+                  'check'    => 'sty:f',
                 ),
                 'gbg' => array(
                   'label' => __( 'Gradient (inactive)', 'comet' ),
                   'type'  => 'gradient',
+                  'check'    => 'sty:g',
                 ),
                 'ghbg' => array(
                   'label' => __( 'Gradient (active)', 'comet' ),
                   'type'  => 'gradient',
+                  'check'    => 'sty:g',
                 ),
                 'ang' => array(
                   'label'  => __( 'Angle', 'comet' ),
@@ -353,6 +362,7 @@ class Comet_Elements extends Comet_Utils {
                   'min'    => '0',
                   'max'    => '360',
                   'unit'   => __( 'deg', 'comet' ),
+                  'check'    => 'sty:g',
                 ),
               )
             ),
@@ -378,6 +388,19 @@ class Comet_Elements extends Comet_Utils {
               )
             ),
             array(
+              'name'   => __( 'Icon', 'comet' ),
+              'fields' => array(
+                'is' => array(
+                  'label'  => __( 'Size', 'comet' ),
+                  'type'   => 'range',
+                  'std'    => '20',
+                  'min'    => '10',
+                  'max'    => '70',
+                  'unit'   => 'px',
+                ),
+              )
+            ),
+            array(
               'name'   => __( 'Border', 'comet' ),
               'fields' => array(
                 'br' => parent::numbers( __( 'Width', 'comet' ) ),
@@ -396,6 +419,72 @@ class Comet_Elements extends Comet_Utils {
                   'type'  => 'color',
                 ),
                 'rd' => parent::numbers( __( 'Radius', 'comet' ) )
+              )
+            ),
+            array(
+              'name'   => __( 'Shadow', 'comet' ),
+              'fields' => array(
+                'sha' => array(
+                  'label'  => __( 'Type', 'comet' ),
+                  'type'   => 'select',
+                  'std'    => 'n',
+                  'switch' => 'true',
+                  'to'     => array(
+                    'c' => array( 'shc', 'sx', 'sy', 'sbl', 'ssp', 'sin' ),
+                  ),
+                  'values' => array(
+                    'n' => __( 'None', 'comet' ),
+                    'c' => __( 'Custom', 'comet' ),
+                  )
+                ),
+                'shc' => array(
+                  'label' => __( 'Color', 'comet' ),
+                  'type'  => 'color',
+                  'check' => 'sha:c',
+                ),
+                'sx' => array(
+                  'label'  => __( 'Offset x', 'comet' ),
+                  'type'   => 'range',
+                  'std'    => '0',
+                  'min'    => '0',
+                  'max'    => '70',
+                  'unit'   => 'px',
+                  'check'  => 'sha:c',
+                ),
+                'sy' => array(
+                  'label'  => __( 'Offset y', 'comet' ),
+                  'type'   => 'range',
+                  'std'    => '0',
+                  'min'    => '0',
+                  'max'    => '70',
+                  'unit'   => 'px',
+                  'check'  => 'sha:c',
+                ),
+                'sbl' => array(
+                  'label'  => __( 'Blur', 'comet' ),
+                  'type'   => 'range',
+                  'std'    => '0',
+                  'min'    => '0',
+                  'max'    => '70',
+                  'unit'   => 'px',
+                  'check'  => 'sha:c',
+                ),
+                'ssp' => array(
+                  'label'  => __( 'Spread', 'comet' ),
+                  'type'   => 'range',
+                  'std'    => '0',
+                  'min'    => '0',
+                  'max'    => '70',
+                  'unit'   => 'px',
+                  'check'  => 'sha:c',
+                ),
+                'sin' => array(
+                  'label'  => __( 'Inset', 'comet' ),
+                  'type'   => 'checkbox',
+                  'std'    => 'false',
+                  'desc'   => __( 'Enable to draw the shadow inside the border instead of outside.', 'comet' ),
+                  'check'  => 'sha:c',
+                ),
               )
             ),
             array(

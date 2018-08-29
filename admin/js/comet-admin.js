@@ -306,7 +306,7 @@
               var c;
               c = '<div id="comet-newTemplateDialogContent">';
               c += '<input type="text" id="comet-newTemplateName" value=""/>';
-              c += '<button id="comet-saveNewTemplate" title="' + cometdata.ui.save + '"><span class="dashicons dashicons-yes"></span></button>';
+              c += '<button id="comet-saveNewTemplate" title="' + cometdata.ui.save + '"><span class="cico cico-arrow-right-alt"></span></button>';
               c += '</div>';
               comet.dialog({
                 id: 'comet-newTemplateDialog',
@@ -360,7 +360,7 @@
                 var url;
 
                 if( typeof ( r = parseInt( r ) ) !== 'number' || isNaN( r ) || r <= 0 ){
-                  o = '<div><span class="comet-dialogIconState dashicons dashicons-warning"></span></div>';
+                  o = '<div><span class="comet-dialogIconState cico cico-exclamation"></span></div>';
                   o += '<div class="comet-message comet-messageError">' + cometdata.messages.error + '</div>';
                   d.innerHTML = o;
                   return;
@@ -368,7 +368,7 @@
                 url = utils.addQueryArgs( { post: r, action: 'edit', comet: ''  }, cometdata.edit_url );
 
                 window.open( url, '_self' );
-                o = '<div><span class="comet-dialogIconState dashicons dashicons-yes"></span></div>';
+                o = '<div><span class="comet-dialogIconState cico cico-check"></span></div>';
                 o += '<div class="comet-message comet-messageSuccess">' + cometdata.messages.stNew + '<br>' + cometdata.messages.redirect;
                 o += ' <a href="' + encodeURI( url ) + '">' + cometdata.messages.gtep + '</a>.';
                 o += '</div>';
@@ -394,7 +394,7 @@
               }
               c = '<div id="comet-exportTemplateDialogContent">';
               c += '<input type="text" id="comet-exportNewTemplateName" value=""/>';
-              c += '<button id="comet-exportNewTemplate" title="' + cometdata.ui.save + '" data-id="' + id + '"><span class="dashicons dashicons-yes"></span></button>';
+              c += '<button id="comet-exportNewTemplate" title="' + cometdata.ui.save + '" data-id="' + id + '"><span class="cico cico-arrow-right-alt"></span></button>';
               c += '</div>';
               comet.dialog({
                 id: 'comet-exportTemplateDialog',
@@ -447,7 +447,7 @@
                 var data, str, uri, obj, a;
                 
                 if( r == '0' || typeof ( data = $.parseJSON( r ) ) !== 'object' || !( 'post_content' in data ) ){
-                  o = '<div><span class="comet-dialogIconState dashicons dashicons-warning"></span></div>';
+                  o = '<div><span class="comet-dialogIconState cico cico-exclamation"></span></div>';
                   o += '<div class="comet-message comet-messageError">' + cometdata.messages.error + '</div>';
                   d.innerHTML = o;
                   return;
@@ -470,7 +470,7 @@
                 a.setAttribute( 'download', encodeURI( name ) + '.json' );
                 a.innerHTML = cometdata.ui.download;
 
-                o = '<div><span class="comet-dialogIconState dashicons dashicons-yes"></span></div>';
+                o = '<div><span class="comet-dialogIconState cico cico-check"></span></div>';
                 o += '<div class="comet-message comet-messageSuccess">'+ cometdata.messages.stNew;
                 o += '</div>';
                 d.innerHTML = o;
@@ -539,10 +539,10 @@
                     data.post_type = 'comet_mytemplates';
                     aj = utils.load({
                       do: 'save',
-                      data: data,
+                      data: JSON.stringify( data ),
                     }).done( function( r ){
                       var a, w;
-                      $( document.getElementById( _id ) ).children( '.comet-waitWhileIcon' ).attr( 'class', 'dashicons dashicons-yes' );
+                      $( document.getElementById( _id ) ).children( '.comet-waitWhileIcon' ).attr( 'class', 'cico cico-check' );
                       w = $( document.getElementsByClassName( 'comet-importTemplateItem' ) ).children( '.comet-waitWhileIcon' );
                       if( !w || typeof w !== 'object' || w.length < 1 ){
                         a = document.createElement( 'a' );
@@ -579,7 +579,7 @@
                   || typeof ui.dataset.id !== 'string'
                   || typeof ( id = parseInt( ui.dataset.id ) ) !== 'number'
                   || isNaN( id ) ){
-                    c += '<div><span class="comet-dialogIconState dashicons dashicons-warning"></span></div>';
+                    c += '<div><span class="comet-dialogIconState cico cico-exclamation"></span></div>';
                     c += '<div class="comet-message comet-messageError">' + cometdata.messages.unreach + '</div>';
 
               }else{
@@ -627,7 +627,7 @@
               }else{
                 c += cometdata.messages.notDel;
               }
-              c += '<div class="comet-buttonset text-right">';
+              c += '<div class="comet-buttonset">';
               c += '<button id="comet-doTemplateDelCan" class="comet-button comet-buttonCancel">' + cometdata.ui.cancel + '</button>';
               if( comet.myTemplates.delete.id ){
                 c += '<button id="comet-doTemplateDelete" class="comet-button comet-buttonPrimary">' + cometdata.ui.delete + '</button>';
@@ -669,7 +669,7 @@
               if(    !comet.myTemplates.delete.id
                   || typeof ( id = parseInt( comet.myTemplates.delete.id ) ) !== 'number'
                   || isNaN( id ) ){
-                    m = '<div><span class="comet-dialogIconState dashicons dashicons-warning"></span></div>';
+                    m = '<div><span class="comet-dialogIconState cico cico-exclamation"></span></div>';
                     m += '<div class="comet-message comet-messageError">' + cometdata.messages.notDel + '</div>';
 
               }
@@ -682,12 +682,12 @@
               }).done( function( r ){
                 var div = document.getElementById( 'comet-deleteTemplateDialogContent' ), o;
 
-                o = '<div><span class="comet-dialogIconState dashicons dashicons-yes"></span></div>';
+                o = '<div><span class="comet-dialogIconState cico cico-check"></span></div>';
                 o += '<div class="comet-message comet-messageSuccess">' + cometdata.messages.stDel + '</div>';
                 
 
                 if( r == 'false' ){
-                  o = '<div><span class="comet-dialogIconState dashicons dashicons-warning"></span></div>';
+                  o = '<div><span class="comet-dialogIconState cico cico-exclamation"></span></div>';
                   o += '<div class="comet-message comet-messageError">' + cometdata.messages.notDel + '</div>';
                 }else{
                   comet.myTemplates.delete.context.parentNode.parentNode.remove();
@@ -787,7 +787,7 @@
               var failed = function(){
                 var w = document.getElementById( 'comet-addFontDialogContent' ),
                     o;
-                o = '<div><span class="comet-dialogIconState dashicons dashicons-warning"></span></div>';
+                o = '<div><span class="comet-dialogIconState cico cico-exclamation"></span></div>';
                 o += '<div class="comet-message comet-messageError">' + cometdata.messages.unreach + '</div>';
                 w.innerHTML = o;
               }

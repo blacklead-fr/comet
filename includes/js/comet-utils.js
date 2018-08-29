@@ -49,7 +49,6 @@
     },
     icon: function( icon ){
       var sets = cometdata.svgSets, d, a, i, o;
-      console.log( 'oui' );
       if( u.eval.empty( icon ) ){
         return false;
       }

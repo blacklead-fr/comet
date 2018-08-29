@@ -28,7 +28,7 @@ class Comet_My_Templates {
     echo '<h4>' . sprintf( _n( '%d template', '%d templates', $templates->found_posts, 'comet' ), $templates->found_posts ) . '</h4>';
     echo '</div>';
     echo '<div class="comet-column col3 text-right">';
-    echo '<a id="comet-newTemplate" class="comet-mthOption comet-button comet-buttonPrimary cico cico-x" title="' . __( 'Create new', 'comet' ) . '"></a>';
+    echo '<a id="comet-newTemplate" class="comet-mthOption comet-button comet-buttonPrimary cico cico-plus" title="' . __( 'Create new', 'comet' ) . '"></a>';
     echo '<div id="comet-importTemplate" class="comet-middleIb">';
     echo '<input type="file" id="comet-importTemplateFile" multiple accept=".json" />';
     echo '<button type="button" id="comet-importTemplateBtn" class="comet-mthOption comet-button cico cico-import" title="' . __( 'Import', 'comet' ) . '"></button>';

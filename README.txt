@@ -7,7 +7,7 @@ Tags: drag and drop, page builder, visual editor, columns, rows, sections, eleme
 Requires at least: 4.7
 Tested up to: 4.9.7
 Requires PHP: 5.5
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,16 @@ No, Comet is really easy to use and you don't have to learn code.
 
 
 == Changelog ==
+
+= 1.0.1 - July 24, 2018 =
+* New - Added icon size and shadow for Button
+* Tweak - Update Cico icons
+* Tweak - Range setting support custom step
+* Fix - Scrolling not working while dragging
+* Fix - Range dragger position is wrong on increase/decrease
+* Fix - Bug while importing a template
+* Fix - Content cropped out in the dialog box
+* Fix - Bug on the Color picker
 
 = 1.0.0 - July 20, 2018 =
 * Hello world !

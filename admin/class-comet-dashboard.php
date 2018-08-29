@@ -77,7 +77,7 @@ class Comet_Dashboard {
     echo '<a href="#" id="comet-doSidebarOpen" class="comet-dashTopBarItem"><span class="comet-icon cico cico-comet"></span></a>';
     echo '<div id="comet-dashboardSidebar">';
     echo '<div>';
-    echo '<button id="comet-doSidebarClose" class="comet-button comet-buttonPrimary"><span class="comet-icon dashicons dashicons-arrow-left-alt"></span>' . __( 'Close', 'comet' ) . '</button>';
+    echo '<button id="comet-doSidebarClose" class="comet-button comet-buttonPrimary"><span class="comet-icon cico cico-arrow-left-alt"></span>' . __( 'Close', 'comet' ) . '</button>';
     echo $this->navigation();
     echo '</div>';
     echo '</div>';
@@ -90,7 +90,7 @@ class Comet_Dashboard {
 
     echo '<div class="comet-column col3 text-right">';
     echo '<div class="comet-middleIb comet-dashTopBarMenuPop comet-tooltip">';
-    echo '<a href="#" class="comet-dashTopBarItem comet-buttonTooltip"><span class="comet-icon">?</span></a>';
+    echo '<a href="#" class="comet-dashTopBarItem comet-buttonTooltip"><span class="comet-icon cico cico-question"></span></a>';
     echo '<div class="comet-innerTooltip">';
     echo '<div class="comet-headerTooltip comet-blockTooltip">';
     echo '<h4>' . __( 'Help', 'comet' ) . '</h4>';
@@ -99,8 +99,8 @@ class Comet_Dashboard {
       echo '<div class="comet-mainTooltip comet-blockTooltip">' . $menu[$d]['help'] . '</div>';
     }
     echo '<div class="comet-footerTooltip comet-blockTooltip">';
-    echo '<a class="comet-linkTooltip" href="' . esc_url( 'https://blacklead.fr/support/docs/comet' ) . '" target="_blank">' . __( 'Documentation', 'comet' ) . '<span class="dashicons dashicons-arrow-right-alt2"></span></a>';
-    echo '<a class="comet-linkTooltip" href="' . esc_url( 'https://wordpress.org/support/plugin/comet-lite/' ) . '" target="_blank">' . __( 'Support', 'comet' ) . '<span class="dashicons dashicons-arrow-right-alt2"></span></a>';
+    echo '<a class="comet-linkTooltip" href="' . esc_url( 'https://blacklead.fr/support/docs/comet' ) . '" target="_blank">' . __( 'Documentation', 'comet' ) . '<span class="cico cico-arrow-right"></span></a>';
+    echo '<a class="comet-linkTooltip" href="' . esc_url( 'https://wordpress.org/support/plugin/comet-lite/' ) . '" target="_blank">' . __( 'Support', 'comet' ) . '<span class="cico cico-arrow-right"></span></a>';
     echo '</div>';
     echo '</div>';
     echo '</div>';

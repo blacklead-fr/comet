@@ -215,7 +215,8 @@
           css: function(){
             var o = '',
                 sty, bg, abg, tc, atc, bc, abc, bs,
-                br, rd, mr, ang, fs, hsp, vsp, isp, rcss;
+                br, rd, mr, ang, fs, hsp, vsp, isp, rcss,
+                sin, ssp, sy, sx, sbl, shc, is;
         
             sty = 'sty' in el && el.sty === 'g' ? 'g' : 'f';
         
@@ -243,6 +244,13 @@
               fs = 10;
             }else if( fs > 70 ){
               fs = 70;
+            }
+            is = 'is' in el ? parseInt( el.is ) : 20;
+            is = typeof is !== 'number' || isNaN( is ) ? 20 : is;
+            if( is < 10 ){
+              is = 10;
+            }else if( fs > 70 ){
+              is = 70;
             }
             vsp = 'vsp' in el ? parseInt( el.vsp ) : 0;
             vsp = typeof vsp !== 'number' || isNaN( vsp ) ? 0 : vsp;
@@ -288,11 +296,32 @@
             if( rd !== 0 ){
               o += cometUtils.generate.css( 'border-radius', rd );
             }
+
+            if( 'sha' in el && el.sha === 'c' ){
+              shc = 'shc' in el ? cometUtils.sanitize.color( el.shc ) : '';
+              sbl = 'sbl' in el ? parseInt( el.sbl ) : 0;
+              ssp = 'ssp' in el ? parseInt( el.ssp ) : 0;
+              sx = 'sx' in el ? parseInt( el.sx ) : 0;
+              sy = 'sy' in el ? parseInt( el.sy ) : 0;
+              sin = 'sin' in el && el.sin === 'true' ? ' inset ' : ' ';
+
+
+              sbl = sbl > 0 ? sbl + 'px ' : 0;
+              ssp = ssp > 0 ? ssp + 'px' : 0;
+              sx = sx > 0 ? sx + 'px ' : 0;
+              sy = sy > 0 ? sy + 'px ' : 0;
+
+              if( shc !== '' && ( sx !== 0 || sy !== 0 || sbl !== 0 || ssp !== 0 ) ){
+                o += cometUtils.generate.css( 'box-shadow', sx + sy + sbl + ssp + sin + shc );
+                o += cometUtils.generate.css( '-moz-box-shadow', sx + sy + sbl + ssp + sin + shc );
+                o += cometUtils.generate.css( '-webkit-box-shadow', sx + sy + sbl + ssp + sin + shc );
+              }
+
+            }
             o += '}';
-        
-        
-            o += '.cpb-elementNode' + id + ' .cpb-theButton .cpb-buttonIcon{';
-            o += cometUtils.generate.css( 'width', fs + 'px' );
+
+            o += '.cpb-elementNode' + id + ' .cpb-buttonIcon{';
+            o += cometUtils.generate.css( 'width', is + 'px' );
             o += '}';
         
             o += '.cpb-elementNode' + id + ' .cpb-theButton > span {';

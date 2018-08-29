@@ -272,7 +272,7 @@ section, article, figure, aside {
 /* Button */
 
 .comet-button,
-.comet-button > .dashicons {
+.comet-button > .cico /* TODO */ {
   background: none;
   padding: 0;
   border: 0;
@@ -299,17 +299,10 @@ section, article, figure, aside {
 
 .comet-button.cico { font-family: 'cico'; }
 
-.comet-button.dashicons,
-.comet-button > .dashicons {
-  display: block;
-  font-family: 'dashicons';
-}
-
 .comet-button.comet-buttonPrimary { background: #006AFE; }
 
 .comet-button.comet-buttonPrimary,
-.comet-button.comet-buttonPrimary > .cico,
-.comet-button.comet-buttonPrimary > .dashicons { color: white; }
+.comet-button.comet-buttonPrimary > .cico { color: white; }
 
 /* Editor */
 
@@ -461,7 +454,8 @@ section, article, figure, aside {
 
 #comet-editorOptionsButton .cico {
   transform: rotate(90deg);
-  margin-left: -2px;
+  margin-left: -7px;
+  display: block;
 }
 
 #comet-editorSidebarFooter button {
@@ -474,6 +468,8 @@ section, article, figure, aside {
   padding: 0;
   width: 35px;
 }
+
+#comet-editorSaveButton .cico { height: 20px; }
 
 #comet-editorSidebarFooter button span { color: white; }
 
@@ -691,12 +687,12 @@ section, article, figure, aside {
   border-color: #006AFE;
 }
 
-.comet-modalClose .cico,
-.comet-modalClose .dashicons {
+.comet-modalClose .cico {
   font-size: 12px;
   line-height: 29px;
   width: 29px;
   height: 29px;
+  display: block;
 }
 
 #comet-modal .comet-modalHeader {
@@ -1032,18 +1028,6 @@ section, article, figure, aside {
   width: 215px;
 }
 
-.sp-container.sp-flat {
-    position: relative;
-}
-
-/* Fix for * { box-sizing: border-box; } */
-.sp-container,
-.sp-container * {
-    -webkit-box-sizing: content-box;
-       -moz-box-sizing: content-box;
-            box-sizing: content-box;
-}
-
 .sp-picker-container {
   position: relative;
   padding: 5px;
@@ -1052,7 +1036,8 @@ section, article, figure, aside {
 }
 
 .sp-top,
-.sp-top-inner {
+.sp-top-inner,
+.sp-container.sp-flat {
   position:relative;
 }
 
@@ -1241,7 +1226,7 @@ section, article, figure, aside {
   border-radius: 5px;
   box-shadow: none;
   padding: 5px;
-  height: 30px;
+  height: 35px;
   border: 0;
   border-bottom: 1px solid #ACBECC;
   border-radius: 5px;
@@ -1444,6 +1429,7 @@ section, article, figure, aside {
   width: 12px;
   height: 12px;
   margin: 0;
+  display: block;
 }
 
 .comet-eRDragger { background: #006AFE; }
@@ -1555,6 +1541,7 @@ section, article, figure, aside {
 	width: 25px;
 	line-height: 25px;
   font-size: 15px;
+  display: block;
 }
 
 .comet-edModalItems > li > .comet-edModalItemEdit { right: 35px; }
@@ -1570,9 +1557,9 @@ section, article, figure, aside {
 }
 
 .comet-edModalItemAdd .cico {
-  font-size: 13px;
-  line-height: 20px;
-  transform: rotate(45deg);
+  font-size: 14px;
+  line-height: 30px;
+  display: block;
 }
 
 /* Image // Icon */
@@ -1832,8 +1819,7 @@ section, article, figure, aside {
 }
 
 .comet-editorToolbarTool,
-.comet-editorToolbarTool .cico,
-.comet-editorToolbarTool .dashicons {
+.comet-editorToolbarTool .cico {
   line-height: 40px;
   height: 40px;
   text-align: center;
@@ -1841,6 +1827,8 @@ section, article, figure, aside {
   padding: 0;
   font-size: 17px;
 }
+
+.comet-editorToolbarTool .cico { display: block; }
 
 .comet-editorToolbarTool {
   position: relative;
@@ -1911,13 +1899,13 @@ section, article, figure, aside {
   width: 1500px;
   max-width: 100%;
   color: #404146;
+  height: 100%;
 }
 
 .comet-dialog .comet-dialogHeader { border-bottom: 1px solid #DAE5EE; }
 
 .comet-dialog .comet-dialogHeader,
 .comet-dialog .comet-dialogContent {
-  display: block;
   padding: 20px;
   position: relative;
   overflow: auto;
@@ -1948,7 +1936,11 @@ section, article, figure, aside {
 /* Icon picker - Templates library */
 
 #comet-modalIconPicker .comet-dialogContent,
-#comet-modalTemplatesLibrary .comet-dialogContent { height: calc(100% - 77px); }
+#comet-modalTemplatesLibrary .comet-dialogContent {
+  height: calc(100% - 76px);
+  height: -moz-calc(100% - 76px);
+  height: -webkit-calc(100% - 76px);
+}
 
 #comet-modalTemplatesLibrary .comet-dialogContent { padding: 10px; }
 

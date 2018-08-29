@@ -25,7 +25,7 @@ if( isset( $_GET['comet'] )
     wp_localize_script( $utils, 'cometdata', $data );
     wp_enqueue_script( $utils );
     wp_enqueue_style( $public );
-    wp_enqueue_style( 'dashicons' );
+    wp_enqueue_style( 'cico' );
         
     echo '<html>';
     echo '<head>';
@@ -35,7 +35,7 @@ if( isset( $_GET['comet'] )
     do_action( 'admin_print_scripts' );
     echo '</head>';
     echo '<body>';
-    echo '<div id="cpb-content" class="cpb cpb-frontendMode"><div id="cpb-loading"><span class="dashicons dashicons-update"></span></div></div>';
+    echo '<div id="cpb-content" class="cpb cpb-frontendMode"><div id="cpb-loading"><span class="cico cico-spin"></span></div></div>';
     do_action( 'admin_print_footer_scripts' );
     echo '</body>';
     echo '</html>';

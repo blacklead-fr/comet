@@ -11,7 +11,7 @@
       editor = document.getElementById( 'comet-editor' ),
       $editor = $( editor ),
       winWidth = $win.outerWidth( true ),
-      frame = document.getElementById( 'cpb-content'/*'comet-editorFrame'*/ ),
+      frame = document.getElementById( 'cpb-content' ),
       $frame = $( frame ),
       metaData = {},
       post = null,
@@ -530,7 +530,7 @@
               }
             }
             o += '</ul>';
-            o += '<div class="comet-edMIAdd"><button class="comet-button comet-buttonPrimary comet-edModalItemAdd"><span class="cico cico-x"></span></button></div>';
+            o += '<div class="comet-edMIAdd"><button class="comet-button comet-buttonPrimary comet-edModalItemAdd"><span class="cico cico-plus"></span></button></div>';
             o += '</div>';
             return o;
           }
@@ -2005,24 +2005,6 @@
               title: cometdata.ui.ilink
             };
 
-            /*btns[btns.length] = {
-              command: 'justifyLeft',
-              icon: 'dashicons dashicons-editor-alignleft',
-              title: 'Align left' // TRANSLATION
-            };
-
-            btns[btns.length] = {
-              command: 'justifyCenter',
-              icon: 'dashicons dashicons-editor-aligncenter',
-              title: 'Align center' // TRANSLATION
-            };
-
-            btns[btns.length] = {
-              command: 'justifyRight',
-              icon: 'dashicons dashicons-editor-alignright',
-              title: 'Align right' // TRANSLATION
-            };*/
-
             o =  '<div id="' + x.toolbar +'">';
             for( b = 0; b < btns.length; b++ ){
               btn = btns[b];
@@ -2253,9 +2235,9 @@
                 px = r.left;
 
                 it = $( p.parentNode ).children( '.comet-field' );
-                min = parseInt( it.attr( 'min' ) ) || 0;
-                max = parseInt( it.attr( 'max' ) ) || 360;
-                step = parseInt( it.attr( 'step' ) ) || 1;
+                min = parseFloat( it.attr( 'min' ) ) || 0;
+                max = parseFloat( it.attr( 'max' ) ) || 360;
+                step = parseFloat( it.attr( 'step' ) ) || 1;
               }
             },
             stop: {
@@ -2309,9 +2291,9 @@
                 }
 
                 v = parseFloat( f.value );
-                _min = parseInt( f.getAttribute( 'min' ) ) || 0;
-                _max = parseInt( f.getAttribute( 'max' ) ) || 360;
-                _step = parseInt( f.getAttribute( 'step' ) ) || 1;
+                _min = parseFloat( f.getAttribute( 'min' ) ) || 0;
+                _max = parseFloat( f.getAttribute( 'max' ) ) || 360;
+                _step = parseFloat( f.getAttribute( 'step' ) ) || 1;
 
                 if( typeof v !== 'number' || isNaN( v ) ){
                   v = _min;
@@ -2328,11 +2310,12 @@
                 }else if( v > _max ){
                   v = _max;
                 }
-                v = Number( (v).toFixed(2) );
+
+                offset = Number( ( ( ( v - _min ) / ( step * ( ( _max - _min ) / step ) ) ) * 100 ).toFixed(2) );
+                v = Number( ( v ).toFixed( 2 ) );
                 f.value = v;
                 vu.html( v );
                 
-                offset = Number( ( ( v  / ( _max - _min ) ) * 100 ).toFixed(2) );
                 $( r ).children( '.comet-eRDragger' ).css( { left: offset + '%' } );
                 comet.updateComponent( f );
               }
@@ -3371,7 +3354,7 @@
                   l = '<div class="comet-editorToolbarToolInline">';
                   l += '<button class="comet-button comet-editorToolbarTool" data-command="unlink"><span class="cico cico-unlink"></span></button>';
                   l += '<input type="text" class="comet-rendField" value="'+href+'"/>';
-                  l += '<button class="comet-button comet-editorToolbarTool" data-command="createLink"><span class="dashicons dashicons-editor-break"></span></button>';
+                  l += '<button class="comet-button comet-editorToolbarTool" data-command="createLink"><span class="cico cico-break"></span></button>';
                   l += '</div>';
                   $ui.before( l ).remove();
                   return
@@ -3862,7 +3845,7 @@
                 id: false,
                 title: title,
                 close: {
-                  inner: '<span class="dashicons dashicons-arrow-left-alt"></span>',
+                  inner: '<span class="cico cico-arrow-left-alt"></span>',
                   title: cometdata.ui.back,
                   do: function( e, ui ){
                     var r = comet.buildTabs( cometdata.elements[element].tabs, metaData.elements[target.id] ),
@@ -4271,7 +4254,7 @@
 
 
             placeholder = '<div class="' + options.placeholder + '"></div>';
-            cursorHTML = '<div id="' + idCursor + '" class="' + options.cursor + '"><span class="dashicons dashicons-move"></span></div>';
+            cursorHTML = '<div id="' + idCursor + '" class="' + options.cursor + '"><span class="cico cico-move"></span></div>';
             $win = $( options.containment );
 
             _cursor = function( event ){
@@ -4370,12 +4353,12 @@
                       return;
                     }
 
-                    if( top > 0 && y < 1 ){
+                    if( top > 0 && y < 10 ){
                       $win.scrollTop( top - 1 );
                       interval = setInterval( pf, 1 );
                       return;
                     }
-                    if( y > height ){
+                    if( ( y + 5 ) > height ){
                       $win.scrollTop( top + 1 );
                       interval = setInterval( pf, 1 );
                     }

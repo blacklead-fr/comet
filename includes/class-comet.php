@@ -66,7 +66,7 @@ class Comet {
 		if ( defined( 'COMET_VERSION' ) ) {
 			$this->version = COMET_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.0.1';
 		}
 		$this->plugin_name = 'comet';
 		$this->dir_path = plugin_dir_path( dirname( __FILE__ ) );

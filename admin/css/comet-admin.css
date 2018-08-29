@@ -136,7 +136,7 @@ body { overflow: hidden; }
   background: -webkit-linear-gradient(225deg, #52CEFF 0%, #006AFE 74%);
 }
 
-.comet-footerTooltip a .dashicons {
+.comet-footerTooltip a .cico {
   position: absolute;
   top: 50%;
   right: 10px;
@@ -306,8 +306,6 @@ body { overflow: hidden; }
   -webkit-transform: scale(1.05, 1.05);
 }
 
-.comet-button.dashicons { font-family: 'dashicons';}
-
 .comet-button.cico { font-family: 'cico';}
 
 /* Message */
@@ -382,8 +380,7 @@ body { overflow: hidden; }
   border-radius: 100%;
   color: white;
   line-height: 40px;
-  transform: rotate(45deg);
-  font-size: 15px;
+  font-size: 20px;
 }
 
 #comet-mytemplates .comet-button.comet-templateEdit { 
@@ -475,7 +472,7 @@ body { overflow: hidden; }
   margin: 0;
 }
 
-.comet-dialog .comet-dialogContent { height: calc( 100% - 121px); }
+.comet-dialog .comet-dialogContent { height: calc( 100% - 81px); }
 
 .comet-dialog .comet-dialogHeader { border-bottom: 1px solid #DAE5EE; }
 
@@ -540,10 +537,22 @@ body { overflow: hidden; }
 	width: 25px;
 	height: 25px;
 	line-height: 25px;
+  font-size: 15px;
+  display: block;
 }
 
 .comet-dialogContent,
 .comet-dialogContent div { text-align: center; }
+
+.comet-dialogContent .comet-buttonset {
+  padding-top: 20px;
+  text-align: right;
+}
+
+.comet-button.comet-buttonCancel {
+  border: 1px solid #DAE5EE;
+  margin-right: 10px;
+}
 
 .comet-dialogContent .comet-dialogIconState {
   margin: 0 auto;
@@ -583,14 +592,8 @@ body { overflow: hidden; }
 }
 
 .comet-importTemplateItems li .cico {
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  text-align: center;
-  display: inline-block;
-  font-size: 20px;
   color: #006AFE;
-  vertical-align: middle;
+  margin: 5px;
 }
 
 #comet-previewTemplateDialogContent iframe {
@@ -835,7 +838,7 @@ body { overflow: hidden; }
   text-decoration: none;
 }
 
-#comet-addFontsFromCollection .dashicons {
+#comet-addFontsFromCollection .cico {
   width: 30px;
   height: 30px;
   line-height: 30px;
