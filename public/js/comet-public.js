@@ -3,7 +3,7 @@
 (function( global ) {
 	'use strict';
 
-	const c = function( tar ){
+	var c = function( tar ){
 		var func = {},
 			ar = arguments;
 
@@ -160,7 +160,7 @@
 		func.removeClass = function( classe ){
 			var node = this.get(), b;
 
-			const rc = function( n ){
+			var rc = function( n ){
 				var classes, a, j = [];
 				
 				if( ( classes = c( n ).classList() ).length < 1 ){
@@ -189,7 +189,7 @@
 		func.addClass = function( classe ){
 			var node = this.get(), b;
 
-			const ac = function( n ){
+			var ac = function( n ){
 				var classes = c( n ).classList(), a;
 
 				if( typeof n !== 'object' ){
@@ -220,7 +220,7 @@
 				t = c( sib ).type(),
 				s = ( c( sib ).trim() ).substr( 1 );
 
-			const cur = function( n ){
+			var cur = function( n ){
 				var ns;
 				if( !n || typeof n !== 'object' || !( ns = n.nextElementSibling ) || typeof ns !== 'object' ){
 					return false;
@@ -257,7 +257,7 @@
 				t = c( sib ).type(),
 				s = ( c( sib ).trim() ).substr( 1 );
 
-			const cur = function( n ){
+			var cur = function( n ){
 				var ns;
 				if( !n || typeof n !== 'object' || !( ns = node.previousElementSibling ) || typeof ns !== 'object' ){
 					return false;

@@ -365,7 +365,7 @@
                   d.innerHTML = o;
                   return;
                 }
-                url = utils.addQueryArgs( { post: r, action: 'edit', comet: ''  }, cometdata.edit_url );
+                url = utils.addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, cometdata.edit_url );
 
                 window.open( url, '_self' );
                 o = '<div><span class="comet-dialogIconState cico cico-check"></span></div>';

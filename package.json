@@ -1,0 +1,27 @@
+{
+  "name": "comet",
+  "version": "1.0.2",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "https://blacklead.fr",
+  "license": "GPL-2.0",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.10.0",
+    "gulp-csslint": "^1.0.1",
+    "gulp-eslint": "^5.0.0",
+    "gulp-uglify": "^3.0.1",
+    "vinyl-named": "^1.1.0",
+    "webpack-stream": "^5.1.1"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blacklead-fr/comet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blacklead-fr/comet/issues"
+  },
+  "homepage": "https://blacklead.fr/comet"
+}

@@ -47,7 +47,7 @@
     base64: function( str ){
       return decodeURIComponent( escape( window.atob( str ) ) );
     },
-    icon: function( icon ){
+    icon: function( icon ){ // TODO
       var sets = cometdata.svgSets, d, a, i, o;
       if( u.eval.empty( icon ) ){
         return false;
@@ -285,7 +285,7 @@
       }
       return '<' + tag + data + '>' + content + '</' + tag + '>';
     },
-    item: function( options ){
+    item: function( options ){ // TODO
       var o, id, c, t;
       if( typeof options !== 'object' || !options.hasOwnProperty( 'id' ) ){
         return false;
@@ -358,7 +358,7 @@
 
       return '<span class="cometPending">...</span>';
     },
-    classe: {
+    classe: { // TODO
       alignment: function( alg ){
         var c = 'cpb-align';
         switch( alg ){
@@ -453,7 +453,7 @@
       }
       return d;
     },
-    placeholder: function(){
+    placeholder: function(){ // TODO
       var t = 0 in arguments && typeof arguments[0] === 'string' ? arguments[0] : 'default',
           c = 'cpb-elementPlaceholder',
           i;
@@ -1176,7 +1176,7 @@
           return 'scroll';
       }
     },
-    html: function( str ){
+    html: function( str ){ // TODO
       var o, n, b;
       var k = { br:'', strong:'', i:'', span:'', em:'', strike:'', del:'', ins:'', b:'', a:'', u:'' };
       var san = function( node ){
@@ -1267,7 +1267,7 @@
     }
   };
 
-  u.editor = function( id ){
+  u.editor = function( id ){ // TODO
     var c;
 
     if( typeof u === 'object' && '_editor' in u ){

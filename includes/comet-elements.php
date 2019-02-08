@@ -188,17 +188,4 @@ function comet_posts( $id, $data ){
   wp_reset_postdata();
   return '<p>' . __( 'No posts to show.', 'comet' ) . '</p>';
 }
-
-function comet_shortcode( $id, $data ){
-
-  if( !isset( $data['el'] ) || !is_array( $data['el'] ) ){
-    return;
-  }
-
-  $element = $data['el'];
-  $s = isset( $element['s'] ) ?  stripslashes( trim( $element['s'] ) ) : '';
-  
-  return $s !== '' ? do_shortcode( $s ) : '';
-
-}
 ?>

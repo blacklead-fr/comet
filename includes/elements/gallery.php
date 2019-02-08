@@ -1,0 +1,330 @@
+<?php
+namespace Comet\Library\Elements;
+
+if( !defined( 'ABSPATH' ) ){
+    exit;
+    
+}
+require_once COMET_PATH . 'includes/class-register.php';
+use Comet\Library\Comet_Register;
+use Comet\Library\Comet_Utils;
+
+class gallery extends Comet_Register {
+
+	public function get_slug(){
+
+		return strtolower( __CLASS__ );
+
+	}
+
+	public function get_name(){
+
+		return __( 'Gallery', 'comet' );
+
+	}
+
+	public function get_icon(){
+
+		return 'cico-gallery';
+
+	}
+
+	public function get_data(){
+
+		if( !is_array( $this->data ) || count( $this->data ) < 1 ){
+            $this->_register_settings();
+            $this->_register_item_settings();
+
+		}
+		return $this->data;
+
+	}
+
+    public function get_view(){
+
+        ?>
+
+        const content = ui.firstChild;
+        const an = [ 'n', 'r', 'b' ].indexOf( data.el.an ) > -1 ? data.el.an : 'z';
+        const ty = [ 'o', 'c' ].indexOf( data.el.ty ) > -1 ? data.el.ty : 'm';
+        const cap = ( [ 'c', 'true', true, 1, '1' ].indexOf( data.el.oh ) > -1 );
+        const wrapper = document.createElement( 'div' );
+        var columns = toolkit.sanitize.number({ value: data.el.col, min: ( ty === 'o' ? 3 : 1 ), max: 5, default: 3 });
+        var i = 0;
+        var state = 1;
+        var classes;
+
+        classes = 'cpb-gallery cpb-wrapper';
+        classes += ' cpb-st' + ( ty === 'o' ? 'offset' : ( ty === 'c' ? 'carousel' : 'masonry' ) );
+
+        if( ty === 'm' || ty === 'o' ){
+            classes += ' cpb-col' + columns;
+
+        }
+        if( an !== 'n' ){
+            classes += ' cpb-an' + ( an === 'r' ? 'rotate' : ( an === 'b' ? 'blur' : 'zoom' ) );
+
+        }
+        wrapper.className = classes;
+        content.appendChild( wrapper );
+
+        toolkit.utils.foreachItem( data, function( iid, idata ){
+            const img = toolkit.html.image({
+                src: idata.img,
+                alt: idata.alt,
+                auto: true
+            });
+            var item, hr, a;
+
+            if( !img ){
+                return false;
+
+            }
+            item = document.createElement( 'div' );
+            item.className = 'cpb-item cpb-wrapper';
+            item.innerHTML = '<div></div>';
+            item.firstChild.appendChild( img );
+
+            a = document.createElement( 'a' );
+            a.className = 'cpb-aside';
+            a.href = toolkit.utils.escUrl( idata.img );
+
+            if( toolkit.utils.isString( idata.ath ) ){
+                a.dataset.author = toolkit.utils.trim( toolkit.utils.stripTags( idata.ath ) );
+
+            }
+
+            if( cap && toolkit.utils.isString( idata.cap ) ){
+                a.innerHTML = '<span class="cpb-caption">' + toolkit.utils.stripTags( idata.cap ) + '</span>';
+
+            }
+            item.firstChild.appendChild( a );
+            wrapper.appendChild( item );
+
+            if( state === 1 && i === ( columns - 2 ) ){
+                hr = document.createElement( 'div' );
+                hr.className = 'cpb-hr';
+                wrapper.appendChild( hr );
+                state = 2;
+                i = 0;
+
+            }else if( state === 2 && i === ( columns - 1 ) ){
+                hr = document.createElement( 'div' );
+                hr.className = 'cpb-hr';
+                wrapper.appendChild( hr );
+                state = 1;
+                i = 0;
+
+            }else{
+                i++;
+
+            }
+            return io;
+
+        });
+
+        <?php
+        
+    }
+
+    public function get_style(){
+        ?>
+        const gap = toolkit.sanitize.number({ value: data.el.pd, min: 0, max: 50, default: 0 });
+        const ty = [ 'c', 'o' ].indexOf( data.el.ty ) > -1 ? data.el.ty : 'm';
+        var o, tmp, rcss;
+
+        o = '.cpb-elementNode' + id + ' .cpb-gallery .cpb-aside{';
+
+        if( ( tmp = toolkit.sanitize.color( data.el.bg ) ) !== '' ){
+            o += toolkit.css.render( 'background', tmp );
+
+        }
+
+        if( ( tmp = toolkit.sanitize.color( data.el.tc ) ) !== '' ){
+            o += toolkit.css.render( 'color', tmp );
+
+        }
+
+        if( ( tmp = toolkit.sanitize.number({ value: data.el.cps, min: 10, max: 50 }) ) !== null ){
+            o += toolkit.css.render( 'font-size', tmp + 'px' );
+
+        }
+        o += '}';
+
+        if( ty === 'c' || ty === 'o' ){
+            tmp = toolkit.sanitize.number({ value: data.el.hei, min: 100, max: 1000, default: 200 });
+            o += '.cpb-elementNode' + id + ' .cpb-gallery .cpb-item{';
+            o += toolkit.css.render( 'height', tmp + 'px ' );
+            o += '}';
+
+        }
+        o += '.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper {';
+        o += toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' );
+
+        if( ty === 'm' ){
+            tmp = toolkit.sanitize.number({ value: data.el.pd, min: 0 });
+            o += toolkit.css.render( 'column-gap', toolkit.sanitize.valueUnit( tmp, 'px' ) );
+
+        }
+        o += '}';
+
+        if( ty === 'o' ){
+            o += '.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper .cpb-item{';
+            tmp = toolkit.sanitize.number({ value: data.el.pd, min: 0 });
+            o += toolkit.css.render( 'padding', toolkit.sanitize.valueUnit( tmp, '%' ) );
+            o += '}';
+
+        }
+
+        if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
+            o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
+            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
+            o += toolkit.css.responsive( 't', rcss );
+
+        }
+
+        if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
+            o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
+            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
+            o += toolkit.css.responsive( 'm', rcss );
+
+        }
+        return o;
+        <?php
+
+    }
+
+    private function _register_item_settings(){
+
+        $tid = $this->register_tab( 'general', __( 'General', 'comet' ), true );
+
+        $sid = $this->register_section( $tid, 'image', __( 'Image', 'comet' ), true );
+
+        $this->register_field( $tid, $sid, 'img', array(
+            'label'  => __( 'Image', 'comet' ),
+            'type'   => 'image',
+        ), true );
+
+        $this->register_field( $tid, $sid, 'alt', array(
+            'label'  => __( 'Alternative text', 'comet' ),
+            'desc'   => __( 'Alternative text is required for SEO. By default it uses the image filename.', 'comet' ),
+            'type'   => 'text'
+        ), true );
+
+        $this->register_field( $tid, $sid, 'cap', array(
+            'label'  => __( 'Caption', 'comet' ),
+            'type'   => 'text',
+        ), true );
+
+        $this->register_field( $tid, $sid, 'ath', array(
+            'label'  => __( 'Author', 'comet' ),
+            'type'   => 'text',
+        ), true );
+
+        $this->push_items( __( 'Images', 'comet' ) );
+    }
+
+    private function _register_settings(){
+
+        $tid = $this->register_tab( 'general', __( 'General', 'comet' ) );
+
+        $sid = $this->register_section( $tid, 'gallery', __( 'Gallery', 'comet' ) );
+
+        $this->register_field( $tid, $sid, 'ty', array(
+            'label'    => __( 'Type', 'comet' ),
+            'type'     => 'select',
+            'std'      => 'm',
+            'switch'   => 'true',
+            'to'       => array(
+                'o'     => array( 'hei' ),
+            ),
+            'values' => array(
+                'm' => __( 'Masonry', 'comet' ),
+                'o' => __( 'Offset', 'comet' ),
+            )
+        ) );
+
+        $this->register_field( $tid, $sid, 'col', array(
+            'label'  => __( 'Column count', 'comet' ),
+            'type'   => 'select',
+            'std'    => '3',
+            'values' => Comet_Utils::grid( 5 )
+        ) );
+
+        $this->register_field( $tid, $sid, 'pd', array(
+            'label'  => __( 'Gap', 'comet' ),
+            'type'   => 'range',
+            'min'    => '0',
+            'max'    => '30',
+            'std'    => '0',
+            'unit'   => '%',
+        ) );
+
+        $this->register_field( $tid, $sid, 'hei', array(
+            'label'  => __( 'Height', 'comet' ),
+            'type'   => 'range',
+            'min'    => '100',
+            'max'    => '1000',
+            'std'    => '200',
+            'step'   => '1',
+            'unit'   => 'px',
+            'check'  => 'ty'
+        ) );
+
+        /*$this->register_field( $tid, $sid, 'lb', array(
+            'label' => __( 'Lightbox', 'comet' ),
+            'desc'  => __( 'Open in a lightbox ?', 'comet' ),
+            'type'  => 'checkbox',
+            'std'   => 'true',
+        ) );*/
+
+        $this->register_field( $tid, $sid, 'oh', array(
+            'label'  => __( 'Caption', 'comet' ),
+            'desc'   => __( 'Show caption on hover ?', 'comet' ),
+            'type'   => 'checkbox',
+            'std'    => 'true'
+        ) );
+
+        $this->register_field( $tid, $sid, 'an', array(
+            'label'  => __( 'Animation', 'comet' ),
+            'type'   => 'select',
+            'std'    => 'z',
+            'values' => array(
+                'n'  => __( 'None', 'comet' ),
+                'z'  => __( 'Zoom', 'comet' ),
+                'r'  => __( 'Rotate', 'comet' ),
+                'b'  => __( 'Blur', 'comet' )
+            )
+        ) );
+
+        $tid = $this->register_tab( 'design', __( 'Design', 'comet' ) );
+
+        $sid = $this->register_section( $tid, 'caption', __( 'Caption', 'comet' ) );
+
+        $this->register_field( $tid, $sid, 'cps', array(
+            'label'=> __( 'Size', 'comet' ),
+            'type'   => 'range',
+            'min'    => '10',
+            'max'    => '50',
+            'std'    => '15',
+            'unit'   => 'px'
+        ) );
+
+        $this->register_field( $tid, $sid, 'tc', array(
+            'label' => __( 'Color', 'comet' ),
+            'type'  => 'color',
+        ) );
+
+        $this->register_field( $tid, $sid, 'bg', array(
+            'label' => __( 'Background', 'comet' ),
+            'type'  => 'color',
+        ) );
+
+        $sid = $this->register_section( $tid, 'spacing', __( 'Spacing', 'comet' ) );
+
+        $this->register_field( $tid, $sid, 'mr', Comet_Utils::numbers( __( 'Margin', 'comet' ), '', '0', true ) );
+
+    }
+
+}
+?>

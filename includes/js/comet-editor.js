@@ -231,8 +231,9 @@
           var func = {};
 
           func.isNode = function(){
-            if( !node || typeof node !== 'object' ){
+            if( !node || node.nodeType !== Node.ELEMENT_NODE ){
               return false;
+            
             }
             return true;
           };
@@ -315,6 +316,43 @@
             }
             return false;
           };
+
+          func.children = function( className ){
+            var a, ch, n, ns, nds = [], r;
+
+            if( !this.isNode() || typeof node.children !== 'object' || node.children.length < 1 ){
+              return false;
+            }
+            ch = node.children;
+
+            for( a = 0; a < ch.length; a++ ){
+              n = ch[a];
+              ns = comet.node( n );
+
+              if( !ns.isNode() || !ns.hasClass( className ) ){
+                continue;
+              }
+              nds[nds.length] = n;
+              if( 1 in arguments && typeof arguments[1] === 'function' ){
+                r = arguments[1]( n, a, ch );
+                if( r === 0 ){
+                  break;
+                }
+              }
+            }
+            return nds;
+
+          };
+
+          func.child = function( className ){
+            var c = this.children( className, function(){ return 0; } );
+
+            if( typeof c === 'object' && 0 in c && comet.node( c[0] ).isNode() ){
+              return c[0];
+            }
+            return false;
+          }
+
           return func;
         },
         get: {
@@ -2058,7 +2096,6 @@
           comet.toggle.accordion('init');
           comet.initSpectrum();
           cometUtils.init.icons();
-          // TODO icon loader
         },
         handleSize: function(){
           var s = document.getElementById( 'comet-editorSidebar' ),
@@ -2972,25 +3009,72 @@
             }
           };
 
-          e[e.length] = {
+          e[e.length] = { //TODO
             on: 'click',
-            trigger: '.comet-editorCockpitToggle',
-            do: function( event, ui  ){
+            trigger: '.comet-eventToggle',
+            do: function( event, ui ){
               event.preventDefault();
-              var d = document.getElementById( 'comet-editorCockpit' );
+              var e, d;
+
+              e = {
+                'to_cockpit': 'comet-cockpit',
+                'to_settings': 'comet-generalSettings'
+              };
+
+              if( !( 'name' in ui ) || !( ui.name in e ) ){
+                return false;
+              }
+              d = document.getElementById( e[ui.name] );
               if( !d || d == null || typeof d !== 'object' ){
                 return false;
               }
-              $( d ).toggleClass( 'cpb-active' );
+              $( d ).toggleClass( 'is_toggled' );
             }
           };
 
-          e[e.length] = {
+          e[e.length] = {//TODO
+            on: 'mouseenter mouseleave',
+            trigger: '[aria-label]',
+            do: function( event, ui ){
+              event.preventDefault();
+              var tip = comet.node( ui ).child( 'comet-tooltip' ),
+                  t, h, w, x, y, rec, classes;
+
+              if( event.type === 'mouseleave' || event.type === 'mouseout' || tip ){
+                ui.removeChild( tip );
+                return;
+              }
+              /*rec = ui.getBoundingClientRect();
+              x = rec.left;
+              y = rec.top;
+
+              h = window.innerHeight;
+              w = window.innerWidth;*/
+
+              t = ui.getAttribute( 'aria-label' );
+              classes = 'comet-tooltip comet-active';
+
+
+              tip = document.createElement( 'div' );
+              tip.innerHTML = '<span>' + t + '</span>';
+
+
+              //console.log( x, y, h, w );
+
+
+              tip.className = classes;
+
+              ui.appendChild( tip );
+
+            }
+          };
+
+          e[e.length] = {//TODO
             on: 'click',
             trigger: '#comet-clearNotifications, .comet-closeNote',
-            do: function( event, ui  ){
+            do: function( event, ui ){
               event.preventDefault();
-              var d = document.getElementById( 'comet-editorNotifications' );
+              var d = document.getElementById( 'comet-notifications' );
               if( !d || d == null || typeof d !== 'object' ){
                 return false;
               }
@@ -3472,9 +3556,9 @@
             on: 'click',
             trigger: '#comet-editorSaveTemplate',
             do: function( event, ui  ){
-              var set = ui.value;event.preventDefault();
+              event.preventDefault();
               event.stopPropagation();
-              var id, o, h, c;
+              var set = ui.value, id, o, h, c;
 
               h = '<h4>' + cometdata.titles.santemp + '</h4>';
 
@@ -3556,15 +3640,20 @@
               }
               $ui.addClass( disabled ).children( '.cico' ).toggleClass( wait );
 
+              //console.log( $( document.getElementById( 'comet-postSettings' ) ).serialize() );
+
+              //return;
+
               args = {
                 id: id,
                 meta: metaData,
                 content: comet.get.content(),
+                _post: $( document.getElementById( 'comet-postSettings' ) ).serialize()
               };
 
               l = cometUtils.load({
                 do: 'save',
-                data: JSON.stringify( args ),
+                data: JSON.stringify( args )
               });
 
               if( !l ){
@@ -3573,6 +3662,7 @@
 
               l.always(function( r, a, b ){
                 var msg;
+
                 r = parseInt( r );
                 switch( r ){
                   case 0:
@@ -5237,8 +5327,8 @@
           });
         },
         notification: function( note, status ){
-          var c = document.getElementById( 'comet-editorCockpit' ),
-              n = document.getElementById( 'comet-editorNotifications' ),
+          var c = document.getElementById( 'comet-cockpit' ),
+              n = document.getElementById( 'comet-notifications' ),
               o = document.createElement( 'div' );
 
           if( n == null || typeof n !== 'object' || c == null || typeof c !== 'object' ){

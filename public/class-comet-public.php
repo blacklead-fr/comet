@@ -1,4 +1,5 @@
 <?php
+namespace Comet;
 
 /**
  * The public-facing functionality of the plugin.
