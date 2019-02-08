@@ -95,40 +95,46 @@ class Comet_Ajax {
             case 'templates':
             $r = 0;
 
-            if( isset( $p['data'] ) && $p['data'] === 'cus' ){
-                $templates = get_posts( array(
-                    'post_type'      => 'comet_mytemplates',
-                    'post_status'    => 'any',
-                    'nopaging'       => true,
-                    'posts_per_page' => -1
-                ) );
+            if( isset( $p['data'] ) && $p['data'] === 'cus' && ( $templates = comet_get_mytemplates( null, false ) ) ){
+                $r = json_encode( $templates );
 
-                if( is_array( $templates ) || is_object( $templates ) ){
-                    $r = json_encode( $templates );
-
-                }
             }
             echo $r;
             break;
 
             case 'dtemplate':
 
-            echo ( isset( $p['id'] ) && ( ( $r = comet_deleteMyTemplate( $p['id'] ) ) || is_array( $r ) || is_object( $r ) ) );
+            echo ( isset( $p['id' ] ) && ( $post = comet_get_post( $p['id' ] ) )->has_post() && $post->delete_post() ? 1 : 0 );
+
+            //echo ( isset( $p['id'] ) && ( ( $r = comet_deleteMyTemplate( $p['id'] ) ) || is_array( $r ) || is_object( $r ) ) );
             break;
 
             case 'save':
 
-            echo ( isset( $p['data'] ) && ( $d = comet_parse_json( $p['data'] ) ) ? comet_updatePost( $d ) : 0 );
+            if( isset( $p['data'] ) && ( $data = comet_parse_json( $p['data'] ) ) ){
+                $id = isset( $p['id' ] ) ? $p['id'] : -1;
+                $post = comet_get_post( $id );
+                echo $post->save_post( $data );
+                break;
+
+            } 
+            echo 0;
+
+            //echo ( isset( $p['data'] ) && ( $d = comet_parse_json( $p['data'] ) ) ? comet_updatePost( $d ) : 0 );
             break;
 
-            case 'meta':
+            /*case 'meta':
 
             echo ( isset( $p['id'] ) && is_array( $d = comet_getPostMeta( $p['id'] ) ) ? json_encode( $d ) : 0 );
-            break;
+            break;*/
 
             case 'get':
 
-            echo ( isset( $p['id'] ) && ( is_object( $d = comet_getPost( $p['id'] ) ) || is_array( $d ) ) ? json_encode( $d ) : 0 );
+            $meta = isset( $p['meta'] ) && in_array( $p['meta'], [ 'true', 'TRUE', true, 1 ] ) ? true : false;
+
+            echo ( isset( $p['id' ] ) && ( $post = comet_get_post( $p['id' ] ) )->has_post() ? json_encode( $post->get_post( $meta ) ) : 0 );
+
+            //echo ( isset( $p['id'] ) && ( is_object( $d = comet_getPost( $p['id'] ) ) || is_array( $d ) ) ? json_encode( $d ) : 0 );
             break;
 
             case 'sfonts':

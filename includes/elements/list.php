@@ -5,48 +5,32 @@ if( !defined( 'ABSPATH' ) ){
     exit;
     
 }
-require_once COMET_PATH . 'includes/class-register.php';
-use Comet\Library\Comet_Register;
+require_once COMET_PATH . 'includes/class-element.php';
+use Comet\Library\Comet_Element;
 use Comet\Library\Comet_Utils;
 
-class listItems extends Comet_Register {
+class listItems extends Comet_Element {
 
-	public function get_slug(){
+    public function __construct(){
 
-		return strtolower( __CLASS__ );
+        $this->set_element( 'list', __( 'List', 'comet'), 'cico-list' );
 
-	}
+    }
 
-	public function get_name(){
+    public function render( $data ){
 
-		return __( 'List', 'comet' );
+        return 'ououfeozjf';
 
-	}
+    }
 
-	public function get_icon(){
-
-		return 'cico-list';
-
-	}
-
-	public function get_data(){
-
-		if( !is_array( $this->data ) || count( $this->data ) < 1 ){
-            $this->_register_settings();
-            $this->_register_item_settings();
-
-		}
-		return $this->data;
-
-	}
-    
-    public function get_view(){
+    public function view(){
 
         ?>
 
         const content = ui.firstChild;
         var classes = 'cpb-list cpb-wrapper';
         var o = '';
+        var tmp;
 
         if( !toolkit.utils.isStringEmpty( data.el.sty ) && ( tmp = toolkit.utils.trim( data.el.sty ) ) !== 'none' ){
             classes += ' cpb-list' + tmp;
@@ -75,7 +59,7 @@ class listItems extends Comet_Register {
 
     }
 
-    public function get_style(){
+    public function css(){
         ?>
         var o = '';
         var spa, ti, sty, tmp, rcss;
@@ -118,6 +102,7 @@ class listItems extends Comet_Register {
                     io += '.cpb-elementNode' + id + ' .cpb-inner.cpb-item' + iid +'{';
                     io += toolkit.css.render( 'background-image', 'url(' + toolkit.utils.escUrl( img ) + ')' );
                     io += '}';
+                    console.log( io );
 
                 }
 
@@ -144,7 +129,7 @@ class listItems extends Comet_Register {
 
     }
 
-    private function _register_item_settings(){
+    protected function _register_item_settings(){
 
         $tid = $this->register_tab( 'general', __( 'General', 'comet' ), true );
 
@@ -175,7 +160,7 @@ class listItems extends Comet_Register {
 
     }
 
-    private function _register_settings(){
+    protected function _register_settings(){
 
         $tid = $this->register_tab( 'design', __( 'Design', 'comet' ) );
 

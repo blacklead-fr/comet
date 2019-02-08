@@ -28,8 +28,12 @@ class mytemplates extends Comet_Interface {
     }
 
     protected function content() {
-        $templates = comet_get_templates();
         $action = comet_get_dashboard_url( 'mytemplates' );
+        $templates = comet_get_mytemplates([
+            'post_status'     => 'any',
+            'nopaging'        => false,
+            'posts_per_page'  => 50
+        ]);
 
         echo '<form id="comet-mytemplates" class="comet-dashCtntBoxed" action="' . esc_url( $action ) . '" method="post">';
 
@@ -52,13 +56,16 @@ class mytemplates extends Comet_Interface {
         echo '<ul id="comet-map-templates">';
 
         if( $templates->have_posts() ){
+
             while( $templates->have_posts() ){
                 $templates->the_post();
                 $single = $templates->post;
                 $id = $single->ID;
                 echo self::template( $id, $single );
+                
             }
             wp_reset_postdata();
+
         }
         echo '</ul>';
         echo '</form>';

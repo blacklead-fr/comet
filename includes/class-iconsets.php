@@ -104,7 +104,7 @@ class Comet_Iconsets {
 
     public function get_set( $id ){
 
-        if( !$this->set_exists( $id ) || !( $set = comet_autoload( $set['class'], $set['file'] ) ) ){
+        if( !$this->set_exists( $id ) || !( $S = $this->get_registered_set( $id ) ) || !( $set = comet_autoload( $S['class'], $S['file'] ) ) ){
             return false;
 
         }

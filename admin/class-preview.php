@@ -42,7 +42,7 @@ class preview extends Comet_Page {
     public function instance( $pages ){
 
         $this->id = comet_get_id();
-        $this->template = comet_get_template( $this->id );
+        $this->template = comet_get_mytemplate( $this->id, true );
 
         if( !$this->template ){
             comet_die(

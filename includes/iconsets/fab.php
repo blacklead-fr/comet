@@ -5,6 +5,7 @@ if( !defined( 'ABSPATH' ) ){
 	exit;
 
 }
+require_once COMET_PATH . 'includes/class-iconset.php';
 use Comet\Library\Comet_iconset;
 
 class Fab extends Comet_iconset{

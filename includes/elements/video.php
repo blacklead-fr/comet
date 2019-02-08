@@ -5,42 +5,27 @@ if( !defined( 'ABSPATH' ) ){
     exit;
     
 }
-require_once COMET_PATH . 'includes/class-register.php';
-use Comet\Library\Comet_Register;
+require_once COMET_PATH . 'includes/class-element.php';
+use Comet\Library\Comet_Element;
 use Comet\Library\Comet_Utils;
 
-class video extends Comet_Register {
+class video extends Comet_Element{
 
-	public function get_slug(){
+    public function __construct(){
 
-		return strtolower( __CLASS__ );
+        $this->set_element( 'video', __( 'Video', 'comet'), 'cico-video' );
 
-	}
+    }
 
-	public function get_name(){
+    public function render( $data ){
 
-		return __( 'Video', 'comet' );
-
-	}
-
-	public function get_icon(){
-
-		return 'cico-video';
-
-	}
-
-	public function get_data(){
-
-		if( !is_array( $this->data ) || count( $this->data ) < 1 ){
-			$this->_register_settings();
+        return 'ououfeozjf';
 
 
-		}
-		return $this->data;
 
-	}
+    }
 
-    public function get_view(){
+    public function view(){
 
         ?>
 
@@ -139,7 +124,7 @@ class video extends Comet_Register {
 
     }
 
-    public function get_style(){
+    public function css(){
         ?>
         var o = '';
         var tmp, tmp1, rcss;
@@ -191,7 +176,7 @@ class video extends Comet_Register {
 
     }
 
-    private function _register_settings(){
+    protected function _register_settings(){
 
         $tid = $this->register_tab( 'general', __( 'General', 'comet' ) );
 

@@ -5,6 +5,7 @@ if( !defined( 'ABSPATH' ) ){
 	exit;
 
 }
+require_once COMET_PATH . 'includes/class-iconset.php';
 use Comet\Library\Comet_iconset;
 
 class Win10 extends Comet_iconset{

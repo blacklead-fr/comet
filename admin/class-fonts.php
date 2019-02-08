@@ -52,9 +52,8 @@ class fonts extends Comet_Interface{
 
     protected function content(){
 
-        $fonts = comet_getRegisteredFonts( array() );
+        $fonts = comet_get_fonts( [] );
         $weight = array( 100, 200, 300, 400, 500, 600, 700, 800, 900 );
-
 
         $li = '';
         $total = 0;

@@ -153,6 +153,8 @@ export default function( slug, field, data ){
 
 			}
 
+			console.log( sets );
+
 			for( id in sets ){
 
 				if( !utils.isObject( sets[id] ) || !utils.isString( sets[id].name ) ){
@@ -222,7 +224,7 @@ export default function( slug, field, data ){
 			}
 
 			if( !icon ){
-				button.className = classes.button + ' comet-buttonPrimary comet-upload';
+				button.className = buttonClass + ' comet-buttonPrimary comet-upload';
 				button.innerHTML = browse;
 				wrapper.appendChild( button );
 				node( button ).on( 'click', __core.open );
@@ -236,7 +238,7 @@ export default function( slug, field, data ){
 			oh.innerHTML = _icon.get_svg_from_data( icon );
 			node( oh ).on( 'click', __core.open );
 
-			button.className = classes.button + ' comet-remove';
+			button.className = buttonClass + ' comet-remove';
 			button.title = remove;
 			button.innerHTML = '<span class="cico cico-x"></span>';
 			oh.appendChild( button );

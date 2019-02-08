@@ -5,42 +5,25 @@ if( !defined( 'ABSPATH' ) ){
     exit;
     
 }
-require_once COMET_PATH . 'includes/class-register.php';
-use Comet\Library\Comet_Register;
+require_once COMET_PATH . 'includes/class-element.php';
+use Comet\Library\Comet_Element;
 use Comet\Library\Comet_Utils;
 
-class gallery extends Comet_Register {
+class gallery extends Comet_Element {
 
-	public function get_slug(){
+    public function __construct(){
 
-		return strtolower( __CLASS__ );
+        $this->set_element( 'gallery', __( 'Gallery', 'comet'), 'cico-gallery' );
 
-	}
+    }
 
-	public function get_name(){
+    public function render( $data ){
 
-		return __( 'Gallery', 'comet' );
+        return 'ououfeozjf';
 
-	}
+    }
 
-	public function get_icon(){
-
-		return 'cico-gallery';
-
-	}
-
-	public function get_data(){
-
-		if( !is_array( $this->data ) || count( $this->data ) < 1 ){
-            $this->_register_settings();
-            $this->_register_item_settings();
-
-		}
-		return $this->data;
-
-	}
-
-    public function get_view(){
+    public function view(){
 
         ?>
 
@@ -127,7 +110,7 @@ class gallery extends Comet_Register {
         
     }
 
-    public function get_style(){
+    public function css(){
         ?>
         const gap = toolkit.sanitize.number({ value: data.el.pd, min: 0, max: 50, default: 0 });
         const ty = [ 'c', 'o' ].indexOf( data.el.ty ) > -1 ? data.el.ty : 'm';
@@ -194,7 +177,7 @@ class gallery extends Comet_Register {
 
     }
 
-    private function _register_item_settings(){
+    protected function _register_item_settings(){
 
         $tid = $this->register_tab( 'general', __( 'General', 'comet' ), true );
 
@@ -224,7 +207,7 @@ class gallery extends Comet_Register {
         $this->push_items( __( 'Images', 'comet' ) );
     }
 
-    private function _register_settings(){
+    protected function _register_settings(){
 
         $tid = $this->register_tab( 'general', __( 'General', 'comet' ) );
 

@@ -33,6 +33,34 @@ function comet_message( $str = '', $type = 'note', $echo = false ){
 
 }
 
+function comet_get_mytemplates( $args = [], $query = true ){
+
+  $default = [
+    'post_type'       => 'comet_mytemplates',
+    'post_status'     => 'publish',
+    'nopaging'        => true,
+    'posts_per_page'  => -1,
+    'has_password'    => false
+  ];
+
+  $args = is_array( $args ) ? $args : [];
+  $Templates = new WP_Query( array_merge( $default, $args ) );
+
+  if( is_bool( $query ) && $query ){
+    return $Templates;
+
+  }
+  return $Templates->posts;
+
+}
+
+function comet_get_mytemplate( $id, $meta = false ){
+  $post = comet_get_post( $id );
+  
+  return ( $post->has_post() && ( $the_post = $post->get_post( $meta ) ) && isset( $the_post->post_type ) && $the_post->post_type === 'comet_mytemplates' ? $the_post : false );
+
+}
+
 /*function comet_updateMyTemplate( $data = array() ){
   $r = -1;
   if( is_array( $data ) ) {
@@ -69,8 +97,9 @@ function comet_get_post( $id = null ){
 
 }
 
-function comet_updatePost( $data = array() ){
+/*function comet_updatePost( $data = array() ){
   $r = 0;
+
   if( is_array( $data ) ) {
 
     $metaboxes = array();
@@ -85,7 +114,7 @@ function comet_updatePost( $data = array() ){
       $esc_data['post_title'] = sanitize_title( $metaboxes['title'] );
     }*/
 
-    if( isset( $data['title'] ) && is_string( $data['title'] ) ){
+    /*if( isset( $data['title'] ) && is_string( $data['title'] ) ){
       $esc_data['post_title'] = sanitize_title( $data['title'] );
     }
 
@@ -107,7 +136,7 @@ function comet_updatePost( $data = array() ){
       $esc_data['meta_input']['_cometStyle'] = $data['style'];
     }*/
 
-    if( isset( $data['comment'] ) && in_array( $data['comment'], array( 'closed', 'open' ), true ) ){
+   /* if( isset( $data['comment'] ) && in_array( $data['comment'], array( 'closed', 'open' ), true ) ){
       $esc_data['comment_status'] = $data['comment'];
     }
 
@@ -131,18 +160,18 @@ function comet_updatePost( $data = array() ){
     }
   }
   return $r;
-}
+}*/
 
-function comet_deleteMyTemplate( $id ){
+/*function comet_deleteMyTemplate( $id ){
   $r = false;
   $id = (int)$id;
   if( is_numeric( $id ) && $id >= 0 ){
    $r = wp_delete_post( $id, true );
   }
   return $r;
-}
+}*/
 
-function comet_updatePostMeta( $id, $data = array() ){
+/*function comet_updatePostMeta( $id, $data = array() ){
   $r = -1;
   if( is_numeric( $id ) ){
     $r = update_post_meta( (int)$id, '_cometMetaData', $data );
@@ -183,36 +212,15 @@ function comet_parse_items( $ids, $items ){
       $rt[$id] = $items[$id];
     }
     return $rt;
-}
+}*/
 
-function comet_get_templates(){
-
-  $query = new WP_Query(
-    array(
-      'post_type'       => 'comet_mytemplates',
-      'post_status'     => 'any',
-      'posts_per_page'  => 50
-    )
-  );
-  return $query;
-
-}
-
-function comet_get_template( $id ){
+/*function comet_get_template( $id ){
 
   $post = comet_get_post( $id );
   
   return ( $post->has_post() && ( $the_post = $post->get_post() ) && isset( $the_post->post_type ) && $the_post->post_type === 'comet_mytemplates' ? $the_post : false );
 
-  /*$query = new WP_Query(
-    array(
-      'p'         => (int)$id,
-      'post_type' => 'comet_mytemplates'
-    )
-  );
-
-  return $query;*/
-}
+}*/
 
 function comet_layout(){
   global $comet_lib;
@@ -247,7 +255,7 @@ function comet_iconsets(){
 function comet_get_iconsets(){
   $Sets = comet_iconsets();
 
-  return ( !$Sets ? array() : $Sets->get_sets() );
+  return ( !$Sets ? [] : $Sets->get_sets() );
 
 }
 
@@ -270,10 +278,10 @@ function comet_get_fonts( $r = false ){
 
 }
 
-function comet_updateFonts( $fonts = array() ){
+/*function comet_updateFonts( $fonts = array() ){
   return update_option( 'comet_fonts', $fonts );
 
-}
+}*/
 
 function comet_fonts_url(){
 

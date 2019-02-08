@@ -145,42 +145,7 @@ class Comet_i18n {
 
 	}
 
-	/*private function base(){
-
-		return array(
-			'messages'	=> array(
-				'error'		=> array(
-					'default'	=> __( 'An error appears, please try again.', 'comet' ),
-					'title'		=> __( 'The title is missing.', 'comet' ),
-					'delete'	=> __( 'An error has been occurred while deleting.', 'comet' ),
-					'unreach'	=> __( 'Unreachable content.', 'comet' ),
-					'save'		=> __( 'An error has been occurred while saving.', 'comet' ),
-				),
-				'success'	=> array(
-					'default'	=> __( 'No error found.', 'comet' ),
-				),
-				'warning'	=> array(
-					'delete'	=> __( 'Are you sure you want to delete it permanently ?', 'comet' ),
-					'wait'		=> __( 'Please wait while loading. This may take a while.', 'comet' ),
-				),
-			),
-			'ui'		=> array(
-				'close'			=> __( 'Close', 'comet' ),
-				'cancel'		=> __( 'Cancel', 'comet' ),
-				'delete'		=> __( 'Delete', 'comet' ),
-				'done'			=> __( 'Done', 'comet' ),
-				'save'			=> __( 'Save', 'comet' ),
-				'search'		=> __( 'Search...', 'comet' ),
-				'select'		=> __( 'Select', 'comet' ),
-				'name'			=> __( 'Enter a title...', 'comet' ),
-				'pTemplate'     => __( 'Previewing template', 'comet' ),
-			)
-		);
-
-	}*/
-
 	private function editor(){
-		//$base = $this->base();
 
 		$this->add( 'cockpit', [
 			'title'		=> __( 'Cockpit', 'comet' ),
@@ -305,46 +270,6 @@ class Comet_i18n {
 			]
 
 		] );
-
-		/*$base = $this->base();
-
-		$base['ui'] = array_merge(
-			$base['ui'],
-			array(
-				'download'		=> __( 'Download', 'comet' ),
-				'import'		=> __( 'Import', 'comet' ),
-				'export'		=> __( 'Export', 'comet' ),
-				'delTemplate'	=> __( 'Delete template', 'comet' ),
-				'expTemplate'	=> __( 'Export template', 'comet' ),
-				'impTemplate' 	=> __( 'Import template', 'comet' ),
-				'selFonts'		=> __( 'Select fonts', 'comet' ),
-				'fonts'			=> __( 'Fonts', 'comet' ),
-				'newTemplate'	=> __( 'Create new template', 'comet' ),
-			)
-		);
-
-		$base['messages'] = array_merge(
-			$base['messages'],
-			array(
-				'selFile'	=> __( 'Select one or multiple template to import.', 'comet' ),
-				'selFonts'	=> __( 'Select fonts to import.', 'comet' ),
-				'redirect'	=> __( 'You will be redirected to the edit page automatically. If it fails please click the link:', 'comet' ),
-				'editPage'	=> __( 'Go to the edit page', 'comet' ),
-			)
-		);
-
-		$base['messages']['error']['noTemplate'] = __( 'Template not found.', 'comet' );
-		$base['messages']['error']['failedFonts'] = __( 'Failed to connect with Google Fonts. Please verify your API key.', 'comet' );
-
-		$base['messages']['success'] = array_merge(
-			$base['messages']['success'],
-			array(
-				'newTemplate'	=> __( 'The template has been correctly created.', 'comet' ),
-				'delTemplate'	=> __( 'The template has been correctly deleted.', 'comet' ),
-			)
-		);
-
-		return $base;*/
 		
 	}
 }

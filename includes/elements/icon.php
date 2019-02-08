@@ -5,42 +5,25 @@ if( !defined( 'ABSPATH' ) ){
     exit;
     
 }
-require_once COMET_PATH . 'includes/class-register.php';
-use Comet\Library\Comet_Register;
+require_once COMET_PATH . 'includes/class-element.php';
+use Comet\Library\Comet_Element;
 use Comet\Library\Comet_Utils;
 
-class icon extends Comet_Register {
+class icon extends Comet_Element {
 
-	public function get_slug(){
+    public function __construct(){
 
-		return strtolower( __CLASS__ );
+        $this->set_element( 'icon', __( 'Icon', 'comet'), 'cico-icon' );
 
-	}
+    }
 
-	public function get_name(){
+    public function render( $data ){
 
-		return __( 'Icon', 'comet' );
+        return 'ououfeozjf';
 
-	}
+    }
 
-	public function get_icon(){
-
-		return 'cico-icon';
-
-	}
-
-	public function get_data(){
-
-		if( !is_array( $this->data ) || count( $this->data ) < 1 ){
-			$this->_register_settings();
-
-
-		}
-		return $this->data;
-
-	}
-
-    public function get_view(){
+    public function view(){
 
         ?>
 
@@ -80,7 +63,7 @@ class icon extends Comet_Register {
 
     }
 
-    public function get_style(){
+    public function css(){
         ?>
         var o, tmp, rcss;
         
@@ -142,7 +125,7 @@ class icon extends Comet_Register {
 
     }
 
-    private function _register_settings(){
+    protected function _register_settings(){
 
         $tid = $this->register_tab( 'general', __( 'General', 'comet' ) );
 

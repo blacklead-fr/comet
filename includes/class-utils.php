@@ -241,7 +241,7 @@ class Comet_Utils {
             'verdana'         => 'Verdana',
         );
 
-        $fonts = comet_getRegisteredFonts( array() );
+        $fonts = comet_get_fonts( [] );
 
         foreach( $fonts as $id => $font ){
             $f = explode( ':', $font );

@@ -703,46 +703,27 @@ __webpack_require__.r(__webpack_exports__);
 
 			header = _d.createElement( 'div' );
 			header.className = 'comet-searchbox';
-			//header.id = 'comet-tempSearch';
 
 			inner = '<select class="comet-ui comet-select">';
 			inner += '<option value="cus">' + __cometi18n.ui.mytemplates + '</option>';
 			inner += '</select>';
 
-			inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.mytemplates + '"/>';
+			inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.sTemplate + '"/>';
 			header.innerHTML = inner;
 
 			body = _d.createElement( 'div' );
 			body.className = 'comet-templates comet-wrapper comet-mytemplates';
 
-			/*select = document.createElement( 'select' );
-			select.id = 'comet-tempFieldSwitch';
-			select.className = 'comet-tempField comet-rendField';
-			select.innerHTML = '<option value="cus">' + __cometi18n.ui.mytemplates + '</option>';
-			//'<option value="pre">Predefined</option>'
-
-			header.appendChild( select );
-
-			input = document.createElement( 'input' );
-			input.id = 'comet-tempFieldSearch';
-			input.className = 'comet-tempField comet-rendField';
-			input.placeholder = __cometi18n.ui.mytemplates;
-
-			header.appendChild( input );*/
-
-			//c = '<div id="comet-tempResult"></div>';
-
 			tm_modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
 				header: header,
 				content: body
 			});
-			//temp = template( mod );
 
 			/* cus, pre */
 			__core.load( 'cus' );
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.firstChild /*select*/ ).on( 'change', __core.switch );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.lastChild/*input*/ ).on( 'input', __core.search );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.firstChild ).on( 'change', __core.switch );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.lastChild ).on( 'input', __core.search );
 
 		},
 
@@ -755,7 +736,6 @@ __webpack_require__.r(__webpack_exports__);
 
 			}
 			url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].addQueryArgs( { id: id }, __cometdata.preview_url );
-			//url = __cometdata.preview_url + '?comet=mytemplates&action=preview&id=' + id;
 
 			Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
 				header: '<h4>' + edata.title + ' (' + edata.id + ')</h4>',
@@ -774,7 +754,8 @@ __webpack_require__.r(__webpack_exports__);
 
 			Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
 				id: id,
-				do: 'meta'
+				meta: 'true',
+				do: 'get'
 
 			}).done( function( r ){
 				var from = false;
@@ -784,7 +765,12 @@ __webpack_require__.r(__webpack_exports__);
 				var a, b, c, d, e;
 				var id_a, id_b, id_c, id_d, id_e;
 
-				if( r === '0' || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].json( r ) ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( data._sections ) ){
+				if( r === '0' || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( tmp = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].json( r ) ) ){
+					return false;
+
+				}
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data = tmp['meta'] ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( data._sections ) ){
 					return false;
 
 				}
@@ -1010,39 +996,6 @@ __webpack_require__.r(__webpack_exports__);
 					};
 
 					buttonset = scope.firstChild.lastChild;
-
-
-
-					/*div1 = document.createElement( 'div' );
-					div1.className = 'comet-tempCollectionScope';
-					div1.dataset.id = id;
-					div1.dataset.title = title;
-					body.appendChild( div1 );
-
-					figure = document.createElement( 'figure' );
-					figure.className = 'comet-tempFigure';
-					figure.innerHTML = '<span>#' + id + '</span>';
-					div1.appendChild( figure );
-
-					div2 = document.createElement( 'div' );
-					div2.className = 'comet-tempUiElements';
-					figure.appendChild( div2 );
-
-					ins = document.createElement( 'button' );
-					ins.className = 'comet-tempItemInsert';
-					ins.dataset.id = id;
-					ins.innerHTML = '<span class="cico cico-dir-download"></span><span class="comet-tooltip">' + __cometi18n.ui.insert + '</span>';
-					div2.appendChild( ins );
-
-					view = document.createElement( 'button' );
-					view.className = 'comet-tempItemPreview';
-					view.dataset.id = id;
-					view.innerHTML = '<span class="cico cico-eye"></span><span class="comet-tooltip">' + __cometi18n.ui.preview + '</span>';
-					div2.appendChild( view );
-
-					aside = document.createElement( 'aside' );
-					aside.innerHTML = utils.capitalize( title );
-					div1.appendChild( aside );*/
 
 					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( buttonset.firstChild ).on( 'click', __core.insert, id );
 					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( buttonset.lastChild ).on( 'click', __core.preview, { id: id, title: title } );
@@ -3279,6 +3232,8 @@ __webpack_require__.r(__webpack_exports__);
 
 			}
 
+			console.log( sets );
+
 			for( id in sets ){
 
 				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( sets[id].name ) ){
@@ -3348,7 +3303,7 @@ __webpack_require__.r(__webpack_exports__);
 			}
 
 			if( !icon ){
-				button.className = classes.button + ' comet-buttonPrimary comet-upload';
+				button.className = buttonClass + ' comet-buttonPrimary comet-upload';
 				button.innerHTML = browse;
 				wrapper.appendChild( button );
 				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( button ).on( 'click', __core.open );
@@ -3362,7 +3317,7 @@ __webpack_require__.r(__webpack_exports__);
 			oh.innerHTML = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg_from_data( icon );
 			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oh ).on( 'click', __core.open );
 
-			button.className = classes.button + ' comet-remove';
+			button.className = buttonClass + ' comet-remove';
 			button.title = remove;
 			button.innerHTML = '<span class="cico cico-x"></span>';
 			oh.appendChild( button );

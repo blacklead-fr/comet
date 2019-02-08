@@ -56,16 +56,16 @@ class Comet_Elements {
 
 	private function initialize(){
 
-        if( !is_array( $this->parsed ) ){
-            return false;
+		if( !is_array( $this->parsed ) ){
+			return false;
 
-        }
+		}
 
-        foreach( $this->parsed as $slug => $values ){
-        	$this->set( $slug );
+		foreach( $this->parsed as $slug => $values ){
+			$this->set( $slug );
 
-        }
-        return $this->elements;
+		}
+		return $this->elements;
 
 	}
 
@@ -135,20 +135,20 @@ class Comet_Elements {
 
 	private function parse_element( $slug, $class, $file ){
 
-        if( !( $slug = $this->sanitize_slug( $slug ) ) || isset( $this->parsed[$slug] ) || !is_string( $class ) ){
-            return false;
+		if( !( $slug = $this->sanitize_slug( $slug ) ) || isset( $this->parsed[$slug] ) || !is_string( $class ) ){
+			return false;
 
-        }
+		}
 
-        if( !is_string( $file ) || !file_exists( $file = trim( $file ) ) ){
-            return false;
+		if( !is_string( $file ) || !file_exists( $file = trim( $file ) ) ){
+			return false;
 
-        }
-        $this->parsed[$slug] = array(
-        	'class'	=> $class,
-        	'file'	=> $file
-        );
-        return true;
+		}
+		$this->parsed[$slug] = array(
+			'class'	=> $class,
+			'file'	=> $file
+		);
+		return true;
 
 	}
 
@@ -165,13 +165,13 @@ class Comet_Elements {
 		}
 		require_once $this->parsed[$slug]['file'];
 
-        if( !class_exists( $this->parsed[$slug]['class'] ) ){
-            return false;
+		if( !class_exists( $this->parsed[$slug]['class'] ) ){
+			return false;
 
-        }
-        $current = new $this->parsed[$slug]['class'];
-        $this->elements[$slug] = $current;
-        return $current;
+		}
+		$current = new $this->parsed[$slug]['class'];
+		$this->elements[$slug] = $current;
+		return $current;
 
 	}
 
@@ -207,7 +207,7 @@ class Comet_Elements {
 		}
 		$name = __( 'Undefined', 'comet' );
 		$icon = 'cico-custom';
-		$tabs = array();
+		$tabs = [];
 		$view = '';
 		$css = '';
 
@@ -221,7 +221,7 @@ class Comet_Elements {
 
 		}
 
-		if( method_exists( $element, 'get_data' ) && is_array( $tmp = $element->get_data() ) ){
+		if( method_exists( $element, 'get_settings' ) && is_array( $tmp = $element->get_settings() ) ){
 			$tabs = $tmp;
 
 		}
@@ -236,15 +236,15 @@ class Comet_Elements {
 
 		}
 
-		return array(
+		return [
 			'name'		=> $name,
 			'icon'		=> $icon,
 			'tabs'		=> $tabs,
-			'render'	=> array(
+			'render'	=> [
 				'view'	=> $view,
 				'css'	=> $css
-			)
-		);
+			]
+		];
 
 	}
 

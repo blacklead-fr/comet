@@ -54,7 +54,16 @@ class Comet_Element extends Comet_Register{
 	public function get_settings(){
 
 		if( !is_array( $this->data ) || count( $this->data ) < 1 ){
-			$this->_register_settings();
+
+			if( method_exists( $this, '_register_settings') ){
+				$this->_register_settings();
+
+			}
+
+			if( method_exists( $this, '_register_item_settings') ){
+				$this->_register_item_settings();
+
+			}
 
 		}
 		return $this->data;
