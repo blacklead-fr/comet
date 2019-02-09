@@ -105,38 +105,6 @@ const html = {
 
         return ( !decoded ? '' : _icon.get_svg( decoded.set_id, decoded.icon_id ) );
 
-
-        /*var _svg, d, _q;
-
-        if( !node( wicon ).isNode() ){
-            return false;
-
-        }
-
-        if( !( d = _icon.set().decode( icon_id ) ) || !_icon.set( d.set ).isSet() ){
-            return false;
-
-        }
-        _q = _icon.queue();
-
-        if( !( _svg = _q.set( d.set ).icon( d.id ) ) ){
-
-            _icon.set( d.set ).load( function( icon ){
-                const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-                _q.set( d.set ).add( icon.id, svg, true );
-
-                if( icon.id === d.id ){
-                    wicon.appendChild( svg );
-
-                }
-
-            } );
-
-        }else{
-            wicon.appendChild( _svg );
-
-        }*/
-
     },
 
     element: function( opts, ondone ){

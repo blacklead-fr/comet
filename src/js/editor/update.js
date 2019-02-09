@@ -243,14 +243,6 @@ export default function( ui ){
 			data[slug] = ui.checked ? 'true' : 'false';
 			break;
 
-			case 'radio':
-
-			if( !ui.checked ){
-				return false;
-
-			}
-			break;
-
 			case 'number':
 			data[slug] = parseFloat( data[slug] );
 			break;

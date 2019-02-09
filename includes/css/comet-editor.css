@@ -815,6 +815,10 @@ section, article, figure, aside {
   overflow: auto;
 }
 
+.comet-panel.comet-ui > .comet-body > .comet-tab { display: none; }
+
+.comet-panel.comet-ui > .comet-body > .comet-tab.comet-active { display: block; }
+
 .comet-panel.comet-ui > .comet-body .comet-section > .comet-header {
   font-weight: 300;
   border-bottom: 1px solid #DAE5EE;
@@ -908,39 +912,6 @@ section, article, figure, aside {
   z-index: 1;
 }
 
-/**/
-
-#comet-mipSearch,
-#comet-tempSearch { position: relative; }
-
-#comet-mipSearch:before,
-#comet-tempSearch:before {
-  content:' ';
-
-  border: solid #006AFE;
-  border-width: 0 1px 1px 0;
-  display: inline-block;
-  padding: 0;
-  margin: -5px 0 0;
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  height: 6px;
-  width: 6px;
-
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
-}
-
-#comet-mipSearch:before,
-#comet-tempSearch:before {
-  right: auto;
-  left: 20%;
-  margin-left: -20px;
-}
-
-#comet-mipFieldSwitchSet::-ms-expand { display: none; }
-
 /* Tooltips */
 
 .comet-tooltip{
@@ -1029,136 +1000,109 @@ section, article, figure, aside {
   width: 0;
 }
 
-/*
-.comet-modalFieldRadioWrap .comet-tooltip,
-.comet-modalTooltip .comet-modalTooltipText,
-.comet-tempUiElements button .comet-tooltip {
+/* Navigation */
+
+#comet-editorNavBar {
   position: absolute;
-  left: -99999em;
-  background: #404146;
+  bottom: 10px;
+  right: 10px;
+}
+
+#comet-editorNavBar > ul {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+#comet-editorNavBar > ul > li {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+#comet-editorNavBar li > button {
+  border: 0;
+  background: none;
+  width: 100%;
+  cursor: pointer;
+}
+
+
+#comet-editorNavBar > ul > li > button {
   color: white;
-  font: 300 12px/15px sans-serif;
-  box-shadow: 0 0 10px 0 rgba( 0,0,0,.3);
-  padding: 5px;
+  background: #006AFE;
+  height: 30px;
+  width: auto;
   border-radius: 5px;
-  }*/
+  padding: 0 10px;
+}
 
-  .comet-modalFieldRadioWrap .comet-tooltip:before,
-  .comet-tempUiElements button .comet-tooltip:before {
-    content:'';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 12px 0 0 9px;
-    border-color: transparent transparent transparent #404146;
-    position: absolute;
-    top: -8px;
-    left: 0;
-  }
+#comet-editorNavBar > ul > #comet-editorNavUpdate > button {
+  margin-left: 5px;
+  border-radius: 5px 0 0 5px;
+}
 
-  /* Navigation */
+#comet-editorNavBar > ul > #comet-editorNavOpts > button {
+  border-radius: 0 5px 5px 0;
+  border-left: 1px solid #167DFA;
+}
 
-  #comet-editorNavBar {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-  }
+#comet-editorNavBar > ul > li > button:hover { background: #167DFA; }
 
-  #comet-editorNavBar > ul {
-    display: block;
-    margin: 0;
-    padding: 0;
-  }
+#comet-editorNavBar li > ul {
+  position: absolute;
+  margin: 0;
+  padding: 5px 0;
+  bottom: 100%;
+  right: 9999em;
+  background: white;
+  border-radius: 5px 5px 0 5px;
+  box-shadow: 0 -3px 3px 0 rgba( 0,0,0,.1);
+  width: 100px;
+}
 
-  #comet-editorNavBar > ul > li {
-    display: inline-block;
-    vertical-align: middle;
-    margin: 0;
-    padding: 0;
-    position: relative;
-  }
+#comet-editorNavBar li:hover > ul {
+  right: 0;
+}
 
-  #comet-editorNavBar li > button {
-    border: 0;
-    background: none;
-    width: 100%;
-    cursor: pointer;
-  }
+#comet-editorNavBar .comet-editorNavMenuHasChildren:hover > button {
+  border-radius: 0 0 5px 5px;
+  background: white;
+  color: #006AFE;
+  box-shadow: 0 3px 3px 0 rgba( 0,0,0,.1);
+}
 
+#comet-editorNavBar li > ul > li {
+  padding: 0;
+  margin: 0;
+  display: block;
+  color: #006AFE;
+}
+#comet-editorNavBar li > ul > li > button {
+  color: #006AFE;
+  margin: 0;
+  padding: 5px 0;
+}
 
-  #comet-editorNavBar > ul > li > button {
-    color: white;
-    background: #006AFE;
-    height: 30px;
-    width: auto;
-    border-radius: 5px;
-    padding: 0 10px;
-  }
+/* confirm box */
 
-  #comet-editorNavBar > ul > #comet-editorNavUpdate > button {
-    margin-left: 5px;
-    border-radius: 5px 0 0 5px;
-  }
+.comet-dialog.comet-alertbox {
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ z-index: 99999;
+ background: rgba( 0, 0, 0, .7 );
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ padding: 20px;
+}
 
-  #comet-editorNavBar > ul > #comet-editorNavOpts > button {
-    border-radius: 0 5px 5px 0;
-    border-left: 1px solid #167DFA;
-  }
-
-  #comet-editorNavBar > ul > li > button:hover { background: #167DFA; }
-
-  #comet-editorNavBar li > ul {
-    position: absolute;
-    margin: 0;
-    padding: 5px 0;
-    bottom: 100%;
-    right: 9999em;
-    background: white;
-    border-radius: 5px 5px 0 5px;
-    box-shadow: 0 -3px 3px 0 rgba( 0,0,0,.1);
-    width: 100px;
-  }
-
-  #comet-editorNavBar li:hover > ul {
-    right: 0;
-  }
-
-  #comet-editorNavBar .comet-editorNavMenuHasChildren:hover > button {
-    border-radius: 0 0 5px 5px;
-    background: white;
-    color: #006AFE;
-    box-shadow: 0 3px 3px 0 rgba( 0,0,0,.1);
-  }
-
-  #comet-editorNavBar li > ul > li {
-    padding: 0;
-    margin: 0;
-    display: block;
-    color: #006AFE;
-  }
-  #comet-editorNavBar li > ul > li > button {
-    color: #006AFE;
-    margin: 0;
-    padding: 5px 0;
-  }
-
-  /* confirm box */
-
-  .comet-dialog.comet-alertbox {
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   bottom: 0;
-   z-index: 99999;
-   background: rgba( 0, 0, 0, .7 );
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   padding: 20px;
- }
-
- .comet-dialog.comet-alertbox > .comet-inner{
+.comet-dialog.comet-alertbox > .comet-inner{
   background: white;
   color: #404146;
   height: 150px;
@@ -1487,61 +1431,97 @@ section, article, figure, aside {
 
 /* Items */
 
-.comet-edModalItems li {
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-buttonset{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-buttonset > .comet-button {
+  padding: 10px;
+  height: auto;
+  border-radius: 2em;
+  position: relative;
+}
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-buttonset > .comet-button .cico{
+  display: block;
+  height: 20px;
+}
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items .comet-button .comet-title{
+  position: absolute;
+  left: -9999em;
+  top: 0;
+  padding: 5px;
+  color: white;
+  border-radius: 3px;
+  background: rgba( 0, 0, 0, .7 );
+  font: 300 12px/1.2 sans-serif;
+  margin-top: 5px;
+  transition: top .1s ease-in-out;
+  transform: translate( -50%, 0 );
+}
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items .comet-button:hover .comet-title{
+  left: 50%;
+  top: 100%;
+}
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items .comet-button .comet-title:before{
+  content: '';
+  position: absolute;
+  left: 50%;
+  margin-left: -5px;
+  bottom: 100%;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  
+  border-bottom: 5px solid rgba( 0, 0, 0, .7 );
+
+}
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item {
   padding: 7px;
   border-bottom: 1px solid #DAE5EE;
   display: flex;
   background: none;
-  height: 40px;
-  overflow: hidden;
-  color: #006AFE;
+  color: #404146;
   font: 300 15px/1 sans-serif;
+  width: 100%;
+  align-items: center;
 }
 
-.comet-edModalItems li > span { width: calc( 100% - 64px ); }
-
-.comet-edModalItems li .comet-button {
-  margin-left: 7px;
-  background: #DAE5EE;
-}
-
-.comet-edModalItems li .cico,
-.comet-edModalItems li .comet-button {
-	height: 25px;
-	width: 25px;
-	line-height: 25px;
-  font-size: 15px;
-  border: 0;
-  padding: 0;
-  display: block;
-}
-
-.comet-edModalItems li .comet-button:hover{
-  background: #006AFE;
-  color: white;
-}
-
-.comet-edModalItems  li:hover {
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item:hover {
   box-shadow: 0 0 5px 0 #DAE5EE;
   -moz-box-shadow: 0 0 5px 0 #DAE5EE;
   -webkit-box-shadow: 0 0 5px 0 #DAE5EE;
 }
 
-.comet-edMIAdd {
-  text-align: center;
-  padding: 10px;
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item > span { width: 100%; }
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item > .comet-button {
+  padding: 5px;
+  border-radius: 2em;
+  height: 27px;
+  width: 27px;
+  position: relative;
 }
 
-.comet-edModalItemAdd {
-  width: 30px;
-  padding: 0;
-  border-radius: 20em;
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item > .comet-button:hover{
+  background: #DAE5EE;
+  color: #006AFE;
 }
 
-.comet-edModalItemAdd .cico {
-  font-size: 14px;
-  line-height: 30px;
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item .cico {
+  height: 17px;
   display: block;
+  font-size: 17px;
+  width: 17px;
+  line-height: 17px;
 }
 
 /* Media uploader */
@@ -1717,51 +1697,66 @@ section, article, figure, aside {
 
 /* radio */
 
-.comet-modalFieldRadioWrap,
-.comet-modalFieldRadioWrap > span{
-  display: block;
-  width: auto;
-  height: 30px;
-  line-height: 30px;
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap {
+  display: flex;
+  background: #DAE5EE;
+  padding: 0;
+  margin-top: 5px;
+  border-radius: 3px;
+}
+
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap > .comet-label {
   text-align: center;
-}
-
-.comet-modalFieldRadioWrap {
-  display: inline-block;
-  vertical-align: top;
-  position: relative;
+  padding: 5px;
   cursor: pointer;
-  border-radius: 5px;
+  position: relative;
+  width: 100%;
+  opacity: .5;
 }
 
-.comet-modalFieldRadioWrap > .comet-modalFieldRadioIcon { width: 30px; }
-
-.comet-modalFieldRadioWrap .comet-tooltip {
-  top: 100%;
-  margin: 6px 0;
-  max-width: 70px;
-  height: auto;
-}
-
-.comet-modalFieldRadioWrap:hover { background: #DAE5EE; }
-
-.comet-modalFieldRadioWrap.cpb-active,
-.comet-modalFieldRadioWrap.cpb-active:hover {
-  background: #006AFE;
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap > .comet-label > .comet-title {
+  position: absolute;
+  top: 0;
+  left: -99999em;
+  transition: top .1s ease-in-out;
+  background: rgba( 0, 0, 0, .7 );
+  border-radius: 3px;
+  padding: 5px;
+  margin-top: 5px;
+  font: 300 12px/1.2 sans-serif;
   color: white;
 }
 
-.comet-modalFieldRadioWrap.cpb-active span,
-.comet-modalFieldRadioWrap.cpb-active:hover span { color: white; }
-
-.comet-modalControlRadioWrap {
-  display: inline-block;
-  vertical-align: top;
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap > .comet-label:hover > .comet-title {
+  left: 50%;
+  top: 100%;
+  transform: translate( -50%, 0 );
 }
 
-.comet-modalFieldRadioWrap:hover .comet-tooltip { left: 50%; }
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap > .comet-label > .comet-title:before {
+  content: '';
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  
+  border-bottom: 5px solid rgba( 0, 0, 0, .7 );
 
-.comet-modalFieldRadioWrap .comet-field{ display: none; }
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+
+}
+
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap > .comet-label > input { display: none; }
+
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap > .comet-label:hover { opacity: 1; }
+
+.comet-panel.comet-ui > .comet-body .comet-control-radio .comet-field-wrap > .comet-label.comet-active {
+  opacity: 1;
+  color: #006AFE;
+}
 
 /* Toolbar */
 
@@ -2034,250 +2029,64 @@ section, article, figure, aside {
   bottom: 0;
 }
 
-/*.comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button,
-.comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button .cico {
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
-  font-size: 22px;
-  text-align: center;
-  padding: 0;
-  margin: 0;
-  border: 0;
+.comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button {
+  padding: 10px;
+  background: rgba( 0, 0, 0, .7 );
   color: white;
-  }*/
-
-  .comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button {
-    padding: 10px;
-    background: rgba( 0, 0, 0, .7 );
-    color: white;
-    opacity: .7;
-    margin: 5px;
-    height: auto;
-  }
-
-
-  .comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button .cico {
-    height: 20px;
-    display: block;
-  }
-
-  .comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button:hover { opacity: 1; }
-
-
-
-
-
-  /* Icon picker - Templates library */
-
-  #comet-modalIconPicker .comet-dialogContent,
-  #comet-modalTemplatesLibrary .comet-dialogContent {
-    height: calc(100% - 76px);
-    height: -moz-calc(100% - 76px);
-    height: -webkit-calc(100% - 76px);
-  }
-
-  #comet-modalTemplatesLibrary .comet-dialogContent { padding: 10px; }
-
-  #comet-modalPreviewTemplate .comet-dialogContent { padding: 0; }
-
-  #comet-mipSearch,
-  #comet-tempSearch {
-   width: 50%;
-   margin: 0 auto;
-   display: flex;
-   align-items: center;
-   justify-content: center;
- }
-
- #comet-tempSearch #comet-tempFieldSwitch,
- #comet-mipSearch #comet-mipFieldSwitchSet {
-  width: 20%;
-  border-radius: 5px 0 0 5px;
-  padding: 5px 30px 5px 5px;
+  opacity: .7;
+  margin: 5px;
+  height: auto;
 }
 
-#comet-tempSearch #comet-tempFieldSearch,
-#comet-mipSearch #comet-mipFieldSearchIcon {
-  width: 80%;
-  border-radius: 0 5px 5px 0;
+
+.comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button .cico {
+  height: 20px;
+  display: block;
 }
 
-#comet-mipResult{
+.comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope .comet-buttonset .comet-button:hover { opacity: 1; }
+
+/* Icons library */
+
+.comet-modal > .comet-inner > .comet-body > .comet-icons.comet-set {
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
-
 }
 
-#comet-mipResult .comet-mipCollectionScope {
+.comet-modal > .comet-inner > .comet-body > .comet-icons.comet-set > .comet-scope {
   min-width: 6.25%;
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
-
-}
-#comet-mipResult .comet-mipCollectionScope:hover,
-#comet-mipResult .comet-mipCollectionScope:active { background: #EBF5FB; }
-
-.comet-tempCollectionScope {
-  margin: 0;
-  padding: 12px;
-  display: inline-block;
-  width: 6.25%;
-  text-align: center;
-  vertical-align: top;
-  cursor: pointer;
-}
-
-.comet-tempCollectionScope {
-  padding: 10px;
-  width: 16.667%;
-  cursor: default;
-}
-
-.comet-tempCollectionScope > * {
-  padding: 0;
-  margin: 0;
-  border: 0;
-  text-align: center;
-  font: 300 15px/22px sans-serif;
-  background: none;
-  display: block;
-  overflow: hidden;
-}
-
-.comet-tempFigure {
-  height: 150px;
-  border-radius: 5px;
-  background: #EDF5FB;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-.comet-tempTitle {
-  margin-top: 5px;
   color: #404146;
 }
 
-.comet-tempUiElements {
-	position: absolute;
-	top: 0;
-	left: -99999em;
-  background: rgba( 44, 45, 49, .8);
-  padding-top: 57px;
+@media screen and (max-width: 1300px) {
+  .comet-modal > .comet-inner > .comet-body > .comet-icons.comet-set > .comet-scope { min-width: 10%; }
 }
 
-.comet-tempCollectionScope:hover .comet-tempUiElements{
-	left: 0;
-	right: 0;
-	bottom: 0;
+@media screen and (max-width: 900px) {
+  .comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope { min-width: 16.66%; }
 }
 
-.comet-tempUiElements button,
-.comet-tempUiElements button .cico {
-  width: 35px;
-  height: 35px;
-  line-height: 35px;
-  font-size: 22px;
-  text-align: center;
-  padding: 0;
-  margin: 0;
-  border: 0;
-  color: white;
+@media screen and (max-width: 500px) {
+  .comet-modal > .comet-inner > .comet-body > .comet-mytemplates > .comet-scope { min-width: 33.33%; }
 }
 
-.comet-tempUiElements button {
-  display: inline-block;
-  vertical-align: middle;
-  background: #404146;
-  margin: 0 5px;
-  border-radius: 10px;
-  cursor: pointer;
-  position: relative;
-}
-
-.comet-tempUiElements button:hover { background: #006AFE; }
-
-.comet-tempUiElements button:hover .comet-tooltip {
-  left: 15px;
-  top: 100%;
-  margin-top: 6px;
-  color: #404146;
-  background: #DAE5EE;
-}
-
-.comet-tempUiElements button .comet-tooltip:before {
-  border-left-color: #DAE5EE;
-}
-
-.comet-mipCollectionScope svg {
+.comet-modal > .comet-inner > .comet-body > .comet-icons.comet-set > .comet-scope svg {
   width: auto;
   height: 40px;
   display: inline-block;
   fill: currentColor;
-  color: #404146;
 }
 
-.comet-mipCollectionScope:hover svg,
-.comet-mipCollectionScope:active svg { color: #006AFE; }
-
-#comet-saveTempWin a {
-  font-weight: 500;
-  text-decoration: none;
-}
-
-#comet-saveTempWin a:hover {
+.comet-modal > .comet-inner > .comet-body > .comet-icons.comet-set > .comet-scope:hover{
+  background: #EBF5FB;
   color: #006AFE;
-  text-decoration: underline;
 }
 
-#comet-modalSaveTemplate .comet-dialogbox { width: 500px; }
-
-#comet-modalSaveTemplate .comet-dialogContent { max-height: 100%; }
-
-.comet-dialogHeader h4 {
-	padding: 0;
-	margin: 0;
-	font: 300 20px/30px sans-serif;
-	text-align: center;
-  color: #404146;
-}
-
-#comet-saveTempForm {
-  position: relative;
-  margin-top: 10px;
-}
-
-#comet-saveTempForm > button {
-	position: absolute;
-	top: 50%;
-	right: 2px;
-	padding: 0;
-	text-align: center;
-	margin-top: -15px;
-}
-
-#comet-saveTempForm > button .cico {
-	width: 30px;
-	height: 30px;
-  line-height: 30px;
-  font-size: 15px;
-  color: white;
-}
-
-#comet-saveTempWin .comet-saveTempErr {
-  display: block;
-  margin: 10px 0;
-  padding: 5px;
-  background: #FFE8DF;
-  color: #E66E3F;
-  border-radius: 5px 0 5px 5px;
-  position: relative;
-}
 
 /* Responsive */
 

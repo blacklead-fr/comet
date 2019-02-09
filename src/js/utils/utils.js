@@ -354,10 +354,10 @@ utils.foreachItem = function( data, onitem ){
 			continue;
 
 		}
-		onitem( ids[i], data.items[ids[i]] );
+		o += onitem( ids[i], data.items[ids[i]] );
 
 	}
-	return true;
+	return o;
 
 };
 

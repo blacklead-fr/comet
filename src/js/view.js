@@ -1246,38 +1246,6 @@ const html = {
 
         return ( !decoded ? '' : _icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg( decoded.set_id, decoded.icon_id ) );
 
-
-        /*var _svg, d, _q;
-
-        if( !node( wicon ).isNode() ){
-            return false;
-
-        }
-
-        if( !( d = _icon.set().decode( icon_id ) ) || !_icon.set( d.set ).isSet() ){
-            return false;
-
-        }
-        _q = _icon.queue();
-
-        if( !( _svg = _q.set( d.set ).icon( d.id ) ) ){
-
-            _icon.set( d.set ).load( function( icon ){
-                const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-                _q.set( d.set ).add( icon.id, svg, true );
-
-                if( icon.id === d.id ){
-                    wicon.appendChild( svg );
-
-                }
-
-            } );
-
-        }else{
-            wicon.appendChild( _svg );
-
-        }*/
-
     },
 
     element: function( opts, ondone ){
@@ -1333,9 +1301,15 @@ const __icon = {
 	},
 
 	get_icon: function( set_id, icon_id ){
-		const set = __icon.get_set( set_id );
+		var set;
 
-		return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon_id ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set[icon_id] ) ? set[icon_id] : false );
+		if( !__icon.icon_exists( set_id, icon_id ) ){
+			return false;
+
+		}
+		set = __icon.get_set( set_id );
+
+		return set.set[icon_id];
 
 	},
 
@@ -1366,7 +1340,7 @@ const __icon = {
 	icon_exists: function( set_id, icon_id ){
 		const set = __icon.get_set( set_id );
 
-		return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon_id ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set[icon_id] ) );
+		return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon_id ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set.set ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set.set[icon_id] ) );
 
 	},
 
@@ -4139,10 +4113,10 @@ utils.foreachItem = function( data, onitem ){
 			continue;
 
 		}
-		onitem( ids[i], data.items[ids[i]] );
+		o += onitem( ids[i], data.items[ids[i]] );
 
 	}
-	return true;
+	return o;
 
 };
 

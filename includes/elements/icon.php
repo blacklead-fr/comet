@@ -56,8 +56,7 @@ class icon extends Comet_Element {
             }
 
         }
-        content.firstChild.innerHTML = '<' + tag + attr + '></' + tag + '>';
-        toolkit.html.icon( content.firstChild.firstChild, icon );
+        content.firstChild.innerHTML = '<' + tag + attr + '>' + toolkit.html.icon( icon ) + '</' + tag + '>';
 
         <?php
 

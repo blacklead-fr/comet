@@ -11,7 +11,7 @@ export default function( slug, field, data ){
 
 	var value = '';
 
-	var result = null;
+	var loaded = [];
 
 	var _modal = false;
 
@@ -26,82 +26,48 @@ export default function( slug, field, data ){
 			const set = _icon.get_set( set_id );
 			var icon_id, scope, svg, encoded;
 
-			for( icon_id in set ){
+			loaded = [];
 
-				if( utils.isStringEmpty( svg = _icon.get_svg_from_data( set[icon_id] ) ) ){
-					continue;
+			if( utils.isObject( set ) && utils.isObject( set.set ) ){
 
-				}
-				encoded = _icon.encode( set_id, icon_id );
-				scope = _d.createElement( 'div' );
-				scope.className = 'comet-mipCollectionScope';
-				scope.innerHTML = svg;
-				fragment.appendChild( scope );
+				for( icon_id in set.set ){
 
-				node( scope ).on( 'click', function( ev, ui ){
-					value = encoded;
-					input.value = encoded;
-					__core.create();
-					update( input );
-					_modal.destroy();
+					if( utils.isStringEmpty( svg = _icon.get_svg_from_data( set.set[icon_id] ) ) ){
+						continue;
 
-				});
+					}
+					encoded = _icon.encode( set_id, icon_id );
+					scope = _d.createElement( 'div' );
+					scope.className = 'comet-scope comet-icon comet-collection';
+					scope.innerHTML = svg;
+					fragment.appendChild( scope );
 
+					loaded[loaded.length] = {
+						id: icon_id,
+						name: set.set[icon_id].name,
+						svg: svg,
+						node: scope
 
-			}
-			result.innerHTML = '';
-			result.appendChild( fragment );
+					};
 
-
-
-		/*
-			const svgSet = _icon.set( set_id );
-			var queue, set, i;
-
-			if( !svgSet.isSet() ){
-				result.innerHTML = '<p>Set not found.</p>';
-				return;
-
-			}
-			set_id = utils.trim( set_id );
-			set = _icon.queue().set( set_id );
-			result.innerHTML = '';
-
-			function onicon( icon ){
-				const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-				const scope = _d.createElement( 'div' );
-				const val = svgSet.encode( icon.id );
-				scope.className = 'comet-mipCollectionScope';
-				scope.appendChild( svg );
-				result.appendChild( scope );
-
-				node( svg ).on( 'click', function( ev, ui ){
-					value = val;
-					input.value = val;
-					__core.create();
-					update( input );
-					_modal.destroy();
-
-				});
-				return svg;
-
-			}
-
-			if( utils.isObject( queue = set.set() ) ){
-
-				for( i in queue ){
-					onicon( queue[i] );
+					node( scope ).on( 'click', __core.onclick, encoded );
 
 				}
-				return;
 
 			}
+			_modal.body.firstChild.innerHTML = '';
+			_modal.body.firstChild.appendChild( fragment );
 
-			svgSet.load( function( icon ){
-				const svg = onicon( icon );
-				set.add( icon.id, svg, true );
+		},
 
-			});*/
+		onclick: function( ev, ui, edata ){
+			ev.preventDefault();
+			console.log( edata );
+			value = edata;
+			input.value = edata;
+			__core.create();
+			update( input );
+			_modal.destroy();
 
 		},
 
@@ -112,28 +78,28 @@ export default function( slug, field, data ){
 
 		search: function( ev, ui ){
 
-			const val = utils.isString( ui.value ) || utils.isNumber( ui.value ) ? utils.trim( ui.value.toString() ) : '';
-			var icons, icon, i, id, regex;
+			const val = utils.isString( ui.value ) ? utils.trim( ui.value ) : '';
+			var icon, i, regex;
 
-			if( result === null || ( icons = result.getElementsByClassName( 'comet-mipCollectionScope' ) ).length < 1 ){
-				return;
+			if( loaded.length < 1 ){
+				return false;
 
 			}
-			regex = new RegExp( val, 'ig' );
+			regex = new RegExp( val, 'i' );
 
-			for( i = 0; i < icons.length; i++ ){
-				icon = icons[i];
+			for( i = 0; i < loaded.length; i++ ){
 
-				if( !node( icon ).isNode() || ( !utils.isString( id = parse.dataset( icon, 'id' ) ) && !utils.isNumber( id ) ) ){
+				if( !utils.isObject( icon = loaded[i] ) || !utils.isString( icon.id ) ){
 					continue;
 
 				}
-				if( !utils.isStringEmpty( val ) && ( id.toString() ).search( regex ) === -1 ){
-					icon.style.display = 'none';
+
+				if( !utils.isStringEmpty( val ) && icon.id.search( regex ) === -1 ){
+					icon.node.style.display = 'none';
 					continue;
 
 				}
-				icon.style.display = 'inline-block';
+				icon.node.style.display = 'block';
 
 			}
 
@@ -145,52 +111,52 @@ export default function( slug, field, data ){
 			ev.stopPropagation();
 
 			const sets = utils.getSvgSets();
+			var first_id = false;
+			var count = 1;
 			var option = '';
-			var id, header, select, sinput;
+			var id, header, inner, body;
 
 			if( !utils.isObject( sets ) ){
 				return;
 
 			}
 
-			console.log( sets );
+			header = _d.createElement( 'div' );
+			header.className = 'comet-searchbox';
+
+			inner = '<select class="comet-ui comet-select">';
 
 			for( id in sets ){
 
-				if( !utils.isObject( sets[id] ) || !utils.isString( sets[id].name ) ){
+				if( !utils.isObject( sets[id] ) || !utils.isString( sets[id].name ) || !utils.isObject( sets[id].set ) ){
 					continue;
 
 				}
-				option += '<option value="' + id +'">' + utils.trim( sets[id].name ) + '</option>';
+
+				if( count === 1 ){
+					first_id = id;
+
+				}
+				inner += '<option value="' + id +'">' + sets[id].name + '</option>';
+				count++;
 
 			}
-			result = _d.createElement( 'div' );
-			result.id = 'comet-mipResult';
+			inner += '</select>';
+			inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.sIcon + '"/>';
+			header.innerHTML = inner;
 
-			header = _d.createElement( 'div' );
-			header.id = 'comet-mipSearch';
-
-			select = _d.createElement( 'select' );
-			select.id = 'comet-mipFieldSwitchSet';
-			select.className = 'comet-mipField comet-rendField';
-			select.innerHTML = option;
-			header.appendChild( select );
-
-			sinput = _d.createElement( 'input' );
-			sinput.id = 'comet-mipFieldSearchIcon';
-			sinput.className = 'comet-mipField comet-rendField';
-			sinput.placeholder = __cometi18n.ui.sIcon;
-			header.appendChild( sinput );
+			body = _d.createElement( 'div' );
+			body.className = 'comet-icons comet-set comet-wrapper';
 
 			_modal = modal({
-				id: 'comet-modalIconPicker',
 				header: header,
-				content: result
+				content: body
 			});
-			__core.load( 'fas' );
 
-			node( select ).on( 'change', __core.switch );
-			node( sinput ).on( 'input', __core.search );
+			__core.load( first_id );
+
+			node( header.firstChild ).on( 'change', __core.switch );
+			node( header.lastChild ).on( 'input', __core.search );
 		},
 
 		delete: function( ev, ui ){
@@ -213,6 +179,8 @@ export default function( slug, field, data ){
 			const decoded = _icon.decode( value );
 			const icon = ( !decoded ? false : _icon.get_icon( decoded.set_id, decoded.icon_id ) );
 			var n = 0;
+
+			console.log( value, decoded, icon );
 
 			while( n < wcn.length ){
 
@@ -268,268 +236,5 @@ export default function( slug, field, data ){
 	__core.create();
 
 	return wrapper;
-
-	/*const prop = {
-
-		open: function( e, self, input ){
-			e.preventDefault();
-			e.stopPropagation();
-
-			var _modal = null;
-
-			var result = null;
-
-			const classes = {
-				scope: 'comet-mipCollectionScope',
-				result: 'comet-mipResult'
-
-			};
-
-			const priv = {
-
-				load: function( set_id ){
-					const svgSet = _icon.set( set_id );
-					var queue, set, i;
-
-					if( !svgSet.isSet() ){
-						result.innerHTML = '<p>Set not found.</p>';
-						return;
-
-					}
-					set_id = utils.trim( set_id );
-					set = _icon.queue().set( set_id );
-					result.innerHTML = '';
-
-					function onicon( icon ){
-						const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-						const scope = _d.createElement( 'div' );
-						const val = svgSet.encode( icon.id );
-						scope.className = 'comet-mipCollectionScope';
-						scope.appendChild( svg );
-						result.appendChild( scope );
-
-						node( svg ).on( 'click', function( ev, ui ){
-							input.value = val;
-							kit( ui, input );
-							update( input );
-							_modal.destroy();
-
-						});
-						return svg;
-
-					}
-
-					if( utils.isObject( queue = set.set() ) ){
-
-						for( i in queue ){
-							onicon( queue[i] );
-
-						}
-						return;
-
-					}
-
-					svgSet.load( function( icon ){
-						const svg = onicon( icon );
-						set.add( icon.id, svg, true );
-
-					});
-
-
-
-				},
-
-				switch: function( ev, ui ){
-					priv.load( utils.isString( ui.value ) ? utils.trim( ui.value ) : '' );
-
-				},
-
-				search: function( ev, ui ){
-					const val = utils.isString( ui.value ) || utils.isNumber( ui.value ) ? utils.trim( ui.value.toString() ) : '';
-					var icons, icon, i, id, regex;
-
-					if( result === null || ( icons = result.getElementsByClassName( 'comet-mipCollectionScope' ) ).length < 1 ){
-						return false;
-
-					}
-					regex = new RegExp( val, 'ig' );
-
-					for( i = 0; i < icons.length; i++ ){
-						icon = icons[i];
-
-						if( !node( icon ).isNode() || ( !utils.isString( id = parse.dataset( icon, 'id' ) ) && !utils.isNumber( id ) ) ){
-							continue;
-
-						}
-						if( !utils.isStringEmpty( val ) && ( id.toString() ).search( regex ) === -1 ){
-							icon.style.display = 'none';
-							continue;
-
-						}
-						icon.style.display = 'inline-block';
-
-					}
-
-				}
-
-			};
-
-			(function(){
-				const sets = utils.getSvgSets();
-				const args = {};
-				var option = '';
-				var id, header, select, sinput;
-
-				if( !utils.isObject( sets ) ){
-					return;
-
-				}
-
-				for( id in sets ){
-
-					if( !utils.isObject( sets[id] ) || !utils.isString( sets[id].name ) ){
-						continue;
-
-					}
-					option += '<option value="' + id +'">' + utils.trim( sets[id].name ) + '</option>';
-
-				}
-				result = document.createElement( 'div' );
-				result.id = classes.result;
-
-				header = document.createElement( 'div' );
-				header.id = 'comet-mipSearch';
-
-				select = document.createElement( 'select' );
-				select.id = 'comet-mipFieldSwitchSet';
-				select.className = 'comet-mipField comet-rendField';
-				select.innerHTML = option;
-				header.appendChild( select );
-
-				sinput = document.createElement( 'input' );
-				sinput.id = 'comet-mipFieldSearchIcon';
-				sinput.className = 'comet-mipField comet-rendField';
-				sinput.placeholder = __cometi18n.ui.sIcon;
-				header.appendChild( sinput );
-
-				_modal = modal({
-					id: 'comet-modalIconPicker',
-					header: header,
-					content: result
-				});
-				priv.load( 'fas' );
-
-				node( select ).on( 'change', priv.switch );
-				node( sinput ).on( 'input', priv.search );
-
-			})();
-
-		},
-
-		remove: function( ev, ui, input ){
-			ev.preventDefault();
-			ev.stopPropagation();
-			input.value = '';
-			kit( null, input );
-			update( input );
-
-		}
-
-	};
-
-	function kit( icon, input ){
-
-		const browse = __cometi18n.ui.browse;
-		const remove = __cometi18n.ui.remove;
-		const classes = {
-			button: 'comet-button',
-		};
-		const wrapper = input.parentNode;
-		const wcn = wrapper.childNodes;
-		const button = document.createElement( 'button' );
-		var n = 0;
-
-		while( n < wcn.length ){
-
-			if( wcn[n] !== input ){
-				wrapper.removeChild( wcn[n] );
-
-			}
-			n++;
-		}
-
-		if( icon === null ){
-			button.className = classes.button + ' comet-buttonPrimary comet-upload';
-			button.innerHTML = browse;
-			wrapper.appendChild( button );
-			node( button ).on( 'click', prop.open, input );
-			return;
-
-		}
-		const oh = document.createElement( 'div' );
-		wrapper.appendChild( oh );
-		oh.className = 'comet-media comet-wrapper comet-icon';
-		oh.title = browse;
-		oh.appendChild( icon );
-		node( oh ).on( 'click', prop.open, input );
-
-		button.className = classes.button + ' comet-remove';
-		button.title = remove;
-		button.innerHTML = '<span class="cico cico-x"></span>';
-		oh.appendChild( button );
-		node( button ).on( 'click', prop.remove, input );
-
-	}
-
-	function create( _ui ){
-		const val = !utils.isStringEmpty( _ui.value ) ? utils.trim( _ui.value ) : false;
-		const _q = _icon.queue();
-		var decoded, _svg;
-
-		if( !val || !( decoded = _icon.set().decode( val ) ) || !_icon.set( decoded.set ).isSet() ){
-			kit( null, _ui );
-			return;
-		}
-
-		if( !( _svg = _q.set( decoded.set ).icon( decoded.id ) ) ){
-
-			_icon.set( decoded.set ).load( function( icon, current ){
-				const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-				_q.set( decoded.set ).add( icon.id, svg, true );
-
-				if( icon.id === decoded.id ){
-					kit( svg, current );
-
-				}
-
-			}, _ui );
-			return;
-
-		}
-		kit( _svg, _ui );
-
-	}
-
-	(function(){
-		var x, _source, tmp;
-
-		if( ( ( _source = node( source ) ).isNode() ) ){
-
-			create( source );
-
-		}else if( ( utils.isObject( tmp = _source.get() ) || utils.isArray( tmp, 1 ) ) && !_source.isView() ){
-
-			for( x in source ){
-
-				if( !node( source[x] ).isNode() ){
-					continue;
-
-				}
-				create( source[x] );
-			}
-
-		}
-
-	})();*/
 
 }

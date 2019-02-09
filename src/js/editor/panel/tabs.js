@@ -3,10 +3,15 @@ import f_color from '../../utils/ui/color-picker.js';
 import sanitize from '../../utils/sanitize.js';
 import f_range from '../../utils/ui/range.js';
 import f_numbers from './fields/numbers.js';
+import layout from '../../utils/layout.js';
+import parse from '../../utils/parse.js';
 import utils from '../../utils/utils.js';
 import node from '../../utils/node.js';
 import f_icon from './fields/icon.js';
+import __target from '../target.js';
 import update from '../update.js';
+import panel from '../panel.js';
+import __data from '../data.js';
 //import __tab from './tab.js';
 
 const __create = function( tabs, data ){
@@ -103,34 +108,40 @@ const __create = function( tabs, data ){
 								close: {
 									do: function(){
 										target_.reset();
-										redefine.workflow();
 
 									}
 
 								}
 
 							});
-							initPanel();
 
 						}
 					}
 				});
-				initPanel();
 
 			},
 
 			delete: function( ev, ui, args ){
 				ev.preventDefault();
-				var id;
+				const data_ = __data();
+				const target_ = __target();
+				var element_id, item_id, elementNode;
+				var id, _t, lyt;
 
-				if( !( ( _t = node( args.target ) ).isNode() ) || !( id = parse.id( args.id ) ) ){
+				if( !( ( _t = node( args.target ) ).isNode() ) || !( item_id = parse.id( args.id ) ) ){
 					return;
 
 				}
 
-				if( _t.remove() ){
-					__data().remove( id, 'items', __target().id() );
+				if( !data_.remove( item_id, 'items', ( element_id = target_.id() ) ) ){
+					return;
 
+				}
+				_t.remove();
+
+				if( ( elementNode = target_.node() ) && ( lyt = layout( data_.getData() ).element( element_id, true ) ) ){
+					elementNode.parentNode.replaceChild( lyt, elementNode );
+					
 				}
 
 			}
@@ -180,13 +191,13 @@ const __create = function( tabs, data ){
 
 		tab: function( sections, isItems ){
 			const oTab = _d.createDocumentFragment();
-			var section, a, s, dataItem;
+			var section, a, s, dataItem, ids, id;
 
 			if( utils.isBool( isItems ) && isItems ){
 
 				section = _d.createElement( 'div' );
 				section.className = 'comet-section comet-items comet-ui';
-				section.innerHTML = '<div class="comet-items"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary"><span class="cico cico-plus"></span></button></div>';
+				section.innerHTML = '<div class="comet-items"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
 				oTab.appendChild( section );
 
 				if( utils.isObject( data ) && !utils.isStringEmpty( data._items ) && utils.isArray( ( ids = parse.ids( data._items, 'array' ) ), 1 ) ){
@@ -238,8 +249,8 @@ const __create = function( tabs, data ){
 			item.className = 'comet-item';
 
 			inner = '<span><span>#' + id + '</span>' + ( !utils.isStringEmpty( title ) ? utils.trim( title ) : '' ) + '</span>';
-			inner += '<button class="comet-button comet-first" title="' + __cometi18n.ui.edit + '"><span class="cico cico-edit"></span></button>';
-			inner += '<button class="comet-button comet-last" title="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span></button>';
+			inner += '<button class="comet-button comet-first" aria-label="' + __cometi18n.ui.edit + '"><span class="cico cico-edit"></span><span class="comet-title">' + __cometi18n.ui.edit + '</span></button>';
+			inner += '<button class="comet-button comet-last" aria-label="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span><span class="comet-title">' + __cometi18n.ui.delete + '</span></button>';
 
 			item.innerHTML = inner;
 			dren = item.children;
@@ -378,7 +389,6 @@ const __create = function( tabs, data ){
 				radio: function(){
 
 					const onradio = function( ev, ui ){
-						ev.preventDefault();
 						const parentNode = ui.parentNode;
 						var dren;
 
@@ -388,6 +398,7 @@ const __create = function( tabs, data ){
 						}
 						node( dren ).removeClass( classes.active );
 						node( ui ).addClass( classes.active );
+						update( ui.firstElementChild );
 
 					};
 
@@ -404,6 +415,7 @@ const __create = function( tabs, data ){
 
 							}
 							_radio = _d.createElement( 'label' );
+							_radio.className = 'comet-label comet-ui' + ( v === value ? ' ' + classes.active : '' );
 							fragment.appendChild( _radio );
 							inner = '<input type="radio" class="' + fieldClass + '" name="' + slug + '"value="' + v + '" />';
 							inner += '<span class="comet-icon ' + utils.trim( utils.stripTags( values[v].icon ) ) + '"></span>';
@@ -411,11 +423,9 @@ const __create = function( tabs, data ){
 							_radio.innerHTML = inner;
 
 							if( v === value ){
-								_radio.className = classes.active;
 								_radio.firstChild.checked = true;
 
 							}
-							__core.update( _radio.firstChild );
 							node( _radio ).on( 'click', onradio );
 
 						}
@@ -541,6 +551,7 @@ const __create = function( tabs, data ){
 				},
 
 				editor: function(){
+					var op;
 
 					const _node = _d.createElement( 'textarea' );
 					_node.name = slug;

@@ -6,7 +6,6 @@ if( !defined( 'ABSPATH' ) ){
     
 }
 require_once COMET_PATH . 'includes/class-element.php';
-//require_once COMET_PATH . 'includes/class-register.php';
 use Comet\Library\Comet_Element;
 use Comet\Library\Comet_Utils;
 
@@ -147,16 +146,16 @@ class text extends Comet_Element{
 			'type'    => 'select',
 			'std'     => 'p',
 			'values'  => array(
-				'p'				=> 'p',
-				'h1'			=> 'h1',
-				'h2'			=> 'h2',
-				'h3'			=> 'h3',
-				'h4'			=> 'h4',
-				'h5'			=> 'h5',
-				'h6'			=> 'h6',
-				'blockquote'	=> 'blockquote',
+				'p'				=> __( 'Paragraph', 'comet' ),
+				'h1'			=> __( 'Heading 1', 'comet' ),
+				'h2'			=> __( 'Heading 2', 'comet' ),
+				'h3'			=> __( 'Heading 3', 'comet' ),
+				'h4'			=> __( 'Heading 4', 'comet' ),
+				'h5'			=> __( 'Heading 5', 'comet' ),
+				'h6'			=> __( 'Heading 6', 'comet' ),
+				'blockquote'	=> __( 'Blockquote', 'comet' ),
 				//'code'       	=> 'code',
-				'pre'			=> 'preformatted',
+				'pre'			=> __( 'Preformatted', 'comet' ),
 			),
 		) );
 

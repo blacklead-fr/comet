@@ -3090,7 +3090,7 @@ __webpack_require__.r(__webpack_exports__);
 
 	var value = '';
 
-	var result = null;
+	var loaded = [];
 
 	var _modal = false;
 
@@ -3105,82 +3105,48 @@ __webpack_require__.r(__webpack_exports__);
 			const set = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_set( set_id );
 			var icon_id, scope, svg, encoded;
 
-			for( icon_id in set ){
+			loaded = [];
 
-				if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( svg = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg_from_data( set[icon_id] ) ) ){
-					continue;
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set.set ) ){
 
-				}
-				encoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode( set_id, icon_id );
-				scope = _d.createElement( 'div' );
-				scope.className = 'comet-mipCollectionScope';
-				scope.innerHTML = svg;
-				fragment.appendChild( scope );
+				for( icon_id in set.set ){
 
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( scope ).on( 'click', function( ev, ui ){
-					value = encoded;
-					input.value = encoded;
-					__core.create();
-					Object(_update_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input );
-					_modal.destroy();
+					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( svg = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg_from_data( set.set[icon_id] ) ) ){
+						continue;
 
-				});
+					}
+					encoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode( set_id, icon_id );
+					scope = _d.createElement( 'div' );
+					scope.className = 'comet-scope comet-icon comet-collection';
+					scope.innerHTML = svg;
+					fragment.appendChild( scope );
 
+					loaded[loaded.length] = {
+						id: icon_id,
+						name: set.set[icon_id].name,
+						svg: svg,
+						node: scope
 
-			}
-			result.innerHTML = '';
-			result.appendChild( fragment );
+					};
 
-
-
-		/*
-			const svgSet = _icon.set( set_id );
-			var queue, set, i;
-
-			if( !svgSet.isSet() ){
-				result.innerHTML = '<p>Set not found.</p>';
-				return;
-
-			}
-			set_id = utils.trim( set_id );
-			set = _icon.queue().set( set_id );
-			result.innerHTML = '';
-
-			function onicon( icon ){
-				const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-				const scope = _d.createElement( 'div' );
-				const val = svgSet.encode( icon.id );
-				scope.className = 'comet-mipCollectionScope';
-				scope.appendChild( svg );
-				result.appendChild( scope );
-
-				node( svg ).on( 'click', function( ev, ui ){
-					value = val;
-					input.value = val;
-					__core.create();
-					update( input );
-					_modal.destroy();
-
-				});
-				return svg;
-
-			}
-
-			if( utils.isObject( queue = set.set() ) ){
-
-				for( i in queue ){
-					onicon( queue[i] );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( scope ).on( 'click', __core.onclick, encoded );
 
 				}
-				return;
 
 			}
+			_modal.body.firstChild.innerHTML = '';
+			_modal.body.firstChild.appendChild( fragment );
 
-			svgSet.load( function( icon ){
-				const svg = onicon( icon );
-				set.add( icon.id, svg, true );
+		},
 
-			});*/
+		onclick: function( ev, ui, edata ){
+			ev.preventDefault();
+			console.log( edata );
+			value = edata;
+			input.value = edata;
+			__core.create();
+			Object(_update_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input );
+			_modal.destroy();
 
 		},
 
@@ -3191,28 +3157,28 @@ __webpack_require__.r(__webpack_exports__);
 
 		search: function( ev, ui ){
 
-			const val = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( ui.value ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isNumber( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( ui.value.toString() ) : '';
-			var icons, icon, i, id, regex;
+			const val = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( ui.value ) : '';
+			var icon, i, regex;
 
-			if( result === null || ( icons = result.getElementsByClassName( 'comet-mipCollectionScope' ) ).length < 1 ){
-				return;
+			if( loaded.length < 1 ){
+				return false;
 
 			}
-			regex = new RegExp( val, 'ig' );
+			regex = new RegExp( val, 'i' );
 
-			for( i = 0; i < icons.length; i++ ){
-				icon = icons[i];
+			for( i = 0; i < loaded.length; i++ ){
 
-				if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( icon ).isNode() || ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__["default"].dataset( icon, 'id' ) ) && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isNumber( id ) ) ){
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( icon = loaded[i] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon.id ) ){
 					continue;
 
 				}
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( val ) && ( id.toString() ).search( regex ) === -1 ){
-					icon.style.display = 'none';
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( val ) && icon.id.search( regex ) === -1 ){
+					icon.node.style.display = 'none';
 					continue;
 
 				}
-				icon.style.display = 'inline-block';
+				icon.node.style.display = 'block';
 
 			}
 
@@ -3224,52 +3190,52 @@ __webpack_require__.r(__webpack_exports__);
 			ev.stopPropagation();
 
 			const sets = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSvgSets();
+			var first_id = false;
+			var count = 1;
 			var option = '';
-			var id, header, select, sinput;
+			var id, header, inner, body;
 
 			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets ) ){
 				return;
 
 			}
 
-			console.log( sets );
+			header = _d.createElement( 'div' );
+			header.className = 'comet-searchbox';
+
+			inner = '<select class="comet-ui comet-select">';
 
 			for( id in sets ){
 
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( sets[id].name ) ){
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( sets[id].name ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id].set ) ){
 					continue;
 
 				}
-				option += '<option value="' + id +'">' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( sets[id].name ) + '</option>';
+
+				if( count === 1 ){
+					first_id = id;
+
+				}
+				inner += '<option value="' + id +'">' + sets[id].name + '</option>';
+				count++;
 
 			}
-			result = _d.createElement( 'div' );
-			result.id = 'comet-mipResult';
+			inner += '</select>';
+			inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.sIcon + '"/>';
+			header.innerHTML = inner;
 
-			header = _d.createElement( 'div' );
-			header.id = 'comet-mipSearch';
-
-			select = _d.createElement( 'select' );
-			select.id = 'comet-mipFieldSwitchSet';
-			select.className = 'comet-mipField comet-rendField';
-			select.innerHTML = option;
-			header.appendChild( select );
-
-			sinput = _d.createElement( 'input' );
-			sinput.id = 'comet-mipFieldSearchIcon';
-			sinput.className = 'comet-mipField comet-rendField';
-			sinput.placeholder = __cometi18n.ui.sIcon;
-			header.appendChild( sinput );
+			body = _d.createElement( 'div' );
+			body.className = 'comet-icons comet-set comet-wrapper';
 
 			_modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
-				id: 'comet-modalIconPicker',
 				header: header,
-				content: result
+				content: body
 			});
-			__core.load( 'fas' );
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( select ).on( 'change', __core.switch );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( sinput ).on( 'input', __core.search );
+			__core.load( first_id );
+
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.firstChild ).on( 'change', __core.switch );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.lastChild ).on( 'input', __core.search );
 		},
 
 		delete: function( ev, ui ){
@@ -3292,6 +3258,8 @@ __webpack_require__.r(__webpack_exports__);
 			const decoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].decode( value );
 			const icon = ( !decoded ? false : _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_icon( decoded.set_id, decoded.icon_id ) );
 			var n = 0;
+
+			console.log( value, decoded, icon );
 
 			while( n < wcn.length ){
 
@@ -3347,269 +3315,6 @@ __webpack_require__.r(__webpack_exports__);
 	__core.create();
 
 	return wrapper;
-
-	/*const prop = {
-
-		open: function( e, self, input ){
-			e.preventDefault();
-			e.stopPropagation();
-
-			var _modal = null;
-
-			var result = null;
-
-			const classes = {
-				scope: 'comet-mipCollectionScope',
-				result: 'comet-mipResult'
-
-			};
-
-			const priv = {
-
-				load: function( set_id ){
-					const svgSet = _icon.set( set_id );
-					var queue, set, i;
-
-					if( !svgSet.isSet() ){
-						result.innerHTML = '<p>Set not found.</p>';
-						return;
-
-					}
-					set_id = utils.trim( set_id );
-					set = _icon.queue().set( set_id );
-					result.innerHTML = '';
-
-					function onicon( icon ){
-						const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-						const scope = _d.createElement( 'div' );
-						const val = svgSet.encode( icon.id );
-						scope.className = 'comet-mipCollectionScope';
-						scope.appendChild( svg );
-						result.appendChild( scope );
-
-						node( svg ).on( 'click', function( ev, ui ){
-							input.value = val;
-							kit( ui, input );
-							update( input );
-							_modal.destroy();
-
-						});
-						return svg;
-
-					}
-
-					if( utils.isObject( queue = set.set() ) ){
-
-						for( i in queue ){
-							onicon( queue[i] );
-
-						}
-						return;
-
-					}
-
-					svgSet.load( function( icon ){
-						const svg = onicon( icon );
-						set.add( icon.id, svg, true );
-
-					});
-
-
-
-				},
-
-				switch: function( ev, ui ){
-					priv.load( utils.isString( ui.value ) ? utils.trim( ui.value ) : '' );
-
-				},
-
-				search: function( ev, ui ){
-					const val = utils.isString( ui.value ) || utils.isNumber( ui.value ) ? utils.trim( ui.value.toString() ) : '';
-					var icons, icon, i, id, regex;
-
-					if( result === null || ( icons = result.getElementsByClassName( 'comet-mipCollectionScope' ) ).length < 1 ){
-						return false;
-
-					}
-					regex = new RegExp( val, 'ig' );
-
-					for( i = 0; i < icons.length; i++ ){
-						icon = icons[i];
-
-						if( !node( icon ).isNode() || ( !utils.isString( id = parse.dataset( icon, 'id' ) ) && !utils.isNumber( id ) ) ){
-							continue;
-
-						}
-						if( !utils.isStringEmpty( val ) && ( id.toString() ).search( regex ) === -1 ){
-							icon.style.display = 'none';
-							continue;
-
-						}
-						icon.style.display = 'inline-block';
-
-					}
-
-				}
-
-			};
-
-			(function(){
-				const sets = utils.getSvgSets();
-				const args = {};
-				var option = '';
-				var id, header, select, sinput;
-
-				if( !utils.isObject( sets ) ){
-					return;
-
-				}
-
-				for( id in sets ){
-
-					if( !utils.isObject( sets[id] ) || !utils.isString( sets[id].name ) ){
-						continue;
-
-					}
-					option += '<option value="' + id +'">' + utils.trim( sets[id].name ) + '</option>';
-
-				}
-				result = document.createElement( 'div' );
-				result.id = classes.result;
-
-				header = document.createElement( 'div' );
-				header.id = 'comet-mipSearch';
-
-				select = document.createElement( 'select' );
-				select.id = 'comet-mipFieldSwitchSet';
-				select.className = 'comet-mipField comet-rendField';
-				select.innerHTML = option;
-				header.appendChild( select );
-
-				sinput = document.createElement( 'input' );
-				sinput.id = 'comet-mipFieldSearchIcon';
-				sinput.className = 'comet-mipField comet-rendField';
-				sinput.placeholder = __cometi18n.ui.sIcon;
-				header.appendChild( sinput );
-
-				_modal = modal({
-					id: 'comet-modalIconPicker',
-					header: header,
-					content: result
-				});
-				priv.load( 'fas' );
-
-				node( select ).on( 'change', priv.switch );
-				node( sinput ).on( 'input', priv.search );
-
-			})();
-
-		},
-
-		remove: function( ev, ui, input ){
-			ev.preventDefault();
-			ev.stopPropagation();
-			input.value = '';
-			kit( null, input );
-			update( input );
-
-		}
-
-	};
-
-	function kit( icon, input ){
-
-		const browse = __cometi18n.ui.browse;
-		const remove = __cometi18n.ui.remove;
-		const classes = {
-			button: 'comet-button',
-		};
-		const wrapper = input.parentNode;
-		const wcn = wrapper.childNodes;
-		const button = document.createElement( 'button' );
-		var n = 0;
-
-		while( n < wcn.length ){
-
-			if( wcn[n] !== input ){
-				wrapper.removeChild( wcn[n] );
-
-			}
-			n++;
-		}
-
-		if( icon === null ){
-			button.className = classes.button + ' comet-buttonPrimary comet-upload';
-			button.innerHTML = browse;
-			wrapper.appendChild( button );
-			node( button ).on( 'click', prop.open, input );
-			return;
-
-		}
-		const oh = document.createElement( 'div' );
-		wrapper.appendChild( oh );
-		oh.className = 'comet-media comet-wrapper comet-icon';
-		oh.title = browse;
-		oh.appendChild( icon );
-		node( oh ).on( 'click', prop.open, input );
-
-		button.className = classes.button + ' comet-remove';
-		button.title = remove;
-		button.innerHTML = '<span class="cico cico-x"></span>';
-		oh.appendChild( button );
-		node( button ).on( 'click', prop.remove, input );
-
-	}
-
-	function create( _ui ){
-		const val = !utils.isStringEmpty( _ui.value ) ? utils.trim( _ui.value ) : false;
-		const _q = _icon.queue();
-		var decoded, _svg;
-
-		if( !val || !( decoded = _icon.set().decode( val ) ) || !_icon.set( decoded.set ).isSet() ){
-			kit( null, _ui );
-			return;
-		}
-
-		if( !( _svg = _q.set( decoded.set ).icon( decoded.id ) ) ){
-
-			_icon.set( decoded.set ).load( function( icon, current ){
-				const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-				_q.set( decoded.set ).add( icon.id, svg, true );
-
-				if( icon.id === decoded.id ){
-					kit( svg, current );
-
-				}
-
-			}, _ui );
-			return;
-
-		}
-		kit( _svg, _ui );
-
-	}
-
-	(function(){
-		var x, _source, tmp;
-
-		if( ( ( _source = node( source ) ).isNode() ) ){
-
-			create( source );
-
-		}else if( ( utils.isObject( tmp = _source.get() ) || utils.isArray( tmp, 1 ) ) && !_source.isView() ){
-
-			for( x in source ){
-
-				if( !node( source[x] ).isNode() ){
-					continue;
-
-				}
-				create( source[x] );
-			}
-
-		}
-
-	})();*/
 
 });
 
@@ -4381,10 +4086,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/sanitize.js */ "./src/js/utils/sanitize.js");
 /* harmony import */ var _utils_ui_range_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/ui/range.js */ "./src/js/utils/ui/range.js");
 /* harmony import */ var _fields_numbers_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./fields/numbers.js */ "./src/js/editor/panel/fields/numbers.js");
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _fields_icon_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./fields/icon.js */ "./src/js/editor/panel/fields/icon.js");
-/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../update.js */ "./src/js/editor/update.js");
+/* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/layout.js */ "./src/js/utils/layout.js");
+/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _fields_icon_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./fields/icon.js */ "./src/js/editor/panel/fields/icon.js");
+/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../target.js */ "./src/js/editor/target.js");
+/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../update.js */ "./src/js/editor/update.js");
+/* harmony import */ var _panel_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../panel.js */ "./src/js/editor/panel.js");
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
+
+
+
+
+
 
 
 
@@ -4410,16 +4125,16 @@ const __create = function( tabs, data ){
 
 		tab: function( ev, ui, contentNode ){
 			ev.preventDefault();
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui.parentNode.children ).removeClass( classes.active );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( contentNode.parentNode.children ).removeClass( classes.active );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( contentNode ).addClass( classes.active );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui ).addClass( classes.active );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( ui.parentNode.children ).removeClass( classes.active );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( contentNode.parentNode.children ).removeClass( classes.active );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( contentNode ).addClass( classes.active );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( ui ).addClass( classes.active );
 
 		},
 
 		section: function( ev, ui, contentNode ){
 			ev.preventDefault();
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( contentNode ).toggleClass( classes.active );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( contentNode ).toggleClass( classes.active );
 
 		},
 
@@ -4427,15 +4142,15 @@ const __create = function( tabs, data ){
 
 			add: function( ev, ui, itemsNode ){
 				ev.preventDefault();
-				const target_ = __target();
+				const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
 				var pid, id;
 
-				if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( itemsNode ).isNode() || !( pid = target_.id() ) ){
+				if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( itemsNode ).isNode() || !( pid = target_.id() ) ){
 					return;
 
 				}
 
-				if( target_.type() === null || !( id = __data().create( 'items', pid, 'last' ) ) ){
+				if( target_.type() === null || !( id = Object(_data_js__WEBPACK_IMPORTED_MODULE_13__["default"])().create( 'items', pid, 'last' ) ) ){
 					return;
 
 				}
@@ -4446,28 +4161,28 @@ const __create = function( tabs, data ){
 
 			edit: function( ev, ui, args ){
 				ev.preventDefault();
-				const target_ = __target();
-				const data_ = __data();
+				const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_13__["default"])();
 				var id, tabs1, tid, element, edata;
 
-				if( !( id = parse.id( args.id ) ) || !( tid = target_.id() ) ){
+				if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].id( args.id ) ) || !( tid = target_.id() ) ){
 					return;
 
 				}
 
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( element = data_.get( tid, 'elements' ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( edata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].getElement( element._type ) ) ){
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( element = data_.get( tid, 'elements' ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( edata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].getElement( element._type ) ) ){
 					return;
 
 				}
 
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( edata.tabs ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( edata.tabs.items ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( edata.tabs.items.tabs ) ){
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( edata.tabs ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( edata.tabs.items ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( edata.tabs.items.tabs ) ){
 					return;
 
 				}
 				tabs1 = __create( edata.tabs.items.tabs, data_.get( id, 'items' ) );
 				target_.set( { state: 'items', item: id } );
 
-				panel({
+				Object(_panel_js__WEBPACK_IMPORTED_MODULE_12__["default"])({
 					title: __cometi18n.ui.editItem,
 					tabs: tabs1.tabs,
 					content: tabs1.content,
@@ -4483,41 +4198,47 @@ const __create = function( tabs, data ){
 							const tabs2 = __create( edata.tabs, element );
 							target_.set( { state: null, item: null } );
 
-							panel({
+							Object(_panel_js__WEBPACK_IMPORTED_MODULE_12__["default"])({
 								title: __cometi18n.options.element.edit,
 								tabs: tabs2.tabs,
 								content: tabs2.content,
 								close: {
 									do: function(){
 										target_.reset();
-										redefine.workflow();
 
 									}
 
 								}
 
 							});
-							initPanel();
 
 						}
 					}
 				});
-				initPanel();
 
 			},
 
 			delete: function( ev, ui, args ){
 				ev.preventDefault();
-				var id;
+				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_13__["default"])();
+				const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+				var element_id, item_id, elementNode;
+				var id, _t, lyt;
 
-				if( !( ( _t = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( args.target ) ).isNode() ) || !( id = parse.id( args.id ) ) ){
+				if( !( ( _t = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( args.target ) ).isNode() ) || !( item_id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].id( args.id ) ) ){
 					return;
 
 				}
 
-				if( _t.remove() ){
-					__data().remove( id, 'items', __target().id() );
+				if( !data_.remove( item_id, 'items', ( element_id = target_.id() ) ) ){
+					return;
 
+				}
+				_t.remove();
+
+				if( ( elementNode = target_.node() ) && ( lyt = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_5__["default"])( data_.getData() ).element( element_id, true ) ) ){
+					elementNode.parentNode.replaceChild( lyt, elementNode );
+					
 				}
 
 			}
@@ -4533,12 +4254,12 @@ const __create = function( tabs, data ){
 			var count = 1;
 			var a, isItems, t, tab, tid, content;
 
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( tabs ) ){
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( tabs ) ){
 
 				for( a in tabs ){
 					isItems = ( a === 'items' );
 
-					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( t = tabs[a] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( t.name ) || ( !isItems && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( t.sections ) ) || ( isItems && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( t.tabs ) ) ){
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( t = tabs[a] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( t.name ) || ( !isItems && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( t.sections ) ) || ( isItems && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( t.tabs ) ) ){
 						continue;
 
 					}
@@ -4552,7 +4273,7 @@ const __create = function( tabs, data ){
 					content.appendChild( __core.tab( ( isItems ? t.tabs : t.sections ), isItems ) );
 					oContent.appendChild( content );
 
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( tab ).on( 'click', __events.tab, content );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( tab ).on( 'click', __events.tab, content );
 					count++;
 
 				}
@@ -4567,20 +4288,20 @@ const __create = function( tabs, data ){
 
 		tab: function( sections, isItems ){
 			const oTab = _d.createDocumentFragment();
-			var section, a, s, dataItem;
+			var section, a, s, dataItem, ids, id;
 
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isBool( isItems ) && isItems ){
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isBool( isItems ) && isItems ){
 
 				section = _d.createElement( 'div' );
 				section.className = 'comet-section comet-items comet-ui';
-				section.innerHTML = '<div class="comet-items"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary"><span class="cico cico-plus"></span></button></div>';
+				section.innerHTML = '<div class="comet-items"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
 				oTab.appendChild( section );
 
-				if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( data ) && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isStringEmpty( data._items ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isArray( ( ids = parse.ids( data._items, 'array' ) ), 1 ) ){
+				if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( data ) && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( data._items ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isArray( ( ids = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].ids( data._items, 'array' ) ), 1 ) ){
 
 					for( a = 0; a < ids.length; a++ ){
 
-						if( !( id = parse.id( ids[a] ) ) || !( dataItem = __data().get( id, 'items' ) ) ){
+						if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].id( ids[a] ) ) || !( dataItem = Object(_data_js__WEBPACK_IMPORTED_MODULE_13__["default"])().get( id, 'items' ) ) ){
 							continue;
 
 						}
@@ -4589,17 +4310,17 @@ const __create = function( tabs, data ){
 					}
 				}
 
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( section.lastChild.firstChild ).on( 'click', __events.item.add, section.firstChild );
+				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( section.lastChild.firstChild ).on( 'click', __events.item.add, section.firstChild );
 
 				return oTab;
 
 			}
 
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( sections ) ){ 
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( sections ) ){ 
 
 				for( a in sections ){
 
-					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( s = sections[a] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( s.name ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( s.fields ) ){
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( s = sections[a] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( s.name ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( s.fields ) ){
 						continue;
 
 					}
@@ -4610,7 +4331,7 @@ const __create = function( tabs, data ){
 
 					section.lastChild.appendChild( __core.fields( s.fields ) );
 
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( section.firstChild ).on( 'click', __events.section, section.lastChild );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( section.firstChild ).on( 'click', __events.section, section.lastChild );
 				}
 			}
 			return oTab;
@@ -4624,9 +4345,9 @@ const __create = function( tabs, data ){
 			//item.dataset.id = id;
 			item.className = 'comet-item';
 
-			inner = '<span><span>#' + id + '</span>' + ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isStringEmpty( title ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( title ) : '' ) + '</span>';
-			inner += '<button class="comet-button comet-first" title="' + __cometi18n.ui.edit + '"><span class="cico cico-edit"></span></button>';
-			inner += '<button class="comet-button comet-last" title="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span></button>';
+			inner = '<span><span>#' + id + '</span>' + ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( title ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( title ) : '' ) + '</span>';
+			inner += '<button class="comet-button comet-first" aria-label="' + __cometi18n.ui.edit + '"><span class="cico cico-edit"></span><span class="comet-title">' + __cometi18n.ui.edit + '</span></button>';
+			inner += '<button class="comet-button comet-last" aria-label="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span><span class="comet-title">' + __cometi18n.ui.delete + '</span></button>';
 
 			item.innerHTML = inner;
 			dren = item.children;
@@ -4637,8 +4358,8 @@ const __create = function( tabs, data ){
 
 			};
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( dren[1] ).on( 'click', __events.item.edit, args );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( dren[2] ).on( 'click', __events.item.delete, args );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[1] ).on( 'click', __events.item.edit, args );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[2] ).on( 'click', __events.item.delete, args );
 
 			return item;
 
@@ -4648,26 +4369,26 @@ const __create = function( tabs, data ){
 			const oFields = _d.createDocumentFragment();
 			var f, a, field, type, meta;
 
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( fields ) ){
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( fields ) ){
 
 				for( a in fields ){
 
-					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( f = fields[a] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( f.type ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( f.label ) ){
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( f = fields[a] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( f.type ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( f.label ) ){
 						continue;
 
 					}
-					f.type = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( f.type.toLowerCase() ) );
+					f.type = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( f.type.toLowerCase() ) );
 					field = _d.createElement( 'div' );
 					field.className = 'comet-control comet-control-' + f.type;
 					field.innerHTML = '<div class="comet-meta"></div><div class="comet-field-wrap"></div>';
 					oFields.appendChild( field );
 
-					meta = '<label>' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( f.label ) ) + '</label>';
+					meta = '<label>' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( f.label ) ) + '</label>';
 
-					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isStringEmpty( f.desc ) ){
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( f.desc ) ){
 						meta += '<span class="comet-tooltip">';
 						meta += '<span class="comet-icon">?</span>';
-						meta += '<span class="comet-description comet-inner">' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( f.desc, '<b><strong><i><a><span><sub><sup><ins>' ) + '</span>';
+						meta += '<span class="comet-description comet-inner">' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( f.desc, '<b><strong><i><a><span><sub><sup><ins>' ) + '</span>';
 						meta += '</span>';
 
 					}
@@ -4719,17 +4440,17 @@ const __create = function( tabs, data ){
 					_node.name = slug;
 					_node.className = fieldClass;
 
-					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( values = field.values ) ){
+					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( values = field.values ) ){
 
 						for( v in values ){
 
-							if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( values[v] ) ){
+							if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( values[v] ) ){
 								continue;
 
 							}
 							_option = _d.createElement( 'option' );
 							_option.value = v;
-							_option.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( values[v] );
+							_option.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( values[v] );
 
 							if( v === value ){
 								_option.selected = true;
@@ -4765,7 +4486,6 @@ const __create = function( tabs, data ){
 				radio: function(){
 
 					const onradio = function( ev, ui ){
-						ev.preventDefault();
 						const parentNode = ui.parentNode;
 						var dren;
 
@@ -4773,8 +4493,9 @@ const __create = function( tabs, data ){
 							return;
 
 						}
-						Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( dren ).removeClass( classes.active );
-						Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui ).addClass( classes.active );
+						Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren ).removeClass( classes.active );
+						Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( ui ).addClass( classes.active );
+						Object(_update_js__WEBPACK_IMPORTED_MODULE_11__["default"])( ui.firstElementChild );
 
 					};
 
@@ -4782,28 +4503,27 @@ const __create = function( tabs, data ){
 
 					var _radio, values, v, inner;
 
-					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( values = field.values ) ){
+					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( values = field.values ) ){
 
 						for( v in values ){
 
-							if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( values[v] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( values[v].title ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( values[v].icon ) ){
+							if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( values[v] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( values[v].title ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( values[v].icon ) ){
 								continue;
 
 							}
 							_radio = _d.createElement( 'label' );
+							_radio.className = 'comet-label comet-ui' + ( v === value ? ' ' + classes.active : '' );
 							fragment.appendChild( _radio );
 							inner = '<input type="radio" class="' + fieldClass + '" name="' + slug + '"value="' + v + '" />';
-							inner += '<span class="comet-icon ' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( values[v].icon ) ) + '"></span>';
-							inner += '<span class="comet-title">' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( values[v].title, '<b><strong><i><span><u><ins>' ) ) + '</span>';
+							inner += '<span class="comet-icon ' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( values[v].icon ) ) + '"></span>';
+							inner += '<span class="comet-title">' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( values[v].title, '<b><strong><i><span><u><ins>' ) ) + '</span>';
 							_radio.innerHTML = inner;
 
 							if( v === value ){
-								_radio.className = classes.active;
 								_radio.firstChild.checked = true;
 
 							}
-							__core.update( _radio.firstChild );
-							Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( _radio ).on( 'click', onradio );
+							Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( _radio ).on( 'click', onradio );
 
 						}
 
@@ -4830,14 +4550,14 @@ const __create = function( tabs, data ){
 
 						for( x = 0; x < dren.length; x++ ){
 
-							if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( dren[x] ).isNode() ){
+							if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[x] ).isNode() ){
 								continue;
 
 							}
 							dren[x].innerHTML = val;
 
 						}
-						Object(_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])( e.source );
+						Object(_update_js__WEBPACK_IMPORTED_MODULE_11__["default"])( e.source );
 
 					};
 
@@ -4855,7 +4575,7 @@ const __create = function( tabs, data ){
 					_node.step = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_2__["default"].number({ value: field.step, min: 0.01 });
 
 					_unit.className = 'comet-unit';
-					_unit.innerHTML = '<span class="comet-value">' + value + '</span>' + ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( field.unit ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( field.unit ) : '' );
+					_unit.innerHTML = '<span class="comet-value">' + value + '</span>' + ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( field.unit ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( field.unit ) : '' );
 
 					fragment.appendChild( _node );
 					fragment.appendChild( _unit );
@@ -4883,10 +4603,10 @@ const __create = function( tabs, data ){
 
 					fragment.appendChild( _node );
 
-					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( unit = field.unit ) ){
+					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( unit = field.unit ) ){
 						_unit = _d.createElement( 'span' );
 						_unit.className = 'comet-unit';
-						_unit.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( unit );
+						_unit.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( unit );
 						fragment.appendChild( _unit );
 
 					}
@@ -4917,7 +4637,7 @@ const __create = function( tabs, data ){
 						input: true,
 						clear: true,
 						onchange: function( ui, source, color ){
-							Object(_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])( source );
+							Object(_update_js__WEBPACK_IMPORTED_MODULE_11__["default"])( source );
 
 						}
 
@@ -4928,10 +4648,11 @@ const __create = function( tabs, data ){
 				},
 
 				editor: function(){
+					var op;
 
 					const _node = _d.createElement( 'textarea' );
 					_node.name = slug;
-					_node.className = fieldClass + ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isStringEmpty( op = field.option ) && [ 'advanced', 'force_tag' ].indexOf( op = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( op ) ) > -1 ? ( op === 'advanced' ? ' comet-fieldEditorAdvanced' : ' comet-fieldEditorForceTag' ) : '' );
+					_node.className = fieldClass + ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( op = field.option ) && [ 'advanced', 'force_tag' ].indexOf( op = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( op ) ) > -1 ? ( op === 'advanced' ? ' comet-fieldEditorAdvanced' : ' comet-fieldEditorForceTag' ) : '' );
 					_node.innerHTML = value;
 					__core.update( _node );
 
@@ -4952,7 +4673,7 @@ const __create = function( tabs, data ){
 					Object(_utils_ui_gradient_js__WEBPACK_IMPORTED_MODULE_0__["default"])( _node, {
 						size: 20,
 						onchange: function( ui, gdt ){
-							Object(_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])( ui );
+							Object(_update_js__WEBPACK_IMPORTED_MODULE_11__["default"])( ui );
 
 						}
 					} );
@@ -4963,7 +4684,7 @@ const __create = function( tabs, data ){
 
 				icon: function(){
 
-					return Object(_fields_icon_js__WEBPACK_IMPORTED_MODULE_7__["default"])( slug, field, data );
+					return Object(_fields_icon_js__WEBPACK_IMPORTED_MODULE_9__["default"])( slug, field, data );
 					
 				},
 
@@ -4971,7 +4692,7 @@ const __create = function( tabs, data ){
 
 					var input = null;
 
-					var _value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( value ) ) : '';
+					var _value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( value ) ) : '';
 
 					const wrapper = _d.createElement( 'div' );
 
@@ -5008,11 +4729,11 @@ const __create = function( tabs, data ){
 
 							media.on( 'select', function(){
 								const att = media.state().get('selection').first().toJSON();
-								_value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isString( _value = att.url ) ? ( ( _value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].stripTags( _value ) ) ) !== '' ? _value : '' ) : '';
+								_value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( _value = att.url ) ? ( ( _value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( _value ) ) ) !== '' ? _value : '' ) : '';
 
 								input.value = _value;
 								__img.create();
-								Object(_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])( input );
+								Object(_update_js__WEBPACK_IMPORTED_MODULE_11__["default"])( input );
 
 							});
 							media.open();
@@ -5025,7 +4746,7 @@ const __create = function( tabs, data ){
 							_value = '';
 							input.value = _value;
 							__img.create();
-							Object(_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])( input );
+							Object(_update_js__WEBPACK_IMPORTED_MODULE_11__["default"])( input );
 
 						},
 
@@ -5052,7 +4773,7 @@ const __create = function( tabs, data ){
 								button.className = buttonClass + ' comet-buttonPrimary comet-upload';
 								button.innerHTML = browse;
 								wrapper.appendChild( button );
-								Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( button ).on( 'click', __img.open );
+								Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( button ).on( 'click', __img.open );
 								return;
 
 							}
@@ -5061,13 +4782,13 @@ const __create = function( tabs, data ){
 							oh.className = 'comet-media comet-wrapper comet-image';
 							oh.title = browse;
 							oh.innerHTML = '<img src="' + _value + '"/>';
-							Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( oh ).on( 'click', __img.open );
+							Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( oh ).on( 'click', __img.open );
 
 							button.className = classes.button + ' comet-remove';
 							button.title = remove;
 							button.innerHTML = '<span class="cico cico-x"></span>';
 							oh.appendChild( button );
-							Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( button ).on( 'click', __img.delete );
+							Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( button ).on( 'click', __img.delete );
 						}
 
 					};
@@ -5092,21 +4813,21 @@ const __create = function( tabs, data ){
 				value = data[slug];
 
 			}
-			return ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isFunction( fields[field.type] ) ? fields[field.type]() : false );
+			return ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isFunction( fields[field.type] ) ? fields[field.type]() : false );
 
 		},
 
 		update: function( _node ){
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( _node ).on( 'input', function( ev, ui ){
-				Object(_update_js__WEBPACK_IMPORTED_MODULE_8__["default"])( ui );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( _node ).on( 'input', function( ev, ui ){
+				Object(_update_js__WEBPACK_IMPORTED_MODULE_11__["default"])( ui );
 
 			});
 
 		}
 
 	};
-	data = _utils_utils_js__WEBPACK_IMPORTED_MODULE_5__["default"].isObject( data ) ? data : {};
+	data = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( data ) ? data : {};
 
 	return __core.tabs();
 
@@ -5895,14 +5616,6 @@ __webpack_require__.r(__webpack_exports__);
 
 			case 'checkbox':
 			data[slug] = ui.checked ? 'true' : 'false';
-			break;
-
-			case 'radio':
-
-			if( !ui.checked ){
-				return false;
-
-			}
 			break;
 
 			case 'number':
@@ -7083,38 +6796,6 @@ const html = {
 
         return ( !decoded ? '' : _icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg( decoded.set_id, decoded.icon_id ) );
 
-
-        /*var _svg, d, _q;
-
-        if( !node( wicon ).isNode() ){
-            return false;
-
-        }
-
-        if( !( d = _icon.set().decode( icon_id ) ) || !_icon.set( d.set ).isSet() ){
-            return false;
-
-        }
-        _q = _icon.queue();
-
-        if( !( _svg = _q.set( d.set ).icon( d.id ) ) ){
-
-            _icon.set( d.set ).load( function( icon ){
-                const svg = _icon.svg( icon.getAttribute( 'viewBox' ), icon.innerHTML );
-                _q.set( d.set ).add( icon.id, svg, true );
-
-                if( icon.id === d.id ){
-                    wicon.appendChild( svg );
-
-                }
-
-            } );
-
-        }else{
-            wicon.appendChild( _svg );
-
-        }*/
-
     },
 
     element: function( opts, ondone ){
@@ -7170,9 +6851,15 @@ const __icon = {
 	},
 
 	get_icon: function( set_id, icon_id ){
-		const set = __icon.get_set( set_id );
+		var set;
 
-		return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon_id ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set[icon_id] ) ? set[icon_id] : false );
+		if( !__icon.icon_exists( set_id, icon_id ) ){
+			return false;
+
+		}
+		set = __icon.get_set( set_id );
+
+		return set.set[icon_id];
 
 	},
 
@@ -7203,7 +6890,7 @@ const __icon = {
 	icon_exists: function( set_id, icon_id ){
 		const set = __icon.get_set( set_id );
 
-		return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon_id ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set[icon_id] ) );
+		return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon_id ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set.set ) && _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set.set[icon_id] ) );
 
 	},
 
@@ -11562,10 +11249,10 @@ utils.foreachItem = function( data, onitem ){
 			continue;
 
 		}
-		onitem( ids[i], data.items[ids[i]] );
+		o += onitem( ids[i], data.items[ids[i]] );
 
 	}
-	return true;
+	return o;
 
 };
 

@@ -10,9 +10,15 @@ const __icon = {
 	},
 
 	get_icon: function( set_id, icon_id ){
-		const set = __icon.get_set( set_id );
+		var set;
 
-		return ( utils.isString( icon_id ) && utils.isObject( set[icon_id] ) ? set[icon_id] : false );
+		if( !__icon.icon_exists( set_id, icon_id ) ){
+			return false;
+
+		}
+		set = __icon.get_set( set_id );
+
+		return set.set[icon_id];
 
 	},
 
@@ -43,7 +49,7 @@ const __icon = {
 	icon_exists: function( set_id, icon_id ){
 		const set = __icon.get_set( set_id );
 
-		return ( utils.isString( icon_id ) && utils.isObject( set[icon_id] ) );
+		return ( utils.isString( icon_id ) && utils.isObject( set ) && utils.isObject( set.set ) && utils.isObject( set.set[icon_id] ) );
 
 	},
 
