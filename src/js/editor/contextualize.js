@@ -1,4 +1,4 @@
-import __editor from './panel/parts/editor.js';
+import __editor from './panel/fields/editor.js';
 import layout from '../utils/layout.js';
 import utils from '../utils/utils.js';
 import parse from '../utils/parse.js';
@@ -6,7 +6,6 @@ import __tabs from './panel/tabs.js';
 import redefine from './redefine.js';
 import node from '../utils/node.js';
 import __target from './target.js';
-//import init from './panel/init.js';
 import __data from './data.js';
 import panel from './panel.js';
 import __id from './id.js';
@@ -545,13 +544,10 @@ export default function(){
             }
 
             panel({
-                id: false,
                 title: get.title,
                 content: 'content' in get.tabs ? get.tabs.content : '',
                 tabs: 'tabs' in get.tabs ? get.tabs.tabs : '',
                 close: {
-                    inner: '<span class="cico cico-x"></span>',
-                    title: __cometi18n.ui.close,
                     do: function( e, ui ){
                         target_.reset();
                         __editor( true );
@@ -567,7 +563,6 @@ export default function(){
             const priv = {
 
                 section: {
-                    //handle: '.comet-mcItemMoveSection',
                     connectWith : '#cpb-content',
                     items: '.cpb-section',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -609,7 +604,6 @@ export default function(){
                 },
 
                 row: {
-                    handle: '.comet-mcItemMoveRow',
                     connectWith : '.cpb-rows',
                     items: '.cpb-row',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -659,7 +653,6 @@ export default function(){
                 },
 
                 column: {
-                    //handle: '.comet-mcItemMoveColumn',
                     connectWith : '.cpb-rowContent',
                     items: '.cpb-column',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -715,7 +708,6 @@ export default function(){
                 },
 
                 element: {
-                    //handle: '.comet-mcItemMoveElement',
                     connectWith : '.cpb-columnContent',
                     items: '.cpb-element',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -736,7 +728,7 @@ export default function(){
                     },
                     stop: function( e, ui, elementNode ){
                         const id_ = __id();
-                        var id, cid, ncid, t, p, closest;
+                        var id, cid, ncid, t, p, closest, _closest;
 
                         if( !node( elementNode ).isNode() || !( id = parse.dataset( elementNode, 'id' ) ) || !( id = parse.id( id ) ) ){
                             return;

@@ -219,6 +219,7 @@ class Comet_i18n {
 			'saveTemplate'		=> __( 'Save as new template', 'comet' ),
 			'editItem'			=> __( 'Item settings', 'comet' ),
 			'addItem'			=> __( 'Add item', 'comet' ),
+			'sort'				=> __( 'Sort', 'comet' ),
 		] );
 
 		$this->add( 'messages', [

@@ -178,7 +178,7 @@ __webpack_require__.r(__webpack_exports__);
 			const target = prop.get();
 			var _t;
 
-			return ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( target ) || target.node === null || !( _t = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_3__["default"])( target.node ) ).isNode() ? false : _t.prop() );
+			return ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( target ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( target.node )/*!( _t = node( target.node ) ).isNode()*/ ? false : target.node/*_t.prop()*/ );
 
 
 		},

@@ -2,6 +2,8 @@ import utils from '../../../utils/utils.js';
 import node from '../../../utils/node.js';
 import redefine from '../../redefine.js';
 import update from '../../update.js';
+import __target from '../../target.js';
+import __data from '../../data.js';
 
 export default function( id, field, data ){
 
@@ -121,7 +123,7 @@ export default function( id, field, data ){
 
 		update: function( ev, ui, type ){
 			ev.preventDefault();
-			var num, input, d;
+			var num, input, d, target_, t_id, t_type, data_, edata;
 
 			if( !( type in devices ) ){
 				return;
@@ -130,15 +132,23 @@ export default function( id, field, data ){
 			num = parseFloat( ui.value );
 
 			if( is_locked ){
+				target_ = __target();
 
-				for( d in devices[type] ){
+				if( ( t_id = target_.id() ) && ( t_type = target_.type() ) ){
+					data_ = __data();
 
-					if( !node( devices[type][d] ).isNode() || !node( input = devices[type][d].firstChild ).hasClass( 'comet-field' ) || input === ui ){
-						continue;
+					for( d in devices[type] ){
+
+						if( !node( devices[type][d] ).isNode() || !node( input = devices[type][d].firstChild ).hasClass( 'comet-field' ) || input === ui ){
+							continue;
+
+						}
+						edata = {};
+						input.value = num;
+						edata[input.name] = num;
+						data_.set( t_id, t_type, edata );
 
 					}
-					input.value = num;
-
 				}
 
 			}

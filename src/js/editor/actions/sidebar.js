@@ -6,9 +6,10 @@ import utils from '../../utils/utils.js';
 import node from '../../utils/node.js';
 import sort from '../../utils/sort.js';
 import redefine from '../redefine.js';
-//import menu from '../menu/events.js';
-//import __menu from '../menu/menu.js';
+import __tabs from '../panel/tabs.js';
+import __target from '../target.js';
 import __data from '../data.js';
+import panel from '../panel.js';
 
 const sidebar = {
 
@@ -180,10 +181,6 @@ const sidebar = {
 			placeholder: 'cpb-edPlaceholder',
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
-			/*start: function( e, ui, current ){
-				__menu.close();
-
-			},*/
 			stop: function( e, ui, current ){
 				const data_ = __data();
 				const _ui = node( ui );
@@ -263,7 +260,6 @@ const sidebar = {
 
 				}
 				ui.parentNode.replaceChild( re, ui );
-				//menu();
 
 			}
 
@@ -280,13 +276,10 @@ const sidebar = {
 			placeholder: 'cpb-edSortPlaceholder',
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
-			/*start: function(){
-				__menu.close();
-
-			},*/
 			stop: function( e, ui, current ){
 				const data_ = __data();
-				var _ui, closest, _closest, id, t, pid, defname, position, ret, ch;
+				const target_ = __target();
+				var preload, _ui, closest, _closest, id, t, pid, defname, lyt, element, tabs, edata;
 
 				if( !( defname = parse.dataset( current, 'id' ) ) || utils.isStringEmpty( defname ) ){
 					return;
@@ -303,14 +296,41 @@ const sidebar = {
 				_closest = node( closest );
 				t = _closest.isNode() && ( t = parse.dataset( _closest.prop(), 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
 
-				if( !( id = data_.create( defname, pid, t ) ) || !( ret = layout( data_.getData() ).element( id ) ) ){
+				if( !( id = data_.create( defname, pid, t ) ) || !( lyt = layout( data_.getData() ).element( id ) ) ){
 					return;
 
 				}
-				ch = node( ui.parentNode ).children( 'comet-editorMenuOptions' );
-				node( ch ).remove();
-				ui.parentNode.replaceChild( ret, ui );
-				//menu();
+				preload = document.createElement( 'div' );
+				preload.appendChild( lyt );
+				element = preload.firstChild;
+
+				ui.parentNode.replaceChild( element, ui );
+
+				if( !utils.isObject( edata = utils.getElement( defname ) ) || !utils.isObject( edata.tabs ) ){
+					return;
+
+				}
+				tabs = __tabs( edata.tabs, data_.get( id, defname ) );
+				target_.reset();
+
+				target_.set({
+					id: id,
+					type: 'elements',
+					node: element
+				});
+
+				panel({
+					title: __cometi18n.options.element.edit,
+					content: 'content' in tabs ? tabs.content : '',
+					tabs: 'tabs' in tabs ? tabs.tabs : '',
+					close: {
+						do: function( e, ui ){
+							target_.reset();
+							__editor( true );
+						}
+					}
+
+				});
 
 			}
 

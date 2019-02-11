@@ -334,7 +334,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/node.js */ "./src/js/utils/node.js");
 /* harmony import */ var _utils_sort_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/sort.js */ "./src/js/utils/sort.js");
 /* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../redefine.js */ "./src/js/editor/redefine.js");
-/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
+/* harmony import */ var _panel_tabs_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../panel/tabs.js */ "./src/js/editor/panel/tabs.js");
+/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../target.js */ "./src/js/editor/target.js");
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
+/* harmony import */ var _panel_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../panel.js */ "./src/js/editor/panel.js");
 
 
 
@@ -343,8 +346,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import menu from '../menu/events.js';
-//import __menu from '../menu/menu.js';
+
+
+
 
 
 const sidebar = {
@@ -483,7 +487,7 @@ const sidebar = {
 				do: 'save',
 				data: JSON.stringify({
 					id: id,
-					meta: _data_js__WEBPACK_IMPORTED_MODULE_8__["default"].getData(),
+					meta: _data_js__WEBPACK_IMPORTED_MODULE_10__["default"].getData(),
 					content: _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].content(),
 					_post: Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( document.getElementById( 'comet-postSettings' ) ).serialize()
 
@@ -517,12 +521,8 @@ const sidebar = {
 			placeholder: 'cpb-edPlaceholder',
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
-			/*start: function( e, ui, current ){
-				__menu.close();
-
-			},*/
 			stop: function( e, ui, current ){
-				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
+				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
 				const _ui = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui );
 				var sid, rid, cid, columns, _column, sibid, nb, _p, p, r, re, a, w, tmp, position;
 
@@ -600,7 +600,6 @@ const sidebar = {
 
 				}
 				ui.parentNode.replaceChild( re, ui );
-				//menu();
 
 			}
 
@@ -617,13 +616,10 @@ const sidebar = {
 			placeholder: 'cpb-edSortPlaceholder',
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
-			/*start: function(){
-				__menu.close();
-
-			},*/
 			stop: function( e, ui, current ){
-				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
-				var _ui, closest, _closest, id, t, pid, defname, position, ret, ch;
+				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+				const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
+				var preload, _ui, closest, _closest, id, t, pid, defname, lyt, element, tabs, edata;
 
 				if( !( defname = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( current, 'id' ) ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( defname ) ){
 					return;
@@ -640,14 +636,41 @@ const sidebar = {
 				_closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( closest );
 				t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( t ) ) ? t : 'last';
 
-				if( !( id = data_.create( defname, pid, t ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_2__["default"])( data_.getData() ).element( id ) ) ){
+				if( !( id = data_.create( defname, pid, t ) ) || !( lyt = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_2__["default"])( data_.getData() ).element( id ) ) ){
 					return;
 
 				}
-				ch = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui.parentNode ).children( 'comet-editorMenuOptions' );
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ch ).remove();
-				ui.parentNode.replaceChild( ret, ui );
-				//menu();
+				preload = document.createElement( 'div' );
+				preload.appendChild( lyt );
+				element = preload.firstChild;
+
+				ui.parentNode.replaceChild( element, ui );
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( edata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].getElement( defname ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( edata.tabs ) ){
+					return;
+
+				}
+				tabs = Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_8__["default"])( edata.tabs, data_.get( id, defname ) );
+				target_.reset();
+
+				target_.set({
+					id: id,
+					type: 'elements',
+					node: element
+				});
+
+				Object(_panel_js__WEBPACK_IMPORTED_MODULE_11__["default"])({
+					title: __cometi18n.options.element.edit,
+					content: 'content' in tabs ? tabs.content : '',
+					tabs: 'tabs' in tabs ? tabs.tabs : '',
+					close: {
+						do: function( e, ui ){
+							target_.reset();
+							__editor( true );
+						}
+					}
+
+				});
 
 			}
 
@@ -1029,7 +1052,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _panel_parts_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./panel/parts/editor.js */ "./src/js/editor/panel/parts/editor.js");
+/* harmony import */ var _panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./panel/fields/editor.js */ "./src/js/editor/panel/fields/editor.js");
 /* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/layout.js */ "./src/js/utils/layout.js");
 /* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
 /* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
@@ -1048,7 +1071,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import init from './panel/init.js';
 
 
 
@@ -1587,16 +1609,13 @@ __webpack_require__.r(__webpack_exports__);
             }
 
             Object(_panel_js__WEBPACK_IMPORTED_MODULE_9__["default"])({
-                id: false,
                 title: get.title,
                 content: 'content' in get.tabs ? get.tabs.content : '',
                 tabs: 'tabs' in get.tabs ? get.tabs.tabs : '',
                 close: {
-                    inner: '<span class="cico cico-x"></span>',
-                    title: __cometi18n.ui.close,
                     do: function( e, ui ){
                         target_.reset();
-                        Object(_panel_parts_editor_js__WEBPACK_IMPORTED_MODULE_0__["default"])( true );
+                        Object(_panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__["default"])( true );
                     }
                 }
 
@@ -1609,7 +1628,6 @@ __webpack_require__.r(__webpack_exports__);
             const priv = {
 
                 section: {
-                    //handle: '.comet-mcItemMoveSection',
                     connectWith : '#cpb-content',
                     items: '.cpb-section',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -1651,7 +1669,6 @@ __webpack_require__.r(__webpack_exports__);
                 },
 
                 row: {
-                    handle: '.comet-mcItemMoveRow',
                     connectWith : '.cpb-rows',
                     items: '.cpb-row',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -1701,7 +1718,6 @@ __webpack_require__.r(__webpack_exports__);
                 },
 
                 column: {
-                    //handle: '.comet-mcItemMoveColumn',
                     connectWith : '.cpb-rowContent',
                     items: '.cpb-column',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -1757,7 +1773,6 @@ __webpack_require__.r(__webpack_exports__);
                 },
 
                 element: {
-                    //handle: '.comet-mcItemMoveElement',
                     connectWith : '.cpb-columnContent',
                     items: '.cpb-element',
                     placeholder: 'cpb-edSortPlaceholder',
@@ -1778,7 +1793,7 @@ __webpack_require__.r(__webpack_exports__);
                     },
                     stop: function( e, ui, elementNode ){
                         const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
-                        var id, cid, ncid, t, p, closest;
+                        var id, cid, ncid, t, p, closest, _closest;
 
                         if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( elementNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( elementNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
                             return;
@@ -3062,585 +3077,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/js/editor/panel/fields/icon.js":
-/*!********************************************!*\
-  !*** ./src/js/editor/panel/fields/icon.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _utils_modal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/modal.js */ "./src/js/utils/modal.js");
-/* harmony import */ var _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils/icon.js */ "./src/js/utils/icon.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../update.js */ "./src/js/editor/update.js");
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function( slug, field, data ){
-
-	var input = null;
-
-	var value = '';
-
-	var loaded = [];
-
-	var _modal = false;
-
-	const _d = document;
-
-	const wrapper = _d.createElement( 'div' );
-
-	const __core = {
-
-		load: function( set_id ){
-			const fragment = _d.createDocumentFragment();
-			const set = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_set( set_id );
-			var icon_id, scope, svg, encoded;
-
-			loaded = [];
-
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set.set ) ){
-
-				for( icon_id in set.set ){
-
-					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( svg = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg_from_data( set.set[icon_id] ) ) ){
-						continue;
-
-					}
-					encoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode( set_id, icon_id );
-					scope = _d.createElement( 'div' );
-					scope.className = 'comet-scope comet-icon comet-collection';
-					scope.innerHTML = svg;
-					fragment.appendChild( scope );
-
-					loaded[loaded.length] = {
-						id: icon_id,
-						name: set.set[icon_id].name,
-						svg: svg,
-						node: scope
-
-					};
-
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( scope ).on( 'click', __core.onclick, encoded );
-
-				}
-
-			}
-			_modal.body.firstChild.innerHTML = '';
-			_modal.body.firstChild.appendChild( fragment );
-
-		},
-
-		onclick: function( ev, ui, edata ){
-			ev.preventDefault();
-			console.log( edata );
-			value = edata;
-			input.value = edata;
-			__core.create();
-			Object(_update_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input );
-			_modal.destroy();
-
-		},
-
-		switch: function( ev, ui ){
-			__core.load( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( ui.value ) : '' );
-
-		},
-
-		search: function( ev, ui ){
-
-			const val = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( ui.value ) : '';
-			var icon, i, regex;
-
-			if( loaded.length < 1 ){
-				return false;
-
-			}
-			regex = new RegExp( val, 'i' );
-
-			for( i = 0; i < loaded.length; i++ ){
-
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( icon = loaded[i] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon.id ) ){
-					continue;
-
-				}
-
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( val ) && icon.id.search( regex ) === -1 ){
-					icon.node.style.display = 'none';
-					continue;
-
-				}
-				icon.node.style.display = 'block';
-
-			}
-
-		},
-
-		open: function( ev, ui ){
-
-			ev.preventDefault();
-			ev.stopPropagation();
-
-			const sets = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSvgSets();
-			var first_id = false;
-			var count = 1;
-			var option = '';
-			var id, header, inner, body;
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets ) ){
-				return;
-
-			}
-
-			header = _d.createElement( 'div' );
-			header.className = 'comet-searchbox';
-
-			inner = '<select class="comet-ui comet-select">';
-
-			for( id in sets ){
-
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( sets[id].name ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id].set ) ){
-					continue;
-
-				}
-
-				if( count === 1 ){
-					first_id = id;
-
-				}
-				inner += '<option value="' + id +'">' + sets[id].name + '</option>';
-				count++;
-
-			}
-			inner += '</select>';
-			inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.sIcon + '"/>';
-			header.innerHTML = inner;
-
-			body = _d.createElement( 'div' );
-			body.className = 'comet-icons comet-set comet-wrapper';
-
-			_modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
-				header: header,
-				content: body
-			});
-
-			__core.load( first_id );
-
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.firstChild ).on( 'change', __core.switch );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.lastChild ).on( 'input', __core.search );
-		},
-
-		delete: function( ev, ui ){
-			ev.preventDefault();
-			ev.stopPropagation();
-			value = '';
-			input.value = value;
-			__core.create();
-			Object(_update_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input );
-
-		},
-
-		create: function(){
-
-			const browse = __cometi18n.ui.browse;
-			const remove = __cometi18n.ui.remove;
-			const buttonClass = 'comet-button';
-			const wcn = wrapper.childNodes;
-			const button = _d.createElement( 'button' );
-			const decoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].decode( value );
-			const icon = ( !decoded ? false : _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_icon( decoded.set_id, decoded.icon_id ) );
-			var n = 0;
-
-			console.log( value, decoded, icon );
-
-			while( n < wcn.length ){
-
-				if( wcn[n] !== input ){
-					wrapper.removeChild( wcn[n] );
-
-				}
-				n++;
-			}
-
-			if( !icon ){
-				button.className = buttonClass + ' comet-buttonPrimary comet-upload';
-				button.innerHTML = browse;
-				wrapper.appendChild( button );
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( button ).on( 'click', __core.open );
-				return;
-
-			}
-			const oh = _d.createElement( 'div' );
-			wrapper.appendChild( oh );
-			oh.className = 'comet-media comet-wrapper comet-icon';
-			oh.title = browse;
-			oh.innerHTML = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg_from_data( icon );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oh ).on( 'click', __core.open );
-
-			button.className = buttonClass + ' comet-remove';
-			button.title = remove;
-			button.innerHTML = '<span class="cico cico-x"></span>';
-			oh.appendChild( button );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( button ).on( 'click', __core.delete );
-
-		}
-
-
-	};
-
-	data = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( data ) ? data : {};
-
-	if( 'std' in field ){
-		value = field.std;
-
-	}
-
-	if( slug in data ){
-		value = data[slug];
-
-	}
-	value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( value ) ) : '';
-
-	wrapper.className = 'comet-uploader comet-image comet-wrapper';
-	wrapper.innerHTML = '<input type="hidden" name="' + slug + '" class="comet-field" value="' + value + '" />';
-	input = wrapper.firstChild;
-	__core.create();
-
-	return wrapper;
-
-});
-
-/***/ }),
-
-/***/ "./src/js/editor/panel/fields/numbers.js":
-/*!***********************************************!*\
-  !*** ./src/js/editor/panel/fields/numbers.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../redefine.js */ "./src/js/editor/redefine.js");
-/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../update.js */ "./src/js/editor/update.js");
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function( id, field, data ){
-
-	var inner, _dd, v, values, _id, _responsive, tmp;
-
-	var is_locked = false;
-
-	var device = 'desktop';
-
-	const _d = document;
-
-	const is_responsive = ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( field.responsive ) && [ 'true', 'yes' ].indexOf( ( field.responsive ).toLowerCase() ) > -1 );
-
-	const devices = {
-		tablet: [],
-		mobile: [],
-		desktop: []
-	};
-
-	const frame = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getNode( 'frame' );
-
-	const classes = {
-		active: 'comet-active',
-		locked: 'comet-locked',
-	};
-
-	const __core = {
-
-		devices: function( ev, ui, e ){
-			ev.preventDefault();
-			ev.stopPropagation();
-			var _device, ico, d;
-
-			switch( e.device ){
-				case 'desktop':
-				ico = 'cico-desktop';
-				_redefine_js__WEBPACK_IMPORTED_MODULE_2__["default"].workflow();
-				break;
-				
-				case 'tablet':
-				ico = 'cico-tablet';
-				frame.style.maxWidth = '800px';
-				break;
-
-				case 'mobile':
-				ico = 'cico-mobile';
-				frame.style.maxWidth = '400px';
-				break;
-
-				default:
-				return;
-
-			}
-			device = e.device;
-			e.icon.className = 'cico ' + ico;
-
-			for( d in devices ){
-
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( devices[d] ) ){
-					return;
-
-				}
-				_device = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( devices[d] );
-
-				if( d === e.device ){
-					_device.addClass( classes.active );
-
-				}else{
-					_device.removeClass( classes.active );
-
-				}
-
-				if( is_locked ){
-					_device.addClass( classes.locked );
-					continue;
-
-				}
-				_device.removeClass( classes.locked );
-
-			}
-
-		},
-
-		vernum: function( ev, ui ){
-			ev.preventDefault();
-			var d, _device;
-			is_locked = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isBool( is_locked ) && is_locked ? false : true;
-
-			if( is_locked ){
-				ui.firstChild.className = 'cico cico-lock';
-				ui.title = __cometi18n.ui.locked;
-
-			}else{
-				ui.firstChild.className = 'cico cico-unlock';
-				ui.title = __cometi18n.ui.unlocked;
-
-			}
-
-			for( d in devices ){
-
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( devices[d] ) ){
-					return;
-
-				}
-				_device = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( devices[d] );
-
-				if( d === device  && is_locked ){
-					_device.addClass( classes.locked );
-					continue;
-
-				}
-				_device.removeClass( classes.locked );
-
-			}
-
-		},
-
-		update: function( ev, ui, type ){
-			ev.preventDefault();
-			var num, input, d;
-
-			if( !( type in devices ) ){
-				return;
-
-			}
-			num = parseFloat( ui.value );
-
-			if( is_locked ){
-
-				for( d in devices[type] ){
-
-					if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( devices[type][d] ).isNode() || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( input = devices[type][d].firstChild ).hasClass( 'comet-field' ) || input === ui ){
-						continue;
-
-					}
-					input.value = num;
-
-				}
-
-			}
-			Object(_update_js__WEBPACK_IMPORTED_MODULE_3__["default"])( ui );
-
-		},
-
-		get_value: function( slug, _field ){
-			var value = '';
-
-			if( 'std' in _field ){
-				value = _field.std;
-
-			}
-
-			if( slug in data ){
-				value = data[slug];
-
-			}
-			return value;
-
-		},
-
-		number: function( type, e ){
-			var className = 'comet-number comet-wrapper';
-			var _node, len;
-
-			if( !( type in devices ) ){
-				return false;
-
-			}
-
-			if( is_locked ){
-				className += ' ' + classes.locked;
-
-			}
-
-			if( type === 'desktop' ){
-				className += ' ' + classes.active;
-
-			}
-			_node = _d.createElement( 'div' );
-			_node.className = className;
-			_node.innerHTML = '<input type="number" class="comet-field" name="' + e.name + '" value="' + e.value + '" /><label>' + e.label + '</label>';
-			
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _node.firstChild ).on( 'input change', __core.update, type );
-			
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( devices[type] ) ){
-				len = devices[type].length;
-				devices[type][len] = _node;
-
-			}else{
-				devices[type] = [];
-				devices[type][0] = _node;
-
-			}
-
-			return _node;
-
-		}
-
-	};
-
-	const fragment = _d.createDocumentFragment();
-
-	const _num = _d.createElement( 'div' );
-
-	const _lock = _d.createElement( 'button' );
-
-	data = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( data ) ? data : {};
-
-	_lock.className = 'comet-vernum comet-upper';
-	_lock.title = __cometi18n.ui.unlocked;
-	_lock.innerHTML = '<span class="cico cico-unlock"></span>';
-
-	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _lock ).on( 'click', __core.vernum );
-
-	fragment.appendChild( _lock );
-
-	if( is_responsive ){
-		_responsive = _d.createElement( 'div' );
-		_responsive.className = 'comet-switch comet-devices comet-dropdown comet-upper';
-
-		inner = '<span class="cico cico-desktop"></span>';
-		inner += '<div class="comet-items">';
-		inner += '<button class="comet-device" data-device="d"><span class="cico cico-desktop"></span>' + __cometi18n.ui.desktop + '</button>';
-		inner += '<button class="comet-device" data-device="t"><span class="cico cico-tablet"></span>' + __cometi18n.ui.tablet + '</button>';
-		inner += '<button class="comet-device" data-device="m"><span class="cico cico-mobile"></span>' + __cometi18n.ui.mobile + '</button>';
-		inner += '</div>';
-		_responsive.innerHTML = inner;
-
-		_dd = _responsive.lastChild.children;
-
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _dd[0] ).on( 'click', __core.devices, { icon: _responsive.firstChild, device: 'desktop' } );
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _dd[1] ).on( 'click', __core.devices, { icon: _responsive.firstChild, device: 'tablet' } );
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _dd[2] ).on( 'click', __core.devices, { icon: _responsive.firstChild, device: 'mobile' } );
-
-		fragment.appendChild( _responsive );
-
-	}
-	_num.className = 'comet-wrapper comet-numbers';
-	fragment.appendChild( _num );
-
-	if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( values = field.values ) ){
-
-		for( v in values ){
-
-			tmp = __core.number( 'desktop', {
-				label: _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( values[v].label ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( values[v].label ) ) : '',
-				name: ( _id = id + v ),
-				value: __core.get_value( _id, values[v] )
-
-			} );
-
-			if( !tmp ){
-				continue;
-
-			}
-			_num.appendChild( tmp );
-
-			if( !is_responsive ){
-				continue;
-
-			}
-
-			tmp = __core.number( 'tablet', {
-				label: _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( values[v].label ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( values[v].label ) ) : '',
-				name: _id + 't',
-				value: __core.get_value( _id + 't', values[v] )
-
-			} );
-
-			if( !tmp ){
-				continue;
-
-			}
-			_num.appendChild( tmp );
-
-
-			tmp = __core.number( 'mobile', {
-				label: _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( values[v].label ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( values[v].label ) ) : '',
-				name: _id + 'm',
-				value: __core.get_value( _id + 'm', values[v] )
-
-			} );
-
-			if( !tmp ){
-				continue;
-
-			}
-			_num.appendChild( tmp );
-
-
-		}
-
-	}
-
-	return fragment;
-
-});
-
-/***/ }),
-
-/***/ "./src/js/editor/panel/parts/editor.js":
-/*!*********************************************!*\
-  !*** ./src/js/editor/panel/parts/editor.js ***!
-  \*********************************************/
+/***/ "./src/js/editor/panel/fields/editor.js":
+/*!**********************************************!*\
+  !*** ./src/js/editor/panel/fields/editor.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4072,6 +3512,593 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/js/editor/panel/fields/icon.js":
+/*!********************************************!*\
+  !*** ./src/js/editor/panel/fields/icon.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _utils_modal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/modal.js */ "./src/js/utils/modal.js");
+/* harmony import */ var _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils/icon.js */ "./src/js/utils/icon.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../update.js */ "./src/js/editor/update.js");
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function( slug, field, data ){
+
+	var input = null;
+
+	var value = '';
+
+	var loaded = [];
+
+	var _modal = false;
+
+	const _d = document;
+
+	const wrapper = _d.createElement( 'div' );
+
+	const __core = {
+
+		load: function( set_id ){
+			const fragment = _d.createDocumentFragment();
+			const set = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_set( set_id );
+			var icon_id, scope, svg, encoded;
+
+			loaded = [];
+
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( set.set ) ){
+
+				for( icon_id in set.set ){
+
+					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( svg = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg_from_data( set.set[icon_id] ) ) ){
+						continue;
+
+					}
+					encoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode( set_id, icon_id );
+					scope = _d.createElement( 'div' );
+					scope.className = 'comet-scope comet-icon comet-collection';
+					scope.innerHTML = svg;
+					fragment.appendChild( scope );
+
+					loaded[loaded.length] = {
+						id: icon_id,
+						name: set.set[icon_id].name,
+						svg: svg,
+						node: scope
+
+					};
+
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( scope ).on( 'click', __core.onclick, encoded );
+
+				}
+
+			}
+			_modal.body.firstChild.innerHTML = '';
+			_modal.body.firstChild.appendChild( fragment );
+
+		},
+
+		onclick: function( ev, ui, edata ){
+			ev.preventDefault();
+			console.log( edata );
+			value = edata;
+			input.value = edata;
+			__core.create();
+			Object(_update_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input );
+			_modal.destroy();
+
+		},
+
+		switch: function( ev, ui ){
+			__core.load( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( ui.value ) : '' );
+
+		},
+
+		search: function( ev, ui ){
+
+			const val = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( ui.value ) : '';
+			var icon, i, regex;
+
+			if( loaded.length < 1 ){
+				return false;
+
+			}
+			regex = new RegExp( val, 'i' );
+
+			for( i = 0; i < loaded.length; i++ ){
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( icon = loaded[i] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( icon.id ) ){
+					continue;
+
+				}
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( val ) && icon.id.search( regex ) === -1 ){
+					icon.node.style.display = 'none';
+					continue;
+
+				}
+				icon.node.style.display = 'block';
+
+			}
+
+		},
+
+		open: function( ev, ui ){
+
+			ev.preventDefault();
+			ev.stopPropagation();
+
+			const sets = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getSvgSets();
+			var first_id = false;
+			var count = 1;
+			var option = '';
+			var id, header, inner, body;
+
+			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets ) ){
+				return;
+
+			}
+
+			header = _d.createElement( 'div' );
+			header.className = 'comet-searchbox';
+
+			inner = '<select class="comet-ui comet-select">';
+
+			for( id in sets ){
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( sets[id].name ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( sets[id].set ) ){
+					continue;
+
+				}
+
+				if( count === 1 ){
+					first_id = id;
+
+				}
+				inner += '<option value="' + id +'">' + sets[id].name + '</option>';
+				count++;
+
+			}
+			inner += '</select>';
+			inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.sIcon + '"/>';
+			header.innerHTML = inner;
+
+			body = _d.createElement( 'div' );
+			body.className = 'comet-icons comet-set comet-wrapper';
+
+			_modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
+				header: header,
+				content: body
+			});
+
+			__core.load( first_id );
+
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.firstChild ).on( 'change', __core.switch );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.lastChild ).on( 'input', __core.search );
+		},
+
+		delete: function( ev, ui ){
+			ev.preventDefault();
+			ev.stopPropagation();
+			value = '';
+			input.value = value;
+			__core.create();
+			Object(_update_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input );
+
+		},
+
+		create: function(){
+
+			const browse = __cometi18n.ui.browse;
+			const remove = __cometi18n.ui.remove;
+			const buttonClass = 'comet-button';
+			const wcn = wrapper.childNodes;
+			const button = _d.createElement( 'button' );
+			const decoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].decode( value );
+			const icon = ( !decoded ? false : _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_icon( decoded.set_id, decoded.icon_id ) );
+			var n = 0;
+
+			console.log( value, decoded, icon );
+
+			while( n < wcn.length ){
+
+				if( wcn[n] !== input ){
+					wrapper.removeChild( wcn[n] );
+
+				}
+				n++;
+			}
+
+			if( !icon ){
+				button.className = buttonClass + ' comet-buttonPrimary comet-upload';
+				button.innerHTML = browse;
+				wrapper.appendChild( button );
+				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( button ).on( 'click', __core.open );
+				return;
+
+			}
+			const oh = _d.createElement( 'div' );
+			wrapper.appendChild( oh );
+			oh.className = 'comet-media comet-wrapper comet-icon';
+			oh.title = browse;
+			oh.innerHTML = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_svg_from_data( icon );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oh ).on( 'click', __core.open );
+
+			button.className = buttonClass + ' comet-remove';
+			button.title = remove;
+			button.innerHTML = '<span class="cico cico-x"></span>';
+			oh.appendChild( button );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( button ).on( 'click', __core.delete );
+
+		}
+
+
+	};
+
+	data = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( data ) ? data : {};
+
+	if( 'std' in field ){
+		value = field.std;
+
+	}
+
+	if( slug in data ){
+		value = data[slug];
+
+	}
+	value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( value ) ) : '';
+
+	wrapper.className = 'comet-uploader comet-image comet-wrapper';
+	wrapper.innerHTML = '<input type="hidden" name="' + slug + '" class="comet-field" value="' + value + '" />';
+	input = wrapper.firstChild;
+	__core.create();
+
+	return wrapper;
+
+});
+
+/***/ }),
+
+/***/ "./src/js/editor/panel/fields/numbers.js":
+/*!***********************************************!*\
+  !*** ./src/js/editor/panel/fields/numbers.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../redefine.js */ "./src/js/editor/redefine.js");
+/* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../update.js */ "./src/js/editor/update.js");
+/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../target.js */ "./src/js/editor/target.js");
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../data.js */ "./src/js/editor/data.js");
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function( id, field, data ){
+
+	var inner, _dd, v, values, _id, _responsive, tmp;
+
+	var is_locked = false;
+
+	var device = 'desktop';
+
+	const _d = document;
+
+	const is_responsive = ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( field.responsive ) && [ 'true', 'yes' ].indexOf( ( field.responsive ).toLowerCase() ) > -1 );
+
+	const devices = {
+		tablet: [],
+		mobile: [],
+		desktop: []
+	};
+
+	const frame = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getNode( 'frame' );
+
+	const classes = {
+		active: 'comet-active',
+		locked: 'comet-locked',
+	};
+
+	const __core = {
+
+		devices: function( ev, ui, e ){
+			ev.preventDefault();
+			ev.stopPropagation();
+			var _device, ico, d;
+
+			switch( e.device ){
+				case 'desktop':
+				ico = 'cico-desktop';
+				_redefine_js__WEBPACK_IMPORTED_MODULE_2__["default"].workflow();
+				break;
+				
+				case 'tablet':
+				ico = 'cico-tablet';
+				frame.style.maxWidth = '800px';
+				break;
+
+				case 'mobile':
+				ico = 'cico-mobile';
+				frame.style.maxWidth = '400px';
+				break;
+
+				default:
+				return;
+
+			}
+			device = e.device;
+			e.icon.className = 'cico ' + ico;
+
+			for( d in devices ){
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( devices[d] ) ){
+					return;
+
+				}
+				_device = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( devices[d] );
+
+				if( d === e.device ){
+					_device.addClass( classes.active );
+
+				}else{
+					_device.removeClass( classes.active );
+
+				}
+
+				if( is_locked ){
+					_device.addClass( classes.locked );
+					continue;
+
+				}
+				_device.removeClass( classes.locked );
+
+			}
+
+		},
+
+		vernum: function( ev, ui ){
+			ev.preventDefault();
+			var d, _device;
+			is_locked = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isBool( is_locked ) && is_locked ? false : true;
+
+			if( is_locked ){
+				ui.firstChild.className = 'cico cico-lock';
+				ui.title = __cometi18n.ui.locked;
+
+			}else{
+				ui.firstChild.className = 'cico cico-unlock';
+				ui.title = __cometi18n.ui.unlocked;
+
+			}
+
+			for( d in devices ){
+
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( devices[d] ) ){
+					return;
+
+				}
+				_device = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( devices[d] );
+
+				if( d === device  && is_locked ){
+					_device.addClass( classes.locked );
+					continue;
+
+				}
+				_device.removeClass( classes.locked );
+
+			}
+
+		},
+
+		update: function( ev, ui, type ){
+			ev.preventDefault();
+			var num, input, d, target_, t_id, t_type, data_, edata;
+
+			if( !( type in devices ) ){
+				return;
+
+			}
+			num = parseFloat( ui.value );
+
+			if( is_locked ){
+				target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_4__["default"])();
+
+				if( ( t_id = target_.id() ) && ( t_type = target_.type() ) ){
+					data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_5__["default"])();
+
+					for( d in devices[type] ){
+
+						if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( devices[type][d] ).isNode() || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( input = devices[type][d].firstChild ).hasClass( 'comet-field' ) || input === ui ){
+							continue;
+
+						}
+						edata = {};
+						input.value = num;
+						edata[input.name] = num;
+						data_.set( t_id, t_type, edata );
+
+					}
+				}
+
+			}
+			Object(_update_js__WEBPACK_IMPORTED_MODULE_3__["default"])( ui );
+
+		},
+
+		get_value: function( slug, _field ){
+			var value = '';
+
+			if( 'std' in _field ){
+				value = _field.std;
+
+			}
+
+			if( slug in data ){
+				value = data[slug];
+
+			}
+			return value;
+
+		},
+
+		number: function( type, e ){
+			var className = 'comet-number comet-wrapper';
+			var _node, len;
+
+			if( !( type in devices ) ){
+				return false;
+
+			}
+
+			if( is_locked ){
+				className += ' ' + classes.locked;
+
+			}
+
+			if( type === 'desktop' ){
+				className += ' ' + classes.active;
+
+			}
+			_node = _d.createElement( 'div' );
+			_node.className = className;
+			_node.innerHTML = '<input type="number" class="comet-field" name="' + e.name + '" value="' + e.value + '" /><label>' + e.label + '</label>';
+			
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _node.firstChild ).on( 'input change', __core.update, type );
+			
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( devices[type] ) ){
+				len = devices[type].length;
+				devices[type][len] = _node;
+
+			}else{
+				devices[type] = [];
+				devices[type][0] = _node;
+
+			}
+
+			return _node;
+
+		}
+
+	};
+
+	const fragment = _d.createDocumentFragment();
+
+	const _num = _d.createElement( 'div' );
+
+	const _lock = _d.createElement( 'button' );
+
+	data = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( data ) ? data : {};
+
+	_lock.className = 'comet-vernum comet-upper';
+	_lock.title = __cometi18n.ui.unlocked;
+	_lock.innerHTML = '<span class="cico cico-unlock"></span>';
+
+	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _lock ).on( 'click', __core.vernum );
+
+	fragment.appendChild( _lock );
+
+	if( is_responsive ){
+		_responsive = _d.createElement( 'div' );
+		_responsive.className = 'comet-switch comet-devices comet-dropdown comet-upper';
+
+		inner = '<span class="cico cico-desktop"></span>';
+		inner += '<div class="comet-items">';
+		inner += '<button class="comet-device" data-device="d"><span class="cico cico-desktop"></span>' + __cometi18n.ui.desktop + '</button>';
+		inner += '<button class="comet-device" data-device="t"><span class="cico cico-tablet"></span>' + __cometi18n.ui.tablet + '</button>';
+		inner += '<button class="comet-device" data-device="m"><span class="cico cico-mobile"></span>' + __cometi18n.ui.mobile + '</button>';
+		inner += '</div>';
+		_responsive.innerHTML = inner;
+
+		_dd = _responsive.lastChild.children;
+
+		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _dd[0] ).on( 'click', __core.devices, { icon: _responsive.firstChild, device: 'desktop' } );
+		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _dd[1] ).on( 'click', __core.devices, { icon: _responsive.firstChild, device: 'tablet' } );
+		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _dd[2] ).on( 'click', __core.devices, { icon: _responsive.firstChild, device: 'mobile' } );
+
+		fragment.appendChild( _responsive );
+
+	}
+	_num.className = 'comet-wrapper comet-numbers';
+	fragment.appendChild( _num );
+
+	if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( values = field.values ) ){
+
+		for( v in values ){
+
+			tmp = __core.number( 'desktop', {
+				label: _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( values[v].label ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( values[v].label ) ) : '',
+				name: ( _id = id + v ),
+				value: __core.get_value( _id, values[v] )
+
+			} );
+
+			if( !tmp ){
+				continue;
+
+			}
+			_num.appendChild( tmp );
+
+			if( !is_responsive ){
+				continue;
+
+			}
+
+			tmp = __core.number( 'tablet', {
+				label: _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( values[v].label ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( values[v].label ) ) : '',
+				name: _id + 't',
+				value: __core.get_value( _id + 't', values[v] )
+
+			} );
+
+			if( !tmp ){
+				continue;
+
+			}
+			_num.appendChild( tmp );
+
+
+			tmp = __core.number( 'mobile', {
+				label: _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( values[v].label ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( values[v].label ) ) : '',
+				name: _id + 'm',
+				value: __core.get_value( _id + 'm', values[v] )
+
+			} );
+
+			if( !tmp ){
+				continue;
+
+			}
+			_num.appendChild( tmp );
+
+
+		}
+
+	}
+
+	return fragment;
+
+});
+
+/***/ }),
+
 /***/ "./src/js/editor/panel/tabs.js":
 /*!*************************************!*\
   !*** ./src/js/editor/panel/tabs.js ***!
@@ -4095,6 +4122,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _update_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../update.js */ "./src/js/editor/update.js");
 /* harmony import */ var _panel_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../panel.js */ "./src/js/editor/panel.js");
 /* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
+/* harmony import */ var _id_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../id.js */ "./src/js/editor/id.js");
 
 
 
@@ -4109,7 +4137,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import __tab from './tab.js';
+
 
 const __create = function( tabs, data ){
 
@@ -4241,8 +4269,60 @@ const __create = function( tabs, data ){
 					
 				}
 
+			},
+
+			sort: function( id ){
+
+				return {
+					//handle: handler,
+					connectWith: '.comet-items-sortable',
+					items: '.comet-item-sortable',
+					placeholder: 'comet-item comet-ui comet-ui-placeholder',
+					cursor: 'cpb-elementCursor',
+					bodyClass: '',
+
+					start: function( ev, ui ){
+						var tmp;
+
+						if( ui.parentNode === null ){
+							return;
+
+						}
+
+						ui.parentNode.style.visibility = 'hidden';
+						return ui.parentNode;
+
+					},
+					stop: function( e, ui, item ){
+						const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+						const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_14__["default"])(); 
+						var pid, t, re, _closest, closest, tnode;
+
+						item.removeAttribute( 'style' );
+
+						if( !( pid = target_.id() ) ){
+							return;
+
+						}
+						closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( ui ).next( '.comet-item-sortable' );
+						_closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( closest );
+						t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].id( t ) ) ? t : 'last';
+
+						id_.remove( id, 'items', pid );
+						id_.insert( id, 'items', pid, t );
+						ui.parentNode.replaceChild( item , ui );
+
+						if( !( tnode = target_.node() ) || tnode === null || !( re = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_5__["default"])( Object(_data_js__WEBPACK_IMPORTED_MODULE_13__["default"])().getData() ).element( pid, true ) ) ){
+							return;
+
+						}
+						tnode.parentNode.replaceChild( re, tnode );
+
+					}
+				};
+
 			}
-		},
+		}
 
 	};
 
@@ -4294,7 +4374,7 @@ const __create = function( tabs, data ){
 
 				section = _d.createElement( 'div' );
 				section.className = 'comet-section comet-items comet-ui';
-				section.innerHTML = '<div class="comet-items"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
+				section.innerHTML = '<div class="comet-items comet-items-sortable"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
 				oTab.appendChild( section );
 
 				if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( data ) && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( data._items ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isArray( ( ids = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].ids( data._items, 'array' ) ), 1 ) ){
@@ -4342,10 +4422,11 @@ const __create = function( tabs, data ){
 			const item = _d.createElement( 'div' );
 			var inner, dren, args;
 
-			//item.dataset.id = id;
-			item.className = 'comet-item';
+			item.className = 'comet-item comet-item-sortable';
+			item.dataset.id = id;
 
-			inner = '<span><span>#' + id + '</span>' + ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( title ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( title ) : '' ) + '</span>';
+			inner = '<button class="comet-button" aria-label="' + __cometi18n.ui.sort + '"><span class="cico cico-move"></span><span class="comet-title">' + __cometi18n.ui.sort + '</span></button>';
+			inner += '<span>' + id + '</span>';
 			inner += '<button class="comet-button comet-first" aria-label="' + __cometi18n.ui.edit + '"><span class="cico cico-edit"></span><span class="comet-title">' + __cometi18n.ui.edit + '</span></button>';
 			inner += '<button class="comet-button comet-last" aria-label="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span><span class="comet-title">' + __cometi18n.ui.delete + '</span></button>';
 
@@ -4358,8 +4439,9 @@ const __create = function( tabs, data ){
 
 			};
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[1] ).on( 'click', __events.item.edit, args );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[2] ).on( 'click', __events.item.delete, args );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[0] ).sort( __events.item.sort( id ) );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[2] ).on( 'click', __events.item.edit, args );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( dren[3] ).on( 'click', __events.item.delete, args );
 
 			return item;
 
@@ -5310,7 +5392,7 @@ __webpack_require__.r(__webpack_exports__);
 			const target = prop.get();
 			var _t;
 
-			return ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( target ) || target.node === null || !( _t = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_3__["default"])( target.node ) ).isNode() ? false : _t.prop() );
+			return ( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( target ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( target.node )/*!( _t = node( target.node ) ).isNode()*/ ? false : target.node/*_t.prop()*/ );
 
 
 		},
@@ -5364,7 +5446,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _panel_parts_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./panel/parts/editor.js */ "./src/js/editor/panel/parts/editor.js");
+/* harmony import */ var _panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./panel/fields/editor.js */ "./src/js/editor/panel/fields/editor.js");
 /* harmony import */ var _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/sanitize.js */ "./src/js/utils/sanitize.js");
 /* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/layout.js */ "./src/js/utils/layout.js");
 /* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
@@ -5602,7 +5684,6 @@ __webpack_require__.r(__webpack_exports__);
 
 	}
 
-
 	if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( ui.name ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( slug = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].stripTags( ui.name ) ) ) ){
 		return false;
 
@@ -5663,7 +5744,7 @@ __webpack_require__.r(__webpack_exports__);
 
 		}
 		targetNode.parentNode.replaceChild( re, targetNode );
-		Object(_panel_parts_editor_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+		Object(_panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 		return true;
 
 		default:

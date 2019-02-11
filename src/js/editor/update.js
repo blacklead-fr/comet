@@ -1,4 +1,4 @@
-import editor from './panel/parts/editor.js';
+import editor from './panel/fields/editor.js';
 import sanitize from '../utils/sanitize.js';
 import layout from '../utils/layout.js';
 import parse from '../utils/parse.js';
@@ -226,7 +226,6 @@ export default function( ui ){
 		return false;
 
 	}
-
 
 	if( !utils.isString( ui.name ) || utils.isStringEmpty( slug = utils.trim( utils.stripTags( ui.name ) ) ) ){
 		return false;

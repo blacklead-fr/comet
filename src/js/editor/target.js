@@ -77,7 +77,7 @@ export default function(){
 			const target = prop.get();
 			var _t;
 
-			return ( !utils.isObject( target ) || target.node === null || !( _t = node( target.node ) ).isNode() ? false : _t.prop() );
+			return ( !utils.isObject( target ) || !utils.isObject( target.node )/*!( _t = node( target.node ) ).isNode()*/ ? false : target.node/*_t.prop()*/ );
 
 
 		},

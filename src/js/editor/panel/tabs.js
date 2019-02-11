@@ -12,7 +12,7 @@ import __target from '../target.js';
 import update from '../update.js';
 import panel from '../panel.js';
 import __data from '../data.js';
-//import __tab from './tab.js';
+import __id from '../id.js';
 
 const __create = function( tabs, data ){
 
@@ -144,8 +144,60 @@ const __create = function( tabs, data ){
 					
 				}
 
+			},
+
+			sort: function( id ){
+
+				return {
+					//handle: handler,
+					connectWith: '.comet-items-sortable',
+					items: '.comet-item-sortable',
+					placeholder: 'comet-item comet-ui comet-ui-placeholder',
+					cursor: 'cpb-elementCursor',
+					bodyClass: '',
+
+					start: function( ev, ui ){
+						var tmp;
+
+						if( ui.parentNode === null ){
+							return;
+
+						}
+
+						ui.parentNode.style.visibility = 'hidden';
+						return ui.parentNode;
+
+					},
+					stop: function( e, ui, item ){
+						const target_ = __target();
+						const id_ = __id(); 
+						var pid, t, re, _closest, closest, tnode;
+
+						item.removeAttribute( 'style' );
+
+						if( !( pid = target_.id() ) ){
+							return;
+
+						}
+						closest = node( ui ).next( '.comet-item-sortable' );
+						_closest = node( closest );
+						t = _closest.isNode() && ( t = parse.dataset( _closest.prop(), 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+
+						id_.remove( id, 'items', pid );
+						id_.insert( id, 'items', pid, t );
+						ui.parentNode.replaceChild( item , ui );
+
+						if( !( tnode = target_.node() ) || tnode === null || !( re = layout( __data().getData() ).element( pid, true ) ) ){
+							return;
+
+						}
+						tnode.parentNode.replaceChild( re, tnode );
+
+					}
+				};
+
 			}
-		},
+		}
 
 	};
 
@@ -197,7 +249,7 @@ const __create = function( tabs, data ){
 
 				section = _d.createElement( 'div' );
 				section.className = 'comet-section comet-items comet-ui';
-				section.innerHTML = '<div class="comet-items"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
+				section.innerHTML = '<div class="comet-items comet-items-sortable"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
 				oTab.appendChild( section );
 
 				if( utils.isObject( data ) && !utils.isStringEmpty( data._items ) && utils.isArray( ( ids = parse.ids( data._items, 'array' ) ), 1 ) ){
@@ -245,10 +297,11 @@ const __create = function( tabs, data ){
 			const item = _d.createElement( 'div' );
 			var inner, dren, args;
 
-			//item.dataset.id = id;
-			item.className = 'comet-item';
+			item.className = 'comet-item comet-item-sortable';
+			item.dataset.id = id;
 
-			inner = '<span><span>#' + id + '</span>' + ( !utils.isStringEmpty( title ) ? utils.trim( title ) : '' ) + '</span>';
+			inner = '<button class="comet-button" aria-label="' + __cometi18n.ui.sort + '"><span class="cico cico-move"></span><span class="comet-title">' + __cometi18n.ui.sort + '</span></button>';
+			inner += '<span>' + id + '</span>';
 			inner += '<button class="comet-button comet-first" aria-label="' + __cometi18n.ui.edit + '"><span class="cico cico-edit"></span><span class="comet-title">' + __cometi18n.ui.edit + '</span></button>';
 			inner += '<button class="comet-button comet-last" aria-label="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span><span class="comet-title">' + __cometi18n.ui.delete + '</span></button>';
 
@@ -261,8 +314,9 @@ const __create = function( tabs, data ){
 
 			};
 
-			node( dren[1] ).on( 'click', __events.item.edit, args );
-			node( dren[2] ).on( 'click', __events.item.delete, args );
+			node( dren[0] ).sort( __events.item.sort( id ) );
+			node( dren[2] ).on( 'click', __events.item.edit, args );
+			node( dren[3] ).on( 'click', __events.item.delete, args );
 
 			return item;
 

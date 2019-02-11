@@ -85,6 +85,7 @@ section, article, figure, aside {
 .cpb-sorting .cpb-element {
   padding: 20px;
   background: rgba( 0, 106, 254, .3 );
+  outline: 0;
 }
 
 .cpb-sorting .cpb-column { box-shadow: 0 0 0 2px #006AFE; }
@@ -94,6 +95,10 @@ section, article, figure, aside {
 .cpb-sorting .cpb-backgroundComponents { display: none; }
 
 .cpb-element { min-height: 30px; }
+
+.cpb-column:hover { outline: 2px dotted #969696; }
+
+.cpb-element:hover { outline: 2px solid #006AFE; }
 
 #comet-uiCursor {
   z-index: 99999999999999999;
@@ -130,8 +135,6 @@ section, article, figure, aside {
   margin: 0;
   padding: 0;
 }
-
-.comet-edModalItems .cpb-edSortPlaceholder{ margin: 0 0 10px; }
 
 .cpb-rowContent > .cpb-edPlaceholder,
 .cpb-rowContent > .cpb-edSortPlaceholder {
@@ -1501,7 +1504,15 @@ section, article, figure, aside {
   -webkit-box-shadow: 0 0 5px 0 #DAE5EE;
 }
 
-.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item > span { width: 100%; }
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items .comet-item.comet-ui-placeholder {
+  height: 42px;
+  background: #DAE5EE;
+}
+
+.comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item > span {
+  width: 100%;
+  padding: 5px;
+}
 
 .comet-panel.comet-ui > .comet-body .comet-section.comet-items > .comet-items > .comet-item > .comet-button {
   padding: 5px;
