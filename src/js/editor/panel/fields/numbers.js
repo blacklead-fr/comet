@@ -28,6 +28,8 @@ export default function( id, field, data ){
 	const classes = {
 		active: 'comet-active',
 		locked: 'comet-locked',
+		tablet: 'cpb-devicetype-tablet',
+		mobile: 'cpb-devicetype-mobile'
 	};
 
 	const __core = {
@@ -35,26 +37,29 @@ export default function( id, field, data ){
 		devices: function( ev, ui, e ){
 			ev.preventDefault();
 			ev.stopPropagation();
+			const _body = node( _d.body );
 			var _device, ico, d;
 
 			switch( e.device ){
-				case 'desktop':
-				ico = 'cico-desktop';
-				redefine.workflow();
-				break;
 				
 				case 'tablet':
 				ico = 'cico-tablet';
 				frame.style.maxWidth = '800px';
+				_body.addClass( classes.tablet );
 				break;
 
 				case 'mobile':
 				ico = 'cico-mobile';
 				frame.style.maxWidth = '400px';
+				_body.addClass( classes.mobile );
 				break;
 
+				case 'desktop':
 				default:
-				return;
+				ico = 'cico-desktop';
+				_body.removeClass( classes.tablet );
+				_body.removeClass( classes.mobile );
+				redefine.workflow();
 
 			}
 			device = e.device;

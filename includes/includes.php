@@ -212,7 +212,7 @@ function comet_parse_items( $ids, $items ){
       $rt[$id] = $items[$id];
     }
     return $rt;
-}*/
+  }*/
 
 /*function comet_get_template( $id ){
 
@@ -273,6 +273,17 @@ function comet_get_icon( $set_id, $icon_id ){
 
 }
 
+function comet_get_svgicon( $entry ){
+  $Sets = comet_iconsets();
+
+  if( !$Sets || !( $decoded = $Sets->decode( $entry ) ) || !( $Set = $Sets->get_set_object( $decoded['set_id'] ) ) ){
+    return '';
+
+  }
+  return $Set->get_svg( $decoded['icon_id'] );
+
+}
+
 function comet_get_fonts( $r = false ){
   return get_option( 'comet_fonts', $r );
 
@@ -304,7 +315,7 @@ function comet_enqueue_fonts(){
 }
 
 function comet_get_header( $name = null ){
-  
+
   $name = apply_filters( 'comet_template_header', $name );
 
   get_header( $name );
@@ -312,7 +323,7 @@ function comet_get_header( $name = null ){
 }
 
 function comet_get_footer( $name = null ){
-  
+
   $name = apply_filters( 'comet_template_footer', $name );
 
   get_footer( $name );
@@ -467,11 +478,11 @@ function comet_get_element( $slug ){
 
 function comet_get_element_ajax( $slug = '', $id = null, $data ){
 
-  if( !( $element = comet_get_element( $slug ) ) || !( $element instanceof $slug ) || !method_exists( $element, 'ajax' ) ){
+  if( !( $element = comet_get_element( $slug ) ) || !( $element instanceof $slug ) || !method_exists( $element, 'render' ) ){
     return false;
 
   }
-  return $element->ajax( $id, $data );
+  return $element->render( $data );
 
 }
 
@@ -500,6 +511,33 @@ function comet_requires( $className, $file ){
 function comet_autoload( $className, $file ){
 
   return ( !( $class = comet_requires( $className, $file ) ) || !( $_class = new $class ) || !( $_class instanceof $class ) ? false : $_class );
+
+}
+
+function comet_parse_id( $id ){
+
+  return ( is_int( $id = (int)$id ) && $id > -1 ? $id : false );
+
+}
+
+function comet_parse_ids( $entry ){
+
+  if( !is_string( $entry ) || !is_array( $ids = explode( ',', $entry ) ) ){
+    return false;
+
+  }
+  $nids = [];
+
+  foreach( $ids as $index => $value ){
+
+    if( !( $id = comet_parse_id( $value ) ) ){
+      continue;
+
+    }
+    $nids[] = $id;
+
+  }
+  return ( count( $nids ) < 1 ? false : $nids );
 
 }
 

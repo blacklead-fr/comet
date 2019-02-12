@@ -19,7 +19,30 @@ class icon extends Comet_Element {
 
     public function render( $data ){
 
-        return 'ououfeozjf';
+        $edata = is_array( $data['el'] ) ? $data['el'] : [];
+        $icon = isset( $edata['icon'] ) ? comet_get_svgicon( $edata['icon'] ) : '';
+        $url = isset( $edata['url'] ) && is_string( $edata['url'] ) ? esc_url( trim( strip_tags( $edata['url'] ) ) ) : '';
+        $tag = 'div';
+        $classes = 'cpb-icon cpb-wrapper ' . Comet_Utils::get_alignment( $edata['alg'] );
+
+        $output = "<div class=\"{$classes}\">";
+
+        $attr = ' class="cpb-icon cpb-inner"';
+
+        if( $url !== '' ){
+            $tag = 'a';
+            $attr .= " href=\"{$url}\"";
+
+            if( Comet_Utils::is_true( $edata['tar'] ) ){
+                $attr .= ' target="_blank"';
+
+            }
+
+        }
+        $output .= "<{$tag}{$attr}>{$icon}</{$tag}>";
+        $output .= '</div>';
+
+        return $output;
 
     }
 
@@ -64,20 +87,19 @@ class icon extends Comet_Element {
 
     public function css(){
         ?>
-        var o, tmp, rcss;
-        
-        o = '.cpb-elementNode' + id + ' .cpb-icon.cpb-inner{';
+        var css = '';
+        var o, tmp;
 
         if( ( tmp = toolkit.sanitize.color( data.el.bgc ) ) !== '' ){
-            o += toolkit.css.render( 'background', tmp );
+            css += toolkit.css.render( 'background', tmp );
 
         }
 
         if( ( tmp = toolkit.sanitize.color( data.el.ic ) ) !== '' ){
-            o += toolkit.css.render( 'color', tmp );
+            css += toolkit.css.render( 'color', tmp );
 
         }
-        o += toolkit.css.border({
+        css += toolkit.css.border({
             color: data.el.bc,
             style: data.el.bs,
             top: data.el.brt,
@@ -86,37 +108,33 @@ class icon extends Comet_Element {
             left: data.el.brl,
 
         });
-        o += toolkit.css.borderRadius( data.el.rdt, data.el.rdr, data.el.rdb, data.el.rdl );
+        css += toolkit.css.borderRadius( data.el.rdt, data.el.rdr, data.el.rdb, data.el.rdl );
 
         if( ( tmp = toolkit.sanitize.number({ value: data.el.pd, min: 0, max: 100 }) ) !== null || tmp > 0 ){
-            o += toolkit.css.render( 'padding', tmp + 'px' );
+            css += toolkit.css.render( 'padding', tmp + 'px' );
 
         }
-        o += '}';
+        o = toolkit.css.element( id, '.cpb-icon.cpb-inner', css );
 
         if( ( tmp = toolkit.sanitize.number({ value: data.el.isi, min: 20, max: 200 }) ) !== null ){
-            o += '.cpb-elementNode' + id + ' .cpb-icon.cpb-inner svg{';
-            o += toolkit.css.render( 'width', tmp + 'px' );
-            o += '}';
+            o += toolkit.css.element( id, '.cpb-icon.cpb-inner svg', toolkit.css.render( 'width', tmp + 'px' ) );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-elementNode' + id + ' .cpb-icon.cpb-wrapper{' + tmp + '}';
+            o += toolkit.css.element( id, '.cpb-icon.cpb-wrapper', tmp );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-icon.cpb-wrapper{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-icon.cpb-wrapper{' + tmp + '}';
-            o += toolkit.css.responsive( 't', rcss );
+            o += toolkit.css.element( id, '.cpb-icon.cpb-wrapper', tmp, 't' );
+            o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-icon.cpb-wrapper', tmp ) );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-icon.cpb-wrapper{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-icon.cpb-wrapper{' + tmp + '}';
-            o += toolkit.css.responsive( 'm', rcss );
+            o += toolkit.css.element( id, '.cpb-icon.cpb-wrapper', tmp, 'm' );
+            o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-icon.cpb-wrapper', tmp ) );
 
         }
         return o;

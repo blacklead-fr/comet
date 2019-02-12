@@ -104,7 +104,7 @@ class Comet_Iconsets {
 
     public function get_set( $id ){
 
-        if( !$this->set_exists( $id ) || !( $S = $this->get_registered_set( $id ) ) || !( $set = comet_autoload( $S['class'], $S['file'] ) ) ){
+        if( !($set = $this->get_set_object( $id ) ) ){
             return false;
 
         }
@@ -113,6 +113,30 @@ class Comet_Iconsets {
             'name'  => $set->get_name(),
             'set'   => $set->get_icons()
 
+        ];
+
+    }
+
+    public function get_set_object( $id ){
+
+        if( !$this->set_exists( $id ) || !( $S = $this->get_registered_set( $id ) ) || !( $set = comet_autoload( $S['class'], $S['file'] ) ) ){
+            return false;
+
+        }
+        return $set;
+
+    }
+
+    public function decode( $entry ){
+
+        if( !is_string( $entry ) || !is_array( $entry = explode( ':', trim( $entry ) ) ) || count( $entry ) < 2 ){
+            return false;
+
+        }
+
+        return [
+            'set_id'    => trim( $entry[0] ),
+            'icon_id'   => trim( $entry[1] )
         ];
 
     }

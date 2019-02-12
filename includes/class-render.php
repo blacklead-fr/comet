@@ -21,30 +21,43 @@ class Comet_Render{
 
 	}
 
-	private function parse_id( $id ){
+	private function build_data( $id ){
+		$_data = [
+			'el'	=> []
+		];
 
-		return ( is_int( $id = (int)$id ) && $id > -1 ? $id : false );
-
-	}
-
-	private function parse_ids( $entry ){
-
-		if( !is_string( $entry ) || !is_array( $ids = explode( ',', $entry ) ) ){
-			return false;
+		if( !is_array( $this->meta ) || !isset( $this->meta['elements'] ) || !( $id = comet_parse_id( $id ) ) ){
+			return $_data;
 
 		}
-		$nids = [];
 
-		foreach( $ids as $index => $value ){
+		if( !isset( $this->meta['elements'][$id] ) || !is_array( $this->meta['elements'][$id] ) ){
+			return $_data;
 
-			if( !( $id = $this->parse_id( $value ) ) ){
+		}
+		$_data['el'] = $this->meta['elements'][$id];
+
+		if( !isset( $this->meta['items'] ) || !is_array( $this->meta['items'] ) || !isset( $_data['el']['_items'] ) ){
+			return $_data;
+
+		}
+
+		if( !is_array( $ids = comet_parse_ids( $_data['el']['_items'] ) ) || ( $length = count( $ids ) ) < 1 ){
+			return $_data;
+
+		}
+		$_data['items'] = [];
+
+		for( $i = 0; $i < $length; $i++ ){
+
+			if( !( $idsa = comet_parse_id( $ids[$i] ) ) || !isset( $this->meta['items'][$idsa] ) ){
 				continue;
 
 			}
-			$nids[] = $id;
+			$_data['items'][$idsa] = $this->meta['items'][$idsa];
 
 		}
-		return ( count( $nids ) < 1 ? false : $nids );
+		return $_data;
 
 	}
 
@@ -77,7 +90,7 @@ class Comet_Render{
 		}
 		$this->meta = $meta;
 
-		if( !$this->has_connection( 'sections' ) || !is_array( $ids = $this->parse_ids( $meta['_sections'] ) ) ){
+		if( !$this->has_connection( 'sections' ) || !is_array( $ids = comet_parse_ids( $meta['_sections'] ) ) ){
 			return '';
 
 		}
@@ -98,12 +111,11 @@ class Comet_Render{
 			return '';
 
 		}
-		$classes = "cpb-section-{$id} cpb-section";
-		$output = '<div class="' . $classes . '" data-id="' . $id . '">';
+		$output = "<div class=\"cpb-section-{$id} cpb-section\" data-id=\"{$id}\">";
 		$output .= '<div class="cpb-rows cpb-sectionContent">';
 		$output .= $this->background( $meta );
 
-		if( $this->has_connection( 'rows' ) && isset( $meta['_rows'] ) && is_array( $ids = $this->parse_ids( $meta['_rows'] ) ) ){
+		if( $this->has_connection( 'rows' ) && isset( $meta['_rows'] ) && is_array( $ids = comet_parse_ids( $meta['_rows'] ) ) ){
 
 			for( $a = 0; $a < count( $ids ); $a++ ){
 				$output .= $this->row( $ids[$a] );
@@ -125,12 +137,11 @@ class Comet_Render{
 			return '';
 
 		}
-		$classes = "cpb-row-{$id} cpb-row";
-		$output = '<div class="' . $classes . '" data-id="' . $id . '">';
+		$output = "<div class=\"cpb-row-{$id} cpb-row\" data-id=\"{$id}\">";
 		$output .= '<div class="cpb-rowContent" data-ncol="0">';
 		$output .= $this->background( $meta );
 
-		if( $this->has_connection( 'columns' ) && isset( $meta['_columns'] ) && is_array( $ids = $this->parse_ids( $meta['_columns'] ) ) ){
+		if( $this->has_connection( 'columns' ) && isset( $meta['_columns'] ) && is_array( $ids = comet_parse_ids( $meta['_columns'] ) ) ){
 
 			for( $a = 0; $a < count( $ids ); $a++ ){
 				$output .= $this->column( $ids[$a] );
@@ -152,12 +163,11 @@ class Comet_Render{
 			return '';
 
 		}
-		$classes = "cpb-column-{$id} cpb-column";
-		$output = '<div class="' . $classes . '" data-id="' . $id . '">';
+		$output = "<div class=\"cpb-column-{$id} cpb-column\" data-id=\"{$id}\">";
 		$output .= '<div class="cpb-columnContent">';
 		$output .= $this->background( $meta );
 
-		if( $this->has_connection( 'elements' ) && isset( $meta['_elements'] ) && is_array( $ids = $this->parse_ids( $meta['_elements'] ) ) ){
+		if( $this->has_connection( 'elements' ) && isset( $meta['_elements'] ) && is_array( $ids = comet_parse_ids( $meta['_elements'] ) ) ){
 
 			for( $a = 0; $a < count( $ids ); $a++ ){
 				$output .= $this->element( $ids[$a] );
@@ -190,11 +200,9 @@ class Comet_Render{
 			return '';
 
 		}
-		$classes = "cpb-element cpb-element-{$slug} cpb-elementNode{$id}";
-
-		$output = '<div class="' . $classes . '" data-id="' . $id . '">';
+		$output = "<div class=\"cpb-element cpb-element-{$slug} cpb-elementNode{$id}\" data-id=\"{$id}\">";
 		$output .= '<div class="cpb-elementContent">';
-		$output .= $element->render( $meta );
+		$output .= $element->render( $this->build_data( $id ) );
 		$output .= '</div>';
 		$output .= '</div>';
 

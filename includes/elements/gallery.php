@@ -19,7 +19,7 @@ class gallery extends Comet_Element {
 
     public function render( $data ){
 
-        return 'ououfeozjf';
+        return __( 'Loading...', 'comet' );
 
     }
 

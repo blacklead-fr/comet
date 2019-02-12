@@ -19,9 +19,9 @@ class shortcode extends Comet_Element {
 
     public function render( $data ){
 
-        return 'ououfeozjf';
+        $edata =  is_array( $data['el'] ) ? $data['el'] : [];
 
-
+        return ( isset( $edata['s'] ) && is_string( $edata['s'] ) ?  do_shortcode( stripslashes( trim( $edata['s'] ) ) ) : '' );
 
     }
 
@@ -77,18 +77,6 @@ class shortcode extends Comet_Element {
     	<?php
 
     }
-
-	public function ajax( $id, $data ){
-
-		if( !isset( $data['el'] ) || !is_array( $data['el'] ) ){
-			return '';
-		}
-		$element = $data['el'];
-		$s = isset( $element['s'] ) && is_string( $element['s'] ) ? stripslashes( trim( $element['s'] ) ) : '';
-
-		return $s !== '' ? do_shortcode( $s ) : '';
-
-	}
 
 	protected function _register_settings(){
 

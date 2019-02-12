@@ -19,7 +19,33 @@ class map extends Comet_Element {
 
     public function render( $data ){
 
-        return 'ououfeozjf';
+        $edata = is_array( $data['el'] ) ? $data['el'] : [];
+        $w = Comet_Utils::sanitize_number( $edata['wi'], 200, 2000, 200 );
+        $h = Comet_Utils::sanitize_number( $edata['he'], 200, 2000, 200 );
+        $args = [
+            'output'    => 'embed',
+            '=iwloc'    => 'B',
+            'z'         => Comet_Utils::sanitize_number( $edata['zoom'], 0, 21, 10 ),
+            'width'     => $w,
+            'height'    => $h,
+
+        ];
+
+        if( isset( $edata['q'] ) && is_string( $edata['q'] ) ){
+            $args['q'] = trim( strip_tags( $edata['q'] ) );
+
+        }
+
+        if( isset( $edata['mt'] ) && in_array( $edata['mt'], [ 'satellite', 's', 'S', 'SATELLITE' ] ) ){
+            $args['t'] = 'k';
+
+        }
+        $src = esc_url( add_query_arg( $args, 'https://maps.google.com/maps' ) );
+
+        $output = "<iframe class=\"cpb-map cpb-frame\" width=\"{$w}\" height=\"{$h}\" src=\"{$src}\" allowfullscreen  scrolling=\"no\" frameborder=\"0\">";
+        $output .= __( 'No map to show', 'comet' );
+        $output .= "</iframe>";
+        return $output;
 
     }
 

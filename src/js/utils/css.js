@@ -561,16 +561,32 @@ css.gradient = function( style, angle, colors ){
 };
 
 css.responsive = function( device, css ){
-	const width = device === 'm' ? 400 : 800;
-	var o = '';
+	const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
+	var index;
 
-	if( !utils.isStringEmpty( css ) ){
-		o += '@media only screen and (max-width:' + width + 'px){';
-		o += css;
-		o += '}';
+	if( utils.isStringEmpty( css ) || ( index = mobile.indexOf( device ) ) < 0 ){
+		return '';
+
 	}
-	return o;
+	return '@media only screen and (max-width:' + ( index <= 2 ? 400 : 800 ) + 'px){' + css + '}';
 
 };
+
+css.element = function( id, target, css, device ){
+	const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
+	const index = utils.isString( device ) ? devices.indexOf( device ) : -1;
+	var targetClass;
+
+	if( !utils.isNumber( id ) || !utils.isString( css ) ){
+		return '';
+
+	}
+	targetClass = ( index > -1 ? ( '.cpb-devicetype-' + ( index <= 2 ? 'mobile' : 'tablet' ) + ' ' ) : '' );
+	targetClass += '.cpb-element.cpb-elementNode' + id;
+	targetClass += utils.isString( target ) ? ' ' + utils.trim( target ) : '';
+
+	return targetClass + '{' + utils.trim( css ) + '}';
+
+}
 
 export default css;

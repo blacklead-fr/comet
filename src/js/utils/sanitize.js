@@ -34,19 +34,6 @@ sanitize.number = function( entry ){
 	}
 	return ( utils.isNumber( entry.default ) ? parseFloat( entry.default ) : null );
 
-	/*if( type === 'object' && 'value' in entry ){
-		v = entry.value;
-	}
-	if( typeof v === 'string' ){
-		v = parseFloat( v );
-	}
-	if( typeof v !== 'number' || isNaN( v ) ){
-		if( type === 'object' && 'default' in entry ){
-			return sanitize.number( { value: entry.default, default: 0 } );
-		}
-		return '';
-	}
-	return v;*/
 };
 
 sanitize.valueUnit = function( value, unit ){
@@ -72,7 +59,7 @@ sanitize.valueUnit = function( value, unit ){
 
 sanitize.unit = function( unit ){
 
-	unit = utils.trim( unit );
+	unit = utils.isString( unit ) ? utils.trim( unit.toLowerCase() ) : unit;
 
 	switch( unit ){
 		case 'px':
@@ -217,40 +204,40 @@ sanitize.class = function( str, prefix ){
 
 sanitize.alignment = function( entry ){
 	const c = 'cpb-align';
-	entry = utils.isString( entry ) ? ( utils.trim( entry ) ).toLowerCase() : entry;
+	entry = utils.isString( entry ) ? utils.trim( entry.toLowerCase() ) : entry;
 
 	switch( entry ){
 		case 'l':
 		case 'left':
 		case '<':
-		return c + 'Left';
+		return c + 'left';
 
 		case 'r':
 		case 'right':
 		case '>':
-		return c + 'Right';
+		return c + 'right';
 
 		case 'j':
 		case 'justify':
 		case '=':
-		return c + 'Justify';
+		return c + 'justify';
 
 		case 'm':
 		case 'middle':
-		return c + 'Middle';
+		return c + 'middle';
 
 		case 't':
 		case 'top':
 		case '^':
-		return c + 'Top';
+		return c + 'top';
 
 		case 'b':
 		case 'bottom':
 		case 'v':
-		return c + 'Bottom';
+		return c + 'bottom';
 
 		default:
-		return c + 'Center';
+		return c + 'center';
 	}
 
 }

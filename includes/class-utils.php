@@ -3,7 +3,7 @@ namespace Comet\Library;
 
 if( !defined( 'ABSPATH' ) ){
 	exit;
-    
+
 }
 
 class Comet_Utils {
@@ -269,6 +269,120 @@ class Comet_Utils {
         }
 
         return $w;
+    }
+
+    static protected function is_true( $entry ){
+
+        return ( in_array( $entry, [ 'true', 'TRUE', 1, true ] ) );
+
+    }
+
+    static protected function parse_number( $entry ){
+
+        return ( is_string( $entry ) || is_numeric( $entry ) ? ( is_numeric( $entry = (float)$entry ) ? $entry : null ) : null );
+    }
+
+    static protected function sanitize_number( $value, $min, $max, $default ){
+
+        if( ( $value = $this->parse_number( $value ) ) !== null ){
+
+            if( ( $min = $this->parse_number( $min ) ) !== null && $value < $min ){
+                return $min;
+
+            }
+
+            if( ( $max = $this->parse_number( $max ) ) !== null && $value > $max ){
+                return $max;
+
+            }
+            return $value;
+
+        }
+        return $this->parse_number( $default );
+
+    }
+
+    static protected function get_image( $src = '', $alt = '' ){
+
+        $src = is_string( $src ) ? esc_url( strip_tags( $src ) ) : '';
+        $alt = is_string( $alt ) ? esc_attr( $alt ) : '';
+        $size = is_array( $size = getimagesize( $src ) ) && isset( $size[3] ) ? $size[3] : '';
+
+        return "<img class=\"cpb-image\" {$size} src=\"{$src}\" alt=\"{$alt}\" />";
+
+    }
+
+    static protected function get_alignment( $entry = '' ){
+        $prefix = 'cpb-align';
+        $entry = is_string( $entry ) ? trim( strtolower( $entry ) ) : $entry;
+
+        switch( $entry ){
+            case 'l':
+            case 'left':
+            case '<':
+            return "{$prefix}left";
+
+            case 'r':
+            case 'right':
+            case '>':
+            return "{$prefix}right";
+
+            case 'j':
+            case 'justify':
+            case '=':
+            return "{$prefix}justify";
+
+            case 'm':
+            case 'middle':
+            return "{$prefix}middle";
+
+            case 't':
+            case 'top':
+            case '^':
+            return "{$prefix}top";
+
+            case 'b':
+            case 'bottom':
+            case 'v':
+            return "{$prefix}bottom";
+
+            default:
+            return "{$prefix}center";
+        }
+
+    }
+
+    static protected function foreach_item( $data, $callback ){
+
+        $data = is_array( $data ) ? $data : [];
+
+        if( !is_array( $data ) || !is_array( $data['el'] ) || !is_array( $data['items'] ) || !is_callable( $callback ) ){
+            return '';
+
+        }
+
+        if( !isset( $data['el']['_items'] ) || !is_string( $data['el']['_items'] ) ){
+            return '';
+
+        }
+
+        if( !is_array( $ids = comet_parse_ids( $data['el']['_items'] ) ) || ( $length = count( $ids ) ) < 1 ){
+            return '';
+
+        }
+        $output = '';
+
+        for( $i = 0; $i < $length; $i++ ){
+
+            if( !isset( $data['items'][$ids[$i]] ) ){
+                continue;
+
+            }
+            $output .= $callback( $ids[$i], $data['items'][$ids[$i]] );
+
+        }
+        return $output;
+
     }
 
 }

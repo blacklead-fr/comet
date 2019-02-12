@@ -19,7 +19,26 @@ class listItems extends Comet_Element {
 
     public function render( $data ){
 
-        return 'ououfeozjf';
+        $edata = is_array( $data['el'] ) ? $data['el'] : [];
+        $classes = 'cpb-list cpb-wrapper';
+
+        if( isset( $edata['sty'] ) && is_string( $edata['sty'] ) && ( $tmp = trim( $edata['sty'] ) ) !== 'none' ){
+            $classes .= " cpb-list{$tmp}";
+
+        }
+        $output = "<ul class=\"{$classes}\">";
+
+        $output .= Comet_Utils::foreach_item( $data, function( $iid, $idata ){
+            $idata = is_array( $idata ) ? $idata : [];
+            $iclasses = "cpb-item cpb-inner cpb-item{$iid} " . Comet_Utils::get_alignment( $idata['alg'] );
+            $icontent = isset( $idata['ctnt'] ) && is_string( $idata['ctnt'] ) ? $idata['ctnt'] : '';
+
+            return "<li class=\"{$iclasses}\">{$icontent}</li>";
+
+        });
+        $output .= '</ul>';
+
+        return $output;
 
     }
 

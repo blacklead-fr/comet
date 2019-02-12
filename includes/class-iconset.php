@@ -65,6 +65,21 @@ class Comet_iconset{
 
 	}
 
+	public function get_svg( $id ){
+
+		if( !( $icon = $this->get_icon( $id ) ) ){
+			return '';
+
+		}
+		$w = $icon['width'];
+		$h = $icon['height'];
+		$path = $icon['path'];
+
+		return "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 {$w} {$h}\">{$path}</svg>";
+
+
+	}
+
 	public function icon_exists( $id ){
 
 		return ( is_array( $this->icons ) && is_string( $id ) && isset( $this->icons[$id] ) );

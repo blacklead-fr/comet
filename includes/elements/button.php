@@ -19,7 +19,60 @@ class button extends Comet_Element {
 
     public function render( $data ){
 
-        return 'ououfeozjf';
+    	$edata = is_array( $data['el'] ) ? $data['el'] : [];
+    	$text = isset( $edata['text'] ) && is_string( $edata['text'] ) ? trim( strip_tags( $edata['text'] ) ) : '';
+    	$icon = isset( $edata['icon'] ) && is_string( $edata['icon'] ) ? comet_get_svgicon( $edata['icon'] ) : '';
+
+        $classe = 'cpb-button cpb-wrapper ' . Comet_Utils::get_alignment( $edata['alg'] );
+
+        $output = "<div class=\"{$classe}\">";
+        $ca = 'cpb-link';
+
+        if( isset( $edata['ani'] ) && is_string( $edata['ani'] ) ){
+
+        	switch( $animation = strtolower( trim( $edata['ani'] ) ) ){
+        		case 'none':
+        		break;
+
+                case 'stt':
+                case 'stl':
+                case 'stb':
+                case 'str':
+                $ca += " cpb-hvrbt cpb-hvrbt-{$animation}";
+                break;
+
+                default:
+
+                if( in_array( $animation, [ 'pulse', 'tada' ] ) ){
+                	$ca .= ' cpb-animated cpb-efInfinite';
+
+                }
+                $ca .= " cpb-ef-{$animation}";
+                break;
+
+            }
+
+        }
+        $url = isset( $edata['link'] ) && is_string( $edata['link'] ) ? esc_url( trim( strip_tags( $edata['link'] ) ) ) : '#';
+        $tar = Comet_Utils::is_true( $edata['tar'] ) ? ' target="_blank"' : '';
+        $dir = isset( $edata['ipos'] ) && is_string( $edata['ipos'] ) && $edata['ipos'] === 'r' ? 'r' : 'l';
+
+        $output .= "<a class=\"{$ca}\" href=\"{$url}\"{$tar}>";
+
+        if( $dir === 'l' && $icon !== '' ){
+        	$output .= "<span class=\"cpb-icon\">{$icon}</span>";
+
+        }
+        $output .= "<span class=\"cpb-title\">{$text}</span>";
+
+        if( $dir === 'r' && $icon !== '' ){
+        	$output .= "<span class=\"cpb-icon\">{$icon}</span>";
+
+        }
+        $output .= '</a>';
+        $output .= '</div>';
+
+        return $output;
 
     }
 
@@ -57,7 +110,7 @@ class button extends Comet_Element {
 
                 default:
 
-                if( [ 'pulse', 'tada' ].indexOf( data.el.ani ) ){
+                if( [ 'pulse', 'tada' ].indexOf( data.el.ani ) > -1 ){
                 	ca += ' cpb-animated cpb-efInfinite';
 
                 }
