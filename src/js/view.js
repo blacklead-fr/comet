@@ -867,17 +867,33 @@ css.gradient = function( style, angle, colors ){
 };
 
 css.responsive = function( device, css ){
-	const width = device === 'm' ? 400 : 800;
-	var o = '';
+	const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
+	var index;
 
-	if( !_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( css ) ){
-		o += '@media only screen and (max-width:' + width + 'px){';
-		o += css;
-		o += '}';
+	if( _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( css ) || ( index = devices.indexOf( device ) ) < 0 ){
+		return '';
+
 	}
-	return o;
+	return '@media only screen and (max-width:' + ( index <= 2 ? 400 : 800 ) + 'px){' + css + '}';
 
 };
+
+css.element = function( id, target, css, device ){
+	const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
+	const index = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( device ) ? devices.indexOf( device ) : -1;
+	var targetClass;
+
+	if( !_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isNumber( id ) || !_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( css ) ){
+		return '';
+
+	}
+	targetClass = ( index > -1 ? ( '.cpb-devicetype-' + ( index <= 2 ? 'mobile' : 'tablet' ) + ' ' ) : '' );
+	targetClass += '.cpb-element.cpb-elementNode' + id;
+	targetClass += _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( target ) ? ' ' + _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( target ) : '';
+
+	return targetClass + '{' + _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( css ) + '}';
+
+}
 
 /* harmony default export */ __webpack_exports__["default"] = (css);
 
@@ -967,6 +983,8 @@ __webpack_require__.r(__webpack_exports__);
 	_data = _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( _data ) ? _data : {};
 
 	return {
+
+		force_js: ( [ 'true', 'TRUE', '1', 1, true ].indexOf( element.force_js ) > -1 ),
 
 		view: function( _ui ){
 			
@@ -1161,6 +1179,7 @@ const html = {
     
     content: function( entry ){
         const tags = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'span', 'div', 'aside', 'code', 'pre', 'blockquote', 'article', 'section', 'main' ];
+        const allowed = '<span><br><ins><u><i><em><strong><b><strike><del><a><abbr><address><code><hr><mark><sup><sub><s>';
         var attr = '';
         var editable, content, tag, med_id, classes, o;
 
@@ -1168,9 +1187,9 @@ const html = {
             return '';
 
         }
-        tag = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( entry.tag ) ? ( tags.indexOf( tag = ( ( _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( entry.tag ) ).toLowerCase() ) ) > -1 ? tag : 'p' ) : 'p';
+        tag = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( entry.tag ) ? ( tags.indexOf( tag = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( entry.tag.toLowerCase() ) ) > -1 ? tag : 'p' ) : 'p';
         editable = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isBool( entry.editable ) ? entry.editable : false;
-        content = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( entry.inner ) ? _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].stripOnly( entry.inner, _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].getAllowedTags( tag ) ) : '';
+        content = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( entry.inner ) ? _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].stripTags( entry.inner, allowed ) : '';
         classes = !_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( entry.classes ) ? _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( entry.classes ) : '';
 
         if( editable && !_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( entry.match ) && ( entry.id = _parse_js__WEBPACK_IMPORTED_MODULE_1__["default"].id( entry.id ) ) ){
@@ -1741,7 +1760,7 @@ __webpack_require__.r(__webpack_exports__);
 
 		},
 
-		element: function( id, updating ){
+		element: function( id, state ){
 			var cl, element, fragment, el;
 
 			if( !_priv.hasConnection( 'elements' ) || !( id = _parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].id( id ) ) || !_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( data.elements[id] ) || _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isStringEmpty( data.elements[id]._type ) ){
@@ -1755,7 +1774,7 @@ __webpack_require__.r(__webpack_exports__);
 			}
 			Object(_style_js__WEBPACK_IMPORTED_MODULE_5__["default"])( id, 'elements' ).insert( el.css() );
 
-			if( g_css ){
+			if( g_css || ( [ 'view', 'VIEW' ].indexOf( state ) > -1 && !el.force_js ) ){
 				return true;
 				
 			}
@@ -1774,7 +1793,7 @@ __webpack_require__.r(__webpack_exports__);
 			el.view( element );
 			console.timeEnd("element");
 
-			if( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isBool( updating ) && updating ){
+			if( [ 'update', 'UPDATE', 'updating', 'UPDATING', true, 1 ].indexOf( state ) > -1 ){
 				Object(_editor_target_js__WEBPACK_IMPORTED_MODULE_0__["default"])().set({node: element });
 
 			}
@@ -1783,7 +1802,7 @@ __webpack_require__.r(__webpack_exports__);
 		},
 
 	};
-	g_css = ( ( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isBool( g_css ) && g_css === true ) || ( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( g_css ) && 'css' === _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( g_css.toLowerCase() ) ) );
+	g_css = ( ( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isBool( g_css ) && g_css ) || ( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( g_css ) && 'css' === _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( g_css.toLowerCase() ) ) );
 	prop.css = g_css;
 
 	return prop;
@@ -2965,19 +2984,6 @@ sanitize.number = function( entry ){
 	}
 	return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isNumber( entry.default ) ? parseFloat( entry.default ) : null );
 
-	/*if( type === 'object' && 'value' in entry ){
-		v = entry.value;
-	}
-	if( typeof v === 'string' ){
-		v = parseFloat( v );
-	}
-	if( typeof v !== 'number' || isNaN( v ) ){
-		if( type === 'object' && 'default' in entry ){
-			return sanitize.number( { value: entry.default, default: 0 } );
-		}
-		return '';
-	}
-	return v;*/
 };
 
 sanitize.valueUnit = function( value, unit ){
@@ -3003,7 +3009,7 @@ sanitize.valueUnit = function( value, unit ){
 
 sanitize.unit = function( unit ){
 
-	unit = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( unit );
+	unit = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( unit ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( unit.toLowerCase() ) : unit;
 
 	switch( unit ){
 		case 'px':
@@ -3148,40 +3154,40 @@ sanitize.class = function( str, prefix ){
 
 sanitize.alignment = function( entry ){
 	const c = 'cpb-align';
-	entry = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( entry ) ? ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( entry ) ).toLowerCase() : entry;
+	entry = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( entry ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( entry.toLowerCase() ) : entry;
 
 	switch( entry ){
 		case 'l':
 		case 'left':
 		case '<':
-		return c + 'Left';
+		return c + 'left';
 
 		case 'r':
 		case 'right':
 		case '>':
-		return c + 'Right';
+		return c + 'right';
 
 		case 'j':
 		case 'justify':
 		case '=':
-		return c + 'Justify';
+		return c + 'justify';
 
 		case 'm':
 		case 'middle':
-		return c + 'Middle';
+		return c + 'middle';
 
 		case 't':
 		case 'top':
 		case '^':
-		return c + 'Top';
+		return c + 'top';
 
 		case 'b':
 		case 'bottom':
 		case 'v':
-		return c + 'Bottom';
+		return c + 'bottom';
 
 		default:
-		return c + 'Center';
+		return c + 'center';
 	}
 
 }
@@ -4257,12 +4263,20 @@ __webpack_require__.r(__webpack_exports__);
 
 	};
 
-	const parser = function( nodes, type ){
+	const parser = function( data, nodes, type ){
 		const is_element = ( type === 'element' );
-		var i, id, a;
+		var i, id, a, _layout;
 
 		if( !nodes || !nodes.length || nodes.length < 1 ){
 			return;
+
+		}
+
+		if( is_element ){
+			_layout = Object(_layout_js__WEBPACK_IMPORTED_MODULE_4__["default"])( data, false );
+
+		}else{
+			_layout = Object(_layout_js__WEBPACK_IMPORTED_MODULE_4__["default"])( data, true );
 
 		}
 
@@ -4272,20 +4286,24 @@ __webpack_require__.r(__webpack_exports__);
 				continue;
 
 			}
-			a = _layout[type]( id );
 
-			if( is_element && a ){
-				nodes[i].parentNode.replaceChild( a, nodes[i] );
+			if( is_element ){
+				a = _layout.element( id, 'view' );
+
+				if( !_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isBool( a ) ){
+					nodes[i].parentNode.replaceChild( a, nodes[i] );
+
+				}
+				continue;
 
 			}
+			a = _layout[type]( id );
 
 		}
 
 	};
 
 	var _id = null;
-
-	var _layout = null;
 
 	if( !_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( __cometdata ) || !( _id = _parse_js__WEBPACK_IMPORTED_MODULE_1__["default"].id( __cometdata.id ) ) ){
 		return false;
@@ -4326,12 +4344,10 @@ __webpack_require__.r(__webpack_exports__);
 		}
 		post = g_.get( 'post' );
 		metadata = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( post ) && _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( post.meta ) ? post.meta : {};
-		_layout = Object(_layout_js__WEBPACK_IMPORTED_MODULE_4__["default"])( metadata, true );
-		parser( capture( 'cpb-section' ), 'section' );
-		parser( capture( 'cpb-row' ), 'row' );
-		parser( capture( 'cpb-column' ), 'column' );
-		_layout = Object(_layout_js__WEBPACK_IMPORTED_MODULE_4__["default"])( metadata, false );
-		parser( capture( 'cpb-element' ), 'element' );
+		parser( metadata, capture( 'cpb-section' ), 'section' );
+		parser( metadata, capture( 'cpb-row' ), 'row' );
+		parser( metadata, capture( 'cpb-column' ), 'column' );
+		parser( metadata, capture( 'cpb-element' ), 'element' );
 
 	});
 

@@ -40,8 +40,6 @@ class text extends Comet_Element{
 
 		return $output;
 
-
-
 	}
 
 	public function view(){
@@ -68,31 +66,30 @@ class text extends Comet_Element{
 
 	public function css(){
 		?>
-		var tmp, tmp1, tmp2, tmp3, o, rcss;
-
-		o = '.cpb-elementNode' + id + ' .cpb-text.cpb-wrapper {';
+		var css = '';
+		var tmp, tmp1, o;
 
 		if( ( tmp = toolkit.sanitize.number( { value: data.el.lh, float: true } ) ) !== null && tmp > 0 ){
-			o += toolkit.css.render( 'line-height', tmp );
+			css += toolkit.css.render( 'line-height', tmp );
 
 		}
 
 		if( ( tmp = toolkit.sanitize.number( data.el.ls ) ) !== null ){
-			o += toolkit.css.render( 'letter-spacing', tmp + 'px' );
+			css += toolkit.css.render( 'letter-spacing', tmp + 'px' );
 
 		}
 
 		if( ( tmp = toolkit.sanitize.color( data.el.tc ) ) !== '' ){
-			o += toolkit.css.render( 'color', tmp );
+			css += toolkit.css.render( 'color', tmp );
 
 		}
 
 		if( !toolkit.utils.isStringEmpty( data.el.fo ) ){
-			o += toolkit.css.render( 'font-family', toolkit.utils.trim( data.el.fo ) );
+			css += toolkit.css.render( 'font-family', toolkit.utils.trim( data.el.fo ) );
 
 		}
 
-		o += toolkit.css.textShadow({
+		css += toolkit.css.textShadow({
 			color: data.el.tsc,
 			blur: data.el.tsb,
 			x: data.el.tsh,
@@ -101,11 +98,11 @@ class text extends Comet_Element{
 		});
 
 		if( ( tmp = toolkit.sanitize.color( data.el.bg ) ) !== '' ){
-			o += toolkit.css.render( 'background', tmp );
+			css += toolkit.css.render( 'background', tmp );
 
 		}
 
-		o += toolkit.css.border({
+		css += toolkit.css.border({
 			style: data.el.bs,
 			color: data.el.bc,
 			top: data.el.brt,
@@ -113,41 +110,34 @@ class text extends Comet_Element{
 			bottom: data.el.brb,
 			left: data.el.brl
 		});
-		o += toolkit.css.padding( data.el.pdt, data.el.pdr, data.el.pdb, data.el.pdl, 'px', 'px' );
-		o += toolkit.css.borderRadius( data.el.rdt, data.el.rdr, data.el.rdb, data.el.rdl );
-		o += toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' );
-		o += '}';
+		css += toolkit.css.padding( data.el.pdt, data.el.pdr, data.el.pdb, data.el.pdl, 'px', 'px' );
+		css += toolkit.css.borderRadius( data.el.rdt, data.el.rdr, data.el.rdb, data.el.rdl );
+		css += toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' );
+        o = toolkit.css.element( id, '.cpb-text.cpb-wrapper', css );
 
 
-		o += '.cpb-elementNode' + id + ' .cpb-text.cpb-wrapper *{';
+		css = '';
 
 		if( ( tmp = toolkit.sanitize.number( data.el.fs ) ) !== null && tmp > 0 ){
-			o += toolkit.css.render( 'font-size', tmp + 'px' );
+			css += toolkit.css.render( 'font-size', tmp + 'px' );
 
 		}
 
 		if( ( tmp = toolkit.sanitize.number( data.el.fw ) ) !== null && tmp > 99 && tmp < 901 ){
-			o += toolkit.css.render( 'font-weight', tmp );
+			css += toolkit.css.render( 'font-weight', tmp );
 
 		}
-		o += '}';
+		o += toolkit.css.element( id, '.cpb-text.cpb-wrapper *', css );
 
 		tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' );
 		tmp1 = toolkit.css.padding( data.el.pdtt, data.el.pdrt, data.el.pdbt, data.el.pdlt, 'px', 'px' );
-
-		o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-text.cpb-wrapper{' + tmp + tmp1 + '}';
-
-		rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-text.cpb-wrapper{' + tmp + tmp1 + '}';
-
-		o += toolkit.css.responsive( 't', rcss );
+		o += toolkit.css.element( id, '.cpb-text.cpb-wrapper', ( tmp + tmp1 ), 't' );
+		o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-text.cpb-wrapper', ( tmp + tmp1 ) ) );
 
 		tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' );
 		tmp1 = toolkit.css.padding( data.el.pdtm, data.el.pdrm, data.el.pdbm, data.el.pdlm, 'px', 'px' );
-
-		o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-text.cpb-wrapper{' + tmp + tmp1 + '}';
-
-		rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-text.cpb-wrapper{' + tmp + tmp1 + '}';
-		o += toolkit.css.responsive( 'm', rcss );
+		o += toolkit.css.element( id, '.cpb-text.cpb-wrapper', ( tmp + tmp1 ), 'm' );
+		o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-text.cpb-wrapper', ( tmp + tmp1 ) ) );
 		return o;
 
 		<?php

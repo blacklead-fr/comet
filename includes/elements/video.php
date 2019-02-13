@@ -13,15 +13,13 @@ class video extends Comet_Element{
 
     public function __construct(){
 
-        $this->set_element( 'video', __( 'Video', 'comet'), 'cico-video' );
+        $this->set_element( 'video', __( 'Video', 'comet'), 'cico-video', true );
 
     }
 
     public function render( $data ){
 
         return __( 'Loading...', 'comet' );
-
-
 
     }
 
@@ -127,48 +125,45 @@ class video extends Comet_Element{
     public function css(){
         ?>
         var o = '';
-        var tmp, tmp1, rcss;
+        var tmp, tmp1, css;
 
         if( data.el.ov === 'p' ){
-            o += '.cpb-elementNode' + id + ' .cpb-video.cpb-player .cpb-button{';
+            css = '';
 
             if( ( tmp = toolkit.sanitize.color( data.el.bgc ) ) !== '' ){
-                o += toolkit.css.render( 'background', tmp );
+                css += toolkit.css.render( 'background', tmp );
 
             }
 
             if( ( tmp = toolkit.sanitize.number({ value: data.el.bw, min: 0, max: 6, default: 0 }) ) > 0 && ( tmp1 = toolkit.sanitize.color( data.el.bc ) ) !== '' ){
-                o += toolkit.css.render( 'border', tmp + 'px solid ' + tmp1 );
+                css += toolkit.css.render( 'border', tmp + 'px solid ' + tmp1 );
 
             }
-            o += toolkit.css.borderRadius( data.el.brt, data.el.brr, data.el.brb, data.el.brl );
-            o += '}';
+            css += toolkit.css.borderRadius( data.el.brt, data.el.brr, data.el.brb, data.el.brl );
+            o += toolkit.css.element( id, '.cpb-video.cpb-player .cpb-button', css );
 
             if( ( tmp = toolkit.sanitize.color( data.el.ic ) ) !== '' ){
-                o += '.cpb-elementNode' + id + ' .cpb-video.cpb-player .cpb-button span {';
-                o += toolkit.css.render( 'border-left', '15px solid ' + tmp );
-                o += '}';
+                css = toolkit.css.render( 'border-left', '15px solid ' + tmp );
+                o += toolkit.css.element( id, '.cpb-video.cpb-player .cpb-button span', css );
 
             }
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-elementNode' + id + ' .cpb-video{' + tmp + '}';
+            o += toolkit.css.element( id, '.cpb-video', tmp );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-video{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-video{' + tmp + '}';
-            o += toolkit.css.responsive( 't', rcss );
+            o += toolkit.css.element( id, '.cpb-video', tmp, 't' );
+            o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-video', tmp ) );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-video{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-video{' + tmp + '}';
-            o += toolkit.css.responsive( 'm', rcss );
+            o += toolkit.css.element( id, '.cpb-video', tmp, 'm' );
+            o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-video', tmp ) );
 
         }
         return o;

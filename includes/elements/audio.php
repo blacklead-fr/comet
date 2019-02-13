@@ -67,24 +67,22 @@ class audio extends Comet_Element {
     public function css(){
         ?>
         var o = '';
-        var tmp, rcss;
+        var tmp;
 
         if( ( tmp = toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-elementNode' + id + ' .cpb-audioW {' + tmp + '}';
+            o += toolkit.css.element( id, '.cpb-audio', tmp );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-audioW{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-audioW{' + tmp + '}';
-            o += toolkit.css.responsive( 't', rcss );
+            o += toolkit.css.element( id, '.cpb-audio', tmp, 't' );
+            o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-audio', tmp ) );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-audioW{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-audioW{' + tmp + '}';
-            o += toolkit.css.responsive( 'm', rcss );
+            o += toolkit.css.element( id, '.cpb-audio', tmp, 'm' )
+            o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-audio', tmp ) );
 
         }
         return o;

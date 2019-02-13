@@ -68,6 +68,8 @@ export default function( _slug, _id, _data ){
 
 	return {
 
+		force_js: ( [ 'true', 'TRUE', '1', 1, true ].indexOf( element.force_js ) > -1 ),
+
 		view: function( _ui ){
 			
 			if( !utils.isString( element.render.view ) || !node( _ui ).isNode() ){

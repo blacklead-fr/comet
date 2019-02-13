@@ -20,6 +20,7 @@ const html = {
     
     content: function( entry ){
         const tags = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'span', 'div', 'aside', 'code', 'pre', 'blockquote', 'article', 'section', 'main' ];
+        const allowed = '<span><br><ins><u><i><em><strong><b><strike><del><a><abbr><address><code><hr><mark><sup><sub><s>';
         var attr = '';
         var editable, content, tag, med_id, classes, o;
 
@@ -27,9 +28,9 @@ const html = {
             return '';
 
         }
-        tag = utils.isString( entry.tag ) ? ( tags.indexOf( tag = ( ( utils.trim( entry.tag ) ).toLowerCase() ) ) > -1 ? tag : 'p' ) : 'p';
+        tag = utils.isString( entry.tag ) ? ( tags.indexOf( tag = utils.trim( entry.tag.toLowerCase() ) ) > -1 ? tag : 'p' ) : 'p';
         editable = utils.isBool( entry.editable ) ? entry.editable : false;
-        content = utils.isString( entry.inner ) ? utils.stripOnly( entry.inner, utils.getAllowedTags( tag ) ) : '';
+        content = utils.isString( entry.inner ) ? utils.stripTags( entry.inner, allowed ) : '';
         classes = !utils.isStringEmpty( entry.classes ) ? utils.trim( entry.classes ) : '';
 
         if( editable && !utils.isStringEmpty( entry.match ) && ( entry.id = parse.id( entry.id ) ) ){

@@ -10,9 +10,9 @@ class Comet_Elements {
 
 	private $base_path = COMET_PATH . 'includes/elements/';
 
-	private $parsed = array();
+	private $parsed = [];
 
-	private $elements = array();
+	private $elements = [];
 
 	public function __construct(){
 
@@ -240,6 +240,7 @@ class Comet_Elements {
 			'name'		=> $name,
 			'icon'		=> $icon,
 			'tabs'		=> $tabs,
+			'force_js'	=> ( is_bool( $element->force_js() ) ? $element->force_js() : false ),
 			'render'	=> [
 				'view'	=> $view,
 				'css'	=> $css

@@ -15,13 +15,15 @@ class Comet_Element extends Comet_Register{
 
 	private $icon = 'cico-custom';
 
+	private $force_js = false;
+
 	private function sanitize_slug( $slug ){
 
 		return ( is_string( $slug ) ? preg_replace( '/[^a-z_]/i', '', $slug ) : false );
 
 	}
 
-	protected function set_element( $slug, $name, $icon ){
+	protected function set_element( $slug, $name, $icon, $force_js = false ){
 
 		if( !( $slug = $this->sanitize_slug( $slug ) ) ){
 			return false;
@@ -30,7 +32,14 @@ class Comet_Element extends Comet_Register{
 		$this->slug = $slug;
 		$this->name = is_string( $name ) ? trim( strip_tags( $name ) ) : __( 'Undefined', 'comet' );
 		$this->icon = is_string( $icon ) ? trim( strip_tags( $icon ) ) : 'cico-custom';
+		$this->force_js = is_bool( $force_js ) ? $force_js : false; 
 
+	}
+
+	public function force_js(){
+
+		return $this->force_js;
+		
 	}
 
 	public function get_slug(){

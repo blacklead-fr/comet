@@ -2823,19 +2823,6 @@ sanitize.number = function( entry ){
 	}
 	return ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isNumber( entry.default ) ? parseFloat( entry.default ) : null );
 
-	/*if( type === 'object' && 'value' in entry ){
-		v = entry.value;
-	}
-	if( typeof v === 'string' ){
-		v = parseFloat( v );
-	}
-	if( typeof v !== 'number' || isNaN( v ) ){
-		if( type === 'object' && 'default' in entry ){
-			return sanitize.number( { value: entry.default, default: 0 } );
-		}
-		return '';
-	}
-	return v;*/
 };
 
 sanitize.valueUnit = function( value, unit ){
@@ -2861,7 +2848,7 @@ sanitize.valueUnit = function( value, unit ){
 
 sanitize.unit = function( unit ){
 
-	unit = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( unit );
+	unit = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( unit ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( unit.toLowerCase() ) : unit;
 
 	switch( unit ){
 		case 'px':
@@ -3006,40 +2993,40 @@ sanitize.class = function( str, prefix ){
 
 sanitize.alignment = function( entry ){
 	const c = 'cpb-align';
-	entry = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( entry ) ? ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( entry ) ).toLowerCase() : entry;
+	entry = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( entry ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( entry.toLowerCase() ) : entry;
 
 	switch( entry ){
 		case 'l':
 		case 'left':
 		case '<':
-		return c + 'Left';
+		return c + 'left';
 
 		case 'r':
 		case 'right':
 		case '>':
-		return c + 'Right';
+		return c + 'right';
 
 		case 'j':
 		case 'justify':
 		case '=':
-		return c + 'Justify';
+		return c + 'justify';
 
 		case 'm':
 		case 'middle':
-		return c + 'Middle';
+		return c + 'middle';
 
 		case 't':
 		case 'top':
 		case '^':
-		return c + 'Top';
+		return c + 'top';
 
 		case 'b':
 		case 'bottom':
 		case 'v':
-		return c + 'Bottom';
+		return c + 'bottom';
 
 		default:
-		return c + 'Center';
+		return c + 'center';
 	}
 
 }

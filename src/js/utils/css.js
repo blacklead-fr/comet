@@ -564,7 +564,7 @@ css.responsive = function( device, css ){
 	const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
 	var index;
 
-	if( utils.isStringEmpty( css ) || ( index = mobile.indexOf( device ) ) < 0 ){
+	if( utils.isStringEmpty( css ) || ( index = devices.indexOf( device ) ) < 0 ){
 		return '';
 
 	}

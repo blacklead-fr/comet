@@ -13,7 +13,7 @@ class gallery extends Comet_Element {
 
     public function __construct(){
 
-        $this->set_element( 'gallery', __( 'Gallery', 'comet'), 'cico-gallery' );
+        $this->set_element( 'gallery', __( 'Gallery', 'comet'), 'cico-gallery', true );
 
     }
 
@@ -114,62 +114,56 @@ class gallery extends Comet_Element {
         ?>
         const gap = toolkit.sanitize.number({ value: data.el.pd, min: 0, max: 50, default: 0 });
         const ty = [ 'c', 'o' ].indexOf( data.el.ty ) > -1 ? data.el.ty : 'm';
-        var o, tmp, rcss;
-
-        o = '.cpb-elementNode' + id + ' .cpb-gallery .cpb-aside{';
+        var css = '';
+        var o, tmp;
 
         if( ( tmp = toolkit.sanitize.color( data.el.bg ) ) !== '' ){
-            o += toolkit.css.render( 'background', tmp );
+            css += toolkit.css.render( 'background', tmp );
 
         }
 
         if( ( tmp = toolkit.sanitize.color( data.el.tc ) ) !== '' ){
-            o += toolkit.css.render( 'color', tmp );
+            css += toolkit.css.render( 'color', tmp );
 
         }
 
         if( ( tmp = toolkit.sanitize.number({ value: data.el.cps, min: 10, max: 50 }) ) !== null ){
-            o += toolkit.css.render( 'font-size', tmp + 'px' );
+            css += toolkit.css.render( 'font-size', tmp + 'px' );
 
         }
-        o += '}';
+        o = toolkit.css.element( id, '.cpb-gallery .cpb-aside', css );
 
         if( ty === 'c' || ty === 'o' ){
             tmp = toolkit.sanitize.number({ value: data.el.hei, min: 100, max: 1000, default: 200 });
-            o += '.cpb-elementNode' + id + ' .cpb-gallery .cpb-item{';
-            o += toolkit.css.render( 'height', tmp + 'px ' );
-            o += '}';
+            css = toolkit.css.render( 'height', tmp + 'px ' );
+            o += toolkit.css.element( id, '.cpb-gallery .cpb-item', css );
 
         }
-        o += '.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper {';
-        o += toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' );
+        css = toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' );
 
         if( ty === 'm' ){
             tmp = toolkit.sanitize.number({ value: data.el.pd, min: 0 });
-            o += toolkit.css.render( 'column-gap', toolkit.sanitize.valueUnit( tmp, 'px' ) );
+            css += toolkit.css.render( 'column-gap', toolkit.sanitize.valueUnit( tmp, 'px' ) );
 
         }
-        o += '}';
+        o += toolkit.css.element( id, '.cpb-gallery.cpb-wrapper', css );
 
         if( ty === 'o' ){
-            o += '.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper .cpb-item{';
             tmp = toolkit.sanitize.number({ value: data.el.pd, min: 0 });
-            o += toolkit.css.render( 'padding', toolkit.sanitize.valueUnit( tmp, '%' ) );
-            o += '}';
+            css = toolkit.css.render( 'padding', toolkit.sanitize.valueUnit( tmp, '%' ) );
+            o += toolkit.css.element( id, '.cpb-gallery.cpb-wrapper .cpb-item', css );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
-            o += toolkit.css.responsive( 't', rcss );
+            o += toolkit.css.element( id, '.cpb-gallery.cpb-wrapper', tmp, 't' );
+            o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-gallery.cpb-wrapper', tmp ) );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-gallery.cpb-wrapper{' + tmp + '}';
-            o += toolkit.css.responsive( 'm', rcss );
+            o += toolkit.css.element( id, '.cpb-gallery.cpb-wrapper', tmp, 'm' );
+            o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-gallery.cpb-wrapper', tmp ) );
 
         }
         return o;

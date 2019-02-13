@@ -81,47 +81,44 @@ class listItems extends Comet_Element {
     public function css(){
         ?>
         var o = '';
-        var spa, ti, sty, tmp, rcss;
+        var spa, ti, sty, tmp, css;
 
         sty = !toolkit.utils.isStringEmpty( data.el.sty ) ? toolkit.utils.trim( data.el.sty ) : 'none';
         spa = toolkit.sanitize.number({ value: data.el.spa, min: 0, max: 200 });
         ti = toolkit.sanitize.number({ value: data.el.ti, min: 0, max: 200 });
 
         if( ( tmp = toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-elementNode' + id + ' .cpb-list.cpb-wrapper{' + tmp + '}';
+            o += toolkit.css.element( id, '.cpb-list.cpb-wrapper', tmp );
 
         }
-
-        o += '.cpb-elementNode' + id + ' .cpb-item.cpb-inner{';
+        css = '';
 
         if( ( tmp = toolkit.sanitize.number({ value: data.el.fs, min: 10, max: 100 } ) ) !== null ){
-            o += toolkit.css.render( 'font-size', tmp + 'px' );
+            css += toolkit.css.render( 'font-size', tmp + 'px' );
 
         }
 
         if( ( tmp = toolkit.sanitize.color( data.el.tc ) ) !== '' ){
-            o += toolkit.css.render( 'color', tmp );
+            css += toolkit.css.render( 'color', tmp );
 
         }
 
         if( spa !== null && ti !== null && ( spa > 0 || ti > 0 ) ){
-            o += toolkit.css.padding( spa, 0, spa, ti, 'px', 'px' );
+            css += toolkit.css.padding( spa, 0, spa, ti, 'px', 'px' );
 
         }
-        o += '}';
+        o += toolkit.css.element( id, '.cpb-item.cpb-inner', css );
 
         o += toolkit.utils.foreachItem( data, function( iid, idata ){
             var io = '';
-            var img;
+            var img, icss;
 
             if( sty === 'img' ){
                 img = toolkit.utils.isString( idata.ico ) ? toolkit.utils.trim( toolkit.utils.stripTags( idata.ico ) ) : '';
 
                 if( img !== '' ){
-                    io += '.cpb-elementNode' + id + ' .cpb-inner.cpb-item' + iid +'{';
-                    io += toolkit.css.render( 'background-image', 'url(' + toolkit.utils.escUrl( img ) + ')' );
-                    io += '}';
-                    console.log( io );
+                    icss = toolkit.css.render( 'background-image', 'url(' + toolkit.utils.escUrl( img ) + ')' );
+                    io = toolkit.css.element( id, '.cpb-inner.cpb-item' + iid, icss );
 
                 }
 
@@ -131,16 +128,14 @@ class listItems extends Comet_Element {
         });
 
         if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-list.cpb-wrapper{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-list.cpb-wrapper{' + tmp + '}';
-            o += toolkit.css.responsive( 't', rcss );
+            o += toolkit.css.element( id, '.cpb-list.cpb-wrapper', tmp, 't' );
+            o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-list.cpb-wrapper', tmp ) );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
-            o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-list.cpb-wrapper{' + tmp + '}';
-            rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-list.cpb-wrapper{' + tmp + '}';
-            o += toolkit.css.responsive( 'm', rcss );
+            o += toolkit.css.element( id, '.cpb-list.cpb-wrapper', tmp, 'm' );
+            o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-list.cpb-wrapper', tmp ) );
 
         }
         return o;

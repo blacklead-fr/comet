@@ -22,12 +22,20 @@ import layout from './layout.js';
 
 	};
 
-	const parser = function( nodes, type ){
+	const parser = function( data, nodes, type ){
 		const is_element = ( type === 'element' );
-		var i, id, a;
+		var i, id, a, _layout;
 
 		if( !nodes || !nodes.length || nodes.length < 1 ){
 			return;
+
+		}
+
+		if( is_element ){
+			_layout = layout( data, false );
+
+		}else{
+			_layout = layout( data, true );
 
 		}
 
@@ -37,20 +45,24 @@ import layout from './layout.js';
 				continue;
 
 			}
-			a = _layout[type]( id );
 
-			if( is_element && a ){
-				nodes[i].parentNode.replaceChild( a, nodes[i] );
+			if( is_element ){
+				a = _layout.element( id, 'view' );
+
+				if( !utils.isBool( a ) ){
+					nodes[i].parentNode.replaceChild( a, nodes[i] );
+
+				}
+				continue;
 
 			}
+			a = _layout[type]( id );
 
 		}
 
 	};
 
 	var _id = null;
-
-	var _layout = null;
 
 	if( !utils.isObject( __cometdata ) || !( _id = parse.id( __cometdata.id ) ) ){
 		return false;
@@ -91,12 +103,10 @@ import layout from './layout.js';
 		}
 		post = g_.get( 'post' );
 		metadata = utils.isObject( post ) && utils.isObject( post.meta ) ? post.meta : {};
-		_layout = layout( metadata, true );
-		parser( capture( 'cpb-section' ), 'section' );
-		parser( capture( 'cpb-row' ), 'row' );
-		parser( capture( 'cpb-column' ), 'column' );
-		_layout = layout( metadata, false );
-		parser( capture( 'cpb-element' ), 'element' );
+		parser( metadata, capture( 'cpb-section' ), 'section' );
+		parser( metadata, capture( 'cpb-row' ), 'row' );
+		parser( metadata, capture( 'cpb-column' ), 'column' );
+		parser( metadata, capture( 'cpb-element' ), 'element' );
 
 	});
 

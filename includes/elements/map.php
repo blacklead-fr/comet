@@ -84,24 +84,22 @@ class map extends Comet_Element {
     public function css(){
     	?>
     	var o = '';
-    	var tmp, rcss;
+    	var tmp;
 
     	if( ( tmp = toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' ) ) !== '' ){
-    		o += '.cpb-elementNode' + id + ' .cpb-map.cpb-frame{' + tmp + '}';
+            o += toolkit.css.element( id, '.cpb-map.cpb-frame', tmp );
 
     	}
 
     	if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
-    		o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-map.cpb-frame{' + tmp + '}';
-    		rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-map.cpb-frame{' + tmp + '}';
-    		o += toolkit.css.responsive( 't', rcss );
+            o += toolkit.css.element( id, '.cpb-map.cpb-frame', tmp, 't' );
+            o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-map.cpb-frame', tmp ) );
 
     	}
 
     	if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
-    		o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-map.cpb-frame{' + tmp + '}';
-    		rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-map.cpb-frame{' + tmp + '}';
-    		o += toolkit.css.responsive( 'm', rcss );
+            o += toolkit.css.element( id, '.cpb-map.cpb-frame', tmp, 'm' );
+    		o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-map.cpb-frame', tmp ) );
 
     	}
     	return o;

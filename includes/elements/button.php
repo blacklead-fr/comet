@@ -81,8 +81,8 @@ class button extends Comet_Element {
     	?>
     	
     	const content = ui.firstChild;
-    	const text = toolkit.utils.isString( data.el.text ) ? toolkit.utils.trim( data.el.text ) : '';
-    	const icon = toolkit.utils.isString( data.el.icon ) ? toolkit.utils.trim( data.el.icon ) : '';
+    	const text = toolkit.utils.isString( data.el.text ) ? toolkit.utils.trim( toolkit.utils.stripTags( data.el.text ) ) : '';
+        const icon = toolkit.utils.isString( data.el.icon ) ? toolkit.utils.trim( data.el.icon ) : '';
         var o, classe, ca, dir, tar, url, b_icon;
 
         if( text === '' && icon === '' ){
@@ -121,39 +121,24 @@ class button extends Comet_Element {
 
         }
         url = toolkit.utils.isString( data.el.link ) ? toolkit.utils.trim( toolkit.utils.stripTags( data.el.link ) ) : '#';
-        tar = [ 'true', 1, true].indexOf( data.el.tar ) > -1 ? ' target="_blank"' : '';
+        tar = [ 'true', 1, true ].indexOf( data.el.tar ) > -1 ? ' target="_blank"' : '';
         dir = data.el.ipos === 'r' ? 'r' : 'l';
 
         o += '<a class="' + ca + '" href="' + toolkit.utils.escUrl( url ) + '"' + tar + '>';
 
         if( dir === 'l' && icon !== '' ){
-        	o += '<span class="cpb-icon"></span>';
+        	o += '<span class="cpb-icon">' + toolkit.html.icon( icon ) + '</span>';
 
         }
         o += '<span class="cpb-title">' + text + '</span>';
 
         if( dir === 'r' && icon !== '' ){
-        	o += '<span class="cpb-icon"></span>';
+        	o += '<span class="cpb-icon">' + toolkit.html.icon( icon ) + '</span>';
 
         }
         o += '</a>';
         o += '</div>';
         content.innerHTML = o;
-
-        if( icon !== '' ){
-        	return;
-
-        }
-
-        b_icon = content.firstChild.firstChild;
-
-        if( dir === 'l' ){
-        	toolkit.html.icon( b_icon.firstChild, icon );
-
-        }else if( dir === 'r' ){
-        	toolkit.html.icon( b_icon.lastChild, icon );
-
-        }
 
         <?php
 
@@ -162,7 +147,7 @@ class button extends Comet_Element {
     public function css(){
     	?>
     	var o = '';
-    	var bg, abg, hsp, vsp, rcss, tmp;
+    	var bg, abg, hsp, vsp, css, tmp;
 
     	if( data.el.sty === 'g' ){
     		bg = toolkit.css.gradient( 'linear', data.el.ang , data.el.gbg );
@@ -177,28 +162,26 @@ class button extends Comet_Element {
     	hsp = toolkit.sanitize.number({ value: data.el.hsp, min: 0, max: 100 });
 
     	if( ( tmp = toolkit.css.margin( data.el.mrt, data.el.mrr, data.el.mrb, data.el.mrl, 'px', 'px' ) ) !== '' ){
-    		o += '.cpb-elementNode' + id + ' .cpb-button.cpb-wrapper{' + tmp + '}';
+    		o += toolkit.css.element( id, '.cpb-button.cpb-wrapper', tmp );
 
     	}
-    	o += '.cpb-elementNode' + id + ' .cpb-button.cpb-wrapper .cpb-link{';
-    	o += toolkit.css.padding( vsp, hsp, vsp, hsp, 'px', 'px' );
+    	css = toolkit.css.padding( vsp, hsp, vsp, hsp, 'px', 'px' );
 
     	if( ( tmp = toolkit.sanitize.number({ value: data.el.fs, min: 0 }) ) !== null ){
-    		o += toolkit.css.render( 'font-size', tmp + 'px' );
+    		css += toolkit.css.render( 'font-size', tmp + 'px' );
 
     	}
 
     	if( bg !== '' ){
-    		o += toolkit.css.render( 'background', bg );
+    		css += toolkit.css.render( 'background', bg );
 
     	}
 
     	if( ( tmp = toolkit.sanitize.color( data.el.tc ) ) !== '' ){
-    		o += toolkit.css.render( 'color', tmp );
+    		css += toolkit.css.render( 'color', tmp );
 
     	}
-
-    	o += toolkit.css.border({
+    	css += toolkit.css.border({
     		color: data.el.bc,
             style: data.el.bs,
             top: data.el.brt,
@@ -206,8 +189,10 @@ class button extends Comet_Element {
             bottom: data.el.brb,
             left: data.el.brl
         });
-        o += toolkit.css.borderRadius( data.el.rdt, data.el.rdr, data.el.rdb, data.el.rdl );
-        o += toolkit.css.boxShadow({
+
+        css += toolkit.css.borderRadius( data.el.rdt, data.el.rdr, data.el.rdb, data.el.rdl );
+
+        css += toolkit.css.boxShadow({
             x: data.el.sx,
             y: data.el.sy,
             blur: data.el.sbl,
@@ -216,56 +201,55 @@ class button extends Comet_Element {
             inset: data.el.sin
 
         });
-        o += '}';
+        o += toolkit.css.element( id, '.cpb-button.cpb-wrapper .cpb-link', css );
+        css = '';
 
-        o += '.cpb-elementNode' + id + ' .cpb-button.cpb-wrapper .cpb-icon{';
         if( ( tmp = toolkit.sanitize.number({ value: data.el.is, min: 10, max: 70, default: 20 }) ) !== null ){
-            o += toolkit.css.render( 'width', tmp + 'px' );
+            css += toolkit.css.render( 'width', tmp + 'px' );
+
         }
 
         if( ( tmp = toolkit.sanitize.number({ value: data.el.isp, min: 0, max: 100 }) ) > 0 ){
+
         	if( data.el.ipos === 'r' ){
-        		o += toolkit.css.render( 'margin-left', tmp + 'px' );
+        		css += toolkit.css.render( 'margin-left', tmp + 'px' );
 
         	}else{
-        		o += toolkit.css.render( 'margin-right', tmp + 'px' );
+        		css += toolkit.css.render( 'margin-right', tmp + 'px' );
 
         	}
 
         }
-        o += '}';
+        o += toolkit.css.element( id, '.cpb-button.cpb-wrapper .cpb-icon', css );
+        css = '';
 
         /* Hover */
 
-        o += '.cpb-elementNode' + id + ' .cpb-button.cpb-wrapper .cpb-link:hover,.cpb-elementNode' + id + ' .cpb-button.cpb-wrapper .cpb-link:active{';
-
         if( abg !== '' ){
-        	o += toolkit.css.render( 'background', abg );
+        	css += toolkit.css.render( 'background', abg );
 
         }
 
         if( ( tmp = toolkit.sanitize.color( data.el.htc ) ) !== '' ){
-        	o += toolkit.css.render( 'color', tmp );
+        	css += toolkit.css.render( 'color', tmp );
 
         }
 
         if( ( tmp = toolkit.sanitize.color( data.el.hbc ) ) !== '' ){
-        	o += toolkit.css.render( 'border-color', tmp );
+        	css += toolkit.css.render( 'border-color', tmp );
 
         }
-        o += '}';
+        o += toolkit.css.element( id, '.cpb-button.cpb-wrapper .cpb-link:hover', css );
 
         if( ( tmp = toolkit.css.margin( data.el.mrtt, data.el.mrrt, data.el.mrbt, data.el.mrlt, 'px', 'px' ) ) !== '' ){
-        	o += '.cpb-tabletMode .cpb-elementNode' + id + ' .cpb-button{' + tmp + '}';
-        	rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-button{' + tmp + '}';
-        	o += toolkit.css.responsive( 't', rcss );
+        	o += toolkit.css.element( id, '.cpb-button.cpb-wrapper', tmp, 't' );
+        	o += toolkit.css.responsive( 't', toolkit.css.element( id, '.cpb-button.cpb-wrapper', tmp ) );
 
         }
 
         if( ( tmp = toolkit.css.margin( data.el.mrtm, data.el.mrrm, data.el.mrbm, data.el.mrlm, 'px', 'px' ) ) !== '' ){
-        	o += '.cpb-mobileMode .cpb-elementNode' + id + ' .cpb-button{' + tmp + '}';
-        	rcss = '.cpb-element.cpb-elementNode' + id + ' .cpb-button{' + tmp + '}';
-        	o += toolkit.css.responsive( 'm', rcss );
+        	o += toolkit.css.element( id, '.cpb-button.cpb-wrapper', tmp, 'm' );
+        	o += toolkit.css.responsive( 'm', toolkit.css.element( id, '.cpb-button.cpb-wrapper', tmp ) );
 
         }
         return o;

@@ -352,7 +352,7 @@ export default function ( data, g_css ){
 
 		},
 
-		element: function( id, updating ){
+		element: function( id, state ){
 			var cl, element, fragment, el;
 
 			if( !_priv.hasConnection( 'elements' ) || !( id = parse.id( id ) ) || !utils.isObject( data.elements[id] ) || utils.isStringEmpty( data.elements[id]._type ) ){
@@ -366,7 +366,7 @@ export default function ( data, g_css ){
 			}
 			style( id, 'elements' ).insert( el.css() );
 
-			if( g_css ){
+			if( g_css || ( [ 'view', 'VIEW' ].indexOf( state ) > -1 && !el.force_js ) ){
 				return true;
 				
 			}
@@ -385,7 +385,7 @@ export default function ( data, g_css ){
 			el.view( element );
 			console.timeEnd("element");
 
-			if( utils.isBool( updating ) && updating ){
+			if( [ 'update', 'UPDATE', 'updating', 'UPDATING', true, 1 ].indexOf( state ) > -1 ){
 				__target().set({node: element });
 
 			}
@@ -394,7 +394,7 @@ export default function ( data, g_css ){
 		},
 
 	};
-	g_css = ( ( utils.isBool( g_css ) && g_css === true ) || ( utils.isString( g_css ) && 'css' === utils.trim( g_css.toLowerCase() ) ) );
+	g_css = ( ( utils.isBool( g_css ) && g_css ) || ( utils.isString( g_css ) && 'css' === utils.trim( g_css.toLowerCase() ) ) );
 	prop.css = g_css;
 
 	return prop;
