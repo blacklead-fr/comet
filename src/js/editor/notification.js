@@ -2,11 +2,12 @@ import utils from '../utils/utils.js';
 import node from '../utils/node.js';
 
 export default function ( str, status ){
-    const cockpit = document.getElementById( 'comet-cockpit' );
-    const notifications = document.getElementById( 'comet-notifications' );
-    var o, button;
+    const _d = document;
+    const cockpit = _d.getElementById( 'comet-cockpit' );
+    const notifications = _d.getElementById( 'comet-notifications' );
+    var o, inner, _cockpit;
 
-    if( !node( notifications ).isNode() || !node( cockpit ).isNode() ){
+    if( !node( notifications ).isNode() || !( ( _cockpit = node( cockpit ) ).isNode() ) ){
         return false;
 
     }
@@ -20,22 +21,19 @@ export default function ( str, status ){
         default:
         status = 'success';
     }
-    cockpit.className = 'cpb-active';
+    _cockpit.addClass( 'is_toggled' );
 
-    o = document.createElement( 'div' );
+    o = _d.createElement( 'div' );
     o.className = 'comet-notification ' + status;
-    o.innerHTML = '<p>' + ( utils.isString( str ) || utils.isNumber( str ) ? utils.stripTags( str.toString() ) : '' ) + '</p>';
 
-    button = document.createElement( 'button' );
-    button.className = 'comet-button comet-close comet-closeNote';
-    button.innerHTML = '<span class="cico cico-x"></span>';
-
-    o.appendChild( button );
+    inner = '<p>' + ( utils.isString( str ) || utils.isNumber( str ) ? utils.stripTags( str.toString() ) : '' ) + '</p>';
+    inner += '<button class="comet-button comet-close" title="' + __cometi18n.ui.close + '" aria-label="' + __cometi18n.ui.close + '"><span class="cico cico-x"></span></button>';
+    o.innerHTML = inner;
 
     notifications.appendChild( o );
 
-    node( button ).on( 'click', function( e, ui ){
-        e.preventDefault();
+    node( o.lastChild ).on( 'click', function( ev, ui ){
+        ev.preventDefault();
         var _note;
 
         if( ( ( _note = node( ui.parentNode ) ).isNode() ) ){

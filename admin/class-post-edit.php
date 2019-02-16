@@ -284,7 +284,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
         $editor_slug = "{$slug}-editor";
         $i18n = comet_get_i18n( 'editor' );
 
-        wp_localize_script( $editor_slug, '__cometdata', array(
+        wp_localize_script( $editor_slug, '__cometdata', [
             'post_id'       => $this->post->ID,
             'preview_url'   => comet_get_dashboard_url( 'preview' ),
             'dashboard_url' => comet_get_rediction_url( $this->post->post_type ),
@@ -292,7 +292,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
             'ajax_url'      => admin_url( 'admin-ajax.php' ),
             'rtl'           => is_rtl() ? 'true' : 'false',
             'user'          => 'true'
-        ) );
+        ] );
         wp_localize_script( $editor_slug, $i18n->get_id(), $i18n->get() ); 
         wp_enqueue_script( $editor_slug, COMET_URL . 'src/js/editor.js', array(), COMET_VERSION, true );
 
@@ -318,7 +318,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
         echo '<div id="comet-generalSettings" class="comet-generalSettings comet-fixfull">';
         echo '<form id="comet-postSettings">';
         echo '<div class="comet-header">';
-        echo '<h4>' . __( 'Settings', 'comet' ) . '</h4>';
+        echo '<h4>' . __( 'Post settings', 'comet' ) . '</h4>';
         echo '<button id="comet-closeGeneralSettings" class="comet-button" aria-label="' . __( 'Close settings', 'comet' ) . '">';
         echo '<span class="cico cico-x"></span>';
         echo '</button>';
@@ -354,7 +354,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
         }
         echo '<div class="comet-metaboxes comet-metaboxes' . ucfirst( $context ) .'">';
 
-        foreach( array( 'high', 'sorted', 'core', 'default', 'low' ) as $priority ){
+        foreach( [ 'high', 'sorted', 'core', 'default', 'low' ] as $priority ){
 
             if( !isset( $wp_meta_boxes[$page][$context][$priority] ) ){
                 continue;

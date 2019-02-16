@@ -5,6 +5,7 @@ import parse from '../../utils/parse.js';
 import utils from '../../utils/utils.js';
 import node from '../../utils/node.js';
 import sort from '../../utils/sort.js';
+import ajax from '../../utils/ajax.js';
 import redefine from '../redefine.js';
 import __tabs from '../panel/tabs.js';
 import __target from '../target.js';
@@ -57,7 +58,7 @@ const sidebar = {
 
 			redefine.workflow();
 
-			node( search ).on( 'keyup change', function( ev1, ui1 ){
+			node( search ).on( 'input', function( ev1, ui1 ){
 				ev1.preventDefault();
 				const val = utils.isString( ui1.value ) ? utils.trim( ui1.value ) : '';
 				const isEmpty = ( val.length < 1 );
@@ -92,83 +93,128 @@ const sidebar = {
 
 	save: function( _n ){
 
-		node( _n ).on( 'click', function( ev, ui ){
-			ev.preventDefault();
-			const disabled = 'cpb-disabled';
-			const wait = 'comet-waitWhileIcon';
-			var hasChildren = false;
-			var id, _ui, dren;
+		const _d = document;
 
-			if( !( id = parse.id( cometdata.post_id ) ) || !( ( _ui = node( ui ) ).hasClass( disabled ) ) ){
-				return;
+		const priv = {
 
-			}
+			catch_data: function(){
+				const form = _d.getElementById( 'comet-postSettings' );
+				const n_names = [ 'input', 'select', 'textarea' ];
+				const i_types = [ 'text', 'number', 'range', 'hidden', 'date', 'color', 'checkbox', 'radio', 'email', 'image', 'file', 'month', 'password', 'search', 'tel', 'time', 'url', 'week' ];
+				const f_data = {};
+				var fields, field, a, index;
 
-			function toggle( state ){
-				var c, _child;
-
-
-				if( state ){
-					_ui.addClass( disabled );
-
-				}else{
-					_ui.removeClass( disabled );
+				if( !node( form ).isNode() || form.nodeName.toLowerCase() !== 'form' || ( fields = form.elements ).length < 1 ){
+					return f_data;
 
 				}
 
-				if( !hasChildren ){
-					return false;
+				for( a = 0; a < fields.length; a++ ){
 
-				}
-
-				for( c in dren ){
-
-					if( !( ( _child = node( dren[c] ) ).isNode() ) || !_child.hasClass( 'cico' ) ){
+					if( !node( field = fields[a] ).isNode() || ( index = n_names.indexOf( field.nodeName.toLowerCase() ) ) < 0 ){
 						continue;
 
 					}
 
-					if( !state || ( state && _child.hasClass( wait ) ) ){
-						_child.removeClass( wait );
+					if( utils.isStringEmpty( field.name ) ){
 						continue;
 
 					}
-					_child.addClass( wait );
+
+					if( index === 0 && i_types.indexOf( field.type.toLowerCase() ) < 0 ){
+						continue;
+
+					}
+					f_data[field.name] = field.value;
 
 				}
 
-			}
+				return f_data;
 
-			hasChildren = ( ( dren = ui.children ).length > 0 );
-			toggle( true );
+			},
 
-			ajax({
-				action: 'comet_ajAdmin',
-				do: 'save',
-				data: JSON.stringify({
+			save: function( ev, ui ){
+				ev.preventDefault();
+				const disabled = 'cpb-disabled';
+				const wait = 'comet-waitWhileIcon';
+				var hasChildren = false;
+				var id, _ui, dren, e_data;
+
+				if( !( id = parse.id( __cometdata.post_id ) ) || ( _ui = node( ui ) ).hasClass( disabled ) ){
+					return;
+
+				}
+
+				function toggle( state ){
+					var c, _child;
+
+
+					if( state ){
+						_ui.addClass( disabled );
+
+					}else{
+						_ui.removeClass( disabled );
+
+					}
+
+					if( !hasChildren ){
+						return false;
+
+					}
+
+					for( c in dren ){
+
+						if( !( ( _child = node( dren[c] ) ).isNode() ) || !_child.hasClass( 'cico' ) ){
+							continue;
+
+						}
+
+						if( !state || ( state && _child.hasClass( wait ) ) ){
+							_child.removeClass( wait );
+							continue;
+
+						}
+						_child.addClass( wait );
+
+					}
+
+				}
+				hasChildren = ( ( dren = ui.children ).length > 0 );
+				toggle( true );
+
+				e_data = priv.catch_data();
+				e_data.meta = __data().getData();
+				e_data.post_content = sanitize.content();
+
+				console.log( e_data );
+
+				ajax({
+					do: 'save',
 					id: id,
-					meta: __data.getData(),
-					content: sanitize.content(),
-					_post: node( document.getElementById( 'comet-postSettings' ) ).serialize()
+					data: JSON.stringify( e_data )
 
-				})
-			}).done(function( r, a, b ){
-				var msg;
+				}).done(function( r ){
+					var msg;
+					console.log( r );
 
-				switch( ( r = parseInt( r ) ) ){
-					case 0:
-					case 400:
-					msg = __cometi18n.messages.error.savePost;
-					break;
-					default:
-					msg = __cometi18n.messages.success.savePost;
-				}
-				notification( msg, r );
-				toggle( false );
+					switch( ( r = parseInt( r ) ) ){
+						case 0:
+						case 400:
+						msg = __cometi18n.messages.error.savePost;
+						break;
+						default:
+						msg = __cometi18n.messages.success.savePost;
+					}
+					notification( msg, r );
+					toggle( false );
 
-			});
+				});
 
-		});
+			}
+
+		};
+
+		node( _n ).on( 'click', priv.save );
 
 	},
 
@@ -326,7 +372,7 @@ const sidebar = {
 					close: {
 						do: function( e, ui ){
 							target_.reset();
-							__editor( true );
+							//__editor( true );
 						}
 					}
 

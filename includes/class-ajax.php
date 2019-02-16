@@ -105,8 +105,6 @@ class Comet_Ajax {
             case 'dtemplate':
 
             echo ( isset( $p['id' ] ) && ( $post = comet_get_post( $p['id' ] ) )->has_post() && $post->delete_post() ? 1 : 0 );
-
-            //echo ( isset( $p['id'] ) && ( ( $r = comet_deleteMyTemplate( $p['id'] ) ) || is_array( $r ) || is_object( $r ) ) );
             break;
 
             case 'save':

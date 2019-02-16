@@ -2756,9 +2756,11 @@ __webpack_require__.r(__webpack_exports__);
 	prop.serialize = function(){
 		const s = [];
 		const exc = [ 'button', 'submit', 'reset', 'file', 'hidden' ];
-		var field, f, fields, opts, o;
+		var field, f, fields, opts, o, type;
 
-		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = from.elements ).length > 0 ){
+		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = node.elements ).length > 0 ){
+			console.log( fields );
+			return;
 
 			for( f in fields ){
 				field = fields[f];

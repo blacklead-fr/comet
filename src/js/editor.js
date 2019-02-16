@@ -333,11 +333,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/utils.js */ "./src/js/utils/utils.js");
 /* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/node.js */ "./src/js/utils/node.js");
 /* harmony import */ var _utils_sort_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/sort.js */ "./src/js/utils/sort.js");
-/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../redefine.js */ "./src/js/editor/redefine.js");
-/* harmony import */ var _panel_tabs_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../panel/tabs.js */ "./src/js/editor/panel/tabs.js");
-/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../target.js */ "./src/js/editor/target.js");
-/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
-/* harmony import */ var _panel_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../panel.js */ "./src/js/editor/panel.js");
+/* harmony import */ var _utils_ajax_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utils/ajax.js */ "./src/js/utils/ajax.js");
+/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../redefine.js */ "./src/js/editor/redefine.js");
+/* harmony import */ var _panel_tabs_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../panel/tabs.js */ "./src/js/editor/panel/tabs.js");
+/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../target.js */ "./src/js/editor/target.js");
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
+/* harmony import */ var _panel_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../panel.js */ "./src/js/editor/panel.js");
+
 
 
 
@@ -383,7 +385,7 @@ const sidebar = {
 					}
 
 				}
-				_redefine_js__WEBPACK_IMPORTED_MODULE_7__["default"].workflow();
+				_redefine_js__WEBPACK_IMPORTED_MODULE_8__["default"].workflow();
 				return;
 			}
 			_p.addClass( enabled );
@@ -395,9 +397,9 @@ const sidebar = {
 			search.placeholder = __cometi18n.ui.sElement;
 			tmp.appendChild( search );
 
-			_redefine_js__WEBPACK_IMPORTED_MODULE_7__["default"].workflow();
+			_redefine_js__WEBPACK_IMPORTED_MODULE_8__["default"].workflow();
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( search ).on( 'keyup change', function( ev1, ui1 ){
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( search ).on( 'input', function( ev1, ui1 ){
 				ev1.preventDefault();
 				const val = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( ui1.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( ui1.value ) : '';
 				const isEmpty = ( val.length < 1 );
@@ -432,83 +434,128 @@ const sidebar = {
 
 	save: function( _n ){
 
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _n ).on( 'click', function( ev, ui ){
-			ev.preventDefault();
-			const disabled = 'cpb-disabled';
-			const wait = 'comet-waitWhileIcon';
-			var hasChildren = false;
-			var id, _ui, dren;
+		const _d = document;
 
-			if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( cometdata.post_id ) ) || !( ( _ui = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ) ).hasClass( disabled ) ) ){
-				return;
+		const priv = {
 
-			}
+			catch_data: function(){
+				const form = _d.getElementById( 'comet-postSettings' );
+				const n_names = [ 'input', 'select', 'textarea' ];
+				const i_types = [ 'text', 'number', 'range', 'hidden', 'date', 'color', 'checkbox', 'radio', 'email', 'image', 'file', 'month', 'password', 'search', 'tel', 'time', 'url', 'week' ];
+				const f_data = {};
+				var fields, field, a, index;
 
-			function toggle( state ){
-				var c, _child;
-
-
-				if( state ){
-					_ui.addClass( disabled );
-
-				}else{
-					_ui.removeClass( disabled );
+				if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( form ).isNode() || form.nodeName.toLowerCase() !== 'form' || ( fields = form.elements ).length < 1 ){
+					return f_data;
 
 				}
 
-				if( !hasChildren ){
-					return false;
+				for( a = 0; a < fields.length; a++ ){
 
-				}
-
-				for( c in dren ){
-
-					if( !( ( _child = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( dren[c] ) ).isNode() ) || !_child.hasClass( 'cico' ) ){
+					if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( field = fields[a] ).isNode() || ( index = n_names.indexOf( field.nodeName.toLowerCase() ) ) < 0 ){
 						continue;
 
 					}
 
-					if( !state || ( state && _child.hasClass( wait ) ) ){
-						_child.removeClass( wait );
+					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( field.name ) ){
 						continue;
 
 					}
-					_child.addClass( wait );
+
+					if( index === 0 && i_types.indexOf( field.type.toLowerCase() ) < 0 ){
+						continue;
+
+					}
+					f_data[field.name] = field.value;
 
 				}
 
-			}
+				return f_data;
 
-			hasChildren = ( ( dren = ui.children ).length > 0 );
-			toggle( true );
+			},
 
-			ajax({
-				action: 'comet_ajAdmin',
-				do: 'save',
-				data: JSON.stringify({
+			save: function( ev, ui ){
+				ev.preventDefault();
+				const disabled = 'cpb-disabled';
+				const wait = 'comet-waitWhileIcon';
+				var hasChildren = false;
+				var id, _ui, dren, e_data;
+
+				if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( __cometdata.post_id ) ) || ( _ui = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ) ).hasClass( disabled ) ){
+					return;
+
+				}
+
+				function toggle( state ){
+					var c, _child;
+
+
+					if( state ){
+						_ui.addClass( disabled );
+
+					}else{
+						_ui.removeClass( disabled );
+
+					}
+
+					if( !hasChildren ){
+						return false;
+
+					}
+
+					for( c in dren ){
+
+						if( !( ( _child = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( dren[c] ) ).isNode() ) || !_child.hasClass( 'cico' ) ){
+							continue;
+
+						}
+
+						if( !state || ( state && _child.hasClass( wait ) ) ){
+							_child.removeClass( wait );
+							continue;
+
+						}
+						_child.addClass( wait );
+
+					}
+
+				}
+				hasChildren = ( ( dren = ui.children ).length > 0 );
+				toggle( true );
+
+				e_data = priv.catch_data();
+				e_data.meta = Object(_data_js__WEBPACK_IMPORTED_MODULE_11__["default"])().getData();
+				e_data.post_content = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].content();
+
+				console.log( e_data );
+
+				Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_7__["default"])({
+					do: 'save',
 					id: id,
-					meta: _data_js__WEBPACK_IMPORTED_MODULE_10__["default"].getData(),
-					content: _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].content(),
-					_post: Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( document.getElementById( 'comet-postSettings' ) ).serialize()
+					data: JSON.stringify( e_data )
 
-				})
-			}).done(function( r, a, b ){
-				var msg;
+				}).done(function( r ){
+					var msg;
+					console.log( r );
 
-				switch( ( r = parseInt( r ) ) ){
-					case 0:
-					case 400:
-					msg = __cometi18n.messages.error.savePost;
-					break;
-					default:
-					msg = __cometi18n.messages.success.savePost;
-				}
-				Object(_notification_js__WEBPACK_IMPORTED_MODULE_1__["default"])( msg, r );
-				toggle( false );
+					switch( ( r = parseInt( r ) ) ){
+						case 0:
+						case 400:
+						msg = __cometi18n.messages.error.savePost;
+						break;
+						default:
+						msg = __cometi18n.messages.success.savePost;
+					}
+					Object(_notification_js__WEBPACK_IMPORTED_MODULE_1__["default"])( msg, r );
+					toggle( false );
 
-			});
+				});
 
-		});
+			}
+
+		};
+
+		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _n ).on( 'click', priv.save );
 
 	},
 
@@ -522,7 +569,7 @@ const sidebar = {
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
 			stop: function( e, ui, current ){
-				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_11__["default"])();
 				const _ui = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui );
 				var sid, rid, cid, columns, _column, sibid, nb, _p, p, r, re, a, w, tmp, position;
 
@@ -617,8 +664,8 @@ const sidebar = {
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
 			stop: function( e, ui, current ){
-				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
-				const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
+				const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_11__["default"])();
+				const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
 				var preload, _ui, closest, _closest, id, t, pid, defname, lyt, element, tabs, edata;
 
 				if( !( defname = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( current, 'id' ) ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( defname ) ){
@@ -650,7 +697,7 @@ const sidebar = {
 					return;
 
 				}
-				tabs = Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_8__["default"])( edata.tabs, data_.get( id, defname ) );
+				tabs = Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_9__["default"])( edata.tabs, data_.get( id, defname ) );
 				target_.reset();
 
 				target_.set({
@@ -659,14 +706,14 @@ const sidebar = {
 					node: element
 				});
 
-				Object(_panel_js__WEBPACK_IMPORTED_MODULE_11__["default"])({
+				Object(_panel_js__WEBPACK_IMPORTED_MODULE_12__["default"])({
 					title: __cometi18n.options.element.edit,
 					content: 'content' in tabs ? tabs.content : '',
 					tabs: 'tabs' in tabs ? tabs.tabs : '',
 					close: {
 						do: function( e, ui ){
 							target_.reset();
-							__editor( true );
+							//__editor( true );
 						}
 					}
 
@@ -2918,11 +2965,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = (function ( str, status ){
-    const cockpit = document.getElementById( 'comet-cockpit' );
-    const notifications = document.getElementById( 'comet-notifications' );
-    var o, button;
+    const _d = document;
+    const cockpit = _d.getElementById( 'comet-cockpit' );
+    const notifications = _d.getElementById( 'comet-notifications' );
+    var o, inner, _cockpit;
 
-    if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( notifications ).isNode() || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( cockpit ).isNode() ){
+    if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( notifications ).isNode() || !( ( _cockpit = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( cockpit ) ).isNode() ) ){
         return false;
 
     }
@@ -2936,22 +2984,19 @@ __webpack_require__.r(__webpack_exports__);
         default:
         status = 'success';
     }
-    cockpit.className = 'cpb-active';
+    _cockpit.addClass( 'is_toggled' );
 
-    o = document.createElement( 'div' );
+    o = _d.createElement( 'div' );
     o.className = 'comet-notification ' + status;
-    o.innerHTML = '<p>' + ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( str ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isNumber( str ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str.toString() ) : '' ) + '</p>';
 
-    button = document.createElement( 'button' );
-    button.className = 'comet-button comet-close comet-closeNote';
-    button.innerHTML = '<span class="cico cico-x"></span>';
-
-    o.appendChild( button );
+    inner = '<p>' + ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( str ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isNumber( str ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str.toString() ) : '' ) + '</p>';
+    inner += '<button class="comet-button comet-close" title="' + __cometi18n.ui.close + '" aria-label="' + __cometi18n.ui.close + '"><span class="cico cico-x"></span></button>';
+    o.innerHTML = inner;
 
     notifications.appendChild( o );
 
-    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( button ).on( 'click', function( e, ui ){
-        e.preventDefault();
+    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( o.lastChild ).on( 'click', function( ev, ui ){
+        ev.preventDefault();
         var _note;
 
         if( ( ( _note = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( ui.parentNode ) ).isNode() ) ){
@@ -8580,9 +8625,11 @@ __webpack_require__.r(__webpack_exports__);
 	prop.serialize = function(){
 		const s = [];
 		const exc = [ 'button', 'submit', 'reset', 'file', 'hidden' ];
-		var field, f, fields, opts, o;
+		var field, f, fields, opts, o, type;
 
-		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = from.elements ).length > 0 ){
+		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = node.elements ).length > 0 ){
+			console.log( fields );
+			return;
 
 			for( f in fields ){
 				field = fields[f];

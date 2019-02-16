@@ -82,7 +82,7 @@ class Comet_Post {
 		$esc = [];
 
 		if( isset( $data['post_title'] ) && is_string( $data['post_title'] ) ){
-			$esc['post_title'] = sanitize_title( $data['post_title'] );
+			$esc['post_title'] = sanitize_text_field( $data['post_title'] );
 
 		}
 
@@ -91,7 +91,7 @@ class Comet_Post {
 
 		}
 
-		if( isset( $data['post_type'] ) ){
+		if( isset( $data['post_type'] ) && post_type_exists( $data['post_type'] ) ){
 			$esc['post_type'] = $data['post_type'];
 
 		}
@@ -115,7 +115,7 @@ class Comet_Post {
 		}
 
 		if( isset( $data['post_excerpt'] ) && is_string( $data['post_excerpt'] ) ){
-			$esc['post_excerpt'] = sanitize_text_field( $data['post_excerpt'] );
+			$esc['post_excerpt'] = sanitize_textarea_field( $data['post_excerpt'] );
 
 		}
 

@@ -69,16 +69,17 @@ class Comet_Dashboard extends Comet_Pages {
 		$i18n = comet_get_i18n( 'admin' );
 
 		comet_localize( 
-			'cometdata',
-			array(
+			'__cometdata',
+			[
 				'ajax_url'		=> admin_url( 'admin-ajax.php' ),
 				'admin_url'		=> admin_url(),
-				'nonce'			=> wp_create_nonce( 'comet-ajax-nonce' ),
+				'security'		=> wp_create_nonce( 'comet-ajax-nonce' ),
 				'edit_url'		=> admin_url( 'post.php' ),
 				'myTemplates'	=> comet_get_dashboard_url( 'mytemplates' ),
 				'fonts'			=> comet_get_fonts(),
-				'apikey'		=> $key
-			)
+				'apikey'		=> $key,
+				'user'			=> 'true'
+			]
 		);
 		comet_localize( $i18n->get_id(), $i18n->get() );
 		comet_print_script( COMET_URL . 'src/js/admin.js' );

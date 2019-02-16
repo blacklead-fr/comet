@@ -9,6 +9,8 @@ export default function(){
 
 	const _d = document;
 
+	const _w = window;
+
 	const _u = {
 
 		message: function( text, type ){
@@ -97,14 +99,13 @@ export default function(){
 					isSaving = true;
 
 					ajax({
-						action: 'comet_ajAdmin',
 						do: 'save',
 						data: JSON.stringify({
-							title: name,
+							post_title: name,
 							post_type: 'comet_mytemplates',
-							content: '',
+							post_content: '',
 							meta: {},
-							status: 'publish'
+							post_status: 'publish'
 						})
 					}).done(function( r ){
 						var url;
@@ -118,13 +119,13 @@ export default function(){
 							return;
 
 						}
-						url = utils.addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, cometdata.edit_url );
+						url = utils.addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, __cometdata.edit_url );
 						msg = __cometi18n.messages.success.newTemplate + '<br>' + __cometi18n.messages.redirect;
 						msg += ' <a href="' + encodeURI( url ) + '">' + __cometi18n.messages.editPage + '</a>.';
 						error = _u.message( msg, 'success' );
 						wrapper.innerHTML = '';
 						wrapper.appendChild( error );
-						window.open( url, '_self' );
+						_w.open( url, '_self' );
 					});
 
 				}
@@ -157,6 +158,7 @@ export default function(){
 						confirm: prop.delete,
 						data: {
 							id: id,
+							node: ui.parentNode.parentNode,
 							error: ( !msg ? false : true )
 						}
 					});
@@ -165,36 +167,26 @@ export default function(){
 
 				delete: function( ev, ui, data ){
 					ev.preventDefault();
-					var id, event;
 
-					if( isDeleting ){
-						return;
-
-					}
-
-					if( ( utils.isBool( data.error ) && data.error ) || 'id' in data ){
-						ui.parentNode.removeChild( ui );
+					if( isDeleting || !utils.isObject( data ) || ( utils.isBool( data.error ) && data.error ) ){
 						return;
 
 					}
 					isDeleting = true;
-					event = ui.parentNode.parentNode.firstChild;
-					event.innerHTML = _u.icons.wait + __cometi18n.messages.warning.wait;
+					data.dialog.destroy();
 
 					ajax({
-						action: 'comet_ajAdmin',
 						do: 'dtemplate',
 						id: data.id
 
 					}).done(function( r ){
 						isDeleting = false;
 
-						if( r == 'false' ){
-							event.innerHTML = __cometi18n.messages.error.delete;
+						if( [ 'false', 'FALSE', '0', 0 ].indexOf( r ) > -1 ){
 							return;
 
 						}
-						data.dialog.destroy();
+						_w.location.reload( true );
 
 					});
 

@@ -33,7 +33,7 @@ body,
 html,
 ul, ol, li,
 p, h1, h2, h3, h4, h5, h5, h6,
-section, article, figure, aside {
+section, article, figure, aside, form {
   display: block;
   width: auto;
 }
@@ -46,13 +46,13 @@ span {
 
 ul, ol, li, svg,
 a, span, p, h1, h2, h3, h4, h5, h5, h6,
-div, iframe, section, article, figure, aside {
+div, iframe, section, article, figure, aside, form {
   border: 0;
   margin: 0;
   padding: 0;
 }
 
-iframe {
+iframe, form {
 	width: 100%;
 	height: 100%;
   position: relative;
@@ -539,82 +539,69 @@ section, article, figure, aside {
 
 .comet-generalSettings {
   display: none;
-  background: rgb(44, 45, 49, .95 );
+  background: #EDF5FB;
   z-index: 3;
-  color: white;
 }
 
-.comet-generalSettings .comet-header {
+.comet-generalSettings > form > .comet-header {
   position: relative;
-  margin: 10px;
-}
-
-.comet-generalSettings .comet-header h4 {
-  padding-right: 25px;
-  color: white;
-}
-
-.comet-generalSettings .comet-header .cico,
-.comet-generalSettings .comet-header p button:hover { color: white; }
-
-.comet-generalSettings .comet-header .comet-button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 0;
-}
-
-.comet-generalSettings .comet-header .cico { font-size: 15px; }
-
-.comet-generalSettings .comet-inner {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  height: calc( 100% - 25px );
-  overflow: auto;
-  color: white;
-}
-
-.comet-metaboxes { padding: 20px 10px; }
-
-.comet-metaboxesAdvanced { width: 65%; }
-
-.comet-metaboxesSide { width: 30%; }
-
-.comet-metaboxesNormal { width: 100%; }
-
-.comet-metabox { margin-bottom: 20px; }
-
-.comet-metaboxTitle { padding: 5px 0; }
-
-.comet-metabox input,
-.comet-metabox select,
-.comet-metabox textarea {
-  width: 100%;
-  padding: 5px;
-  height: 35px;
-  font: 300 15px/1.5 sans-serif;
-  border-radius: 5px;
-  background: white;
-  color: #404146;
-}
-
-.comet-metabox textarea {
-  min-height: 100px;
-  resize: vertical;
-  overflow: auto;
-}
-
-#postgeneral .comet-row { margin-bottom: 20px; } 
-
-#postgeneral .comet-inner {
+  padding: 20px;
   display: flex;
   align-items: center;
 }
 
-#postgeneral .comet-inner * { width: 60%; }
+.comet-generalSettings > form > .comet-header h4 {
+  width: 100%;
+  padding-right: 10px;
+}
 
-#postgeneral .comet-inner label { width: 40%; }
+.comet-generalSettings > form > .comet-header .comet-button {
+  border-radius: 2em;
+  color: #404146;
+  width: 35px;
+  height: 35px;
+  line-height: 25px;
+  padding: 10px;
+}
+
+.comet-generalSettings > form > .comet-header .cico {
+  font-size: 15px;
+  height: 15px;
+  width: 15px;
+  display: block;
+}
+
+.comet-generalSettings > form > .comet-header .comet-button:hover{
+  background: #DAE5EE;
+  color: #006AFE;
+}
+
+.comet-generalSettings > form > .comet-inner {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: auto;
+  height: calc( 100% - 75px );
+}
+
+.comet-metaboxes { padding: 20px; }
+
+.comet-metaboxesAdvanced { width: 65%; }
+
+.comet-metaboxesSide { width: 35%; }
+
+.comet-metaboxesNormal { width: 100%; }
+
+.comet-metabox,
+#poststatus .comet-row { margin-bottom: 20px; } 
+
+#poststatus .comet-inner {
+  display: flex;
+  align-items: center;
+}
+
+#poststatus .comet-inner * { width: 50%; }
+
+#poststatus .comet-inner label { margin-right: 10px; }
 
 
 
@@ -712,7 +699,7 @@ section, article, figure, aside {
   overflow: hidden;
 }
 
-.comet-notification .comet-closeNote {
+.comet-notification .comet-close {
   padding: 0;
   position: absolute;
   top: 4px;
@@ -721,16 +708,16 @@ section, article, figure, aside {
   height: auto;
 }
 
-.comet-notification .comet-closeNote .cico {
+.comet-notification .comet-close .cico {
   color: #DAE5EE;
   font-size: 12px;
   width: 12px;
   height: 12px;
 }
 
-.comet-notification:hover .comet-closeNote { right: 2px; }
+.comet-notification:hover .comet-close { right: 2px; }
 
-.comet-notification .comet-closeNote:hover .cico { color: white; }
+.comet-notification .comet-close:hover .cico { color: white; }
 
 .comet-notification.success p,
 .comet-notification.success p * { color: #ADE995; }
