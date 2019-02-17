@@ -1,3 +1,6 @@
+import sanitize from '../../utils/sanitize.js';
+import notification from '../notification.js';
+import message from '../../utils/message.js';
 import __global from '../../utils/global.js';
 import dialog from '../../utils/dialog.js';
 import modal from '../../utils/modal.js';
@@ -59,131 +62,144 @@ const cockpit = {
 
 	save: function( _n ){
 
+		var is_saving = false;
+
 		const _d = document;
 
-		const onsave = function( ev, ui, edata ){
-			ev.preventDefault();
+		const __core = {
 
-			const metaData = __data().getData();
-			var m = '';
-			var hasError = false;
-			var val, div, pp, x, dren;
+			toggle: function( button, saving ){
+				const waitwhile = 'comet-waitwhile';
+				const _button = node( button );
 
-			if( !utils.isObject( edata ) ){
-				return;
+				if( !_button.isNode() ){
+					return;
 
-			}
+				}
 
-			if( !node( edata.input ).isNode() ){
-				m = __cometi18n.messages.error.savePost + '<br>';
+				if( utils.isBool( saving ) && saving ){
+					_button.addClass( waitwhile );
+					button.innerHTML = '<span class="cico cico-spin"></span>';
+					return;
 
-			}
+				}
+				_button.removeClass( waitwhile );
+				button.innerHTML = __cometi18n.ui.save;
 
-			if( !utils.isObject( metaData ) || utils.isStringEmpty( metaData._sections ) ){
-				m = __cometi18n.messages.error.noContent + '<br>';
+			},
 
-			}
+			open: function( ev, ui ){
+				ev.preventDefault();
 
-			if( !utils.isString( val = input.value ) || ( val = utils.trim( utils.stripTags( val ) ) ).length < 1 ){
-				m += __cometi18n.messages.error.title;
+				const args = {};
+				var mod = false;
+				var id, content, inner, div, input, button, form;
 
-			}
+				content = _d.createElement( 'div' );
+				content.className = 'comet-savebox comet-wrapper';
 
-			if( m.length > 0 ){
+				inner = '<p>' + __cometi18n.messages.stemplate + ' <a href="' + utils.escUrl( 'https://blacklead.fr/support/docs/comet/my-templates/' ) + '" target="_blank">' + __cometi18n.messages.rmtemplate + '</a>.</p>';
+				inner += '<div class="comet-saveform">';
+				inner += '<input type="text" class="comet-input comet-ui" placeholder="' + __cometi18n.ui.tempname + '" />';
+				inner += '<button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.save + '">' + __cometi18n.ui.save + '</button>';
+				inner += '</div>';
 
-				if( ui.parentNode !== null && ( pp = ui.parentNode.parentNode ) !== null && ( dren = pp.children ).length > 0 ){
+				content.innerHTML = inner;
 
-					for( x = 0; x < dren.length; x++ ){
+				mod = modal({
+					classes: 'comet-save-template',
+					header: '<h4>' + __cometi18n.ui.saveTemplate + '</h4>',
+					content: content
 
-						if( node( dren[x] ).hasClass( 'comet-saveTempErr' ) ){
-							hasError = true;
-							dren[x].innerHTML = m;
+				});
 
-						}
+				form = content.lastChild;
+
+				node( form.lastChild ).on( 'click', __core.save, { input: form.firstChild, modal: mod } );
+
+			},
+
+			save: function( ev, ui, edata ){
+				ev.preventDefault();
+
+				const metaData = __data().getData();
+				var m = '';
+				var _message, val, pp;
+
+				if( !utils.isObject( edata ) || is_saving ){
+					return;
+
+				}
+				is_saving = true;
+				__core.toggle( ui, true );
+
+				if( !node( edata.input ).isNode() ){
+					m = __cometi18n.messages.error.savePost + '<br>';
+
+				}
+
+				if( !utils.isObject( metaData ) || utils.isStringEmpty( metaData._sections ) ){
+					m = __cometi18n.messages.error.noContent + '<br>';
+
+				}
+
+				if( !utils.isString( val = edata.input.value ) || ( val = utils.trim( utils.stripTags( val ) ) ).length < 1 ){
+					m += __cometi18n.messages.error.title;
+
+				}
+
+				if( m.length > 0 ){
+
+					if( ui.parentNode !== null && ( pp = ui.parentNode.parentNode ) !== null ){
+						_message = message( m, 400 );
+						_message.remove_existing( pp );
+						_message.appendTo( pp );
 
 					}
+					is_saving = false;
+					__core.toggle( ui, false );
+					return;
 
 				}
 
-				if( !hasError ){
-					div = _d.createElement( 'div' );
-					div.className = 'comet-saveTempErr';
-					div.innerHTML = m;
-					pp.appendChild( div );
+				ajax({
+					do: 'save',
+					data: JSON.stringify({
+						post_title: val,
+						meta: metaData,
+						post_content: sanitize.content(),
+						post_type: 'comet_mytemplates',
+						post_status: 'publish'
 
-				}
-				return;
+					})
 
-			}
+				}).done( function( r ){
+					var code = 400;
+					var msg = __cometi18n.messages.error.savePost;
 
-			ajax({
-				do: 'save',
-				data: JSON.stringify({
-					title: val,
-					meta: metaData,
-					content: sanitize.content(),
-					post_type: 'comet_mytemplates'
+					is_saving = false;
+					__core.toggle( ui, false );
 
-				})
+					if( parseInt( r ) > 0 ){
+						msg = __cometi18n.messages.success.savePost;
+						code = 200;
 
-			});
-			edata.modal.destroy();
+					}
+					edata.modal.destroy();
+					notification( msg, code );
+
+
+				});
+
+			},
 
 		};
 
-		node( _n ).on( 'click', function( ev, ui ){
-			ev.preventDefault();
-
-			const args = {};
-			var mod = false;
-			var id, content, inner, div, input, button, form;
-
-			content = _d.createElement( 'div' );
-			content.className = 'comet-savebox comet-wrapper';
-			content.id = 'comet-saveTempWin';
-
-			inner = '<p>' + __cometi18n.messages.stemplate + ' <a href="' + utils.escUrl( 'https://blacklead.fr/support/docs/comet/my-templates/' ) + '" target="_blank">' + __cometi18n.messages.rmtemplate + '</a>.</p>';
-			inner += '<div class="comet-saveform">';
-			inner += '<input type="text" class="comet-input comet-ui" placeholder="' + __cometi18n.ui.tempname + '" />';
-			inner += '<button class="comet-button comet-buttonPrimary" title="' + __cometi18n.ui.save + '" aria-label="' + __cometi18n.ui.save + '"><span class="cico cico-export"></span></button>';
-			inner += '</div>';
-
-			/*div = document.createElement( 'div' );
-			div.id = 'comet-saveTempForm';
-			content.appendChild( div );
-
-			input = document.createElement( 'input' );
-			input.id = 'comet-saveTempInput';
-			input.className = 'comet-rendField';
-			input.placeholder = __cometi18n.ui.tempname;
-			div.appendChild( input );
-
-			button = document.createElement( 'button' );
-			button.className = 'comet-saveTempButton comet-button comet-buttonPrimary';
-			button.title = __cometi18n.ui.save;
-			button.innerHTML = '<span class="cico cico-export"></span>';
-			div.appendChild( button );*/
-
-			content.innerHTML = inner;
-
-
-			mod = modal({
-				header: '<h4>' + __cometi18n.ui.saveTemplate + '</h4>',
-				content: content
-
-			});
-
-			form = content.lastChild;
-
-			node( form.lastChild ).on( 'click', onsave, { input: form.firstChild, modal: mod } );
-
-		});
+		node( _n ).on( 'click', __core.open );
 
 	},
 
-	lib: template/*function( _n ){
-
-	}*/,
+	lib: template,
 
 	exit: function( _n ){
 

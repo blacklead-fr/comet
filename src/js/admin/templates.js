@@ -1,3 +1,4 @@
+import message from '../utils/message.js';
 import dialog from '../utils/dialog.js';
 import modal from '../utils/modal.js';
 import utils from '../utils/utils.js';
@@ -34,11 +35,31 @@ export default function(){
 
 		create: function(){
 
-			var isSaving = false;
+			var is_saving = false;
 
 			const nt = _d.getElementById( 'comet-newTemplate' );
 
-			const prop = {
+			const __core = {
+
+				toggle: function( button, saving ){
+					const waitwhile = 'comet-waitwhile';
+					const _button = node( button );
+
+					if( !_button.isNode() ){
+						return;
+
+					}
+
+					if( utils.isBool( saving ) && saving ){
+						_button.addClass( waitwhile );
+						button.innerHTML = '<span class="cico cico-spin"></span>';
+						return;
+
+					}
+					_button.removeClass( waitwhile );
+					button.innerHTML = __cometi18n.ui.create;
+
+				},
 
 				open: function( ev, ui ){
 					ev.preventDefault();
@@ -46,13 +67,15 @@ export default function(){
 					const wrapper = _d.createElement( 'div' );
 					var inner;
 
+					wrapper.className = 'comet-saveform';
+
 					fragment.appendChild( wrapper );
 
 					inner = '<input type="text" class="comet-input" value="" placeholder="' + __cometi18n.ui.name + '" />';
-					inner += '<button class="comet-button comet-buttonPrimary" title="' + __cometi18n.ui.newTemplate + '">' + _u.icons.arrow + '</button>';
+					inner += '<button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.create + '">' + __cometi18n.ui.create + '</button>';
 					wrapper.innerHTML = inner;
 
-					node( wrapper.lastChild ).on( 'click', prop.save, wrapper.firstChild );
+					node( wrapper.lastChild ).on( 'click', __core.save, wrapper.firstChild );
 
 					modal({
 						classes: 'comet-newtemplatebox',
@@ -65,38 +88,24 @@ export default function(){
 
 				save: function( ev, ui, input ){
 					ev.preventDefault();
-					var msg = false;
-					var wrapper, name, error;
+					var name, _message;
 
-					if( isSaving ){
+					if( is_saving || !node( input ).isNode() || input.parentNode === null ){
 						return;
 
 					}
-					ui.innerHTML = _u.icons.wait;
+					is_saving = true;
+					__core.toggle( ui, true );
 
-					if( !input || input === null ){
-						msg = __cometi18n.messages.error.default;
-
-					}else if( !utils.isString( name = input.value ) || utils.isStringEmpty( name = utils.trim( utils.stripTags( name ) ) ) ){
-						msg = __cometi18n.messages.error.title;
-
-					}
-
-					if( !( wrapper = input.parentNode ) || wrapper === null ){
-						ui.innerHTML = _u.icons.arrow;
+					if( !utils.isString( name = input.value ) || utils.isStringEmpty( name = utils.trim( utils.stripTags( name ) ) ) ){
+						_message = message( __cometi18n.messages.error.title, 400 );
+						_message.remove_existing( input.parentNode );
+						_message.appendTo( input.parentNode );
+						is_saving = false;
+						__core.toggle( ui, false );
 						return;
 
 					}
-					node( wrapper.getElementsByClassName( 'comet-message' ) ).remove();
-
-					if( msg ){
-						error = _u.message( msg, 'error' );
-						wrapper.appendChild( error );
-						ui.innerHTML = _u.icons.arrow;
-						return;
-
-					}
-					isSaving = true;
 
 					ajax({
 						do: 'save',
@@ -107,32 +116,34 @@ export default function(){
 							meta: {},
 							post_status: 'publish'
 						})
+
 					}).done(function( r ){
-						var url;
+						var url, msg;
 
-						isSaving = false;
+						is_saving = false;
+						__core.toggle( ui, false );
 
-						if( isNaN( r = parseInt( r ) ) || r < 1 ){
-							error = _u.message( __cometi18n.messages.error.default, 'error' );
-							wrapper.appendChild( error );
-							ui.innerHTML = _u.icons.arrow;
+						if( parseInt( r ) > 0 ){
+							url = utils.addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, __cometdata.edit_url );
+							msg = __cometi18n.messages.success.newTemplate + '<br>' + __cometi18n.messages.redirect;
+							msg += ' <a href="' + encodeURI( url ) + '">' + __cometi18n.messages.editPage + '</a>.';
+							message( msg, 200 ).set( input.parentNode );
+							_w.open( url, '_self' );
 							return;
 
 						}
-						url = utils.addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, __cometdata.edit_url );
-						msg = __cometi18n.messages.success.newTemplate + '<br>' + __cometi18n.messages.redirect;
-						msg += ' <a href="' + encodeURI( url ) + '">' + __cometi18n.messages.editPage + '</a>.';
-						error = _u.message( msg, 'success' );
-						wrapper.innerHTML = '';
-						wrapper.appendChild( error );
-						_w.open( url, '_self' );
+						_message = message( __cometi18n.messages.error.default, 400 );
+						_message.remove_existing( input.parentNode );
+						_message.appendTo( input.parentNode );
+
+
 					});
 
 				}
 
 			};
 
-			node( nt ).on( 'click', prop.open );
+			node( nt ).on( 'click', __core.open );
 
 		},
 

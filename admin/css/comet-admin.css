@@ -484,30 +484,23 @@ ol, p, h1, h2, h3, h4, h5, h6 {
   height: 0;
 }
 
-.comet-newtemplatebox .comet-body > div {
+.comet-newtemplatebox .comet-body > .comet-saveform {
   width: 100%;
-  max-width: 300px;
-  margin: 30px auto;
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
+  padding: 20px;
 }
 
-.comet-newtemplatebox .comet-body > div > * { width: 100%; }
-
-.comet-newtemplatebox .comet-body > div > .comet-input { width: calc( 100% - 65px ); }
-
-.comet-newtemplatebox .comet-body > div > .comet-button {
-  margin-left: 5px;
-  width: 60px;
-  height: 35px;
-  padding-top: 7px;
-  padding-bottom: 8px;
+.comet-newtemplatebox .comet-body > .comet-saveform > .comet-button {
+  margin-left: 10px;
+  line-height: 1;
+  padding: 10px 15px;
 }
 
 .comet-previewbox .comet-body > div {
   position: relative;
   height: 100%;
-
 }
 
 .comet-previewbox .comet-body > div iframe {

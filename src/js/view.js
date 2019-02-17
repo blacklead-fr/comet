@@ -2759,7 +2759,6 @@ __webpack_require__.r(__webpack_exports__);
 		var field, f, fields, opts, o, type;
 
 		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = node.elements ).length > 0 ){
-			console.log( fields );
 			return;
 
 			for( f in fields ){

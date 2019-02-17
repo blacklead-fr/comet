@@ -309,7 +309,6 @@ class Comet_Post_Edit extends Comet_Metaboxes{
             $classes .= ' rtl';
 
         }
-
         echo '<div id="comet-editor" class="' . $classes . '">';
 
         do_action( 'add_meta_boxes', $post_type, $post );

@@ -14,12 +14,17 @@ export default function ( str, status ){
     status = parseInt( status );
 
     switch( status ){
-        case 0:
-        case 400:
-        status = 'error';
+        case 100:
+        status = 'note';
+        break;
+        case 200:
+        status = 'success';
+        break;
+        case 300:
+        status = 'warning';
         break;
         default:
-        status = 'success';
+        status = 'error';
     }
     _cockpit.addClass( 'is_toggled' );
 

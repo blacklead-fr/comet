@@ -186,26 +186,21 @@ const sidebar = {
 				e_data.meta = __data().getData();
 				e_data.post_content = sanitize.content();
 
-				console.log( e_data );
-
 				ajax({
 					do: 'save',
 					id: id,
 					data: JSON.stringify( e_data )
 
 				}).done(function( r ){
-					var msg;
-					console.log( r );
+					var code = 400;
+					var msg = __cometi18n.messages.error.savePost;
 
-					switch( ( r = parseInt( r ) ) ){
-						case 0:
-						case 400:
-						msg = __cometi18n.messages.error.savePost;
-						break;
-						default:
+					if( parseInt( r ) > 0 ){
 						msg = __cometi18n.messages.success.savePost;
+						code = 200;
+
 					}
-					notification( msg, r );
+					notification( msg, code );
 					toggle( false );
 
 				});

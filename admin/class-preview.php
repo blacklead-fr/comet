@@ -111,7 +111,6 @@ class preview extends Comet_Page {
             return;
 
         }
-        var_dump( $this->template );
         echo $comet->render( $this->template->meta );
 
     }

@@ -248,6 +248,7 @@ class Comet_i18n {
 			'download'		=> __( 'Download', 'comet' ),
 			'import'		=> __( 'Import', 'comet' ),
 			'export'		=> __( 'Export', 'comet' ),
+			'create'		=> __( 'Create', 'comet' ),
 			'delTemplate'	=> __( 'Delete template', 'comet' ),
 			'expTemplate'	=> __( 'Export template', 'comet' ),
 			'impTemplate' 	=> __( 'Import template', 'comet' ),

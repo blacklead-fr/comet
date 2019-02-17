@@ -824,12 +824,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_dialog_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/dialog.js */ "./src/js/utils/dialog.js");
-/* harmony import */ var _utils_modal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/modal.js */ "./src/js/utils/modal.js");
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/ajax.js */ "./src/js/utils/ajax.js");
+/* harmony import */ var _utils_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/message.js */ "./src/js/utils/message.js");
+/* harmony import */ var _utils_dialog_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/dialog.js */ "./src/js/utils/dialog.js");
+/* harmony import */ var _utils_modal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/modal.js */ "./src/js/utils/modal.js");
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/ajax.js */ "./src/js/utils/ajax.js");
+
 
 
 
@@ -866,11 +868,31 @@ __webpack_require__.r(__webpack_exports__);
 
 		create: function(){
 
-			var isSaving = false;
+			var is_saving = false;
 
 			const nt = _d.getElementById( 'comet-newTemplate' );
 
-			const prop = {
+			const __core = {
+
+				toggle: function( button, saving ){
+					const waitwhile = 'comet-waitwhile';
+					const _button = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button );
+
+					if( !_button.isNode() ){
+						return;
+
+					}
+
+					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isBool( saving ) && saving ){
+						_button.addClass( waitwhile );
+						button.innerHTML = '<span class="cico cico-spin"></span>';
+						return;
+
+					}
+					_button.removeClass( waitwhile );
+					button.innerHTML = __cometi18n.ui.create;
+
+				},
 
 				open: function( ev, ui ){
 					ev.preventDefault();
@@ -878,15 +900,17 @@ __webpack_require__.r(__webpack_exports__);
 					const wrapper = _d.createElement( 'div' );
 					var inner;
 
+					wrapper.className = 'comet-saveform';
+
 					fragment.appendChild( wrapper );
 
 					inner = '<input type="text" class="comet-input" value="" placeholder="' + __cometi18n.ui.name + '" />';
-					inner += '<button class="comet-button comet-buttonPrimary" title="' + __cometi18n.ui.newTemplate + '">' + _u.icons.arrow + '</button>';
+					inner += '<button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.create + '">' + __cometi18n.ui.create + '</button>';
 					wrapper.innerHTML = inner;
 
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( wrapper.lastChild ).on( 'click', prop.save, wrapper.firstChild );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( wrapper.lastChild ).on( 'click', __core.save, wrapper.firstChild );
 
-					Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+					Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
 						classes: 'comet-newtemplatebox',
 						header: '<h4>' + __cometi18n.ui.newTemplate + '</h4>',
 						content: fragment
@@ -897,40 +921,26 @@ __webpack_require__.r(__webpack_exports__);
 
 				save: function( ev, ui, input ){
 					ev.preventDefault();
-					var msg = false;
-					var wrapper, name, error;
+					var name, _message;
 
-					if( isSaving ){
+					if( is_saving || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input ).isNode() || input.parentNode === null ){
 						return;
 
 					}
-					ui.innerHTML = _u.icons.wait;
+					is_saving = true;
+					__core.toggle( ui, true );
 
-					if( !input || input === null ){
-						msg = __cometi18n.messages.error.default;
-
-					}else if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( name = input.value ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].stripTags( name ) ) ) ){
-						msg = __cometi18n.messages.error.title;
-
-					}
-
-					if( !( wrapper = input.parentNode ) || wrapper === null ){
-						ui.innerHTML = _u.icons.arrow;
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( name = input.value ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isStringEmpty( name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( name ) ) ) ){
+						_message = Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.error.title, 400 );
+						_message.remove_existing( input.parentNode );
+						_message.appendTo( input.parentNode );
+						is_saving = false;
+						__core.toggle( ui, false );
 						return;
 
 					}
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( wrapper.getElementsByClassName( 'comet-message' ) ).remove();
 
-					if( msg ){
-						error = _u.message( msg, 'error' );
-						wrapper.appendChild( error );
-						ui.innerHTML = _u.icons.arrow;
-						return;
-
-					}
-					isSaving = true;
-
-					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
+					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 						do: 'save',
 						data: JSON.stringify({
 							post_title: name,
@@ -939,32 +949,34 @@ __webpack_require__.r(__webpack_exports__);
 							meta: {},
 							post_status: 'publish'
 						})
+
 					}).done(function( r ){
-						var url;
+						var url, msg;
 
-						isSaving = false;
+						is_saving = false;
+						__core.toggle( ui, false );
 
-						if( isNaN( r = parseInt( r ) ) || r < 1 ){
-							error = _u.message( __cometi18n.messages.error.default, 'error' );
-							wrapper.appendChild( error );
-							ui.innerHTML = _u.icons.arrow;
+						if( parseInt( r ) > 0 ){
+							url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, __cometdata.edit_url );
+							msg = __cometi18n.messages.success.newTemplate + '<br>' + __cometi18n.messages.redirect;
+							msg += ' <a href="' + encodeURI( url ) + '">' + __cometi18n.messages.editPage + '</a>.';
+							Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( msg, 200 ).set( input.parentNode );
+							_w.open( url, '_self' );
 							return;
 
 						}
-						url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, __cometdata.edit_url );
-						msg = __cometi18n.messages.success.newTemplate + '<br>' + __cometi18n.messages.redirect;
-						msg += ' <a href="' + encodeURI( url ) + '">' + __cometi18n.messages.editPage + '</a>.';
-						error = _u.message( msg, 'success' );
-						wrapper.innerHTML = '';
-						wrapper.appendChild( error );
-						_w.open( url, '_self' );
+						_message = Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.error.default, 400 );
+						_message.remove_existing( input.parentNode );
+						_message.appendTo( input.parentNode );
+
+
 					});
 
 				}
 
 			};
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( nt ).on( 'click', prop.open );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( nt ).on( 'click', __core.open );
 
 		},
 
@@ -981,11 +993,11 @@ __webpack_require__.r(__webpack_exports__);
 					var msg = false;
 					var id;
 
-					if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( ui, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+					if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].dataset( ui, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].id( id ) ) ){
 						msg = __cometi18n.messages.error.noTemplate;
 
 					}
-					Object(_utils_dialog_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+					Object(_utils_dialog_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
 						message: ( !msg ? __cometi18n.messages.warning.delete : msg ),
 						confirm: prop.delete,
 						data: {
@@ -1000,14 +1012,14 @@ __webpack_require__.r(__webpack_exports__);
 				delete: function( ev, ui, data ){
 					ev.preventDefault();
 
-					if( isDeleting || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data ) || ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isBool( data.error ) && data.error ) ){
+					if( isDeleting || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( data ) || ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isBool( data.error ) && data.error ) ){
 						return;
 
 					}
 					isDeleting = true;
 					data.dialog.destroy();
 
-					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
+					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 						do: 'dtemplate',
 						id: data.id
 
@@ -1027,7 +1039,7 @@ __webpack_require__.r(__webpack_exports__);
 
 			};
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( nt ).on( 'click', prop.open );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( nt ).on( 'click', prop.open );
 
 		},
 
@@ -1044,7 +1056,7 @@ __webpack_require__.r(__webpack_exports__);
 					var fragment = false;
 					var wrapper;
 
-					if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( input ).isNode() ){
+					if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input ).isNode() ){
 						return;
 
 					}
@@ -1053,11 +1065,11 @@ __webpack_require__.r(__webpack_exports__);
 					wrapper.innerHTML = __cometi18n.messages.selFile;
 					fragment.appendChild( wrapper );
 
-					Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+					Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
 						header: '<h4>' + __cometi18n.ui.impTemplate + '</h4>',
 						content: fragment,
 					});
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( input ).on( 'change', prop.import );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input ).on( 'change', prop.import );
 					input.click();
 
 				},
@@ -1089,13 +1101,13 @@ __webpack_require__.r(__webpack_exports__);
 						reader.onload = function( e ){
 							var data;
 
-							if( !( data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].json( e.target.result ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data ) || !( 'title' in data ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.meta ) || !( 'content' in data ) ){
+							if( !( data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].json( e.target.result ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( data ) || !( 'title' in data ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( data.meta ) || !( 'content' in data ) ){
 								return false;
 
 							}
 							data.post_type = 'comet_mytemplates';
 
-							Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
+							Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 								action: 'comet_ajAdmin',
 								do: 'save',
 								data: JSON.stringify( data )
@@ -1115,7 +1127,7 @@ __webpack_require__.r(__webpack_exports__);
 
 			};
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( nt ).on( 'click', prop.open );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( nt ).on( 'click', prop.open );
 
 		},
 
@@ -1133,7 +1145,7 @@ __webpack_require__.r(__webpack_exports__);
 					var wrapper, inner, id;
 
 
-					if(  !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( ui, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+					if(  !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].dataset( ui, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].id( id ) ) ){
 						return;
 
 					}
@@ -1145,9 +1157,9 @@ __webpack_require__.r(__webpack_exports__);
 					inner += '<button class="comet-button" title="' + __cometi18n.ui.save + '">' + _u.icons.arrow + '</button>';
 					wrapper.innerHTML = inner;
 
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( wrapper.lastChild ).on( 'click', prop.export, wrapper.firstChild);
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( wrapper.lastChild ).on( 'click', prop.export, wrapper.firstChild);
 
-					Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+					Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
 						header: '<h4>' + __cometi18n.ui.expTemplate + '</h4>',
 						content: fragment,
 					});
@@ -1167,7 +1179,7 @@ __webpack_require__.r(__webpack_exports__);
 					if( !input || input === null ){
 						msg = __cometi18n.messages.error.default;
 
-					}else if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( name = input.value ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].stripTags( name ) ) ) ){
+					}else if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( name = input.value ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isStringEmpty( name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( name ) ) ) ){
 						msg = __cometi18n.messages.error.title;
 
 					}
@@ -1177,7 +1189,7 @@ __webpack_require__.r(__webpack_exports__);
 						return;
 
 					}
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( wrapper.getElementsByClassName( 'comet-message' ) ).remove();
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( wrapper.getElementsByClassName( 'comet-message' ) ).remove();
 
 					if( msg ){
 						error = _u.message( msg, 'error' );
@@ -1188,7 +1200,7 @@ __webpack_require__.r(__webpack_exports__);
 					}
 					isSaving = true;
 
-					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
+					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 						action: 'comet_ajAdmin',
 						do: 'get',
 						id: id,
@@ -1199,7 +1211,7 @@ __webpack_require__.r(__webpack_exports__);
 						isSaving = false;
 						ui.innerHTML = _u.icons.arrow;
 
-						if( !( data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].json( r ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data ) || !( 'post_content' in data ) ){
+						if( !( data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].json( r ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( data ) || !( 'post_content' in data ) ){
 							error = _u.message( __cometi18n.messages.error.default, 'error' );
 							wrapper.appendChild( error );
 							ui.innerHTML = _ui.icons.arrow;
@@ -1210,7 +1222,7 @@ __webpack_require__.r(__webpack_exports__);
 						obj = {
 							title: name,
 							content: data.post_content,
-							meta: _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.meta ) ? data.meta : {},
+							meta: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( data.meta ) ? data.meta : {},
 						};
 						uri = 'data:application/json;charset=utf-8,' + encodeURIComponent( JSON.stringify( obj ) );
 
@@ -1226,7 +1238,7 @@ __webpack_require__.r(__webpack_exports__);
 
 			};
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( nt ).on( 'click', prop.open );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( nt ).on( 'click', prop.open );
 
 		},
 
@@ -1234,9 +1246,9 @@ __webpack_require__.r(__webpack_exports__);
 
 			const nt = _d.getElementsByClassName( 'comet-templatePreview' );
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( nt ).on( 'click', function( ev, ui ){
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( nt ).on( 'click', function( ev, ui ){
 				ev.preventDefault();
-				const url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( ui.href ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].stripTags( ui.href ) ) : false;
+				const url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( ui.href ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( ui.href ) ) : false;
 				var inner = '<div>';
 
 				if( !url ){
@@ -1251,7 +1263,7 @@ __webpack_require__.r(__webpack_exports__);
 				}
 				inner += '</div>';
 
-				Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+				Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
 					classes: 'comet-previewbox',
 					header: '<h4>' + __cometi18n.ui.pTemplate + '</h4>',
 					content: inner
@@ -1495,6 +1507,186 @@ __webpack_require__.r(__webpack_exports__);
 
 	return prop;
 });;
+
+/***/ }),
+
+/***/ "./src/js/utils/message.js":
+/*!*********************************!*\
+  !*** ./src/js/utils/message.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node.js */ "./src/js/utils/node.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function( message, status ){
+
+	const _d = document;
+
+	const _classes = {
+		default: 'comet-message',
+		error: 'comet-error',
+		warning: 'comet-warning',
+		success: 'comet-success',
+		note: 'comet-note'
+
+	};
+
+	const __core = {
+
+		create: function(){
+			const allowed = '<br><strong><u><i><em><strike><del><ins><a><b><code><ul><li><ol><s><sub><sup><small><span><mark>';
+			const _message = _d.createElement( 'div' );
+
+			message = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( message ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( message, allowed ) : '';
+
+
+			_message.className = __core.get_classes();
+			_message.innerHTML = '<p>' + message + '</p>';
+
+			return _message;
+
+		},
+
+		get_status: function(){
+
+			switch( status ){
+
+				case 100:
+				case '100':
+				case 'note':
+				case 'NOTE':
+					return 100;
+
+				case 200:
+				case '200':
+				case 'success':
+				case 'SUCCESS':
+					return 200;
+
+				case 300:
+				case '300':
+				case 'warning':
+				case 'WARNING':
+					return 300;
+
+				default:
+					return 400;
+
+			}
+
+		},
+
+		get_classes: function(){
+			const _status = __core.get_status();
+			var classes = _classes.default + ' ';
+
+			switch( _status ){
+
+				case 100:
+					classes += _classes.note;
+					break;
+
+				case 200:
+					classes += _classes.success;
+					break;
+
+				case 300:
+					classes += _classes.warning;
+					break;
+
+				default:
+					classes += _classes.error;
+					break;
+
+			}
+			return classes;
+
+		},
+
+		get_messages: function( from ){
+			var _from;
+
+			if( ( _from = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( from ) ).isNode() ){
+				return _from.children( _classes.default );
+
+			}
+
+			if( from === _d ){
+				return from.getElementsByClassName( _classes.default );
+
+			}
+			return [];
+
+		}
+
+	};
+
+	const prop = {
+
+		replace: function( old ){
+
+			if( !Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( old ).isNode() || old.parentNode === null ){
+				return false;
+
+			}
+			old.parentNode.replaceChild( node_m, old );
+			return true;
+
+		},
+
+		appendTo: function( to ){
+
+			if( !Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( to ).isNode() ){
+				return false;
+
+			}
+			to.appendChild( node_m );
+			return true;
+
+		},
+
+		set: function( nod_e ){
+
+			if( !Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( nod_e ).isNode() ){
+				return false;
+
+			}
+			nod_e.innerHTML = '';
+			nod_e.appendChild( node_m );
+			return true;
+
+		},
+
+		get: function(){
+
+			return node_m;
+
+		},
+
+		remove_existing: function( from ){
+			var messages;
+
+			if( ( messages = __core.get_messages( from ) ).length < 1 ){
+				return false;
+
+			}
+			return Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( messages ).remove();
+
+		}
+
+	};
+
+	const node_m = __core.create();
+
+	return prop;
+	
+});
 
 /***/ }),
 
@@ -2590,7 +2782,6 @@ __webpack_require__.r(__webpack_exports__);
 		var field, f, fields, opts, o, type;
 
 		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = node.elements ).length > 0 ){
-			console.log( fields );
 			return;
 
 			for( f in fields ){

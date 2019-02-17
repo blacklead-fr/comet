@@ -95,7 +95,6 @@ class Comet_Post {
 			$esc['post_type'] = $data['post_type'];
 
 		}
-
 		$esc['meta_input'] = [];
 		$esc['meta_input']['_cometMetaData'] = ( isset( $data['meta'] ) && is_array( $data['meta'] ) ? $data['meta'] : [] );
 

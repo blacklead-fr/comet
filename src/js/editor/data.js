@@ -12,7 +12,7 @@ export default function (){
 
 	prop.getData = function(){
 		var data = global_.get( 'data' );
-		return ( utils.isObject( data ) ? data : prop.set( {} ) );
+		return ( utils.isObject( data ) ? data : prop.setData( {} ) );
 
 	};
 
@@ -355,7 +355,7 @@ export default function (){
 
 	};
 
-	prop.catchAndSet = function( id, type ){
+	/*prop.catchAndSet = function( id, type ){
 		const metaData = prop.getData();
 		const fields = document.getElementsByClassName( 'comet-field' );
 		const data = {};
@@ -413,7 +413,7 @@ export default function (){
 		}
 		return this.set( id, type, data );
 
-	};
+	};*/
 
 	return prop;
 

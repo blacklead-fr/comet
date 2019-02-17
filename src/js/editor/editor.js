@@ -347,7 +347,7 @@ import __data from './data.js';
 
     }
     post = g_.get( 'post' );
-    metaData = data_.setData( utils.isObject( post ) && utils.isObject( post.meta ) ? post.meta : {} );
+    metaData = data_.setData( utils.isObject( post ) ? ( utils.isObject( post.meta ) && !Array.isArray( post.meta ) ? post.meta : {} ) : {} );
 
     window.onbeforeunload = function(){
       return __cometi18n.messages.warning.exit;
@@ -367,7 +367,6 @@ import __data from './data.js';
     node( _doc.body ).addClass( 'comet-globalLevel' );
     load.comet( data_.getData(), null, true );
     c__.settings( '#comet-closeGeneralSettings' );
-    //menu();
     eb.sidebar();
     eb.preload();
     contextualize();
