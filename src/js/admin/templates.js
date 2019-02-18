@@ -67,15 +67,17 @@ export default function(){
 					const wrapper = _d.createElement( 'div' );
 					var inner;
 
-					wrapper.className = 'comet-saveform';
+					wrapper.className = 'comet-savebox comet-wrapper';
 
 					fragment.appendChild( wrapper );
 
-					inner = '<input type="text" class="comet-input" value="" placeholder="' + __cometi18n.ui.name + '" />';
+					inner = '<div class="comet-saveform">';
+					inner += '<input type="text" class="comet-input" value="" placeholder="' + __cometi18n.ui.name + '" />';
 					inner += '<button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.create + '">' + __cometi18n.ui.create + '</button>';
+					inner += '</div>';
 					wrapper.innerHTML = inner;
 
-					node( wrapper.lastChild ).on( 'click', __core.save, wrapper.firstChild );
+					node( wrapper.lastChild.lastChild ).on( 'click', __core.save, wrapper.lastChild.firstChild );
 
 					modal({
 						classes: 'comet-newtemplatebox',
@@ -88,9 +90,9 @@ export default function(){
 
 				save: function( ev, ui, input ){
 					ev.preventDefault();
-					var name, _message;
+					var name, _message, pp;
 
-					if( is_saving || !node( input ).isNode() || input.parentNode === null ){
+					if( is_saving || !node( input ).isNode() || input.parentNode === null || ( pp = input.parentNode.parentNode ) === null ){
 						return;
 
 					}
@@ -99,13 +101,14 @@ export default function(){
 
 					if( !utils.isString( name = input.value ) || utils.isStringEmpty( name = utils.trim( utils.stripTags( name ) ) ) ){
 						_message = message( __cometi18n.messages.error.title, 400 );
-						_message.remove_existing( input.parentNode );
-						_message.appendTo( input.parentNode );
+						_message.remove_existing( pp );
+						_message.appendTo( pp );
 						is_saving = false;
 						__core.toggle( ui, false );
 						return;
 
 					}
+					return;
 
 					ajax({
 						do: 'save',
@@ -127,14 +130,14 @@ export default function(){
 							url = utils.addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, __cometdata.edit_url );
 							msg = __cometi18n.messages.success.newTemplate + '<br>' + __cometi18n.messages.redirect;
 							msg += ' <a href="' + encodeURI( url ) + '">' + __cometi18n.messages.editPage + '</a>.';
-							message( msg, 200 ).set( input.parentNode );
+							message( msg, 200 ).set( pp );
 							_w.open( url, '_self' );
 							return;
 
 						}
 						_message = message( __cometi18n.messages.error.default, 400 );
-						_message.remove_existing( input.parentNode );
-						_message.appendTo( input.parentNode );
+						_message.remove_existing( pp );
+						_message.appendTo( pp );
 
 
 					});

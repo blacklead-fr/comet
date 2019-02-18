@@ -900,15 +900,17 @@ __webpack_require__.r(__webpack_exports__);
 					const wrapper = _d.createElement( 'div' );
 					var inner;
 
-					wrapper.className = 'comet-saveform';
+					wrapper.className = 'comet-savebox comet-wrapper';
 
 					fragment.appendChild( wrapper );
 
-					inner = '<input type="text" class="comet-input" value="" placeholder="' + __cometi18n.ui.name + '" />';
+					inner = '<div class="comet-saveform">';
+					inner += '<input type="text" class="comet-input" value="" placeholder="' + __cometi18n.ui.name + '" />';
 					inner += '<button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.create + '">' + __cometi18n.ui.create + '</button>';
+					inner += '</div>';
 					wrapper.innerHTML = inner;
 
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( wrapper.lastChild ).on( 'click', __core.save, wrapper.firstChild );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( wrapper.lastChild.lastChild ).on( 'click', __core.save, wrapper.lastChild.firstChild );
 
 					Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_2__["default"])({
 						classes: 'comet-newtemplatebox',
@@ -921,9 +923,9 @@ __webpack_require__.r(__webpack_exports__);
 
 				save: function( ev, ui, input ){
 					ev.preventDefault();
-					var name, _message;
+					var name, _message, pp;
 
-					if( is_saving || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input ).isNode() || input.parentNode === null ){
+					if( is_saving || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( input ).isNode() || input.parentNode === null || ( pp = input.parentNode.parentNode ) === null ){
 						return;
 
 					}
@@ -932,13 +934,14 @@ __webpack_require__.r(__webpack_exports__);
 
 					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( name = input.value ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isStringEmpty( name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( name ) ) ) ){
 						_message = Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.error.title, 400 );
-						_message.remove_existing( input.parentNode );
-						_message.appendTo( input.parentNode );
+						_message.remove_existing( pp );
+						_message.appendTo( pp );
 						is_saving = false;
 						__core.toggle( ui, false );
 						return;
 
 					}
+					return;
 
 					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 						do: 'save',
@@ -960,14 +963,14 @@ __webpack_require__.r(__webpack_exports__);
 							url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].addQueryArgs( { post: r, action: 'edit', comet: 'template'  }, __cometdata.edit_url );
 							msg = __cometi18n.messages.success.newTemplate + '<br>' + __cometi18n.messages.redirect;
 							msg += ' <a href="' + encodeURI( url ) + '">' + __cometi18n.messages.editPage + '</a>.';
-							Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( msg, 200 ).set( input.parentNode );
+							Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( msg, 200 ).set( pp );
 							_w.open( url, '_self' );
 							return;
 
 						}
 						_message = Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.error.default, 400 );
-						_message.remove_existing( input.parentNode );
-						_message.appendTo( input.parentNode );
+						_message.remove_existing( pp );
+						_message.appendTo( pp );
 
 
 					});

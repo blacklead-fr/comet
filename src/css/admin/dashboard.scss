@@ -1,0 +1,108 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+#comet-mapDashboard > .comet-row > .comet-column {
+    width: 50%;
+
+    &.col1 {
+        width: 100%;
+        padding-bottom: 30px;
+
+        .comet-button { margin-top: 10px; }
+    }
+
+    &.col2 { padding-right: 20px; }
+
+}
+
+.comet-dashboardWidget {
+    display: block;
+    margin-bottom: 20px;
+}
+
+#comet-dashboardLearn li {
+    background: white;
+    margin: 0 0 10px;
+    border: 1px solid white;
+
+    &:hover, &:active {
+        border-color: $daLight;
+        @include box_shadow( 0 0 5px 0 $daLight );
+    }
+
+    a {
+        display: block;
+        text-decoration: none;
+        padding: 10px;
+
+        &, &:hover, &:active {
+            color: $liDark;
+            font-weight: 300;
+        }
+    }
+}
+
+#comet-dashboardReadDoc {
+    background: url('../img/comet-dashboard-img1.jpeg') repeat center center;
+    background-size: cover;
+
+    a {
+        padding: 100px 20px;
+        background: rgba( 0, 106, 254, .8);
+        display: block;
+        font-size: 30px;
+        font-weight: 300;
+        text-decoration: none;
+        color: white;
+
+        &:hover, &:active {
+            background: rgba( 0,106,254, .4 );
+            @include transition( background-color ease-in-out .5s );
+        }
+    }
+}
+
+.comet-dashboardSlideCount > span {
+	background: rgba( 255, 255, 255, .5 );
+	display: inline-block;
+	padding: 5px 10px;
+	font: 500 13px/14px sans-serif;
+    @include border_radius( 5px );
+}
+
+.comet-dashboardSlide {
+    padding: 40px;
+    background: $daAccent;
+    @include bg_linear_gradient( 225deg, $liAccent 0%, $daAccent 74% );
+    display: none;
+
+    &:first-child{ display: block; }
+
+    > * {
+        margin: 0 0 120px;
+        color: white;
+
+        &:last-child { margin: 0; }
+
+    }
+
+    > h4 { margin-bottom: 10px; }
+
+    &.comet-dashboardSlideStart h4 {
+        font-size: 30px;
+        margin-bottom: 120px;
+    }
+
+    .comet-button {
+        color: white;
+        padding: 0;
+        margin-right: 10px;
+
+        &.comet-next {
+            color: $daAccent;
+            background: white;
+            padding: 10px 20px;
+            margin: 0;
+        }
+    }
+}

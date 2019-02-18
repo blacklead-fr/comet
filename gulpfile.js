@@ -7,7 +7,21 @@ var css = require( 'gulp-clean-css' );
 var csslint = require( 'gulp-csslint' );
 var eslint = require( 'gulp-eslint' );
 var pump = require('pump');
+var sass = require('gulp-sass');
 const named = require('vinyl-named');
+
+sass.compiler = require('node-sass');
+ 
+gulp.task('css:compile', function(){
+  return gulp.src(['src/css/admin/admin.scss'])
+    .pipe(sass.sync().on('error', sass.logError))
+    .pipe(gulp.dest('src/css/'));
+});
+ 
+gulp.task('css:watch', function(){
+  gulp.watch('src/css/admin/admin.scss', ['css:compile']);
+});
+
  
 gulp.task('css:verify', function(){
 	return gulp.src( ['src/css/**/*.css', '!src/css/**/*.min.css' ])
@@ -41,18 +55,6 @@ gulp.task( 'js:compile', function(){
         devtool: 'source-map',
     } ) )
     .pipe(gulp.dest('src/js/') );
-} );
-
-gulp.task( 'css:compile', function(){
-	return gulp.src( ['src/css/editor.css', 'src/js/admin.css' ] )
-    .pipe( webpack( {
-    	mode: /*'production',*/'development',
-    	output: {
-    		filename: '[name].js',
-    	},
-    } ) )
-    .pipe(gulp.dest('src/css/') );
-
 } );
 
  

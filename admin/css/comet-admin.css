@@ -294,7 +294,6 @@ ol, p, h1, h2, h3, h4, h5, h6 {
   font: 300 15px/1.1 sans-serif;
   width: auto;
   cursor: pointer;
-  overflow: hidden;
 }
 
 .comet-button.comet-buttonPrimary {
@@ -484,19 +483,25 @@ ol, p, h1, h2, h3, h4, h5, h6 {
   height: 0;
 }
 
-.comet-newtemplatebox .comet-body > .comet-saveform {
+.comet-newtemplatebox .comet-body > .comet-savebox {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  display: flex;
   padding: 20px;
 }
 
-.comet-newtemplatebox .comet-body > .comet-saveform > .comet-button {
+.comet-newtemplatebox .comet-body > .comet-savebox > .comet-saveform{
+  display: flex;
+  width: 100%;
+}
+
+.comet-newtemplatebox .comet-body > .comet-savebox > .comet-saveform > .comet-button {
   margin-left: 10px;
   line-height: 1;
   padding: 10px 15px;
 }
+
+.comet-newtemplatebox .comet-body > .comet-savebox > .comet-saveform > .comet-button.comet-waitwhile { padding: 7px 15px; }
 
 .comet-previewbox .comet-body > div {
   position: relative;
@@ -592,11 +597,9 @@ ol, p, h1, h2, h3, h4, h5, h6 {
 .comet-modal > .comet-close:active { opacity: 1; }
 
 /* New template */
-#comet-exportTemplateDialogContent { position: relative; }
 
 #comet-exportNewTemplateName { padding-right: 35px; }
 
-#comet-saveNewTemplate,
 #comet-exportNewTemplate {
 	position: absolute;
 	top: 5px;
@@ -610,12 +613,9 @@ ol, p, h1, h2, h3, h4, h5, h6 {
   cursor: pointer;
 }
 
-#comet-saveNewTemplate:hover,
 #comet-exportNewTemplate:hover { transform: scale( 1.05, 1.05 ); }
 
-#comet-saveNewTemplate,
 #comet-exportNewTemplate,
-#comet-saveNewTemplate .cico,
 #comet-exportNewTemplate .cico {
   color: white;
   width: 25px;
@@ -625,6 +625,13 @@ ol, p, h1, h2, h3, h4, h5, h6 {
   display: block;
 }
 
+.comet-waitwhile > .cico {
+  animation: waitWhile 2s linear 0s infinite;
+  -o-animation: waitWhile 2s linear 0s infinite;
+  -moz-animation: waitWhile 2s linear 0s infinite;
+  -webkit-animation: waitWhile 2s linear 0s infinite;
+} 
+
 .comet-waitWhileIcon {
   animation: waitWhile 2s linear 0s infinite;
   color: white;
@@ -632,8 +639,19 @@ ol, p, h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes waitWhile {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  
+  from {
+    transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+
+  } to {
+    transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+
+  }
+
 }
 
 .comet-importTemplateItems {
@@ -654,18 +672,6 @@ ol, p, h1, h2, h3, h4, h5, h6 {
 .comet-importTemplateItems li .cico {
   color: #006AFE;
   margin: 5px;
-}
-
-#comet-previewTemplateDialogContent iframe {
-  width: 100%;
-  height: 100%;
-}
-
-#comet-previewTemplateDialogContent,
-#comet-previewTemplateDialog .comet-dialogContent {
-  height: 100%;
-  overflow: hidden;
-  padding: 0;
 }
 
 /* Settings */
