@@ -3,24 +3,16 @@
 @import '../utils/reset';
 
 body {
-  font: 300 15px/1.5 sans-serif;
-  text-decoration: none;
-  color: $liDark;
-  background: $liLight;
-  overflow: auto;
+    background: $liLight;
+    overflow: auto;
 }
+
+@include form_fields;
 
 .comet-waitwhile > .cico { @include animation( waitWhile 2s linear 0s infinite ); }
 
 @keyframes waitWhile {
-  
-  from {
-  	@include transform( rotate(0deg) );
-
-  } to {
-  	@include transform( rotate(360deg) );
-
-  }
+    from { @include transform( rotate(0deg) ); } to { @include transform( rotate(360deg) ); }
 
 }
 
@@ -32,3 +24,25 @@ body {
 @import 'fonts';
 @import 'mytemplates';
 @import 'settings';
+
+/* Responsive */
+
+@media screen and ( max-width: 500px ) {
+
+
+/*.comet-dashboard.comet-admin {
+  #comet-dashboard #comet-mapDashboard .comet-column{
+    width: 100%;
+    display: block;
+    padding: 0;
+}*/
+
+#comet-settings .comet-column {
+    display: block;
+    width: auto;
+    padding:0;
+}
+
+#comet-settings .comet-column.last { padding-top: 10px }
+
+}

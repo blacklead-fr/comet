@@ -35,19 +35,15 @@ class mytemplates extends Comet_Interface {
             'posts_per_page'  => 50
         ]);
 
-        echo '<form id="comet-mytemplates" class="comet-dashCtntBoxed" action="' . esc_url( $action ) . '" method="post">';
-
-        echo '<div class="comet-adminHeader">';
-        echo '<div class="comet-row col2">';
-        echo '<div class="comet-column col1 text-left">';
+        echo '<div class="comet-header comet-top comet-wrapper">';
+        echo '<div class="comet-column">';
         echo '<h4>' . sprintf( _n( '%d template', '%d templates', $templates->found_posts, 'comet' ), $templates->found_posts ) . '</h4>';
         echo '</div>';
-        echo '<div class="comet-column col3 text-right">';
+        echo '<div class="comet-column">';
         echo '<a id="comet-newTemplate" class="comet-mthOption comet-button comet-buttonPrimary cico cico-plus" title="' . __( 'Create new', 'comet' ) . '"></a>';
         echo '<div id="comet-importTemplate" class="comet-middleIb">';
         echo '<input type="file" id="comet-importTemplateFile" multiple accept=".json" />';
         echo '<button type="button" id="comet-importTemplateBtn" class="comet-mthOption comet-button cico cico-import" title="' . __( 'Import', 'comet' ) . '"></button>';
-        echo '</div>';
         echo '</div>';
         echo '</div>';
 
@@ -68,7 +64,6 @@ class mytemplates extends Comet_Interface {
 
         }
         echo '</ul>';
-        echo '</form>';
 
     }
 

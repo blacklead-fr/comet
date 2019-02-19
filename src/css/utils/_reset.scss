@@ -1,0 +1,99 @@
+@import 'variables';
+@import 'mixins';
+
+@charset "UTF-8";
+
+body {
+    color: $liDark;
+    font: 300 15px/1.5 sans-serif;
+    background: none;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+%reset-block {
+	display: block;
+	background: none;
+	@include box_sizing( border-box );
+
+}
+
+%font-weight { font-weight: 300; }
+
+h1 {
+	font-size: 25px;
+	@extend %font-weight;
+	@extend %reset-block;
+}
+
+h2 {
+	font-size: 22px;
+	@extend %font-weight;
+	@extend %reset-block;
+}
+
+h3 {
+	font-size: 20px;
+	@extend %font-weight;
+	@extend %reset-block;
+}
+
+h4 {
+	font-size: 17px;
+	@extend %font-weight;
+	@extend %reset-block;
+}
+
+h5 {
+	font-size: 15px;
+	@extend %font-weight;
+	@extend %reset-block;
+}
+
+h6 {
+	font-size: 13px;
+	@extend %font-weight;
+	@extend %reset-block;
+}
+
+
+%reset-shared {
+	outline: 0;
+	@include box_shadow( none );
+	display: inline-block;
+	vertical-align: middle;
+}
+
+a {
+	font-weight: 500;
+	color: $liDark;
+	@extend %reset-shared;
+
+	&, &:focus, &:active { text-decoration: none; }
+
+	&:hover{ text-decoration: underline; }
+
+}
+
+button, input, select, textarea {
+	@extend %reset-shared;
+	@include box_sizing( border-box );
+
+}
+
+button:focus, input:focus,
+button:active, input:active { @extend %reset-shared; }
+
+ul, li, ol, label {
+	list-style: none;
+	@extend %reset-block;
+}
+
+div,
+form,
+figure,
+article, p { @extend %reset-block; }

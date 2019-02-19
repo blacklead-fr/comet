@@ -39,8 +39,8 @@ class main extends Comet_Interface {
 
     protected function content(){
 
-        echo '<div id="comet-mapDashboard" class="comet-dashCtntBoxed">';
-        echo '<div class="comet-row">';
+        //echo '<div id="comet-mapDashboard" class="comet-row comet-wrapper">';
+        echo '<div class="comet-row comet-wrapper">';
         echo '<div class="comet-column col1">';
         echo $this->welcome();
         echo '</div>';
@@ -51,7 +51,7 @@ class main extends Comet_Interface {
         echo $this->learn();
         echo $this->support();
         echo '</div>';
-        echo '</div>';
+        //echo '</div>';
         echo '</div>';
 
     }

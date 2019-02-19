@@ -74,13 +74,11 @@ class fonts extends Comet_Interface{
             
         }
 
-        echo '<div id="comet-fonts" class="comet-dashCtntBoxed">';
-
-        echo '<div class="comet-row col2">';
-        echo '<div class="comet-column col1 text-left">';
+        echo '<div class="comet-header comet-top comet-wrapper">';
+        echo '<div class="comet-column">';
         echo '<h4>' . sprintf( _n( '%s font', '%s fonts', $total, 'comet' ), $total ) . '</h4>';
         echo '</div>';
-        echo '<div class="comet-column col2 text-right">';
+        echo '<div class="comet-column">';
         echo '<a id="comet-addFont" class="comet-button comet-buttonPrimary">' . __( 'Library', 'comet' ) . '</a>';
         echo '</div>';
         echo '</div>';
@@ -88,8 +86,6 @@ class fonts extends Comet_Interface{
         echo '<ul id="comet-mapFonts">';
         echo $li;
         echo '</ul>';
-
-        echo '</div>';
 
     }
 }

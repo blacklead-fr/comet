@@ -24,7 +24,10 @@
 
     } 
 
-    &:hover { @include transform( scale( 1.03, 1.03 ) ); }
+    &:hover {
+        text-decoration: none;
+        @include transform( scale( 1.03, 1.03 ) );
+    }
 
     &.cico { font-family: 'cico' }
 

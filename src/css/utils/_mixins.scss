@@ -1,3 +1,5 @@
+@import 'variables';
+
 
 @mixin transform( $property ){
 	-webkit-transform: $property;
@@ -42,4 +44,95 @@
 	-webkit-border-radius: $property;
 	-moz-border-radius: $property;
 	border-radius: $property;
+}
+
+@mixin form_fields( $target: null ){
+
+	%base-fields {
+		padding: 5px;
+		margin: 0;
+		border: 1px solid $daLight;
+		background: white;
+		font: 300 15px/1.2 sans-serif;
+		color: $liDark;
+		width:  100%;
+		height: 35px;
+		@include border_radius( 5px );
+
+	}
+
+	%base-hover{ @include box_shadow( 0 0 5px 0 $daLight ); }
+
+	%base-focus{
+		border-color: #006AFE;
+		box-shadow: none;
+	}
+
+	#{$target} input {
+		@extend %base-fields;
+
+		&:hover { @extend %base-hover; }
+
+		&:focus { @extend %base-focus; }
+
+		&[type="number"] { width: 100px; }
+
+		&[type="checkbox"] {
+			font-size: 30px;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			width: 45px;
+			height: 24px;
+			margin: 0;
+			border: 0;
+			padding: 0;
+			background: #ACBECC;
+			border-radius: 3em;
+			position: relative;
+			cursor: pointer;
+			outline: none;
+			@include transition( all .2s ease-in-out );
+
+			&:checked{ background: $daAccent; }
+
+			&:after{
+				position: absolute;
+				content: "";
+				width: 20px;
+				height: 20px;
+				background: white;
+				top: 2px; left: 2px;
+				margin: 0;
+				padding: 0;
+				@include border_radius( 50% );
+				@include transition( all .2s ease-in-out );
+			}
+
+			&:checked:after{
+				left: auto;
+				right: 2px;
+			}
+		}
+
+	}
+
+	#{$target} select {
+		@extend %base-fields;
+
+		&:hover { @extend %base-hover; }
+
+		&:focus { @extend %base-focus; }
+
+	}
+
+	#{$target} textarea {
+		@extend %base-fields;
+		height: 200px;
+
+		&:hover { @extend %base-hover; }
+
+		&:focus { @extend %base-focus; }
+	}
+
 }

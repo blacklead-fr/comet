@@ -54,7 +54,8 @@ class Comet_Dashboard extends Comet_Pages {
 			return;
 
 		}
-		comet_print_style( COMET_URL . 'admin/css/comet-admin.css' );
+		//comet_print_style( COMET_URL . 'admin/css/comet-admin.css' );
+		comet_print_style( COMET_URL . 'src/css/admin.css' );
 
 	}
 
