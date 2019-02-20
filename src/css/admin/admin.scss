@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import '../utils/variables';
 @import '../utils/mixins';
 @import '../utils/reset';
@@ -8,13 +9,6 @@ body {
 }
 
 @include form_fields;
-
-.comet-waitwhile > .cico { @include animation( waitWhile 2s linear 0s infinite ); }
-
-@keyframes waitWhile {
-    from { @include transform( rotate(0deg) ); } to { @include transform( rotate(360deg) ); }
-
-}
 
 @import '../utils/button';
 @import '../utils/message';
@@ -27,22 +21,19 @@ body {
 
 /* Responsive */
 
-@media screen and ( max-width: 500px ) {
+@media screen and ( max-width: 650px ) {
 
-
-/*.comet-dashboard.comet-admin {
-  #comet-dashboard #comet-mapDashboard .comet-column{
-    width: 100%;
-    display: block;
-    padding: 0;
-}*/
-
-#comet-settings .comet-column {
-    display: block;
-    width: auto;
-    padding:0;
+    .comet-dashboard.comet-admin .comet-content.comet-boxed > .comet-row.comet-wrapper > .comet-column{ width: 100%; }
 }
 
-#comet-settings .comet-column.last { padding-top: 10px }
+@media screen and ( max-width: 500px ) {
+
+    .comet-settings.comet-dashboard .comet-content.comet-boxed .comet-setting.comet-row .comet-settingBlock.comet-column {
+        width: 100%;
+        padding: 0;
+
+        &.last { padding-top: 10px }
+
+    }
 
 }

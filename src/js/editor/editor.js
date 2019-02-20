@@ -223,7 +223,7 @@ import __data from './data.js';
       const frame = _doc.createElement( 'div' );
 
       frame.id = 'cpb-content';
-      frame.className = 'cpb cpb-editArea cpb-backendMode';
+      frame.className = 'cpb cpb-content cpb-editArea cpb-backendMode';
       frame.style.width = 'calc( 100% - 50px )';
       frame.style.left = '50px';
       editor.appendChild( frame );

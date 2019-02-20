@@ -7,6 +7,14 @@
 	transform: $property;
 }
 
+@mixin transform_origin( $property ){
+	-webkit-transform-origin: $property;
+	-moz-transform-origin: $property;
+	-ms-transform-origin: $property;
+	-o-transform-origin: $property;
+	transform-origin: $property;
+}
+
 @mixin transition( $property ){
 	-webkit-transition: $property;
 	-moz-transition: $property;
@@ -40,6 +48,34 @@
 	animation: $property;
 }
 
+@mixin animation_duration( $property ){
+	-webkit-animation-duration: $property;
+	-moz-animation-duration: $property;
+	-o-animation-duration: $property;
+	animation-duration: $property;
+}
+
+@mixin animation_timing( $property ){
+	-webkit-animation-timing-function: $property;
+	-moz-animation-timing-function: $property;
+	-o-animation-timing-function: $property;
+	animation-timing-function: $property;
+}
+
+@mixin animation_count( $property ){
+	-webkit-animation-iteration-count: $property;
+	-moz-animation-iteration-count: $property;
+	-o-animation-iteration-count: $property;
+	animation-iteration-count: $property;
+}
+
+@mixin animation_name( $property ){
+	-webkit-animation-name: $property;
+	-moz-animation-name: $property;
+	-o-animation-name: $property;
+	animation-name: $property;
+}
+
 @mixin border_radius( $property ){
 	-webkit-border-radius: $property;
 	-moz-border-radius: $property;
@@ -61,11 +97,15 @@
 
 	}
 
-	%base-hover{ @include box_shadow( 0 0 5px 0 $daLight ); }
+	%base-hover{
+		@include box_shadow( 0 0 5px 0 $daLight );
+		z-index: 1;
+	}
 
 	%base-focus{
 		border-color: #006AFE;
 		box-shadow: none;
+		z-index: 1;
 	}
 
 	#{$target} input {
@@ -119,6 +159,14 @@
 
 	#{$target} select {
 		@extend %base-fields;
+		padding-right: 22px;
+		appearance: none;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		position: relative;
+		background: white url(data:image/svg+xml;base64,PHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MDAgNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHdpZHRoPSI1MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0ibTU2LjcgMTg1IDE4MCAxNjBjLjIuMS4zLjMuNS40LjMuMy42LjUgMSAuOC4yLjIuNC4zLjYuNC4zLjIuNy41IDEgLjdzLjUuMy44LjRjLjMuMi42LjMuOS41LjMuMS42LjMuOS40bC45LjNjLjMuMS43LjIgMSAuM3MuNi4yLjguMmMuMy4xLjcuMSAxIC4ycy42LjEuOC4yYy4zIDAgLjcuMSAxIC4xcy42LjEuOS4xaDEgMWMuMyAwIC42IDAgLjktLjEuMyAwIC43LS4xIDEtLjFzLjUtLjEuOC0uMWMuNC0uMS43LS4xIDEuMS0uMi4zLS4xLjUtLjIuOC0uMi4zLS4xLjctLjIgMS0uM3MuNi0uMi44LS4zYy4zLS4xLjYtLjIuOS0uNC4zLS4xLjYtLjMuOS0uNS4zLS4xLjUtLjMuOC0uNC4zLS4yLjctLjQgMS0uNi4yLS4yLjUtLjMuNy0uNS4zLS4yLjYtLjUgMS0uOC4yLS4xLjQtLjMuNS0uNGwxODAtMTYwYzguMy03LjMgOS0yMCAxLjctMjguMi00LTQuNC05LjQtNi43LTE1LTYuNy00LjcgMC05LjUgMS43LTEzLjMgNS4xbC0xNjYuNCAxNDgtMTY2LjctMTQ4LjJjLTMuOC0zLjQtOC42LTUuMS0xMy4zLTUuMS01LjUgMC0xMSAyLjMtMTUgNi43LTcuMyA4LjMtNi41IDIwLjkgMS43IDI4LjN6Ii8+PC9zdmc+) no-repeat 95% 50%;
+		background-size: 10px 10px;
+		background-position: top 50% right 5px;
 
 		&:hover { @extend %base-hover; }
 
@@ -128,7 +176,8 @@
 
 	#{$target} textarea {
 		@extend %base-fields;
-		height: 200px;
+		min-height: 150px;
+		resize: vertical;
 
 		&:hover { @extend %base-hover; }
 

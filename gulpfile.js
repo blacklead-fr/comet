@@ -13,13 +13,13 @@ const named = require('vinyl-named');
 sass.compiler = require('node-sass');
  
 gulp.task('css:compile', function(){
-  return gulp.src(['src/css/admin/admin.scss'])
+  return gulp.src(['src/css/admin/admin.scss', 'src/css/editor/editor.scss', 'src/css/utils/view.scss' ])
     .pipe(sass.sync().on('error', sass.logError))
     .pipe(gulp.dest('src/css/'));
 });
  
 gulp.task('css:watch', function(){
-  gulp.watch('src/css/admin/admin.scss', ['css:compile']);
+  gulp.watch('src/css/**/*.scss', ['css:compile']);
 });
 
  

@@ -1,0 +1,47 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.comet-contextmenu {
+    position: absolute;
+    z-index: 1;
+    background: rgba( 44, 45, 49, .8 );
+    color: white;
+    top: 0;
+    right: auto;
+    bottom: auto;
+    left: 0;
+    border-radius: 3px;
+    font: 300 15px/1.2 sans-serif;
+    cursor: default;
+    width: 150px;
+
+    .comet-option{
+
+        > span {
+            display: block;
+            padding: 5px 10px;
+        }
+
+        .comet-items{
+            display: none;
+            background: #2C2D31;
+        }
+
+        &:hover .comet-items{ display: block; }
+
+    }
+
+    .comet-item{
+        width: 100%;
+        padding: 5px 10px;
+        text-align: left;
+        color: white;
+        background: none;
+        margin: 0;
+        font: 300 15px/1.2 sans-serif;
+        cursor: pointer;
+
+        &:hover { background: #404146; }
+
+    }
+}

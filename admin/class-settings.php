@@ -159,7 +159,7 @@ class settings extends Comet_Interface{
 
 
         }
-        echo '<form id="comet-settings" class="comet-dashCtntBoxed" action="' . esc_url( comet_get_dashboard_url( $this->slug ) ) . '" method="post">';
+        echo '<form action="' . esc_url( comet_get_dashboard_url( $this->slug ) ) . '" method="post">';
 
         if( $this->is_action ){
 

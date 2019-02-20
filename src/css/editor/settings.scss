@@ -1,0 +1,82 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.comet-generalSettings {
+    display: none;
+    background: $liLight;
+    z-index: 3;
+
+    > form {
+
+        > .comet-header {
+            position: relative;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+
+            h4 {
+                width: 100%;
+                padding-right: 10px;
+            }
+
+            .comet-button {
+                color: $liDark;
+                width: 35px;
+                height: 35px;
+                line-height: 25px;
+                padding: 10px;
+                @include border_radius( 100% );
+
+                &:hover{
+                    background: $daLight;
+                    color: $daAccent;
+                }
+            }
+
+            .cico {
+                font-size: 15px;
+                height: 15px;
+                width: 15px;
+                display: block;
+            }
+
+        }
+
+        > .comet-inner {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: auto;
+            height: calc( 100% - 75px );
+        }
+
+    }
+
+    .comet-metaboxes { padding: 20px; }
+
+    .comet-metaboxesAdvanced { width: 65%; }
+
+    .comet-metaboxesSide { width: 35%; }
+
+    .comet-metaboxesNormal { width: 100%; }
+
+    %marbot20{ margin-bottom: 20px; }
+
+    .comet-metabox { @extend %marbot20; } 
+
+    #poststatus{
+
+        .comet-row { @extend %marbot20; } 
+
+        .comet-inner {
+            display: flex;
+            align-items: center;
+
+            * { width: 50%; }
+
+            label { margin-right: 10px; }
+
+        }
+
+    }
+
+}

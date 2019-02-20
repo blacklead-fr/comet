@@ -272,9 +272,11 @@ class Comet_Post_Edit extends Comet_Metaboxes{
         $base_url = COMET_URL;
 
         wp_enqueue_media();
-        wp_enqueue_style( 'cico', "{$base_url}includes/css/cico.min.css", array(), COMET_VERSION );
-        wp_enqueue_style( "{$slug}-editor", "{$base_url}includes/css/comet-editor.css", array(), COMET_VERSION );
-        wp_enqueue_style( "{$slug}-public", "{$base_url}public/css/comet-public.css", array(), COMET_VERSION );
+        wp_enqueue_style( 'cico', "{$base_url}includes/css/cico.min.css", [], COMET_VERSION );
+        //wp_enqueue_style( "{$slug}-editor", "{$base_url}includes/css/comet-editor.css", array(), COMET_VERSION );
+        //wp_enqueue_style( "{$slug}-public", "{$base_url}public/css/comet-public.css", [], COMET_VERSION );
+        wp_enqueue_style( "{$slug}-editor", "{$base_url}src/css/editor.css", [], COMET_VERSION );
+        wp_enqueue_style( "{$slug}-public", "{$base_url}src/css/view.css", [], COMET_VERSION );
         // TODO: RTL;
 
     }
@@ -294,7 +296,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
             'user'          => 'true'
         ] );
         wp_localize_script( $editor_slug, $i18n->get_id(), $i18n->get() ); 
-        wp_enqueue_script( $editor_slug, COMET_URL . 'src/js/editor.js', array(), COMET_VERSION, true );
+        wp_enqueue_script( $editor_slug, COMET_URL . 'src/js/editor.js', [], COMET_VERSION, true );
 
     }
 

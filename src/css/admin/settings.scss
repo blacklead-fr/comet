@@ -1,14 +1,14 @@
 @import '../utils/variables';
 @import '../utils/mixins'; 
 
-#comet-settings{
+.comet-settings.comet-dashboard .comet-content.comet-boxed {
 
 	.comet-setting {
 		padding: 20px 0;
 		border-bottom: 2px solid $daLight;
 	}
 
-	> .comet-button { margin: 30px 0; }
+	> form > .comet-button { margin: 30px 0; }
 
 }
 
