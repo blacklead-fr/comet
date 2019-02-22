@@ -69,8 +69,9 @@ export default function( source, options ){
 	}
 
 	function onDecInc( ev, ui, data, increase ){
-		ev.preventDefault();
 		var v, val;
+
+		ev.preventDefault();
 
 		if( typeof data !== 'object' || !node( data.source ).isNode() || !node( data.dragger ).isNode() ){
 			return false;
@@ -93,9 +94,10 @@ export default function( source, options ){
 	}
 
 	function onrange( ev, ui, data ){
+		var x, width, dwidth, val, delta, per, v;
+		
 		ev.preventDefault();
 		ev.stopPropagation();
-		var x, width, dwidth, val, delta, per, v;
 
 		if( ( ev.type !== 'mousemove' || !dragging ) && ev.type !== 'click' ){
 			return;

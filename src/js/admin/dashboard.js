@@ -54,13 +54,13 @@ export default function(){
 			const buttons = _d.getElementsByClassName( 'comet-dashboardSlideButton' );
 
 			node( buttons ).on( 'click', function( ev, ui ){
-				ev.preventDefault();
 				const slide = ui.parentNode.parentNode;
 				const _ui = node( ui );
 				const sc = 'comet-dashboardSlide';
-
 				var sibling = null;
-                var s, slides, slide_;
+				var s, slides, slide_;
+
+				ev.preventDefault();
 
                 if( _ui.hasClass( 'comet-next' ) && ( sibling = slide.nextSibling ) === null ){
                 	return;

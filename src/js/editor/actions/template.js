@@ -17,9 +17,10 @@ export default function( _node ){
 	const __core = {
 
 		open: function( ev, ui){
-			ev.preventDefault();
 			const args = {};
 			var header, body, temp, inner;
+			
+			ev.preventDefault();
 
 			header = _d.createElement( 'div' );
 			header.className = 'comet-searchbox';
@@ -48,8 +49,9 @@ export default function( _node ){
 		},
 
 		preview: function( e, ui, edata ){
-			e.preventDefault();
 			var id, url;
+			
+			e.preventDefault();
 
 			if( !utils.isObject( edata ) || !( id = parse.id( edata.id ) ) ){
 				return;

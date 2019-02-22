@@ -378,12 +378,12 @@ export default function ( data, g_css ){
 			cl += ' cpb-element' + utils.capitalize( utils.trim( data.elements[id]._type ) );
 			cl += ' cpb-elementNode' + id;
 
-			console.time("element");
+			console.time('element');
 			element.className = cl;
 			element.dataset.id = id;
 			element.innerHTML = '<div class="cpb-elementContent"></div>';
 			el.view( element );
-			console.timeEnd("element");
+			console.timeEnd('element');
 
 			if( [ 'update', 'UPDATE', 'updating', 'UPDATING', true, 1 ].indexOf( state ) > -1 ){
 				__target().set({node: element });

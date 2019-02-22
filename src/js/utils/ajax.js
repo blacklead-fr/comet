@@ -14,7 +14,7 @@ export default function( data ){
                 const response = xhr.status === 200 ? xhr.responseText : false;
                 todo( response );
 
-            }
+            };
 
         }
 

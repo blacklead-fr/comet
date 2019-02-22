@@ -35,10 +35,11 @@ export default function( id, field, data ){
 	const __core = {
 
 		devices: function( ev, ui, e ){
-			ev.preventDefault();
-			ev.stopPropagation();
 			const _body = node( _d.body );
 			var _device, ico, d;
+
+			ev.preventDefault();
+			ev.stopPropagation();
 
 			switch( e.device ){
 				
@@ -93,8 +94,10 @@ export default function( id, field, data ){
 		},
 
 		vernum: function( ev, ui ){
-			ev.preventDefault();
 			var d, _device;
+
+			ev.preventDefault();
+
 			is_locked = utils.isBool( is_locked ) && is_locked ? false : true;
 
 			if( is_locked ){
@@ -127,8 +130,9 @@ export default function( id, field, data ){
 		},
 
 		update: function( ev, ui, type ){
-			ev.preventDefault();
 			var num, input, d, target_, t_id, t_type, data_, edata;
+			
+			ev.preventDefault();
 
 			if( !( type in devices ) ){
 				return;

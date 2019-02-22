@@ -8,14 +8,13 @@
   "license": "GPL-2.0",
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-clean-css": "^3.10.0",
     "gulp-csslint": "^1.0.1",
     "gulp-eslint": "^5.0.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.1",
+    "gulp-sourcemaps": "^2.6.5",
     "node-sass": "^4.11.0",
     "vinyl-named": "^1.1.0",
-    "webpack-stream": "^5.1.1"
+    "webpack-stream": "^5.2.1"
   },
   "dependencies": {},
   "repository": {

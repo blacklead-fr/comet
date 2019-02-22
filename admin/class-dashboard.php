@@ -48,13 +48,12 @@ class Comet_Dashboard extends Comet_Pages {
 	}
 
 	public function styles(){
-		comet_print_style( COMET_URL . 'includes/css/cico.min.css' );
+		comet_print_style( COMET_URL . 'src/css/cico.min.css' );
 
 		if( $this->is_page( 'preview' ) ){
 			return;
 
 		}
-		//comet_print_style( COMET_URL . 'admin/css/comet-admin.css' );
 		comet_print_style( COMET_URL . 'src/css/admin.css' );
 
 	}

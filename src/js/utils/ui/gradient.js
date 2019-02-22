@@ -67,9 +67,10 @@ export default function( source, options ){
 	}
 
 	function onrange( ev, ui, data ){
+		var x, width, delta;
+
 		ev.preventDefault();
 		ev.stopPropagation();
-		var x, width, delta;
 
 		if( ev.type !== 'mousemove' || !dragging || !handler ){
 			dragging = false;
@@ -102,6 +103,8 @@ export default function( source, options ){
 	}
 
 	function onmanager( ev, ui, data ){
+		var dgs, width, nb, offset, count, dragger, input, dg, d;
+
 		ev.preventDefault();
 
 		if( ev.type === 'mouseup' ){
@@ -119,12 +122,11 @@ export default function( source, options ){
 			return;
 
 		}
-		const dgs = data.range.getElementsByClassName( 'comet-eGDragger' );
-		const width = node( data.range ).width() - options.size;
-		const nb = dgs.length;
-		const offset = parseInt( width / nb );
-		var count = 0;
-		var dragger, input, dg, d;
+		dgs = data.range.getElementsByClassName( 'comet-eGDragger' );
+		width = node( data.range ).width() - options.size;
+		nb = dgs.length;
+		offset = parseInt( width / nb );
+		count = 0;
 
 		if( nb > 5 ){
 			return;
@@ -188,9 +190,10 @@ export default function( source, options ){
 	}
 
 	function onstop( ev, ui ){
-		ev.preventDefault();
 		const colors = [];
 		var range, width, draggers, dragger, _dragger, x, stop;
+
+		ev.preventDefault();
 
 		if( !dragging ){
 			return;

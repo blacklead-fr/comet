@@ -4,11 +4,12 @@ const get_title = function( sym ){
 
 	const t = sym.getElementsByTagName( 'title' );
 	var tt = '';
+	var b;
 
 	if( t.length < 1 ){
 		return '';
 	}
-	for( var b = 0; b < t.length; b++ ){
+	for( b = 0; b < t.length; b++ ){
 		tt += t[b].textContent;
 
 	}
@@ -20,11 +21,12 @@ const get_path = function( sym ){
 
 	const t = sym.getElementsByTagName( 'path' );
 	var tt = '';
+	var b;
 
 	if( t.length < 1 ){
 		return '';
 	}
-	for( var b = 0; b < t.length; b++ ){
+	for( b = 0; b < t.length; b++ ){
 
 		tt += t[b].outerHTML;
 
@@ -32,13 +34,14 @@ const get_path = function( sym ){
 	return tt;
 };
 
-var str = '', s, box;
+var str = '';
+var s, box, a;
 
-for( var a = 0; a < symbols.length; a++ ){
+for( a = 0; a < symbols.length; a++ ){
 	s = symbols[a];
 	box = s.viewBox.baseVal;
 
-	str += "$this->add( '" + s.id + "', '" + get_title( s ) + "', " + box.width + ", " + box.height + ", '" + get_path( s ) + "' );"
+	str += "$this->add( '" + s.id + "', '" + get_title( s ) + "', " + box.width + ", " + box.height + ", '" + get_path( s ) + "' );";
 
 }
 

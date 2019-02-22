@@ -587,6 +587,6 @@ css.element = function( id, target, css, device ){
 
 	return targetClass + '{' + utils.trim( css ) + '}';
 
-}
+};
 
 export default css;

@@ -62,7 +62,6 @@ export default function( slug, field, data ){
 
 		onclick: function( ev, ui, edata ){
 			ev.preventDefault();
-			console.log( edata );
 			value = edata;
 			input.value = edata;
 			__core.create();
@@ -106,15 +105,14 @@ export default function( slug, field, data ){
 		},
 
 		open: function( ev, ui ){
-
-			ev.preventDefault();
-			ev.stopPropagation();
-
 			const sets = utils.getSvgSets();
 			var first_id = false;
 			var count = 1;
 			var option = '';
 			var id, header, inner, body;
+
+			ev.preventDefault();
+			ev.stopPropagation();
 
 			if( !utils.isObject( sets ) ){
 				return;

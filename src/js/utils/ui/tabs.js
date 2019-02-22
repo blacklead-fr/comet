@@ -126,9 +126,10 @@ export default function( options ){
 	}
 
 	node( '.' + options.classes.ref ).on( 'click', function( ev, ui ){
-		ev.preventDefault();
 		var current = false;
 		var ref, _pt, _tmp, _tabs, tabs, _wrap, body, t, b, c, dren, _child;
+		
+		ev.preventDefault();
 
 		if( typeof ui.hash !== 'string' || !( ( _pt = node( ui.parentNode ) ).isNode() ) || _pt.hasClass( options.classes.active ) ){
 			return;

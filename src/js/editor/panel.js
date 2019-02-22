@@ -66,8 +66,9 @@ export default function( options ){
 	redefine.workflow();
 
 	node( button ).on( 'click', function( ev, ui ){
-		ev.preventDefault();
 		var _exit;
+		
+		ev.preventDefault();
 
 		if( utils.isFunction( options.close.do ) ){
 			_exit = options.close.do( ev, ui );

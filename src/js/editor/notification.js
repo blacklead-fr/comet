@@ -38,8 +38,9 @@ export default function ( str, status ){
     notifications.appendChild( o );
 
     node( o.lastChild ).on( 'click', function( ev, ui ){
-        ev.preventDefault();
         var _note;
+        
+        ev.preventDefault();
 
         if( ( ( _note = node( ui.parentNode ) ).isNode() ) ){
             _note.remove();

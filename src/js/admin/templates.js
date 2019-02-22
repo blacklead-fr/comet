@@ -62,10 +62,11 @@ export default function(){
 				},
 
 				open: function( ev, ui ){
-					ev.preventDefault();
 					const fragment = _d.createDocumentFragment();
 					const wrapper = _d.createElement( 'div' );
 					var inner;
+
+					ev.preventDefault();
 
 					wrapper.className = 'comet-savebox comet-wrapper';
 
@@ -89,8 +90,9 @@ export default function(){
 				},
 
 				save: function( ev, ui, input ){
-					ev.preventDefault();
 					var name, _message, pp;
+
+					ev.preventDefault();
 
 					if( is_saving || !node( input ).isNode() || input.parentNode === null || ( pp = input.parentNode.parentNode ) === null ){
 						return;
@@ -159,9 +161,10 @@ export default function(){
 			const prop = {
 
 				open: function( ev, ui ){
-					ev.preventDefault();
 					var msg = false;
 					var id;
+
+					ev.preventDefault();
 
 					if( !( id = parse.dataset( ui, 'id' ) ) || !( id = parse.id( id ) ) ){
 						msg = __cometi18n.messages.error.noTemplate;
@@ -310,10 +313,10 @@ export default function(){
 			const prop = {
 
 				open: function( ev, ui ){
-					ev.preventDefault();
 					var fragment = false;
 					var wrapper, inner, id;
 
+					ev.preventDefault();
 
 					if(  !( id = parse.dataset( ui, 'id' ) ) || !( id = parse.id( id ) ) ){
 						return;
@@ -336,9 +339,10 @@ export default function(){
 				},
 
 				export: function( ev, ui, input ){
-					ev.preventDefault();
 					var msg = false;
 					var wrapper, name, error;
+
+					ev.preventDefault();
 
 					if( isSaving ){
 						return;
@@ -417,9 +421,10 @@ export default function(){
 			const nt = _d.getElementsByClassName( 'comet-templatePreview' );
 
 			node( nt ).on( 'click', function( ev, ui ){
-				ev.preventDefault();
 				const url = utils.isString( ui.href ) ? utils.trim( utils.stripTags( ui.href ) ) : false;
 				var inner = '<div>';
+				
+				ev.preventDefault();
 
 				if( !url ){
 					inner += '<div class="comet-msgbox">';

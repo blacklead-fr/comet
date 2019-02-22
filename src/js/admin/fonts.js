@@ -347,8 +347,9 @@ export default function(){
 		},
 
 		add: function( ev, ui, data ){
-			ev.preventDefault();
 			var weight, id;
+
+			ev.preventDefault();
 
 			if( !node( data.select ).isNode() || !utils.isObject( data.font ) || !( 'family' in data.font ) ){
 				return;
@@ -372,8 +373,9 @@ export default function(){
 		},
 
 		remove: function( ev, ui, count ){
-			ev.preventDefault();
 			var id, index;
+
+			ev.preventDefault();
 
 			if( ui.parentNode === null || ui.parentNode.parentNode === null ){
 				return;
@@ -392,8 +394,9 @@ export default function(){
 		},
 
 		search: function( ev, ui, data ){
-			ev.preventDefault();
 			var val;
+
+			ev.preventDefault();
 
 			if( !utils.isArray( appData.fonts ) || !utils.isString( val = ui.value ) ){
 				data.body.innerHTML = 'No font found.';
@@ -455,8 +458,9 @@ export default function(){
 		},
 
 		weight: function( ev, ui, data ){
-			ev.preventDefault();
 			const weight = parseInt( ui.value );
+
+			ev.preventDefault();
 
 			if( !node( data.preview ).isNode() || [ 100, 200, 300, 400, 500, 600, 700, 800, 900 ].indexOf( weight ) < 0 ){
 				return;
@@ -468,13 +472,14 @@ export default function(){
 	};
 
 	node( open ).on( 'click', function( ev, ui ){
-		ev.preventDefault();
 		const i = 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + cometdata.apikey;
 		const h_fragment = _d.createDocumentFragment();
 		const c_fragment = _d.createDocumentFragment();
 		const h_wrapper = _d.createElement( 'div' );
 		const c_wrapper = _d.createElement( 'div' );
 		var a, header, basket, list, count;
+
+		ev.preventDefault();
 
 		h_fragment.appendChild( h_wrapper );
 		c_fragment.appendChild( c_wrapper );

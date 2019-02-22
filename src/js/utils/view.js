@@ -7,12 +7,13 @@ import utils from './utils.js';
 import ajax from './ajax.js';
 import layout from './layout.js';
 
+'use strict';
+
 (function( cometView ) {
 
 	cometView( window, document );
 
 }(function( _w, _d ){
-	'use strict';
 
 	const g_ = __global();
 

@@ -55,9 +55,9 @@ utils.trim = function( entry ){
 		s = entry.str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '' );
 
 		if( typeof entry.char === 'string' ){
-			c = entry.char === "]" ? "\\]" : c;
-			c = entry.char === "\\" ? "\\\\" : c;
-			s.replace( new RegExp( "^[" + c + "]+|[" + c + "]+$", "g" ), "");
+			c = entry.char === ']' ? '\\]' : c;
+			c = entry.char === '\\' ? '\\\\' : c;
+			s.replace( new RegExp( '^[' + c + ']+|[' + c + ']+$', 'g' ), '');
 		}
 
 	}
@@ -120,7 +120,7 @@ utils.escUrl = function( url ){
 		
 	}
 
-	url = url.replace( '&', '&#038;' ).replace( "'", '&#039;' );
+	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
 
 	return encodeURI( url );
 
@@ -261,9 +261,9 @@ utils.getParameters = function(){
 
 	}
 
-	for( aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split("&"); nKeyId < aCouples.length; nKeyId++ ){
-		aItKey = aCouples[nKeyId].split("=");
-		oParametre[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : "";
+	for( aItKey, nKeyId = 0, aCouples = window.location.search.substr(1).split('&'); nKeyId < aCouples.length; nKeyId++ ){
+		aItKey = aCouples[nKeyId].split('=');
+		oParametre[unescape(aItKey[0])] = aItKey.length > 1 ? unescape(aItKey[1]) : '';
 
 	}
 	return oParametre;

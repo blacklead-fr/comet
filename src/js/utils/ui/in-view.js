@@ -43,7 +43,7 @@ const inView = () => {
 
 },
 
-    }
+    };
 
     /**
     * Maintain a hashmap of all registries, a history

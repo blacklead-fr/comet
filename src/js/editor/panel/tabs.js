@@ -44,9 +44,10 @@ const __create = function( tabs, data ){
 		item: {
 
 			add: function( ev, ui, itemsNode ){
-				ev.preventDefault();
 				const target_ = __target();
 				var pid, id;
+
+				ev.preventDefault();
 
 				if( !node( itemsNode ).isNode() || !( pid = target_.id() ) ){
 					return;
@@ -63,10 +64,11 @@ const __create = function( tabs, data ){
 			},
 
 			edit: function( ev, ui, args ){
-				ev.preventDefault();
 				const target_ = __target();
 				const data_ = __data();
 				var id, tabs1, tid, element, edata;
+
+				ev.preventDefault();
 
 				if( !( id = parse.id( args.id ) ) || !( tid = target_.id() ) ){
 					return;
@@ -122,11 +124,12 @@ const __create = function( tabs, data ){
 			},
 
 			delete: function( ev, ui, args ){
-				ev.preventDefault();
 				const data_ = __data();
 				const target_ = __target();
 				var element_id, item_id, elementNode;
 				var id, _t, lyt;
+
+				ev.preventDefault();
 
 				if( !( ( _t = node( args.target ) ).isNode() ) || !( item_id = parse.id( args.id ) ) ){
 					return;
@@ -656,9 +659,10 @@ const __create = function( tabs, data ){
 					const __img = {
 
 						open: function( ev, ui ){
+							var args, media;
+							
 							ev.preventDefault();
 							ev.stopPropagation();
-							var args, media;
 
 							if( media ){
 								media.open();
@@ -788,7 +792,7 @@ const __create = function( tabs, data ){
 
 	return __core.tabs();
 
-}
+};
 
 export default __create;/*
 	const obj = {};

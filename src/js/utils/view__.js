@@ -13,7 +13,6 @@ import layout from './layout.js';
 	cometView( window, document );
 
 }(function( _w, _d ){
-	'use strict';
 
 	const g_ = __global();
 

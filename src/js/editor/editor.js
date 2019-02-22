@@ -17,14 +17,14 @@ import node from '../utils/node.js';
 import load from '../utils/load.js';
 import __data from './data.js';
 
+'use strict';
+
 (function( cometEditor ) {
 
   cometEditor( window, document);
 
 }(function( _win, _doc ){
-
-  'use strict';
-
+  
   const g_ = __global();
   const data_ = __data();
   const editor = _doc.getElementById( 'comet-editor' );

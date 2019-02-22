@@ -17,7 +17,7 @@ export default function( destroy ){
 		active: 'cpb-active',
 		textarea: 'comet-fieldEditor',
 		editor: 'cpb-editable'
-	}
+	};
 	const textarea = document.getElementsByClassName( classes.textarea );
 	var neditor = 0;
 	var oToolbar = document.getElementById( oTid );
@@ -76,8 +76,9 @@ export default function( destroy ){
 			},
 
 			focus: function( ev, ui ){
-				ev.preventDefault();
 				var buttons, _target;
+
+				ev.preventDefault();
 
 				if( window.getSelection && window.getSelection().modify ){
 					selection.range = window.getSelection().getRangeAt(0);
@@ -294,7 +295,7 @@ export default function( destroy ){
 					}
 
 
-				}
+				};
 
 				return [
 				{
@@ -365,9 +366,11 @@ export default function( destroy ){
 						inline.appendChild( createLink );
 
 						node( createLink ).on( 'click', function( ev, ui ){
-							ev.preventDefault();
 							const val = utils.isString( input.value ) ? utils.trim( utils.stripTags( input.value ) ) : '';
 							const state = val === '' ? 'unlink' : 'createLink';
+
+							ev.preventDefault();
+
 							onbutton.default( state, val );
 						});
 
@@ -375,8 +378,9 @@ export default function( destroy ){
 
 					},
 					do: function( ev, ui ){
-						ev.preventDefault();
 						const _p = node( ui.parentNode );
+						
+						ev.preventDefault();
 
 						if( onbutton.toggle( ui ) ){
 							_p.addClass( classes.active );

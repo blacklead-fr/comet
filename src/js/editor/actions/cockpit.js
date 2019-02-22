@@ -15,10 +15,11 @@ const cockpit = {
 	toggle: function( _n ){
 
 		node( _n ).on( 'click', function( ev, ui ){
-			ev.preventDefault();
 			const pit = utils.getNode( 'cockpit' );
 			const toggled = 'is_toggled';
 			var _pit;
+
+			ev.preventDefault();
 
 			if( !pit || !( ( _pit = node( pit ) ).isNode() ) ){
 				return false;
@@ -39,10 +40,11 @@ const cockpit = {
 	settings: function( _n ){
 
 		node( _n ).on( 'click', function( ev, ui ){
-			ev.preventDefault();
 			const pit = utils.getNode( 'generalSettings' );
 			const toggled = 'is_toggled';
 			var _pit;
+
+			ev.preventDefault();
 
 			if( !pit || !( ( _pit = node( pit ) ).isNode() ) ){
 				return false;
@@ -89,11 +91,11 @@ const cockpit = {
 			},
 
 			open: function( ev, ui ){
-				ev.preventDefault();
-
 				const args = {};
 				var mod = false;
 				var id, content, inner, div, input, button, form;
+
+				ev.preventDefault();
 
 				content = _d.createElement( 'div' );
 				content.className = 'comet-savebox comet-wrapper';
@@ -120,11 +122,11 @@ const cockpit = {
 			},
 
 			save: function( ev, ui, edata ){
-				ev.preventDefault();
-
 				const metaData = __data().getData();
 				var m = '';
 				var _message, val, pp;
+				
+				ev.preventDefault();
 
 				if( !utils.isObject( edata ) || is_saving ){
 					return;
@@ -221,6 +223,6 @@ const cockpit = {
 
 	},
 
-}
+};
 
 export default cockpit;

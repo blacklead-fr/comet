@@ -12,8 +12,6 @@ import __id from './id.js';
 
 export default function(){
 
-    "use strict";
-
     const _d = document;
 
     const _w = window;
@@ -56,7 +54,7 @@ export default function(){
             return {
                 x: posx,
                 y: posy
-            }
+            };
 
         },
 
@@ -267,24 +265,23 @@ export default function(){
             var windowHeight = _w.innerHeight;
 
             if( ( windowWidth - clickCoordsX ) < menuWidth ){
-                menu.style.left = windowWidth - menuWidth + "px";
+                menu.style.left = windowWidth - menuWidth + 'px';
 
             }else{
-                menu.style.left = clickCoordsX + "px";
+                menu.style.left = clickCoordsX + 'px';
             }
 
             if( ( windowHeight - clickCoordsY ) < menuHeight ){
-                menu.style.top = windowHeight - menuHeight + "px";
+                menu.style.top = windowHeight - menuHeight + 'px';
 
             }else{
-                menu.style.top = clickCoordsY + "px";
+                menu.style.top = clickCoordsY + 'px';
 
             }
 
         },
 
         onclick: function( ev, ui, e ){
-            ev.preventDefault();
 
             var get;
 
@@ -530,6 +527,8 @@ export default function(){
                 }
 
             };
+            
+            ev.preventDefault();
 
             if( !utils.isFunction( priv[e.type] ) || roles.indexOf( e.role ) < 0 ){
                 __menu.destroy();

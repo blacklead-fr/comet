@@ -17,9 +17,10 @@ const sidebar = {
 	toggle: function( _n ){
 
 		node( _n ).on( 'click', function( ev, ui ){
-			ev.preventDefault();
 			const enabled = 'cpb-active';
 			var _tmp, tmp, _p, field, elements, x, _element, search;
+
+			ev.preventDefault();
 
 			if( !( ( _tmp = node( ui.parentNode ) ).isNode() ) || !( ( _p = node( ( tmp = _tmp.prop() ).parentNode ) ).isNode() ) ){
 				return;
@@ -59,10 +60,11 @@ const sidebar = {
 			redefine.workflow();
 
 			node( search ).on( 'input', function( ev1, ui1 ){
-				ev1.preventDefault();
 				const val = utils.isString( ui1.value ) ? utils.trim( ui1.value ) : '';
 				const isEmpty = ( val.length < 1 );
 				var elements1, _element1, x1, regex, title;
+				
+				ev1.preventDefault();
 
 				if( ( elements1 = document.getElementsByClassName( 'comet-listElement' ) ).length < 1 ){
 					return;
@@ -134,11 +136,12 @@ const sidebar = {
 			},
 
 			save: function( ev, ui ){
-				ev.preventDefault();
 				const disabled = 'cpb-disabled';
 				const wait = 'comet-waitWhileIcon';
 				var hasChildren = false;
 				var id, _ui, dren, e_data;
+
+				ev.preventDefault();
 
 				if( !( id = parse.id( __cometdata.post_id ) ) || ( _ui = node( ui ) ).hasClass( disabled ) ){
 					return;

@@ -71,7 +71,7 @@ class preview extends Comet_Page {
             comet_print_style( $fonts );
 
         }
-        comet_print_style( "{$url}public/css/comet-public.css", COMET_VERSION );
+        comet_print_style( "{$url}src/css/view.css", COMET_VERSION );
 
     }
 

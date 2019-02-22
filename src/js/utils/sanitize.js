@@ -194,13 +194,13 @@ sanitize.post = function( str ){
 
 	return ( !utils.isStringEmpty( str ) ? utils.stripTags( str, allowed ) : '' );
 
-}
+};
 
 sanitize.class = function( str, prefix ){
 
 	return ( utils.toClass( utils.isString( prefix ) ? prefix : '' ) + utils.toClass( str ) );
 
-}
+};
 
 sanitize.alignment = function( entry ){
 	const c = 'cpb-align';
@@ -240,6 +240,6 @@ sanitize.alignment = function( entry ){
 		return c + 'center';
 	}
 
-}
+};
 
 export default sanitize;

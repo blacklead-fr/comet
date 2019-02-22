@@ -949,14 +949,14 @@ export default function ( node ){
 					for( o in opts ){
 
 						if( opts[o].selected ){
-							s[s.length] = encodeURIComponent( field.name ) + "=" + encodeURIComponent( opts[o].value );
+							s[s.length] = encodeURIComponent( field.name ) + '=' + encodeURIComponent( opts[o].value );
 
 						}
 
 					}
 
 				}else if( ( type !== 'checkbox' && type !== 'radio' ) || field.checked ){
-					s[s.length] = encodeURIComponent( field.name ) + "=" + encodeURIComponent( field.value );
+					s[s.length] = encodeURIComponent( field.name ) + '=' + encodeURIComponent( field.value );
 
 				}
 			}

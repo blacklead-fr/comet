@@ -4,11 +4,6 @@ import node from '../node.js';
 
 export default function( source, options ){
 
-    if( !source ){
-        return;
-
-    }
-
     var dragging = false;
 
     const hsb_ = [];
@@ -111,7 +106,7 @@ export default function( source, options ){
                         hsb: convert.rgbhsb( [ r, g, b ] ),
                         alpha: a
 
-                    }
+                    };
 
                 }
             }
@@ -256,11 +251,12 @@ export default function( source, options ){
             }
 
             function saturation( ev, ui ){
-                ev.preventDefault();
-                ev.stopPropagation();
                 const type = ev.type;
                 var color = '';
                 var dt, _sat, dx, dy, x, y, rec, width, height, dw, s, b, px, py, dw2;
+
+                ev.preventDefault();
+                ev.stopPropagation();
 
                 if( type === 'mousedown' && type !== 'click' ){
                     dragging = true;
@@ -476,10 +472,11 @@ export default function( source, options ){
             }
 
             function input( ev, ui ){
-                ev.preventDefault();
                 const val = ev.type === 'paste' ? ( ev.clipboardData || window.clipboardData ).getData( 'text' ) : ui.value;
                 const value = parse.color( val );
                 var color = '';
+
+                ev.preventDefault();
 
                 if( value === null ){
                     ui.value = '';
@@ -515,7 +512,7 @@ export default function( source, options ){
 
         }
 
-    }
+    };
 
     function round( x ){
 
@@ -664,6 +661,11 @@ export default function( source, options ){
             node( clear ).on( 'click', on.clear, data );
 
         }
+
+    }
+
+    if( !source ){
+        return;
 
     }
 

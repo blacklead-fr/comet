@@ -112,8 +112,9 @@ export default function( options ){
 	}
 
 	node( '.' + options.classes.header ).on( 'click', function( ev, ui  ){
-		ev.preventDefault();
 		var _wrapper, _main, dren, c;
+		
+		ev.preventDefault();
 
 		if( !( ( _wrapper = node( ui.parentNode ) ).isNode() ) ){
 			return;
@@ -133,7 +134,7 @@ export default function( options ){
 			hide( _wrapper.prop() );
 
 		}else{
-			show( _wrapper.prop() )
+			show( _wrapper.prop() );
 
 		}
 
