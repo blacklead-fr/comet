@@ -263,11 +263,16 @@ class Comet_i18n {
 			'selFonts'	=> __( 'Select fonts to import.', 'comet' ),
 			'redirect'	=> __( 'You will be redirected to the edit page automatically. If it fails please click the link:', 'comet' ),
 			'editPage'	=> __( 'Go to the edit page', 'comet' ),
-			'error'	=> [
+			'warning'	=> [
+				'export'	=> __( 'Exporting is only supported on computers with up to date and modern browser. You may encounter compatibility issues and errors if it\'s not the case.', 'comet' ),
+			],
+			'error'		=> [
+				'export'		=> __( 'An error has been occurred while exporting the template.', 'comet' ),
 				'noTemplate'	=> __( 'Template not found.', 'comet' ),
 				'failedFonts'	=> __( 'Failed to connect with Google Fonts. Please verify your API key.', 'comet' )
 			],
 			'success'	=> [
+				'export'		=> __( 'The template has been correctly created and ready to be downloaded. Click the link below to download the template.', 'comet' ),
 				'newTemplate'	=> __( 'The template has been correctly created.', 'comet' ),
 				'delTemplate'	=> __( 'The template has been correctly deleted.', 'comet' ),
 			]

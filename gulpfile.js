@@ -64,14 +64,14 @@ gulp.task( 'js:compile', function(){
     .pipe( webpack( {
         //watch: true,
         target: 'web',
-        mode: 'production',//'development',
+        mode: /*'production',*/'development',
         devtool: 'source-map',
     } ) )
     .pipe( gulp.dest( 'src/js/' ) );
 } );
 
 gulp.task( 'js:watch', function() {
-  gulp.watch([ 'src/js/**/*.js' ], [ 'js:compile' ] );
+  gulp.watch([ 'src/js/**/*.js' ], { delay: 60000 }, [ 'js:compile' ] );
 });
 
 gulp.task( 'default', [ 'css:verify', 'js:verify', 'css:compile', 'js:compile' ] );

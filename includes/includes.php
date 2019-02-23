@@ -384,7 +384,7 @@ function comet_get_supported_post_types(){
 function comet_parse_json( $data ){
 
   if( is_string( $data ) ){
-    $data = json_decode( stripslashes( $data ), true );
+    $data = json_decode( urldecode( stripslashes( $data ) ), true );
 
   }
 

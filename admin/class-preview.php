@@ -34,8 +34,8 @@ class preview extends Comet_Page {
         $this->page_title = __( 'Preview', 'comet' );
         $slug = $this->slug;
 
-        add_action( "comet_admin_header_{$slug}", array( $this, 'styles' ) );
-        add_action( "comet_admin_footer_{$slug}", array( $this, 'scripts' ) );
+        add_action( "comet_admin_header_{$slug}", [ $this, 'styles' ] );
+        add_action( "comet_admin_footer_{$slug}", [ $this, 'scripts' ] );
 
     }
 
@@ -111,7 +111,9 @@ class preview extends Comet_Page {
             return;
 
         }
+        echo '<div class="cpb-content">';
         echo $comet->render( $this->template->meta );
+        echo '</div>';
 
     }
 
