@@ -166,8 +166,8 @@ const cockpit = {
 
 				ajax({
 					do: 'save',
-					data: JSON.stringify({
-						post_title: val,
+					data: utils.json_encode({
+						post_title: utils.encode_chars( val ),
 						meta: metaData,
 						post_content: sanitize.content(),
 						post_type: 'comet_mytemplates',

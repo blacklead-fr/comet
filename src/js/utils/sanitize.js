@@ -185,14 +185,14 @@ sanitize.content = function(){
 		o += utils.stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
 
 	}
-	return o;
+	return utils.encode_chars( o );
 
 };
 
 sanitize.post = function( str ){
 	const allowed = '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><sub><sup><title>';
 
-	return ( !utils.isStringEmpty( str ) ? utils.stripTags( str, allowed ) : '' );
+	return ( !utils.isStringEmpty( str ) ? utils.encode_chars( utils.stripTags( str, allowed ) ) : '' );
 
 };
 

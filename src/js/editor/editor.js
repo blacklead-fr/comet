@@ -1,7 +1,6 @@
 /* Comet - Copyright (c) 2019 Blacklead */
 /* Last edit: Jan, 25 2019 */
 
-
 import contextualize from './contextualize.js';
 import sanitize from '../utils/sanitize.js';
 import __global from '../utils/global.js';
@@ -11,7 +10,6 @@ import s__ from './actions/sidebar.js';
 import parse from '../utils/parse.js';
 import utils from '../utils/utils.js';
 import post_elements from './post.js';
-//import menu from './menu/events.js';
 import ajax from '../utils/ajax.js';
 import node from '../utils/node.js';
 import load from '../utils/load.js';

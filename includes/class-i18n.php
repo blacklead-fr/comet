@@ -255,6 +255,7 @@ class Comet_i18n {
 			'selFonts'		=> __( 'Select fonts', 'comet' ),
 			'fonts'			=> __( 'Fonts', 'comet' ),
 			'newTemplate'	=> __( 'Create new template', 'comet' ),
+			'finish'		=> __( 'Finish downloading', 'comet' )
 
 		] );
 
@@ -265,6 +266,7 @@ class Comet_i18n {
 			'editPage'	=> __( 'Go to the edit page', 'comet' ),
 			'warning'	=> [
 				'export'	=> __( 'Exporting is only supported on computers with up to date and modern browser. You may encounter compatibility issues and errors if it\'s not the case.', 'comet' ),
+				'import'	=> __( 'You must not exit the current session while importing the templates.', 'comet' )
 			],
 			'error'		=> [
 				'export'		=> __( 'An error has been occurred while exporting the template.', 'comet' ),

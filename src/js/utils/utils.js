@@ -126,6 +126,64 @@ utils.escUrl = function( url ){
 
 };
 
+utils.encode_chars = function( str ){
+	const __core = {
+
+		map: {
+			'&': '&amp;',
+			'(': '&#40;',
+			')': '&#41;',
+			',': '&#44;',
+			'/': '&#47;',
+			':': '&#58;',
+			';': '&#59;',
+			'[': '&#91;',
+			'\\': '&#92;',
+			']': '&#93;',
+			'`': '&#96;',
+			'{': '&#123;',
+			'|': '&#124;',
+			'}': '&#125;',
+			'~': '&#126;',
+			'«': '&laquo;',
+			'»': '&raquo;',
+		},
+
+		callback: function( m ){
+			return __core.map[m];
+
+		}
+
+	};
+
+	if( !utils.isString( str ) ){
+		return str;
+
+	}
+	return str.replace(/[&\/,\[\]\\`{}\(\):;|~«»]/g, __core.callback );
+
+};
+
+/*utils.decode_chars = function( str ){
+
+};*/
+
+utils.json_encode = function( obj, raw ){
+
+	if( !utils.isObject( obj ) || utils.isArray( obj ) ){
+		return '';
+
+	}
+	raw = utils.isBool( raw ) ? raw : true;
+
+	if( raw ){
+		return encodeURIComponent( JSON.stringify( obj ) );
+
+	}
+	return JSON.stringify( obj );
+
+};
+
 
 utils.getVideo = function( url, media ){
 	const origin = url;

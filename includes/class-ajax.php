@@ -117,8 +117,6 @@ class Comet_Ajax {
 
             } 
             echo 0;
-
-            //echo ( isset( $p['data'] ) && ( $d = comet_parse_json( $p['data'] ) ) ? comet_updatePost( $d ) : 0 );
             break;
 
             /*case 'meta':
@@ -131,8 +129,6 @@ class Comet_Ajax {
             $meta = isset( $p['meta'] ) && in_array( $p['meta'], [ 'true', 'TRUE', true, 1 ] ) ? true : false;
 
             echo ( isset( $p['id' ] ) && ( $post = comet_get_post( $p['id' ] ) )->has_post() ? json_encode( $post->get_post( $meta ) ) : 0 );
-
-            //echo ( isset( $p['id'] ) && ( is_object( $d = comet_getPost( $p['id'] ) ) || is_array( $d ) ) ? json_encode( $d ) : 0 );
             break;
 
             case 'sfonts':

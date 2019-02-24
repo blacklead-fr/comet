@@ -117,11 +117,10 @@ const html = {
         }
 
         ajax({
-            action: ( cometdata.admin === 'true' ? 'comet_ajAdmin' : 'comet_ajPublic' ),
             do: 'element',
             element: utils.trim( opts.element ),
             id: id,
-            data: JSON.stringify( utils.isObject( opts.data ) ? opts.data : {} )
+            data: utils.json_encode( utils.isObject( opts.data ) ? opts.data : {} )
 
         }).done( ondone );
         //return '<span class="cometPending">...</span>';

@@ -274,8 +274,8 @@ const cockpit = {
 
 				Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_8__["default"])({
 					do: 'save',
-					data: JSON.stringify({
-						post_title: val,
+					data: _utils_utils_js__WEBPACK_IMPORTED_MODULE_6__["default"].json_encode({
+						post_title: _utils_utils_js__WEBPACK_IMPORTED_MODULE_6__["default"].encode_chars( val ),
 						meta: metaData,
 						post_content: _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].content(),
 						post_type: 'comet_mytemplates',
@@ -489,7 +489,7 @@ const sidebar = {
 						continue;
 
 					}
-					f_data[field.name] = field.value;
+					f_data[field.name] = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].encode_chars( field.value );
 
 				}
 
@@ -554,7 +554,7 @@ const sidebar = {
 				Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_7__["default"])({
 					do: 'save',
 					id: id,
-					data: JSON.stringify( e_data )
+					data: _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].json_encode( e_data )
 
 				}).done(function( r ){
 					var code = 400;
@@ -2379,8 +2379,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-//import menu from './menu/events.js';
 
 
 
@@ -5775,7 +5773,7 @@ __webpack_require__.r(__webpack_exports__);
 
 	}
 	uidata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( uidata = data_.get( _id, _type ) ) ? uidata : {};
-	data[slug] = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].stripOnly( ui.value, '<script><link><body><html><meta>' );
+	data[slug] = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].encode_chars( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].stripOnly( ui.value, '<script><link><body><html><meta>' ) );
 
 	if( index === 2 && ui.type ){
 
@@ -6993,11 +6991,10 @@ const html = {
         }
 
         Object(_ajax_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
-            action: ( cometdata.admin === 'true' ? 'comet_ajAdmin' : 'comet_ajPublic' ),
             do: 'element',
             element: _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( opts.element ),
             id: id,
-            data: JSON.stringify( _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( opts.data ) ? opts.data : {} )
+            data: _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].json_encode( _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( opts.data ) ? opts.data : {} )
 
         }).done( ondone );
         //return '<span class="cometPending">...</span>';
@@ -9221,14 +9218,14 @@ sanitize.content = function(){
 		o += _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
 
 	}
-	return o;
+	return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].encode_chars( o );
 
 };
 
 sanitize.post = function( str ){
 	const allowed = '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><sub><sup><title>';
 
-	return ( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str, allowed ) : '' );
+	return ( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].encode_chars( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str, allowed ) ) : '' );
 
 };
 
@@ -11379,6 +11376,64 @@ utils.escUrl = function( url ){
 	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
 
 	return encodeURI( url );
+
+};
+
+utils.encode_chars = function( str ){
+	const __core = {
+
+		map: {
+			'&': '&amp;',
+			'(': '&#40;',
+			')': '&#41;',
+			',': '&#44;',
+			'/': '&#47;',
+			':': '&#58;',
+			';': '&#59;',
+			'[': '&#91;',
+			'\\': '&#92;',
+			']': '&#93;',
+			'`': '&#96;',
+			'{': '&#123;',
+			'|': '&#124;',
+			'}': '&#125;',
+			'~': '&#126;',
+			'«': '&laquo;',
+			'»': '&raquo;',
+		},
+
+		callback: function( m ){
+			return __core.map[m];
+
+		}
+
+	};
+
+	if( !utils.isString( str ) ){
+		return str;
+
+	}
+	return str.replace(/[&\/,\[\]\\`{}\(\):;|~«»]/g, __core.callback );
+
+};
+
+/*utils.decode_chars = function( str ){
+
+};*/
+
+utils.json_encode = function( obj, raw ){
+
+	if( !utils.isObject( obj ) || utils.isArray( obj ) ){
+		return '';
+
+	}
+	raw = utils.isBool( raw ) ? raw : true;
+
+	if( raw ){
+		return encodeURIComponent( JSON.stringify( obj ) );
+
+	}
+	return JSON.stringify( obj );
 
 };
 

@@ -127,7 +127,7 @@ const sidebar = {
 						continue;
 
 					}
-					f_data[field.name] = field.value;
+					f_data[field.name] = utils.encode_chars( field.value );
 
 				}
 
@@ -192,7 +192,7 @@ const sidebar = {
 				ajax({
 					do: 'save',
 					id: id,
-					data: JSON.stringify( e_data )
+					data: utils.json_encode( e_data )
 
 				}).done(function( r ){
 					var code = 400;

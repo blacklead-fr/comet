@@ -936,26 +936,6 @@ __webpack_require__.r(__webpack_exports__);
 
 			const __core = {
 
-				/*toggle: function( button, saving ){
-					const waitwhile = 'comet-waitwhile';
-					const _button = node( button );
-
-					if( !_button.isNode() ){
-						return;
-
-					}
-
-					if( utils.isBool( saving ) && saving ){
-						_button.addClass( waitwhile );
-						button.innerHTML = '<span class="cico cico-spin"></span>';
-						return;
-
-					}
-					_button.removeClass( waitwhile );
-					button.innerHTML = __cometi18n.ui.create;
-
-				},*/
-
 				open: function( ev, ui ){
 					const fragment = _d.createDocumentFragment();
 					const wrapper = _d.createElement( 'div' );
@@ -1008,8 +988,8 @@ __webpack_require__.r(__webpack_exports__);
 
 					Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 						do: 'save',
-						data: JSON.stringify({
-							post_title: name,
+						data: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].json_encode({
+							post_title: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode_chars( name ),
 							post_type: 'comet_mytemplates',
 							post_content: '',
 							meta: {},
@@ -1112,8 +1092,6 @@ __webpack_require__.r(__webpack_exports__);
 
 		import: function(){
 
-			var is_importing = false;
-
 			const nt = _d.getElementById( 'comet-importTemplateBtn' );
 
 			const __core = {
@@ -1142,14 +1120,24 @@ __webpack_require__.r(__webpack_exports__);
 
 				import: function( ev, ui, wrapper ){
 					const files = ui.files;
-					var file, f, reader, fragment, item, d, o, id, n;
+					var importing, file, f, reader, fragment, button, items, item, d, o, id, n;
 
 					if( !files || files.length < 1 ){
 						return;
 
 					}
+					importing = files.length;
 					fragment = _d.createDocumentFragment();
-					wrapper.innerHTML = '<ul class="comet-import comet-items"></ul>';
+					items = _d.createElement( 'ul' );
+					items.className = 'comet-import comet-items';
+
+					button = _d.createElement( 'button' );
+					button.className = 'comet-button comet-buttonPrimary';
+					button.innerHTML = __cometi18n.ui.finish;
+
+					fragment.appendChild( Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.warning.import, 300 ).get() );
+					fragment.appendChild( items );
+					fragment.appendChild( button );
 
 					for( f = 0; f < files.length; f++ ){
 
@@ -1160,8 +1148,9 @@ __webpack_require__.r(__webpack_exports__);
 						reader = new FileReader();
 
 						item = _d.createElement( 'li' );
-						item.innerHTML = file.name;// + _u.icons.wait;
-						fragment.appendChild( item );
+						item.className = 'comet-item comet-waitwhile';
+						item.innerHTML = file.name + '<span class="cico cico-spin"></span>';
+						items.appendChild( item );
 
 						reader.onload = function( e ){
 							var data;
@@ -1170,21 +1159,24 @@ __webpack_require__.r(__webpack_exports__);
 								return false;
 
 							}
+							return;
 
 							Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 								do: 'save',
-								data: encodeURIComponent( JSON.stringify({
+								data: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].json_encode({
 									post_title: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( data.title ) ? data.title : _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( data.post_title ) ? data.post_title : 'Undefined',
-									//post_content: utils.isString( data.content ) ? data.content : utils.isString( data.post_content ) ? data.post_content : '',
+									post_content: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( data.content ) ? data.content : _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( data.post_content ) ? data.post_content : '',
 									meta: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isArray( data.meta ) ? {} : data.meta,
 									post_type: 'comet_mytemplates',
 									post_status: 'publish'
 
-								}) )
+								})
 
 							}).done(function( r ){
-								console.log( r );
-								item.lastChild.className = 'cico cico-check';
+								const is_saved = ( parseInt( r ) > 0 );
+								item.className = 'comet-item comet-' + ( is_saved ? 'success' : 'error' ); 
+								item.lastChild.className = 'cico cico-' + ( is_saved ? 'check' : 'x' );
+								importing--;
 
 							});
 
@@ -1192,7 +1184,21 @@ __webpack_require__.r(__webpack_exports__);
 						reader.readAsText( file );
 
 					}
-					wrapper.firstChild.appendChild( fragment );
+					wrapper.innerHTML = '';
+					wrapper.appendChild( fragment );
+
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button ).on( 'click', __core.reload, importing );
+
+				},
+
+				reload: function( ev, ui, importing ){
+					ev.preventDefault();
+
+					if( importing !== 0 ){
+						return;
+
+					}
+					window.location.reload( true ); 
 
 				}
 
@@ -1302,8 +1308,6 @@ __webpack_require__.r(__webpack_exports__);
 
 						is_saving = false;
 						__bun.toggle( ui, __cometi18n.ui.export );
-
-						console.log( r, _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].json( r ) );
 
 						if( !( data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_4__["default"].json( r ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( data.post_content ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( data.meta ) ){
 							_message = Object(_utils_message_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.error.export, 400 );
@@ -3275,14 +3279,14 @@ sanitize.content = function(){
 		o += _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
 
 	}
-	return o;
+	return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].encode_chars( o );
 
 };
 
 sanitize.post = function( str ){
 	const allowed = '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><sub><sup><title>';
 
-	return ( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str, allowed ) : '' );
+	return ( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].encode_chars( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str, allowed ) ) : '' );
 
 };
 
@@ -3904,6 +3908,64 @@ utils.escUrl = function( url ){
 	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
 
 	return encodeURI( url );
+
+};
+
+utils.encode_chars = function( str ){
+	const __core = {
+
+		map: {
+			'&': '&amp;',
+			'(': '&#40;',
+			')': '&#41;',
+			',': '&#44;',
+			'/': '&#47;',
+			':': '&#58;',
+			';': '&#59;',
+			'[': '&#91;',
+			'\\': '&#92;',
+			']': '&#93;',
+			'`': '&#96;',
+			'{': '&#123;',
+			'|': '&#124;',
+			'}': '&#125;',
+			'~': '&#126;',
+			'«': '&laquo;',
+			'»': '&raquo;',
+		},
+
+		callback: function( m ){
+			return __core.map[m];
+
+		}
+
+	};
+
+	if( !utils.isString( str ) ){
+		return str;
+
+	}
+	return str.replace(/[&\/,\[\]\\`{}\(\):;|~«»]/g, __core.callback );
+
+};
+
+/*utils.decode_chars = function( str ){
+
+};*/
+
+utils.json_encode = function( obj, raw ){
+
+	if( !utils.isObject( obj ) || utils.isArray( obj ) ){
+		return '';
+
+	}
+	raw = utils.isBool( raw ) ? raw : true;
+
+	if( raw ){
+		return encodeURIComponent( JSON.stringify( obj ) );
+
+	}
+	return JSON.stringify( obj );
 
 };
 

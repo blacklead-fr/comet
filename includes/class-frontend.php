@@ -98,7 +98,7 @@ class Comet_Frontend extends Comet_Render{
 
 		}
 		$output = '<div class="cpb-content">';
-		$output .= $this->render( $this->post->get_comet_meta() ) );
+		$output .= $this->render( $this->post->get_comet_meta() );
 		$output .= '</div>';
 
 		return $output;
