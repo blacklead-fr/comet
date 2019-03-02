@@ -54,7 +54,7 @@ sanitize.valueUnit = function( value, unit ){
 	unit = utils.isString( unit ) ? sanitize.unit( unit ) : '';
 	value = sanitize.number( { value: value, float: ( unit !== 'px' ) } );
 
-	return ( value === 0 ? value.toString() : value + unit );
+	return ( value === null ? '' : ( value === 0 ? value.toString() : value + unit ) );
 };
 
 sanitize.unit = function( unit ){
@@ -68,33 +68,40 @@ sanitize.unit = function( unit ){
 		case 'pxl':
 		case 'pixels':
 		return 'px';
+
 		case 'em':
 		case 'mul':
 		case 'mu':
 		case '*':
 		return 'em';
+
 		case '%':
 		case 'percent':
 		case 100:
 		case '100':
 		return '%';
+
 		case 'pt':
 		case 'points':
 		case 'point':
 		case 'pts':
 		return 'pt';
+
 		case 'cm':
 		case 'centimeter':
 		case 'centimeters':
 		return 'cm';
+
 		case 'mm':
 		case 'millimeter':
 		case 'millimeters':
 		return 'mm';
+
 		case 'in':
 		case 'inches':
 		case 'inch':
 		return 'in';
+		
 		default:
 		return '';
 	}

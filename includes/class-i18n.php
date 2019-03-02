@@ -227,15 +227,18 @@ class Comet_i18n {
 			'rmtemplate'	=> __( 'Read more about templates', 'comet' ),
 			'warning'		=> [
 				'exit'		=> __( 'Are you sure you want to exit ?', 'comet' ),
+				'ltemplate'	=> __( 'Please wait while loading the template.', 'comet' )
 			],
 			'error'			=> [
 				'failed'		=> sprintf( __( 'Failed to load %s', 'comet' ), 'Comet' ),
 				'savePost'		=> __( 'The post has not been saved.', 'comet' ),
 				'noContent'		=> __( 'Failed to save empty content.', 'comet' ),
 				'noMenu'		=> __( 'Undefined menu', 'comet' ),
+				'ltemplate'		=> __( 'Failed to load the template.', 'comet' )
 			],
 			'success'		=> [
-				'savePost'	=> __( 'The post has been correctly saved.', 'comet' )
+				'savePost'	=> __( 'The post has been correctly saved.', 'comet' ),
+				'ltemplate'	=> __( 'The template has been correctly loaded.', 'comet' )
 			]
 
 		] );

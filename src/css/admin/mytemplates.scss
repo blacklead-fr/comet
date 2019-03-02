@@ -73,29 +73,22 @@
     height: 0;
 }
 
-.comet-newtemplatebox{ 
+.comet-modal.comet-newtemplatebox > .comet-inner > .comet-body > .comet-savebox.comet-wrapper {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
 
-    .comet-body {
+    > .comet-saveform {
+        display: flex;
+        width: 100%;
 
-        > .comet-savebox {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
+        > .comet-button {
+            margin-left: 10px;
+            line-height: 1;
+            padding: 10px 15px;
 
-            > .comet-saveform{
-                display: flex;
-                width: 100%;
+            &.comet-waitwhile { padding: 7px 15px; }
 
-                > .comet-button {
-                    margin-left: 10px;
-                    line-height: 1;
-                    padding: 10px 15px;
-
-                    &.comet-waitwhile { padding: 7px 15px; }
-
-                }
-            }
         }
     }
 }
@@ -115,52 +108,56 @@
 
 /* Export */
 
-#comet-exportNewTemplateName { padding-right: 35px; }
+.comet-modal.comet-exportbox > .comet-inner > .comet-body .comet-savebox.comet-wrapper {
+    max-width: 500px;
+    padding: 20px;
+    margin: 0 auto;
 
-#comet-exportNewTemplate {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    border: 0;
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    background: #006AFE;
-    cursor: pointer;
+    > .comet-saveform {
+        display: flex;
+        width: 100%;
 
-    &:hover { transform: scale( 1.05, 1.05 ); }
+        > .comet-button {
+            margin-left: 10px;
+            line-height: 1;
+            padding: 10px 15px;
 
-    &, .cico {
-        color: white;
-        width: 25px;
-        height: 25px;
-        line-height: 25px;
-        font-size: 15px;
-        display: block;
+            &.comet-waitwhile { padding: 7px 15px; }
+
+        }
     }
 
 }
 
 /* import */
 
-.comet-importTemplateItems {
-    padding: 0;
-    border: 0;
-    margin: 10px 0 0;
-    list-style: none;
-    text-align: left;
+.comet-modal.comet-importbox > .comet-inner > .comet-body .comet-savebox.comet-wrapper {
+    max-width: 500px;
+    padding: 20px;
+    margin: 0 auto;
+    text-align: center;
 
-    li {
-        padding: 5px 0;
-        border: 0;
-        margin: 0;
-        text-align: left;
+    .comet-import.comet-items {
+        padding: 20px 0;
 
-        .cico {
-            color: #006AFE;
-            margin: 5px;
+        .comet-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 2px 0;
+            background: $liLight;
+
+            > .cico {
+                margin: 5px;
+
+                &.cico-check { color: green; }
+
+                &.cico-x { color: red; }
+            }
+
         }
 
-    }
+    } 
+
 }

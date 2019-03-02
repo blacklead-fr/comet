@@ -1,7 +1,8 @@
+import notification from '../notification.js';
+import layout from '../../utils/layout.js';
 import parse from '../../utils/parse.js';
 import modal from '../../utils/modal.js';
 import utils from '../../utils/utils.js';
-import load from '../../utils/load.js';
 import node from '../../utils/node.js';
 import ajax from '../../utils/ajax.js';
 import __data from '../data.js';
@@ -67,158 +68,120 @@ export default function( _node ){
 		},
 
 		insert:  function( e, ui, id ){
+
+			const __core = {
+
+				clone: function( data ){
+					var from = false;
+					var ids, a, count, id;
+
+					if( !utils.isObject( data ) || utils.isStringEmpty( data._sections ) ){
+						return false;
+
+					}
+
+					if( !utils.isArray( ( ids = parse.ids( data._sections, 'array' ) ), 1 ) ){
+						return false;
+
+					}
+					count = 0;
+
+					for( a = 0; a < ids.length; a++ ){
+
+						if( !( id = __core._clone( 'sections', ids[a], data, '0' ) ) ){
+							continue;
+
+						}
+
+						if( count === 0 ){
+							from = id;
+
+						}
+						count++;
+
+					}
+					return from;
+
+				},
+
+				_clone: function( type, id, data, pid ){
+					const _data = __data();
+					const types = [ 'items', 'elements', 'columns', 'rows', 'sections' ];
+					var children = [];
+					var childtype, _childtype, children, n_id, a;
+
+					if( !utils.isString( type ) || types.indexOf( type.toLowerCase() ) < 0 ){
+						return false;
+
+					}
+
+					if( !utils.isObject( data ) || !utils.isObject( data[type] ) ){
+						return false;
+
+					}
+
+					if( !utils.isObject( data[type][id] ) ){
+						data[type][id] = {};
+
+					}
+
+					if( !( n_id = __data().create( ( type === 'elements' ? data[type][id]._type : type ), pid, 'last', data[type][id] ) ) ){
+						return false;
+
+					}
+					childtype = _data.getChild( type );
+
+					if( childtype && ( _childtype = '_' + childtype ) && utils.isObject( data[type][id] ) && !utils.isStringEmpty( data[type][id][_childtype] ) ){
+						children = parse.ids( data[type][id][_childtype], 'array' );
+
+					}
+					__data().removeIds( n_id, type );
+
+					if( !utils.isArray( children, 1 ) ){
+						return n_id;
+
+					}
+
+					for( a = 0; a < children.length; a++ ){
+						__core._clone( childtype, children[a], data, n_id );
+
+					}
+					return n_id;
+
+				}
+
+			};
 			e.preventDefault();
 
-			if( !( id = parse.id( id ) ) ){
-				return;
+			if( ( id = parse.id( id ) ) ){
+				notification( __cometi18n.messages.warning.ltemplate, 300 );
+
+				ajax({
+					id: id,
+					meta: 'true',
+					do: 'get'
+
+				}).done( function( r ){
+					const frame = utils.getNode( 'frame' );
+					var data, from;
+
+					if( !frame || frame === null ){
+						notification( __cometi18n.messages.error.ltemplate, 400 );
+						return;
+
+					}
+
+					if( r === '0' || !utils.isObject( data = parse.json( r ) ) || !utils.isObject( data['meta'] ) ){
+						notification( __cometi18n.messages.error.ltemplate, 400 );
+
+					}
+					from = __core.clone( data['meta'] );
+					layout( __data().getData() ).init( frame, from );
+					notification( __cometi18n.messages.success.ltemplate, 200 );
+
+				} );
 
 			}
-
-			ajax({
-				id: id,
-				meta: 'true',
-				do: 'get'
-
-			}).done( function( r ){
-				var from = false;
-				var data, re, tmp;
-				var fa, fb, fc, fd, fe;
-				var ids_a, ids_b, ids_c, ids_d, ids_e;
-				var a, b, c, d, e;
-				var id_a, id_b, id_c, id_d, id_e;
-
-				if( r === '0' || !utils.isObject( tmp = parse.json( r ) ) ){
-					return false;
-
-				}
-
-				if( !utils.isObject( data = tmp['meta'] ) || utils.isStringEmpty( data._sections ) ){
-					return false;
-
-				}
-
-				if( !utils.isObject( data.sections ) || !utils.isArray( ( ids_a = parse.ids( data._sections, 'array' ) ), 1 ) ){
-					return false;
-
-				}
-				fc = 0;
-
-				for( a in ids_a ){
-					id_a = ids_a[a];
-
-					if( !( id_a = parse.id( ids_a[a] ) ) || !utils.isObject( data.sections[id_a] ) ){
-						continue;
-
-					}
-
-					if( !( tmp = __data.create( 'sections', '0', 'last', data.sections[id_a] ) ) ){
-						continue;
-
-					}
-
-					if( fc === 0 ){
-						from = tmp;
-						__data.removeIds( tmp, 'sections' );
-
-					}
-
-					if( utils.isStringEmpty( data.sections[id_a]._rows ) || !utils.isArray( ( ids_b = parse.ids( data.sections[id_a]._rows, 'array' ) ), 1 ) ){
-						continue;
-
-					}
-
-					for( b in ids_b ){
-
-						if( !( id_b = parse.id( ids_b[b] ) ) || !utils.isObject( data.rows[id_b] ) ){
-							continue;
-
-						}
-
-						if( !( tmp = __data.create( 'rows', tmp, 'last', data.rows[id_b] ) ) ){
-							continue;
-
-						}
-
-						if( fc === 0 ){ 
-							__data.removeIds( tmp, 'rows' );
-
-						}
-
-						if( utils.isStringEmpty( data.rows[id_b]._columns ) || !utils.isArray( ( ids_c = parse.ids( data.rows[id_b]._columns, 'array' ) ), 1 ) ){
-							continue;
-
-						}
-
-						for( c in ids_c ){
-
-							if( !( id_c = parse.id( ids_c[c] ) ) || !utils.isObject( data.columns[id_c] ) ){
-								continue;
-
-							}
-
-							if( !( tmp = __data.create( 'columns', tmp, 'last', data.columns[id_c] ) ) ){
-								continue;
-
-							}
-
-							if( fc === 0 ){ 
-								__data.removeIds( tmp, 'columns' );
-
-							}
-
-							if( utils.isStringEmpty( data.columns[id_c]._elements ) || !utils.isArray( ( ids_d = parse.ids( data.columns[id_c]._elements, 'array' ) ), 1 ) ){
-								continue;
-
-							}
-
-							for( d in ids_d ){
-
-								if( !( id_d = parse.id( ids_d[d] ) ) || !utils.isObject( data.elements[id_d] ) ){
-									continue;
-
-								}
-
-								if( !( tmp = __data.create( 'elements', tmp, 'last', data.elements[id_d] ) ) ){
-									continue;
-
-								}
-
-								if( fc === 0 ){ 
-									__data.removeIds( tmp, 'elements' );
-
-								}
-
-								if( utils.isStringEmpty( data.elements[id_d]._items ) || !utils.isArray( ( ids_e = parse.ids( data.elements[id_d]._items, 'array' ) ), 1 ) ){
-									continue;
-
-								}
-
-								for( e in ids_e ){
-
-									if( !( id_e = parse.id( ids_e[e] ) ) || !utils.isObject( data.items[id_e] ) ){
-										continue;
-
-									}
-
-									if( !( tmp = __data.create( 'items', tmp, 'last', data.items[id_e] ) ) ){
-										continue;
-
-									}
-
-									if( fc === 0 ){ 
-										__data.removeIds( tmp, 'items' );
-
-									}
-								}
-							}
-						}
-					}
-					fc++;
-
-				}
-				load.comet( __data.getData(), from );
-
-			} );
 
 			tm_modal.destroy();
 

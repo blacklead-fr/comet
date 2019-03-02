@@ -5,6 +5,7 @@ import contextualize from './contextualize.js';
 import sanitize from '../utils/sanitize.js';
 import __global from '../utils/global.js';
 import dialog from '../utils/dialog.js';
+import layout from '../utils/layout.js';
 import c__ from './actions/cockpit.js';
 import s__ from './actions/sidebar.js';
 import parse from '../utils/parse.js';
@@ -12,7 +13,6 @@ import utils from '../utils/utils.js';
 import post_elements from './post.js';
 import ajax from '../utils/ajax.js';
 import node from '../utils/node.js';
-import load from '../utils/load.js';
 import __data from './data.js';
 
 'use strict';
@@ -31,6 +31,7 @@ import __data from './data.js';
   var post = {};
   var metaData = {};
   var get, id1, id2;
+  var frame = false;
 
   const eb = {
 
@@ -218,8 +219,7 @@ import __data from './data.js';
     },
 
     frame: function(){
-      const frame = _doc.createElement( 'div' );
-
+      frame = _doc.createElement( 'div' );
       frame.id = 'cpb-content';
       frame.className = 'cpb cpb-content cpb-editArea cpb-backendMode';
       frame.style.width = 'calc( 100% - 50px )';
@@ -347,10 +347,10 @@ import __data from './data.js';
     post = g_.get( 'post' );
     metaData = data_.setData( utils.isObject( post ) ? ( utils.isObject( post.meta ) && !Array.isArray( post.meta ) ? post.meta : {} ) : {} );
 
-    window.onbeforeunload = function(){
+    /*window.onbeforeunload = function(){
       return __cometi18n.messages.warning.exit;
 
-    };
+    };*/
 
     g_.set( 'editor', editor, true );
     g_.set( 'generalSettings', settings, true );
@@ -363,12 +363,11 @@ import __data from './data.js';
       
     }
     node( _doc.body ).addClass( 'comet-globalLevel' );
-    load.comet( data_.getData(), null, true );
+    layout( data_.getData() ).init( frame, null );
     c__.settings( '#comet-closeGeneralSettings' );
     eb.sidebar();
     eb.preload();
     contextualize();
-
 
   });
 

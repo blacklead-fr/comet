@@ -760,13 +760,15 @@ const sidebar = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils/parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _utils_modal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/modal.js */ "./src/js/utils/modal.js");
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _utils_load_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/load.js */ "./src/js/utils/load.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/ajax.js */ "./src/js/utils/ajax.js");
-/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
+/* harmony import */ var _notification_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../notification.js */ "./src/js/editor/notification.js");
+/* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/layout.js */ "./src/js/utils/layout.js");
+/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _utils_modal_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/modal.js */ "./src/js/utils/modal.js");
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utils/ajax.js */ "./src/js/utils/ajax.js");
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../data.js */ "./src/js/editor/data.js");
+
 
 
 
@@ -804,7 +806,7 @@ __webpack_require__.r(__webpack_exports__);
 			body = _d.createElement( 'div' );
 			body.className = 'comet-templates comet-wrapper comet-mytemplates';
 
-			tm_modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+			tm_modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_3__["default"])({
 				header: header,
 				content: body
 			});
@@ -812,8 +814,8 @@ __webpack_require__.r(__webpack_exports__);
 			/* cus, pre */
 			__core.load( 'cus' );
 
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.firstChild ).on( 'change', __core.switch );
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( header.lastChild ).on( 'input', __core.search );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( header.firstChild ).on( 'change', __core.switch );
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( header.lastChild ).on( 'input', __core.search );
 
 		},
 
@@ -822,179 +824,141 @@ __webpack_require__.r(__webpack_exports__);
 			
 			e.preventDefault();
 
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( edata ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( edata.id ) ) ){
+			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( edata ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( edata.id ) ) ){
 				return;
 
 			}
-			url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].addQueryArgs( { id: id }, __cometdata.preview_url );
+			url = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].addQueryArgs( { id: id }, __cometdata.preview_url );
 
-			Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+			Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_3__["default"])({
 				header: '<h4>' + edata.title + ' (' + edata.id + ')</h4>',
-				content: '<iframe src="' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].escUrl( url ) + '"></iframe>'
+				content: '<iframe src="' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].escUrl( url ) + '"></iframe>'
 			});
 
 		},
 
 		insert:  function( e, ui, id ){
+
+			const __core = {
+
+				clone: function( data ){
+					var from = false;
+					var ids, a, count, id;
+
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( data ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( data._sections ) ){
+						return false;
+
+					}
+
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isArray( ( ids = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].ids( data._sections, 'array' ) ), 1 ) ){
+						return false;
+
+					}
+					count = 0;
+
+					for( a = 0; a < ids.length; a++ ){
+
+						if( !( id = __core._clone( 'sections', ids[a], data, '0' ) ) ){
+							continue;
+
+						}
+
+						if( count === 0 ){
+							from = id;
+
+						}
+						count++;
+
+					}
+					return from;
+
+				},
+
+				_clone: function( type, id, data, pid ){
+					const _data = Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
+					const types = [ 'items', 'elements', 'columns', 'rows', 'sections' ];
+					var children = [];
+					var childtype, _childtype, children, n_id, a;
+
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( type ) || types.indexOf( type.toLowerCase() ) < 0 ){
+						return false;
+
+					}
+
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( data ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( data[type] ) ){
+						return false;
+
+					}
+
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( data[type][id] ) ){
+						data[type][id] = {};
+
+					}
+
+					if( !( n_id = Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])().create( ( type === 'elements' ? data[type][id]._type : type ), pid, 'last', data[type][id] ) ) ){
+						return false;
+
+					}
+					childtype = _data.getChild( type );
+
+					if( childtype && ( _childtype = '_' + childtype ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( data[type][id] ) && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( data[type][id][_childtype] ) ){
+						children = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].ids( data[type][id][_childtype], 'array' );
+
+					}
+					Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])().removeIds( n_id, type );
+
+					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isArray( children, 1 ) ){
+						return n_id;
+
+					}
+
+					for( a = 0; a < children.length; a++ ){
+						__core._clone( childtype, children[a], data, n_id );
+
+					}
+					return n_id;
+
+				}
+
+			};
 			e.preventDefault();
 
-			if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( id ) ) ){
-				return;
+			if( ( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
+				Object(_notification_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.warning.ltemplate, 300 );
+
+				Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
+					id: id,
+					meta: 'true',
+					do: 'get'
+
+				}).done( function( r ){
+					const frame = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].getNode( 'frame' );
+					var data, from;
+
+					if( !frame || frame === null ){
+						Object(_notification_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.error.ltemplate, 400 );
+						return;
+
+					}
+
+					if( r === '0' || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].json( r ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( data['meta'] ) ){
+						Object(_notification_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.error.ltemplate, 400 );
+
+					}
+					from = __core.clone( data['meta'] );
+					Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])().getData() ).init( frame, from );
+					Object(_notification_js__WEBPACK_IMPORTED_MODULE_0__["default"])( __cometi18n.messages.success.ltemplate, 200 );
+
+				} );
 
 			}
-
-			Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
-				id: id,
-				meta: 'true',
-				do: 'get'
-
-			}).done( function( r ){
-				var from = false;
-				var data, re, tmp;
-				var fa, fb, fc, fd, fe;
-				var ids_a, ids_b, ids_c, ids_d, ids_e;
-				var a, b, c, d, e;
-				var id_a, id_b, id_c, id_d, id_e;
-
-				if( r === '0' || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( tmp = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].json( r ) ) ){
-					return false;
-
-				}
-
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data = tmp['meta'] ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( data._sections ) ){
-					return false;
-
-				}
-
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.sections ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( ( ids_a = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].ids( data._sections, 'array' ) ), 1 ) ){
-					return false;
-
-				}
-				fc = 0;
-
-				for( a in ids_a ){
-					id_a = ids_a[a];
-
-					if( !( id_a = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( ids_a[a] ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.sections[id_a] ) ){
-						continue;
-
-					}
-
-					if( !( tmp = _data_js__WEBPACK_IMPORTED_MODULE_6__["default"].create( 'sections', '0', 'last', data.sections[id_a] ) ) ){
-						continue;
-
-					}
-
-					if( fc === 0 ){
-						from = tmp;
-						_data_js__WEBPACK_IMPORTED_MODULE_6__["default"].removeIds( tmp, 'sections' );
-
-					}
-
-					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( data.sections[id_a]._rows ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( ( ids_b = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].ids( data.sections[id_a]._rows, 'array' ) ), 1 ) ){
-						continue;
-
-					}
-
-					for( b in ids_b ){
-
-						if( !( id_b = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( ids_b[b] ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.rows[id_b] ) ){
-							continue;
-
-						}
-
-						if( !( tmp = _data_js__WEBPACK_IMPORTED_MODULE_6__["default"].create( 'rows', tmp, 'last', data.rows[id_b] ) ) ){
-							continue;
-
-						}
-
-						if( fc === 0 ){ 
-							_data_js__WEBPACK_IMPORTED_MODULE_6__["default"].removeIds( tmp, 'rows' );
-
-						}
-
-						if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( data.rows[id_b]._columns ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( ( ids_c = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].ids( data.rows[id_b]._columns, 'array' ) ), 1 ) ){
-							continue;
-
-						}
-
-						for( c in ids_c ){
-
-							if( !( id_c = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( ids_c[c] ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.columns[id_c] ) ){
-								continue;
-
-							}
-
-							if( !( tmp = _data_js__WEBPACK_IMPORTED_MODULE_6__["default"].create( 'columns', tmp, 'last', data.columns[id_c] ) ) ){
-								continue;
-
-							}
-
-							if( fc === 0 ){ 
-								_data_js__WEBPACK_IMPORTED_MODULE_6__["default"].removeIds( tmp, 'columns' );
-
-							}
-
-							if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( data.columns[id_c]._elements ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( ( ids_d = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].ids( data.columns[id_c]._elements, 'array' ) ), 1 ) ){
-								continue;
-
-							}
-
-							for( d in ids_d ){
-
-								if( !( id_d = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( ids_d[d] ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.elements[id_d] ) ){
-									continue;
-
-								}
-
-								if( !( tmp = _data_js__WEBPACK_IMPORTED_MODULE_6__["default"].create( 'elements', tmp, 'last', data.elements[id_d] ) ) ){
-									continue;
-
-								}
-
-								if( fc === 0 ){ 
-									_data_js__WEBPACK_IMPORTED_MODULE_6__["default"].removeIds( tmp, 'elements' );
-
-								}
-
-								if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( data.elements[id_d]._items ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( ( ids_e = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].ids( data.elements[id_d]._items, 'array' ) ), 1 ) ){
-									continue;
-
-								}
-
-								for( e in ids_e ){
-
-									if( !( id_e = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( ids_e[e] ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.items[id_e] ) ){
-										continue;
-
-									}
-
-									if( !( tmp = _data_js__WEBPACK_IMPORTED_MODULE_6__["default"].create( 'items', tmp, 'last', data.items[id_e] ) ) ){
-										continue;
-
-									}
-
-									if( fc === 0 ){ 
-										_data_js__WEBPACK_IMPORTED_MODULE_6__["default"].removeIds( tmp, 'items' );
-
-									}
-								}
-							}
-						}
-					}
-					fc++;
-
-				}
-				_utils_load_js__WEBPACK_IMPORTED_MODULE_3__["default"].comet( _data_js__WEBPACK_IMPORTED_MODULE_6__["default"].getData(), from );
-
-			} );
 
 			tm_modal.destroy();
 
 		},
 
 		search: function( ev, ui ){
-			const v = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( ui.value ) : '';
+			const v = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( ui.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( ui.value ) : '';
 			var regex, i;
 
 			if( loaded.length < 1 ){
@@ -1005,7 +969,7 @@ __webpack_require__.r(__webpack_exports__);
 
 			for( i = 0; i < loaded.length; i++ ){
 
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( loaded[i] ) ){
+				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( loaded[i] ) ){
 					continue;
 
 				}
@@ -1024,7 +988,7 @@ __webpack_require__.r(__webpack_exports__);
 		switch: function( ev, ui ){
 			var set;
 
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( set = ui.value ) || [ 'pre', 'cus' ].indexOf( set = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( set ) ) < 0 ){
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( set = ui.value ) || [ 'pre', 'cus' ].indexOf( set = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( set ) ) < 0 ){
 				return;
 
 			}
@@ -1035,12 +999,12 @@ __webpack_require__.r(__webpack_exports__);
 
 		load: function( set ){
 
-			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( set ) || [ 'cus', 'pre' ].indexOf( set = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( set ) ) < 0 ){
+			if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( set ) || [ 'cus', 'pre' ].indexOf( set = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( set ) ) < 0 ){
 				return false;
 
 			}
 
-			Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_5__["default"])({
+			Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_6__["default"])({
 				do: 'templates',
 				data: set
 
@@ -1049,7 +1013,7 @@ __webpack_require__.r(__webpack_exports__);
 				const fragment = _d.createDocumentFragment();
 				var t, template, id, title, buttonset, inner, scope;
 
-				if( templates === '0' || body === null || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( ( templates = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].json( templates ) ), 1 ) ){
+				if( templates === '0' || body === null || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isArray( ( templates = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].json( templates ) ), 1 ) ){
 					return;
 
 				}
@@ -1058,11 +1022,11 @@ __webpack_require__.r(__webpack_exports__);
 				for( t = 0; t < templates.length; t++ ){
 					template = templates[t];
 
-					if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_0__["default"].id( template.ID ) ) ){
+					if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( template.ID ) ) ){
 						continue;
 
 					}
-					title = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( template.post_title ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( template.post_title ) : '';
+					title = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( template.post_title ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( template.post_title ) : '';
 
 					scope = _d.createElement( 'div' );
 					scope.className = 'comet-template comet-scope comet-collection';
@@ -1088,8 +1052,8 @@ __webpack_require__.r(__webpack_exports__);
 
 					buttonset = scope.firstChild.lastChild;
 
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( buttonset.firstChild ).on( 'click', __core.insert, id );
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( buttonset.lastChild ).on( 'click', __core.preview, { id: id, title: title } );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( buttonset.firstChild ).on( 'click', __core.insert, id );
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( buttonset.lastChild ).on( 'click', __core.preview, { id: id, title: title } );
 
 				}
 				body.innerHTML = '';
@@ -1100,12 +1064,12 @@ __webpack_require__.r(__webpack_exports__);
 		}
 	};
 
-	if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( _node ).isNode() ){
+	if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _node ).isNode() ){
 		return;
 
 	}
 
-	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( _node ).on( 'click', __core.open );
+	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _node ).on( 'click', __core.open );
 
 });;
 
@@ -2088,7 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
 			metaData[type][id] = {};
 
 		}
-		metaData[type][id] = dd;
+		metaData[type][id] = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].extend( {}, dd );
 		this.setData( metaData );
 		return id;
 
@@ -2358,14 +2322,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/sanitize.js */ "./src/js/utils/sanitize.js");
 /* harmony import */ var _utils_global_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/global.js */ "./src/js/utils/global.js");
 /* harmony import */ var _utils_dialog_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/dialog.js */ "./src/js/utils/dialog.js");
-/* harmony import */ var _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/cockpit.js */ "./src/js/editor/actions/cockpit.js");
-/* harmony import */ var _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/sidebar.js */ "./src/js/editor/actions/sidebar.js");
-/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _post_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./post.js */ "./src/js/editor/post.js");
-/* harmony import */ var _utils_ajax_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils/ajax.js */ "./src/js/utils/ajax.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _utils_load_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/load.js */ "./src/js/utils/load.js");
+/* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/layout.js */ "./src/js/utils/layout.js");
+/* harmony import */ var _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/cockpit.js */ "./src/js/editor/actions/cockpit.js");
+/* harmony import */ var _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/sidebar.js */ "./src/js/editor/actions/sidebar.js");
+/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _post_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./post.js */ "./src/js/editor/post.js");
+/* harmony import */ var _utils_ajax_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/ajax.js */ "./src/js/utils/ajax.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
 /* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./data.js */ "./src/js/editor/data.js");
 /* Comet - Copyright (c) 2019 Blacklead */
 /* Last edit: Jan, 25 2019 */
@@ -2400,6 +2364,7 @@ __webpack_require__.r(__webpack_exports__);
   var post = {};
   var metaData = {};
   var get, id1, id2;
+  var frame = false;
 
   const eb = {
 
@@ -2422,7 +2387,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     sidebar: function(){
-      const elements = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].getElements();
+      const elements = _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].getElements();
       const sidebar = _doc.createElement( 'div' );
       const footer = _doc.createElement( 'div' );
       var tmp, e, element, inner;
@@ -2431,7 +2396,7 @@ __webpack_require__.r(__webpack_exports__);
       sidebar.className = 'comet-sidebar';
 
 
-      if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( elements ) ){
+      if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isObject( elements ) ){
 
         const header = _doc.createElement( 'div' );
         header.className = 'comet-header';
@@ -2442,7 +2407,7 @@ __webpack_require__.r(__webpack_exports__);
         sToggler.setAttribute( 'aria-label', __cometi18n.ui.elements );
         sToggler.innerHTML = '<span class="cico cico-elements"></span>';
         header.appendChild( sToggler );
-        _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_5__["default"].toggle( sToggler );
+        _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_6__["default"].toggle( sToggler );
 
 
         const sElements = _doc.createElement( 'div' );
@@ -2454,26 +2419,26 @@ __webpack_require__.r(__webpack_exports__);
         tmp.setAttribute( 'aria-label', __cometi18n.ui.layout );
         tmp.innerHTML = '<span class="cico cico-layout"></span><span class="comet-uiTitle">' + __cometi18n.ui.layout + '</span>';
         sElements.appendChild( tmp );
-        _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_5__["default"].layout( tmp );
+        _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_6__["default"].layout( tmp );
 
         for( e in elements ){
 
-          if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( element = elements[e] ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( element.name ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( e ) ){
+          if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isObject( element = elements[e] ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isStringEmpty( element.name ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isStringEmpty( e ) ){
             continue;
 
           }
 
           tmp = _doc.createElement( 'button' );
-          tmp.id = 'comet-listElement' + ( e = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( e ) );
+          tmp.id = 'comet-listElement' + ( e = _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].trim( e ) );
           tmp.className = 'comet-listElement';
-          tmp.setAttribute( 'aria-label', ( element.name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].trim( element.name ) ) );
+          tmp.setAttribute( 'aria-label', ( element.name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].trim( element.name ) ) );
           tmp.setAttribute( 'data-id', e );
 
-          inner = !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( element.icon ) ? '<span class="cico ' + element.icon + '"></span>' : '';
+          inner = !_utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isStringEmpty( element.icon ) ? '<span class="cico ' + element.icon + '"></span>' : '';
           inner += '<span class="comet-uiTitle">' + element.name + '</span>';
           tmp.innerHTML = inner;
           sElements.appendChild( tmp );
-          _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_5__["default"].element( tmp );
+          _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_6__["default"].element( tmp );
 
         }
 
@@ -2485,13 +2450,13 @@ __webpack_require__.r(__webpack_exports__);
       tmp.className = 'comet-save';
       tmp.innerHTML = '<span class="cico cico-update"></span><span class="comet-uiTitle">' + __cometi18n.ui.save + '</span>';
       footer.appendChild( tmp );
-      _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_5__["default"].save( tmp );
+      _actions_sidebar_js__WEBPACK_IMPORTED_MODULE_6__["default"].save( tmp );
 
       tmp = _doc.createElement( 'button' );
       tmp.className = 'comet-btoggle';
       tmp.innerHTML = '<span class="cico cico-more"></span><span class="comet-uiTitle">' + __cometi18n.cockpit.title + '</span>';
       footer.appendChild( tmp );
-      _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_4__["default"].toggle( tmp );
+      _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_5__["default"].toggle( tmp );
 
       editor.appendChild( sidebar );
 
@@ -2534,7 +2499,7 @@ __webpack_require__.r(__webpack_exports__);
       tmp.name = 'to_cockpit';
       tmp.setAttribute( 'aria-label', __cometi18n.ui.close );
       tmp.innerHTML = '<span class="cico cico-x"></span>';
-      _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_4__["default"].toggle( tmp );
+      _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_5__["default"].toggle( tmp );
       header.appendChild( tmp );
 
       tmp1 = _doc.createElement( 'p' );
@@ -2545,7 +2510,7 @@ __webpack_require__.r(__webpack_exports__);
       tmp.innerHTML = __cometi18n.cockpit.clearNx;
       tmp1.appendChild( tmp );
 
-      Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_10__["default"])( tmp ).on( 'click', function( ev, ui ){
+      Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_11__["default"])( tmp ).on( 'click', function( ev, ui ){
         ev.preventDefault();
         notes.innerHTML = '';
         
@@ -2566,8 +2531,8 @@ __webpack_require__.r(__webpack_exports__);
         tmp.innerHTML = '<span class="cico ' + buttons[b] + '"></span>';
         footer.appendChild( tmp );
 
-        if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isFunction( _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_4__["default"][b] ) ){
-          _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_4__["default"][b]( tmp );
+        if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isFunction( _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_5__["default"][b] ) ){
+          _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_5__["default"][b]( tmp );
 
         }
 
@@ -2576,7 +2541,7 @@ __webpack_require__.r(__webpack_exports__);
       tmp = _doc.createElement( 'button' );
       tmp.className = 'comet-sideToggleButton comet-eventToggle';
       tmp.name = 'to_cockpit';
-      _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_4__["default"].toggle( tmp );
+      _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_5__["default"].toggle( tmp );
       cockpit.appendChild( tmp );
 
       editor.appendChild( cockpit );
@@ -2587,8 +2552,7 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     frame: function(){
-      const frame = _doc.createElement( 'div' );
-
+      frame = _doc.createElement( 'div' );
       frame.id = 'cpb-content';
       frame.className = 'cpb cpb-content cpb-editArea cpb-backendMode';
       frame.style.width = 'calc( 100% - 50px )';
@@ -2617,7 +2581,7 @@ __webpack_require__.r(__webpack_exports__);
 
       }
 
-      if( !( elements = Object(_post_js__WEBPACK_IMPORTED_MODULE_8__["default"])( content ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isArray( elements, 1) ){
+      if( !( elements = Object(_post_js__WEBPACK_IMPORTED_MODULE_9__["default"])( content ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isArray( elements, 1) ){
         return false;
 
       }
@@ -2637,7 +2601,7 @@ __webpack_require__.r(__webpack_exports__);
         }
         tmpe = data_.create( elements[i]._type, tmp, 'last', elements[i] );
 
-        if( !tmpe || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isArray( items, 1 ) ){
+        if( !tmpe || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isArray( items, 1 ) ){
           continue;
 
         }
@@ -2656,42 +2620,42 @@ __webpack_require__.r(__webpack_exports__);
 
   window.Comet = Comet || {};
 
-  if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_10__["default"])( editor ).isNode() || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_10__["default"])( settings ).isNode() ){
+  if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_11__["default"])( editor ).isNode() || !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_11__["default"])( settings ).isNode() ){
     alert( __cometi18n.messages.error.failed );
     return false;
 
   }
 
-  if( !( get = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].getParameters() ) || !( 'post' in get ) || !( 'action' in get ) || !( 'comet' in get ) ){
+  if( !( get = _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].getParameters() ) || !( 'post' in get ) || !( 'action' in get ) || !( 'comet' in get ) ){
     alert( __cometi18n.messages.error.failed );
     return false;
 
   }
 
-  if( get.action !== 'edit' || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( __cometdata ) || !( 'post_id' in __cometdata ) ){
+  if( get.action !== 'edit' || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isObject( __cometdata ) || !( 'post_id' in __cometdata ) ){
     alert( __cometi18n.messages.error.failed );
     return false;
 
   }
 
-  if( !( id1 = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].id( get.post ) ) || !( id2 = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].id( __cometdata.post_id ) ) || id1 !== id2 ){
+  if( !( id1 = _utils_parse_js__WEBPACK_IMPORTED_MODULE_7__["default"].id( get.post ) ) || !( id2 = _utils_parse_js__WEBPACK_IMPORTED_MODULE_7__["default"].id( __cometdata.post_id ) ) || id1 !== id2 ){
     alert( __cometi18n.messages.error.failed );
     return false;
 
   }
 
-  Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_9__["default"])( {
+  Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_10__["default"])( {
     do: 'data',
     id: __cometdata.post_id,
     public: false,
 
   } ).done(function( response ){
     const _default = [ 'post', 'settings', 'lib', 'svgSets' ];
-    const data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_6__["default"].json( response );
+    const data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_7__["default"].json( response );
     var n = 0;
     var i, slug;
 
-    if( !data || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( data ) ){
+    if( !data || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isObject( data ) ){
       alert( __cometi18n.messages.error.failed );
       throw new Error( __cometi18n.messages.error.failed );
 
@@ -2714,12 +2678,12 @@ __webpack_require__.r(__webpack_exports__);
 
     }
     post = g_.get( 'post' );
-    metaData = data_.setData( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( post ) ? ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isObject( post.meta ) && !Array.isArray( post.meta ) ? post.meta : {} ) : {} );
+    metaData = data_.setData( _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isObject( post ) ? ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isObject( post.meta ) && !Array.isArray( post.meta ) ? post.meta : {} ) : {} );
 
-    window.onbeforeunload = function(){
+    /*window.onbeforeunload = function(){
       return __cometi18n.messages.warning.exit;
 
-    };
+    };*/
 
     g_.set( 'editor', editor, true );
     g_.set( 'generalSettings', settings, true );
@@ -2727,17 +2691,16 @@ __webpack_require__.r(__webpack_exports__);
     eb.frame();
     eb.cockpit();
 
-    if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isStringEmpty( metaData._sections ) ){
+    if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_8__["default"].isStringEmpty( metaData._sections ) ){
       eb.post( post.post_content );
       
     }
-    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_10__["default"])( _doc.body ).addClass( 'comet-globalLevel' );
-    _utils_load_js__WEBPACK_IMPORTED_MODULE_11__["default"].comet( data_.getData(), null, true );
-    _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_4__["default"].settings( '#comet-closeGeneralSettings' );
+    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_11__["default"])( _doc.body ).addClass( 'comet-globalLevel' );
+    Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_4__["default"])( data_.getData() ).init( frame, null );
+    _actions_cockpit_js__WEBPACK_IMPORTED_MODULE_5__["default"].settings( '#comet-closeGeneralSettings' );
     eb.sidebar();
     eb.preload();
     Object(_contextualize_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
-
 
   });
 
@@ -7526,49 +7489,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/js/utils/load.js":
-/*!******************************!*\
-  !*** ./src/js/utils/load.js ***!
-  \******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _layout_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./layout.js */ "./src/js/utils/layout.js");
-/* harmony import */ var _parse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _ajax_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ajax.js */ "./src/js/utils/ajax.js");
-
-
-
-
-
-const load = {
-
-	comet: function( data, from, empty ){
-		const frame = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].getNode( 'frame' );
-
-		if( !frame || frame === null ){
-			return;
-
-		}
-		empty  = _utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isBool( empty ) ? empty : false;
-
-		if( empty ){
-			frame.innerHTML = '';
-
-		}
-		Object(_layout_js__WEBPACK_IMPORTED_MODULE_0__["default"])( data ).init( frame, from );
-
-	}
-
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (load);
-
-/***/ }),
-
 /***/ "./src/js/utils/message.js":
 /*!*********************************!*\
   !*** ./src/js/utils/message.js ***!
@@ -9087,7 +9007,7 @@ sanitize.valueUnit = function( value, unit ){
 	unit = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( unit ) ? sanitize.unit( unit ) : '';
 	value = sanitize.number( { value: value, float: ( unit !== 'px' ) } );
 
-	return ( value === 0 ? value.toString() : value + unit );
+	return ( value === null ? '' : ( value === 0 ? value.toString() : value + unit ) );
 };
 
 sanitize.unit = function( unit ){
@@ -9101,33 +9021,40 @@ sanitize.unit = function( unit ){
 		case 'pxl':
 		case 'pixels':
 		return 'px';
+
 		case 'em':
 		case 'mul':
 		case 'mu':
 		case '*':
 		return 'em';
+
 		case '%':
 		case 'percent':
 		case 100:
 		case '100':
 		return '%';
+
 		case 'pt':
 		case 'points':
 		case 'point':
 		case 'pts':
 		return 'pt';
+
 		case 'cm':
 		case 'centimeter':
 		case 'centimeters':
 		return 'cm';
+
 		case 'mm':
 		case 'millimeter':
 		case 'millimeters':
 		return 'mm';
+
 		case 'in':
 		case 'inches':
 		case 'inch':
 		return 'in';
+		
 		default:
 		return '';
 	}

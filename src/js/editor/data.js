@@ -165,7 +165,7 @@ export default function (){
 			metaData[type][id] = {};
 
 		}
-		metaData[type][id] = dd;
+		metaData[type][id] = utils.extend( {}, dd );
 		this.setData( metaData );
 		return id;
 

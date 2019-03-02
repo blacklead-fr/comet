@@ -12,44 +12,6 @@ export default function(){
 
 	const _w = window;
 
-	/*const _u = {
-
-		message: function( text, type ){
-			const m = _d.createElement( 'p' );
-			m.className = 'comet-message comet-' + type;
-			m.innerHTML = text;
-			return m;
-
-		},
-
-		icons: {
-			wait: '<span class="comet-waitWhileIcon cico cico-spin"></span>',
-			arrow: '<span class="cico cico-arrow-right-alt"></span>'
-
-		},
-
-		toggle: function( button, state ){
-			const waitwhile = 'comet-waitwhile';
-			const _button = node( button );
-
-			if( !_button.isNode() ){
-				return;
-
-			}
-
-			if( utils.isBool( state ) && state ){
-				_button.addClass( waitwhile );
-				button.innerHTML = '<span class="cico cico-spin"></span>';
-				return;
-
-			}
-			_button.removeClass( waitwhile );
-			button.innerHTML = state;
-		}
-
-
-	};*/
-
 	const __bun = {
 
 		message: function( text, type ){
@@ -321,7 +283,6 @@ export default function(){
 								return false;
 
 							}
-							return;
 
 							ajax({
 								do: 'save',
@@ -349,20 +310,18 @@ export default function(){
 					wrapper.innerHTML = '';
 					wrapper.appendChild( fragment );
 
-					node( button ).on( 'click', __core.reload, importing );
+					node( button ).on( 'click', function( ev, ui ){
+						ev.preventDefault();
+
+						if( importing !== 0 ){
+							return;
+
+						}
+						_w.location.reload( true ); 
+
+					});
 
 				},
-
-				reload: function( ev, ui, importing ){
-					ev.preventDefault();
-
-					if( importing !== 0 ){
-						return;
-
-					}
-					window.location.reload( true ); 
-
-				}
 
 			};
 
@@ -430,43 +389,13 @@ export default function(){
 
 					}
 
-					/*if( isSaving ){
-						return;
-
-					}
-					ui.innerHTML = _u.icons.wait;
-
-					if( !input || input === null ){
-						msg = __cometi18n.messages.error.default;
-
-					}else if( !utils.isString( name = input.value ) || utils.isStringEmpty( name = utils.trim( utils.stripTags( name ) ) ) ){
-						msg = __cometi18n.messages.error.title;
-
-					}
-
-					if( !( wrapper = input.parentNode ) || wrapper === null ){
-						ui.innerHTML = _u.icons.arrow;
-						return;
-
-					}
-					node( wrapper.getElementsByClassName( 'comet-message' ) ).remove();
-
-					if( msg ){
-						error = _u.message( msg, 'error' );
-						wrapper.appendChild( error );
-						ui.innerHTML = _u.icons.arrow;
-						return;
-
-					}
-					isSaving = true;*/
-
 					ajax({
 						do: 'get',
 						meta: true,
 						id: edata.id,
 
 					}).done(function( r ){
-						var data, blob, msg, filename;
+						var data, blob, msg, filename, json_data;
 
 						is_saving = false;
 						__bun.toggle( ui, __cometi18n.ui.export );
@@ -486,33 +415,11 @@ export default function(){
 						};
 						blob = new Blob( [ JSON.stringify( json_data ) ], { type: 'application/json' } );
 						msg = __cometi18n.messages.success.export + '<br>';
-						msg += '<a href="' + utils.escUrl( window.URL.createObjectURL( blob ) ) + '" download="' + filename + '">' + __cometi18n.ui.download + '</a>';
+						msg += '<a href="' + utils.escUrl( _w.URL.createObjectURL( blob ) ) + '" download="' + filename + '">' + __cometi18n.ui.download + '</a>';
 
 						message( msg, 200 ).set( pp );
 						message( __cometi18n.messages.warning.export, 300 ).appendTo( pp );
 
-
-						/*if( !( data = parse.json( r ) ) || !utils.isObject( data ) || !( 'post_content' in data ) ){
-							error = _u.message( __cometi18n.messages.error.default, 'error' );
-							wrapper.appendChild( error );
-							ui.innerHTML = _ui.icons.arrow;
-							return;
-
-						}
-
-						obj = {
-							title: name,
-							content: data.post_content,
-							meta: utils.isObject( data.meta ) ? data.meta : {},
-						};
-						uri = 'data:application/json;charset=utf-8,' + encodeURIComponent( JSON.stringify( obj ) );
-
-						msg = __cometi18n.messages.success.newTemplate;
-						msg += ' <a class="comet-button comet-buttonPrimary" href="' + uri + '" download="' + encodeURI( name ) + '.json">' + __cometi18n.ui.download + '</a>';
-						error = _u.message( msg, 'success' );
-
-						wrapper.innerHTML = '';
-						wrapper.appendChild( error );*/
 					});
 
 				}
