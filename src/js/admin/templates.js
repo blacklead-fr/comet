@@ -45,8 +45,8 @@ export default function(){
 			}
 			_button.removeClass( waitwhile );
 			button.innerHTML = state;
-		}
 
+		}
 
 	};
 

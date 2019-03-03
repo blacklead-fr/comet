@@ -883,8 +883,8 @@ __webpack_require__.r(__webpack_exports__);
 			}
 			_button.removeClass( waitwhile );
 			button.innerHTML = state;
-		}
 
+		}
 
 	};
 

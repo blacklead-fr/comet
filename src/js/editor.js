@@ -457,9 +457,29 @@ const sidebar = {
 
 	save: function( _n ){
 
+		var is_saving = false;
+
 		const _d = document;
 
-		const priv = {
+		const __core = {
+
+			toggle: function( button, state ){
+				const waitwhile = 'comet-waitwhile';
+				const _button = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button );
+
+				if( !_button.isNode() ){
+					return;
+
+				}
+
+				if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isBool( state ) && state ){
+					_button.addClass( waitwhile );
+					return;
+
+				}
+				_button.removeClass( waitwhile );
+
+			},
 
 			catch_data: function(){
 				const form = _d.getElementById( 'comet-postSettings' );
@@ -498,56 +518,17 @@ const sidebar = {
 			},
 
 			save: function( ev, ui ){
-				const disabled = 'cpb-disabled';
-				const wait = 'comet-waitWhileIcon';
-				var hasChildren = false;
-				var id, _ui, dren, e_data;
+				var id, e_data;
 
 				ev.preventDefault();
 
-				if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( __cometdata.post_id ) ) || ( _ui = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ) ).hasClass( disabled ) ){
+				if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( __cometdata.post_id ) ) || is_saving ){
 					return;
 
 				}
-
-				function toggle( state ){
-					var c, _child;
-
-
-					if( state ){
-						_ui.addClass( disabled );
-
-					}else{
-						_ui.removeClass( disabled );
-
-					}
-
-					if( !hasChildren ){
-						return false;
-
-					}
-
-					for( c in dren ){
-
-						if( !( ( _child = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( dren[c] ) ).isNode() ) || !_child.hasClass( 'cico' ) ){
-							continue;
-
-						}
-
-						if( !state || ( state && _child.hasClass( wait ) ) ){
-							_child.removeClass( wait );
-							continue;
-
-						}
-						_child.addClass( wait );
-
-					}
-
-				}
-				hasChildren = ( ( dren = ui.children ).length > 0 );
-				toggle( true );
-
-				e_data = priv.catch_data();
+				is_saving = true;
+				__core.toggle( ui, true );
+				e_data = __core.catch_data();
 				e_data.meta = Object(_data_js__WEBPACK_IMPORTED_MODULE_11__["default"])().getData();
 				e_data.post_content = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].content();
 
@@ -566,7 +547,8 @@ const sidebar = {
 
 					}
 					Object(_notification_js__WEBPACK_IMPORTED_MODULE_1__["default"])( msg, code );
-					toggle( false );
+					is_saving = false;
+					__core.toggle( ui, false );
 
 				});
 
@@ -574,7 +556,7 @@ const sidebar = {
 
 		};
 
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _n ).on( 'click', priv.save );
+		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _n ).on( 'click', __core.save );
 
 	},
 
