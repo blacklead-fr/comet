@@ -5,8 +5,11 @@ import _icon from './icon.js';
 import ajax from './ajax.js';
 import node from './node.js';
 
+import editor from './ui/editor.js';
+
 const html = {
 
+    editor: editor,
     /* 
     type: default,
 	inner: '',

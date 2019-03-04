@@ -4,7 +4,6 @@ import layout from '../utils/layout.js';
 import utils from '../utils/utils.js';
 import parse from '../utils/parse.js';
 import node from '../utils/node.js';
-//import menu from './menu/menu.js';
 import __data from './data.js';
 
 const redefine = {
@@ -13,12 +12,11 @@ const redefine = {
 		const ww = node( window ).width();
 		const frame = utils.getNode( 'frame' );
 		const sidebar = utils.getNode( 'sidebar' );
-		const panel = document.getElementById( 'comet-panel' );
-		const tools = document.getElementById( 'comet-editorToolbar' );
+		const panel = utils.getNode( 'panel' );
 		const rtl = __cometdata.rtl === 'true' ? 'right' : 'left';
-		var sw, mw, th, w, _panel, _tools, _frame;
+		var sw, mw, w, _panel, _frame;
 
-		sw = mw = th = 0;
+		sw = mw = 0;
 
 		if( !( ( _frame = node( frame ) ).isNode() ) ){
 			return false;
@@ -38,19 +36,11 @@ const redefine = {
 		w = ww - sw - mw;
 		frame.style[rtl] = ( sw + mw ) + 'px';
 
-		if( ( ( _tools = node( tools ) ).isNode() ) ){
-			th = _tools.height();
-			frame.style.top = th + 'px';
-			frame.style.height = 'calc(100% - ' + th + 'px)';
-
-		}
-
 		if( !_frame.hasClass( 'cpb-desktopMode' ) ){
 			_frame.addClass( 'cpb-desktopMode' );
 
 		}
 		frame.style.maxWidth = w + 'px';
-		//menu.close();
 
 	},
 

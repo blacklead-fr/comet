@@ -49,15 +49,23 @@ class text extends Comet_Element{
 		const content = ui.firstChild;
 		const classes = [ 'cpb-text', 'cpb-wrapper', toolkit.sanitize.alignment( data.el.alg ) ];
 
-		content.innerHTML = '<div class="' + toolkit.utils.toClass( classes ) + '"></div>';
+		content.innerHTML = '<div class="' + toolkit.utils.toClass( classes ) + '"><span></span></div>';
 
-		content.firstChild.innerHTML = toolkit.html.content({
+		toolkit.html.editor( content.firstChild.firstChild, {
+			id: id,
+			slug: 'content',
+			content: data.el.content,
+			tag: data.el.tag
+
+	});
+
+		/*content.firstChild.innerHTML = toolkit.html.content({
 			editable: true,
 			id: id,
 			match: 'content',
 			inner: data.el.content,
 			tag: data.el.tag,
-		});
+		});*/
 
 
 		<?php

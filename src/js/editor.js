@@ -2988,9 +2988,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/sanitize.js */ "./src/js/utils/sanitize.js");
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./redefine.js */ "./src/js/editor/redefine.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _utils_global_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/global.js */ "./src/js/utils/global.js");
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./redefine.js */ "./src/js/editor/redefine.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
+
 
 
 
@@ -2998,18 +3000,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = (function( options ){
 	const _d = document;
-	const editor = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getNode( 'editor' );
+	const _global = Object(_utils_global_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
+	const editor = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].getNode( 'editor' );
 	const id = 'comet-panel';
 	const fragment = _d.createDocumentFragment();
 	var panel, inner, body, header, button, buttons, title, tabs, content;
 
-	options = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( options ) ? options : {};
-	options.close = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( options.close ) ? options.close : {};
-	options.close.title = !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isStringEmpty( options.close.title ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].trim( options.close.title ) : __cometi18n.ui.close;
-	options.close.inner = !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isStringEmpty( options.close.inner ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].trim( options.close.inner ) : '<span class="cico cico-x"></span>';
+	options = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( options ) ? options : {};
+	options.close = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( options.close ) ? options.close : {};
+	options.close.title = !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( options.close.title ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( options.close.title ) : __cometi18n.ui.close;
+	options.close.inner = !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( options.close.inner ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( options.close.inner ) : '<span class="cico cico-x"></span>';
 
 
-	if( ( ( panel = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_3__["default"])( _d.getElementById( id ) ) ).isNode() ) ){
+	if( ( ( panel = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( _d.getElementById( id ) ) ).isNode() ) ){
 		panel.remove();
 
 	}
@@ -3033,10 +3036,10 @@ __webpack_require__.r(__webpack_exports__);
 	button.innerHTML = options.close.inner;
 	header.firstChild.appendChild( button );
 
-	if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isStringEmpty( options.title ) ){
+	if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( options.title ) ){
 		title = _d.createElement( 'span' );
 		title.className = 'comet-title';
-		title.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].trim( options.title );
+		title.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( options.title );
 		header.firstChild.appendChild( title );
 
 	}
@@ -3056,32 +3059,35 @@ __webpack_require__.r(__webpack_exports__);
 		body.innerHTML = __cometi18n.messages.error.unreach;
 	}
 	editor.appendChild( fragment );
-	_redefine_js__WEBPACK_IMPORTED_MODULE_2__["default"].workflow();
+	_global.set( 'panel', panel, true );
+	_redefine_js__WEBPACK_IMPORTED_MODULE_3__["default"].workflow();
 
-	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_3__["default"])( button ).on( 'click', function( ev, ui ){
+	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( button ).on( 'click', function( ev, ui ){
 		var _exit;
 		
 		ev.preventDefault();
 
-		if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isFunction( options.close.do ) ){
+		if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isFunction( options.close.do ) ){
 			_exit = options.close.do( ev, ui );
 
 		}
 
-		if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isBool( _exit ) && !_exit ){
+		if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isBool( _exit ) && !_exit ){
 			return;
 
 		}
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_3__["default"])( panel ).remove();
-		_redefine_js__WEBPACK_IMPORTED_MODULE_2__["default"].workflow();
+		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( panel ).remove();
+		_global.set( 'panel', false, true );
+		_redefine_js__WEBPACK_IMPORTED_MODULE_3__["default"].workflow();
 
 	});
 
 	return {
 		target: panel,
 		destroy: function(){
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_3__["default"])( panel ).remove();
-			_redefine_js__WEBPACK_IMPORTED_MODULE_2__["default"].workflow();
+			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( panel ).remove();
+			_global.set( 'panel', false, true );
+			_redefine_js__WEBPACK_IMPORTED_MODULE_3__["default"].workflow();
 
 		}
 
@@ -5188,7 +5194,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-//import menu from './menu/menu.js';
 
 
 const redefine = {
@@ -5197,12 +5202,11 @@ const redefine = {
 		const ww = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( window ).width();
 		const frame = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].getNode( 'frame' );
 		const sidebar = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].getNode( 'sidebar' );
-		const panel = document.getElementById( 'comet-panel' );
-		const tools = document.getElementById( 'comet-editorToolbar' );
+		const panel = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].getNode( 'panel' );
 		const rtl = __cometdata.rtl === 'true' ? 'right' : 'left';
-		var sw, mw, th, w, _panel, _tools, _frame;
+		var sw, mw, w, _panel, _frame;
 
-		sw = mw = th = 0;
+		sw = mw = 0;
 
 		if( !( ( _frame = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( frame ) ).isNode() ) ){
 			return false;
@@ -5222,19 +5226,11 @@ const redefine = {
 		w = ww - sw - mw;
 		frame.style[rtl] = ( sw + mw ) + 'px';
 
-		if( ( ( _tools = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( tools ) ).isNode() ) ){
-			th = _tools.height();
-			frame.style.top = th + 'px';
-			frame.style.height = 'calc(100% - ' + th + 'px)';
-
-		}
-
 		if( !_frame.hasClass( 'cpb-desktopMode' ) ){
 			_frame.addClass( 'cpb-desktopMode' );
 
 		}
 		frame.style.maxWidth = w + 'px';
-		//menu.close();
 
 	},
 
@@ -6817,6 +6813,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _icon_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icon.js */ "./src/js/utils/icon.js");
 /* harmony import */ var _ajax_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ajax.js */ "./src/js/utils/ajax.js");
 /* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _ui_editor_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/editor.js */ "./src/js/utils/ui/editor.js");
+
+
 
 
 
@@ -6826,6 +6825,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const html = {
 
+    editor: _ui_editor_js__WEBPACK_IMPORTED_MODULE_6__["default"],
     /* 
     type: default,
 	inner: '',
@@ -10464,6 +10464,521 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/js/utils/ui/editor.js":
+/*!***********************************!*\
+  !*** ./src/js/utils/ui/editor.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editor_data_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../editor/data.js */ "./src/js/editor/data.js");
+/* harmony import */ var _global_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../global.js */ "./src/js/utils/global.js");
+/* harmony import */ var _parse_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../node.js */ "./src/js/utils/node.js");
+
+
+
+
+
+
+/**
+ * 
+ * @param {Object}		source			Node to replace by the editor
+ * @param {Object}		options			Inline editor options
+ * @param {String}		options.type	advanced/basic
+ * @param {Integer}		options.id		Element id
+ * @param {String}		options.slug	Matching setting slug
+ * @param {String}		options.content	Content inner the HTML tag
+ * @param {String}		options.tag		HTML tag wrapping the content
+ *
+ */
+
+ /**
+ *
+ * @TODO	Verify if id exists
+ * @TODO	Verify if slug exists
+ * @TODO	Update input
+ * @TODO	Retrieve command state
+ * 
+ */
+
+
+
+ /* harmony default export */ __webpack_exports__["default"] = (function( source, options ){
+
+ 	const _d = document;
+
+ 	const _w =  window;
+
+ 	const __core = {
+
+ 		selection: {
+ 			range: false,
+ 			clicked: false
+
+ 		},
+
+ 		classes: {
+ 			active: 'comet-active',
+ 			hide: 'comet-hide',
+
+ 		},
+
+ 		element: {
+
+ 			id: false,
+
+ 			slug: false,
+
+ 			data: false,
+
+ 			build_meta: function(){
+ 				var data;
+
+ 				__core.element.id = _parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( options.id );
+ 				__core.element.slug = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( options.slug ) ? _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( options.slug ) : false;
+ 				__core.element.data = ( data = Object(_editor_data_js__WEBPACK_IMPORTED_MODULE_0__["default"])().get( __core.element.id, 'elements' ) ) ? data : false;
+
+
+ 			}
+
+ 		},
+
+ 		get: {
+
+ 			tags: function( oArray ){
+ 				const tags = [ 'span', 'br', 'ins', 'u', 'i', 'em', 'strong', 'b', 'strike', 'del', 'a', 'abbr', 'code', 'hr', 'mark', 'sup', 'sub', 's', 'small', 'cite', 'time', 'q' ];
+ 				var output = '';
+ 				var i = 0;
+
+ 				if( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isBool( oArray ) && oArray ){
+ 					return tags;
+
+ 				}
+
+ 				for( i; i < tags.length; i++ ){
+ 					output += '<' + _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( tags[i] ) + '>';
+
+ 				}
+ 				return output;
+
+ 			},
+
+ 			textarea: function(){
+ 				const panel = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].getNode( 'panel' );
+ 				var textarea, t;
+
+ 				if( !panel || ( textarea = _d.getElementsByTagName( 'textarea' ) ).length < 1 ){
+ 					return false;
+
+ 				}
+
+ 				for( t = 0; t < textarea.length; t++ ){
+
+ 					if( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( textarea[t].name ) && _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( textarea[t].name ) === meta_element.slug ){
+ 						return textarea[t];
+
+ 					}
+
+ 				}
+ 				return false;
+
+ 			}
+
+ 		},
+
+ 		toolbar: {
+
+ 			slug: 'editorToolbar',
+
+ 			get: function(){
+ 				const meta = Object(_global_js__WEBPACK_IMPORTED_MODULE_1__["default"])().get( __core.toolbar.slug );
+
+ 				if( !_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( meta ) || !Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( meta.node ).isNode() || meta.buttons.length < 1 ){
+ 					return __core.toolbar.create();
+
+
+ 				}
+ 				return meta;
+
+ 			},
+
+ 			close: function( ev, ui ){
+ 				const meta = __core.toolbar.get();
+
+ 				if( !meta ){
+ 					return;
+
+ 				}
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( meta.node ).addClass( __core.classes.hide );
+
+ 			},
+
+ 			buttons: function(){
+
+ 				const onbutton = {
+
+ 					default: function( command, val ){
+ 						var sel, range;
+
+ 						val = !_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isStringEmpty( val ) ? _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( val ) : null;
+
+ 						if( !_w.getSelection || !_w.getSelection().modify || __core.selection.range === null ){
+ 							return;
+
+ 						}
+ 						sel = _w.getSelection();
+
+ 						if( __core.selection.clicked ){
+ 							sel.removeAllRanges();
+ 							sel.addRange( __core.selection.range );
+
+ 						}
+
+ 						if( sel.type === 'Caret' ){
+ 							sel.modify('move', 'backward', 'word');
+ 							sel.modify('extend', 'forward', 'word');
+
+ 						}
+ 						range = sel.getRangeAt(0);
+ 						_d.execCommand( command, false, val );
+ 						__core.selection.clicked = false;
+
+ 					},
+
+ 					toggle: function( ui ){
+ 						const _ui = Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( ui );
+
+ 						if( _ui.hasClass( __core.classes.active ) ){
+ 							_ui.removeClass( __core.classes.active );
+ 							return false;
+
+ 						}
+ 						_ui.addClass( __core.classes.active );
+ 						return true;
+
+ 					}
+
+
+ 				};
+
+ 				return [
+ 				{
+ 					command: 'bold',
+ 					icon: 'cico cico-bold',
+ 					title: __cometi18n.ui.bold,
+ 					do: function( ev, ui ){
+ 						ev.preventDefault();
+ 						onbutton.toggle( ui );
+ 						onbutton.default( 'bold' );
+
+ 					}
+ 				},
+
+ 				{
+ 					command: 'italic',
+ 					icon: 'cico cico-italic',
+ 					title: __cometi18n.ui.italic,
+ 					do: function( ev, ui ){
+ 						ev.preventDefault();
+ 						onbutton.toggle( ui );
+ 						onbutton.default( 'italic' );
+
+ 					}
+ 				},
+
+ 				{
+ 					command: 'underline',
+ 					icon: 'cico cico-underline',
+ 					title: __cometi18n.ui.underline,
+ 					do: function( ev, ui ){
+ 						ev.preventDefault();
+ 						onbutton.toggle( ui );
+ 						onbutton.default( 'underline' );
+
+ 					}
+ 				},
+
+ 				{
+ 					command: 'strikeThrough',
+ 					icon: 'cico cico-striketrough',
+ 					title: __cometi18n.ui.st,
+ 					do: function( ev, ui ){
+ 						ev.preventDefault();
+ 						onbutton.toggle( ui );
+ 						onbutton.default( 'strikeThrough' );
+
+ 					}
+ 				},
+
+ 				{
+ 					command: 'link',
+ 					icon: 'cico cico-link',
+ 					title: __cometi18n.ui.ilink,
+ 					render: function( button ){
+ 						const inline = _d.createElement( 'div' );
+ 						const input = _d.createElement( 'input' );
+ 						const createLink = _d.createElement( 'button' );
+
+
+ 						inline.className = 'comet-inline';
+
+ 						createLink.className = 'comet-button comet-done';
+ 						createLink.innerHTML = '<span class="comet-icon cico cico-break"></span><span class="comet-title comet-tooltip">' + __cometi18n.ui.ilink + '</span>';
+
+ 						inline.appendChild( button );
+ 						inline.appendChild( input );
+ 						inline.appendChild( createLink );
+
+ 						Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( createLink ).on( 'click', function( ev, ui ){
+ 							const val = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( input.value ) ? _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( input.value ) ) : '';
+ 							const state = val === '' ? 'unlink' : 'createLink';
+
+ 							ev.preventDefault();
+
+ 							onbutton.default( state, val );
+ 						});
+
+ 						return inline;
+
+ 					},
+ 					do: function( ev, ui ){
+ 						const _p = Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( ui.parentNode );
+
+ 						ev.preventDefault();
+
+ 						if( onbutton.toggle( ui ) ){
+ 							_p.addClass( __core.classes.active );
+ 							return;
+
+ 						}
+ 						_p.removeClass( __core.classes.active );
+
+ 					}
+ 				}];
+
+ 			},
+
+ 			create: function(){
+ 				var button, oButton, inner, oInner, bClasses, b;
+ 				const fragment = _d.createDocumentFragment();
+ 				const oToolbar = _d.createElement( 'div' );
+ 				const buttons = __core.toolbar.buttons();
+ 				const meta = {
+ 					node: oToolbar,
+ 					buttons: []
+ 				};
+
+ 				oToolbar.className = 'comet-toolbar comet-ui comet-inline comet-float';
+
+ 				oInner = '<div class="comet-header">';
+ 				oInner += '<button class="comet-dragger comet-ui"><span class="cico cico-more"></span></button>';
+ 				oInner += '<button class="comet-close" title="' + __cometi18n.ui.close + '"><span class="cico cico-x"></span></button>';
+ 				oInner += '</div>';
+ 				oInner += '<div class="comet-body comet-buttonset"></div>';
+ 				oToolbar.innerHTML = oInner;
+
+ 				fragment.appendChild( oToolbar );
+
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oToolbar.firstChild.lastChild ).on( 'click', __core.toolbar.close );
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oToolbar.firstChild.firstChild ).on( 'mousedown', __core.toolbar.drag );
+
+ 				for( b = 0; b < buttons.length; b++ ){
+ 					button = buttons[b];
+ 					oButton = _d.createElement( 'button' );
+ 					oButton.dataset.command = button.command;
+ 					oButton.className = 'comet-button comet-tbButton';
+ 					bClasses = 'comet-title';
+ 					inner = '';
+
+ 					if( 'icon' in button ){
+ 						inner += '<span class="comet-icon ' + button.icon + '"></span>';
+ 						bClasses += ' comet-tooltip';
+
+ 					}
+
+ 					if( 'title' in button ){
+ 						inner += '<span class="' + bClasses + '">' + button.title + '</span>';
+
+ 					}
+ 					oButton.innerHTML = inner;
+
+ 					if( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isFunction( button.render ) ){
+ 						oToolbar.lastChild.appendChild( button.render( oButton ) );
+
+ 					}else{
+ 						oToolbar.lastChild.appendChild( oButton );
+
+ 					}
+ 					Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oButton ).on( 'click', button.do );
+ 					meta.buttons[meta.buttons.length] = oButton;
+
+ 				}
+ 				_d.body.appendChild( fragment );
+ 				return Object(_global_js__WEBPACK_IMPORTED_MODULE_1__["default"])().set( __core.toolbar.slug, meta, true );
+
+ 			}
+
+ 		},
+
+ 		editor: {
+
+ 			create: function(){
+ 				const tags = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'div', 'aside', 'pre', 'blockquote', 'article', 'section' ];
+ 				const tag = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( options.tag ) ? _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( options.tag.toLowerCase() ) : 'p';
+ 				const oObject = _d.createElement( tags.indexOf( tag ) < 0 ? 'p' : tag );
+
+ 				oObject.className = 'comet-editable comet-ui';
+ 				oObject.innerHTML = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( options.content ) ? _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( options.content, __core.get.tags( false ) ) : 'Write something here...';
+ 				oObject.setAttribute( 'contenteditable', 'true' );
+
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oObject ).on( 'click', __core.editor.focus );
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oObject ).on( 'input', __core.editor.change );
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( oObject ).on( 'keypress', __core.editor.keypress );
+
+ 				return oObject;
+
+ 			},
+
+ 			keypress: function( ev, ui ){
+
+ 				if( ev.keyCode === 13 ){
+ 					ev.preventDefault();
+ 					_d.execCommand( 'insertHTML', false, '<br><br>' );
+ 					return false;
+
+ 				}
+
+ 			},
+
+ 			focus: function( ev, ui ){
+ 				const meta = __core.toolbar.get();
+ 				var buttons, _selection;
+
+ 				ev.preventDefault();
+ 				ev.stopPropagation();
+
+ 				if( !meta || !Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( ev.target ).isNode() || ( buttons = meta.buttons ).length < 1 ){
+ 					return;
+
+ 				}
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( meta.node ).removeClass( __core.classes.hide );
+
+ 				if( _w.getSelection && ( _selection = _w.getSelection() ).modify ){
+ 					__core.selection.range = _selection.getRangeAt(0);
+ 					__core.selection.clicked = true;
+
+ 				}
+ 				_d.execCommand( 'insertBrOnReturn', false, true );
+ 				_d.execCommand( 'defaultParagraphSeparator', false, 'br' );
+
+ 				function isCommand( button, command ){
+ 					const cmd = _parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( button, 'command' );
+
+ 					return ( _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( cmd ) && _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( cmd ) === command );
+
+ 				}
+
+ 				function parent( comp ){
+ 					var command, command1, _button, b;
+
+ 					if( Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( comp ).hasClass( __core.classes.editor ) || comp.parentNode === null ){
+ 						return;
+
+ 					}
+
+ 					switch( comp.nodeName.toLowerCase() ){
+ 						case 'b':
+ 						case 'bold':
+ 						case 'bolder':
+ 						case 'strong':
+ 						command = 'bold';
+ 						break;
+
+ 						case 'i':
+ 						case 'em':
+ 						case 'italic':
+ 						command = 'italic';
+ 						break;
+
+ 						case 'u':
+ 						case 'ins':
+ 						case 'underline':
+ 						command = 'underline';
+ 						break;
+
+ 						case 'del':
+ 						case 'strike':
+ 						case 'strikethrough':
+ 						command = 'strikeThrough';
+ 						break;
+
+ 						case 'a':
+ 						case 'link':
+ 						command = 'link';
+ 						break;
+
+ 						default:
+ 						return;
+ 					}
+
+ 					for( b = 0; b < buttons.length; b++ ){
+
+ 						if( !( ( _button = Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( buttons[b] ) ).isNode() ) || !isCommand( buttons[b], command ) ){
+ 							continue;
+
+ 						}
+ 						_button.addClass( __core.classes.active );
+
+ 					}
+ 					parent( comp.parentNode );
+
+ 				}
+ 				Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( buttons ).removeClass( __core.classes.active );
+ 				parent( ev.target );
+
+ 			},
+
+ 			change: function( ev, ui ){
+ 				const sanitized_content = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( ui.innerHTML, __core.get.tags( false ) );
+ 				const data = {};
+ 				var textarea;
+
+ 				data[meta_element.slug] = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode_chars( sanitized_content );
+ 				Object(_editor_data_js__WEBPACK_IMPORTED_MODULE_0__["default"])().set( meta_element.id, 'elements', data );
+
+ 				if( !( textarea = __core.get.textarea() ) ){
+ 					return;
+
+ 				}
+ 				textarea.value = sanitized_content;
+
+ 			}
+
+ 		}
+
+ 	};
+
+ 	var editor, meta_element;
+
+ 	options = _utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( options ) ? options : {};
+ 	meta_element = __core.element;
+ 	meta_element.build_meta();
+
+ 	if( !Object(_node_js__WEBPACK_IMPORTED_MODULE_4__["default"])( source ).isNode() || source.parentNode === null || !meta_element.id || !meta_element.slug || !meta_element.data ){
+ 		return false;
+
+ 	}
+ 	editor = __core.editor.create();
+ 	source.parentNode.replaceChild( editor, source );
+
+ });
+
+/***/ }),
+
 /***/ "./src/js/utils/ui/gradient.js":
 /*!*************************************!*\
   !*** ./src/js/utils/ui/gradient.js ***!
@@ -11296,7 +11811,7 @@ utils.encode_chars = function( str ){
 			'(': '&#40;',
 			')': '&#41;',
 			',': '&#44;',
-			'/': '&#47;',
+			//'/': '&#47;',
 			':': '&#58;',
 			';': '&#59;',
 			'[': '&#91;',
@@ -11548,7 +12063,7 @@ utils.getElement = function( slug ){
 
 utils.getNode = function( slug ){
 	const g_ = Object(_global_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
-	const types = [ 'editor', 'frame', 'cockpit', 'sidebar', 'generalSettings' ];
+	const types = [ 'editor', 'frame', 'cockpit', 'sidebar', 'panel', 'generalSettings' ];
 
 	return !utils.isStringEmpty( slug ) && types.indexOf( slug = utils.trim( slug ) ) > -1 ? g_.get( slug ) : false;
 

@@ -3833,7 +3833,7 @@ utils.encode_chars = function( str ){
 			'(': '&#40;',
 			')': '&#41;',
 			',': '&#44;',
-			'/': '&#47;',
+			//'/': '&#47;',
 			':': '&#58;',
 			';': '&#59;',
 			'[': '&#91;',
@@ -4085,7 +4085,7 @@ utils.getElement = function( slug ){
 
 utils.getNode = function( slug ){
 	const g_ = Object(_global_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
-	const types = [ 'editor', 'frame', 'cockpit', 'sidebar', 'generalSettings' ];
+	const types = [ 'editor', 'frame', 'cockpit', 'sidebar', 'panel', 'generalSettings' ];
 
 	return !utils.isStringEmpty( slug ) && types.indexOf( slug = utils.trim( slug ) ) > -1 ? g_.get( slug ) : false;
 

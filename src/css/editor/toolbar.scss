@@ -1,7 +1,19 @@
 @import '../utils/variables';
 @import '../utils/mixins';
 
-#comet-editorToolbar {
+.comet-toolbar.comet-ui {
+	position: fixed;
+	top: 30%;
+	right: 100px;
+	z-index: 1;
+	width: 200px;
+	background: white;
+	padding: 10px;
+
+
+}
+
+/*#comet-editorToolbar {
 	position: absolute;
 	top: 0;
 	left: 300px;
@@ -111,4 +123,4 @@
 	position: relative;
 	z-index: 1;
 	@include box_shadow( 0 0 0 2px $daAccent inset );
-}
+}*/

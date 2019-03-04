@@ -1,10 +1,12 @@
 import sanitize from '../utils/sanitize.js';
+import __global from '../utils/global.js';
 import utils from '../utils/utils.js';
 import redefine from './redefine.js';
 import node from '../utils/node.js';
 
 export default function( options ){
 	const _d = document;
+	const _global = __global();
 	const editor = utils.getNode( 'editor' );
 	const id = 'comet-panel';
 	const fragment = _d.createDocumentFragment();
@@ -63,6 +65,7 @@ export default function( options ){
 		body.innerHTML = __cometi18n.messages.error.unreach;
 	}
 	editor.appendChild( fragment );
+	_global.set( 'panel', panel, true );
 	redefine.workflow();
 
 	node( button ).on( 'click', function( ev, ui ){
@@ -80,6 +83,7 @@ export default function( options ){
 
 		}
 		node( panel ).remove();
+		_global.set( 'panel', false, true );
 		redefine.workflow();
 
 	});
@@ -88,6 +92,7 @@ export default function( options ){
 		target: panel,
 		destroy: function(){
 			node( panel ).remove();
+			_global.set( 'panel', false, true );
 			redefine.workflow();
 
 		}

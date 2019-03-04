@@ -1,3 +1,5 @@
+import __data from '../../editor/data.js';
+import __global from '../global.js';
 import parse from '../parse.js';
 import utils from '../utils.js';
 import node from '../node.js';
@@ -33,8 +35,35 @@ import node from '../node.js';
 
  	const __core = {
 
+ 		selection: {
+ 			range: false,
+ 			clicked: false
+
+ 		},
+
  		classes: {
- 			hide: 'comet-hide'
+ 			active: 'comet-active',
+ 			hide: 'comet-hide',
+
+ 		},
+
+ 		element: {
+
+ 			id: false,
+
+ 			slug: false,
+
+ 			data: false,
+
+ 			build_meta: function(){
+ 				var data;
+
+ 				__core.element.id = parse.id( options.id );
+ 				__core.element.slug = utils.isString( options.slug ) ? utils.trim( options.slug ) : false;
+ 				__core.element.data = ( data = __data().get( __core.element.id, 'elements' ) ) ? data : false;
+
+
+ 			}
 
  		},
 
@@ -58,24 +87,24 @@ import node from '../node.js';
 
  			},
 
- 			elementId: function( ui ){
- 				const _ui = node( ui );
- 				var id;
+ 			textarea: function(){
+ 				const panel = utils.getNode( 'panel' );
+ 				var textarea, t;
 
- 				if( !_ui.isNode() ){
+ 				if( !panel || ( textarea = _d.getElementsByTagName( 'textarea' ) ).length < 1 ){
  					return false;
 
  				}
 
- 				if( _ui.hasClass( 'cpb-element' ) ){
- 					return ( !( id = parse.dataset( ui, 'id' ) ) || !( id = parse.id( id ) ) ? false : id );
+ 				for( t = 0; t < textarea.length; t++ ){
+
+ 					if( utils.isString( textarea[t].name ) && utils.trim( textarea[t].name ) === meta_element.slug ){
+ 						return textarea[t];
+
+ 					}
 
  				}
- 				return __core.getElementId( ui.parentNode );
-
- 			},
-
- 			textarea: function( ui ){
+ 				return false;
 
  			}
 
@@ -86,26 +115,25 @@ import node from '../node.js';
  			slug: 'editorToolbar',
 
  			get: function(){
- 				const toolbar = __global().get( __core.toolbar.slug );
+ 				const meta = __global().get( __core.toolbar.slug );
 
- 				return node( toolbar ).isNode() ? toolbar : false;
+ 				if( !utils.isObject( meta ) || !node( meta.node ).isNode() || meta.buttons.length < 1 ){
+ 					return __core.toolbar.create();
 
- 			},
 
- 			set: function( toolbar ){
-
- 				return node( toolbar ).isNode() ? __global().set( __core.toolbar.slug, toolbar, true ) : false;
+ 				}
+ 				return meta;
 
  			},
 
  			close: function( ev, ui ){
- 				const toolbar = __core.toolbar.get();
+ 				const meta = __core.toolbar.get();
 
- 				if( !toolbar ){
+ 				if( !meta ){
  					return;
 
  				}
- 				node( toolbar ).addClass( __core.classes.hide );
+ 				node( meta.node ).addClass( __core.classes.hide );
 
  			},
 
@@ -118,15 +146,15 @@ import node from '../node.js';
 
  						val = !utils.isStringEmpty( val ) ? utils.trim( val ) : null;
 
- 						if( !_w.getSelection || !_w.getSelection().modify || selection.range === null ){
+ 						if( !_w.getSelection || !_w.getSelection().modify || __core.selection.range === null ){
  							return;
 
  						}
  						sel = _w.getSelection();
 
- 						if( selection.clicked ){
+ 						if( __core.selection.clicked ){
  							sel.removeAllRanges();
- 							sel.addRange( selection.range );
+ 							sel.addRange( __core.selection.range );
 
  						}
 
@@ -137,19 +165,19 @@ import node from '../node.js';
  						}
  						range = sel.getRangeAt(0);
  						_d.execCommand( command, false, val );
- 						selection.clicked = false;
+ 						__core.selection.clicked = false;
 
  					},
 
  					toggle: function( ui ){
  						const _ui = node( ui );
 
- 						if( _ui.hasClass( classes.active ) ){
- 							_ui.removeClass( classes.active );
+ 						if( _ui.hasClass( __core.classes.active ) ){
+ 							_ui.removeClass( __core.classes.active );
  							return false;
 
  						}
- 						_ui.addClass( classes.active );
+ 						_ui.addClass( __core.classes.active );
  						return true;
 
  					}
@@ -211,9 +239,9 @@ import node from '../node.js';
  					icon: 'cico cico-link',
  					title: __cometi18n.ui.ilink,
  					render: function( button ){
- 						const inline = document.createElement( 'div' );
- 						const input = document.createElement( 'input' );
- 						const createLink = document.createElement( 'button' );
+ 						const inline = _d.createElement( 'div' );
+ 						const input = _d.createElement( 'input' );
+ 						const createLink = _d.createElement( 'button' );
 
 
  						inline.className = 'comet-inline';
@@ -243,11 +271,11 @@ import node from '../node.js';
  						ev.preventDefault();
 
  						if( onbutton.toggle( ui ) ){
- 							_p.addClass( classes.active );
+ 							_p.addClass( __core.classes.active );
  							return;
 
  						}
- 						_p.removeClass( classes.active );
+ 						_p.removeClass( __core.classes.active );
 
  					}
  				}];
@@ -255,14 +283,28 @@ import node from '../node.js';
  			},
 
  			create: function(){
+ 				var button, oButton, inner, oInner, bClasses, b;
  				const fragment = _d.createDocumentFragment();
  				const oToolbar = _d.createElement( 'div' );
  				const buttons = __core.toolbar.buttons();
- 				var button, oButton, inner, bClasses, b;
+ 				const meta = {
+ 					node: oToolbar,
+ 					buttons: []
+ 				};
 
  				oToolbar.className = 'comet-toolbar comet-ui comet-inline comet-float';
 
+ 				oInner = '<div class="comet-header">';
+ 				oInner += '<button class="comet-dragger comet-ui"><span class="cico cico-more"></span></button>';
+ 				oInner += '<button class="comet-close" title="' + __cometi18n.ui.close + '"><span class="cico cico-x"></span></button>';
+ 				oInner += '</div>';
+ 				oInner += '<div class="comet-body comet-buttonset"></div>';
+ 				oToolbar.innerHTML = oInner;
+
  				fragment.appendChild( oToolbar );
+
+ 				node( oToolbar.firstChild.lastChild ).on( 'click', __core.toolbar.close );
+ 				node( oToolbar.firstChild.firstChild ).on( 'mousedown', __core.toolbar.drag );
 
  				for( b = 0; b < buttons.length; b++ ){
  					button = buttons[b];
@@ -285,18 +327,18 @@ import node from '../node.js';
  					oButton.innerHTML = inner;
 
  					if( utils.isFunction( button.render ) ){
- 						oToolbar.appendChild( button.render( oButton ) );
+ 						oToolbar.lastChild.appendChild( button.render( oButton ) );
 
  					}else{
- 						oToolbar.appendChild( oButton );
+ 						oToolbar.lastChild.appendChild( oButton );
 
  					}
  					node( oButton ).on( 'click', button.do );
+ 					meta.buttons[meta.buttons.length] = oButton;
 
  				}
  				_d.body.appendChild( fragment );
- 				return __core.toolbar.set( oToolbar );
-
+ 				return __global().set( __core.toolbar.slug, meta, true );
 
  			}
 
@@ -315,50 +357,43 @@ import node from '../node.js';
 
  				node( oObject ).on( 'click', __core.editor.focus );
  				node( oObject ).on( 'input', __core.editor.change );
+ 				node( oObject ).on( 'keypress', __core.editor.keypress );
 
  				return oObject;
 
  			},
 
- 			change: function( ev, ui ){
- 				const id = __core.get.elementId( ui );
- 				var toolbar;
+ 			keypress: function( ev, ui ){
+
+ 				if( ev.keyCode === 13 ){
+ 					ev.preventDefault();
+ 					_d.execCommand( 'insertHTML', false, '<br><br>' );
+ 					return false;
+
+ 				}
+
+ 			},
+
+ 			focus: function( ev, ui ){
+ 				const meta = __core.toolbar.get();
+ 				var buttons, _selection;
 
  				ev.preventDefault();
  				ev.stopPropagation();
 
- 				if( !id ){
+ 				if( !meta || !node( ev.target ).isNode() || ( buttons = meta.buttons ).length < 1 ){
  					return;
 
  				}
+ 				node( meta.node ).removeClass( __core.classes.hide );
 
- 				if( !( toolbar = __core.toolbar.get() ) ){
- 					toolbar = __core.toolbar.create();
-
- 				}else{
- 					node( toolbar ).removeClass( __core.classes.hide );
-
- 				}
-
-
- 			},
-
-
- 			focus: function( ev, ui ){
- 				var buttons, _target;
-
- 				ev.preventDefault();
-
- 				if( window.getSelection && window.getSelection().modify ){
- 					selection.range = window.getSelection().getRangeAt(0);
- 					selection.clicked = true;
+ 				if( _w.getSelection && ( _selection = _w.getSelection() ).modify ){
+ 					__core.selection.range = _selection.getRangeAt(0);
+ 					__core.selection.clicked = true;
 
  				}
-
- 				if( ( buttons = oToolbar.getElementsByClassName( 'comet-tbButton' ) ).length < 1 || !( ( _target = node( ev.target ) ).isNode() ) ){
- 					return;
-
- 				}
+ 				_d.execCommand( 'insertBrOnReturn', false, true );
+ 				_d.execCommand( 'defaultParagraphSeparator', false, 'br' );
 
  				function isCommand( button, command ){
  					const cmd = parse.dataset( button, 'command' );
@@ -370,7 +405,7 @@ import node from '../node.js';
  				function parent( comp ){
  					var command, command1, _button, b;
 
- 					if( node( comp ).hasClass( classes.editor ) || comp.parentNode === null ){
+ 					if( node( comp ).hasClass( __core.classes.editor ) || comp.parentNode === null ){
  						return;
 
  					}
@@ -382,25 +417,30 @@ import node from '../node.js';
  						case 'strong':
  						command = 'bold';
  						break;
+
  						case 'i':
  						case 'em':
  						case 'italic':
  						command = 'italic';
  						break;
+
  						case 'u':
  						case 'ins':
  						case 'underline':
  						command = 'underline';
  						break;
+
  						case 'del':
  						case 'strike':
  						case 'strikethrough':
  						command = 'strikeThrough';
  						break;
+
  						case 'a':
  						case 'link':
  						command = 'link';
  						break;
+
  						default:
  						return;
  					}
@@ -411,46 +451,48 @@ import node from '../node.js';
  							continue;
 
  						}
- 						_button.addClass( classes.active );
+ 						_button.addClass( __core.classes.active );
 
  					}
  					parent( comp.parentNode );
 
  				}
- 				node( buttons ).removeClass( classes.active );
- 				parent( _target.prop() );
+ 				node( buttons ).removeClass( __core.classes.active );
+ 				parent( ev.target );
 
  			},
 
  			change: function( ev, ui ){
- 				const ct = prop.matched( ui );
+ 				const sanitized_content = utils.stripTags( ui.innerHTML, __core.get.tags( false ) );
+ 				const data = {};
+ 				var textarea;
 
- 				if( !ct ){
+ 				data[meta_element.slug] = utils.encode_chars( sanitized_content );
+ 				__data().set( meta_element.id, 'elements', data );
+
+ 				if( !( textarea = __core.get.textarea() ) ){
  					return;
 
  				}
- 				ct.value = utils.stripTags( ui.innerHTML, '<p><strong><ins><del><sup><sub><b><i><span><u><em><strike><a><h1><h2><h3><h4><h5><h6><hr><br><img><caption>' );
- 				__data().catchAndSet( id, type );
+ 				textarea.value = sanitized_content;
 
  			}
+
  		}
 
  	};
 
- 	var editor;
+ 	var editor, meta_element;
 
- 	if( !node( source ).isNode() || source.parentNode === null ){
+ 	options = utils.isObject( options ) ? options : {};
+ 	meta_element = __core.element;
+ 	meta_element.build_meta();
+
+ 	if( !node( source ).isNode() || source.parentNode === null || !meta_element.id || !meta_element.slug || !meta_element.data ){
  		return false;
-
- 	}
-
- 	if( !utils.isObject( options ) ){
- 		options = {};
 
  	}
  	editor = __core.editor.create();
  	source.parentNode.replaceChild( editor, source );
-
-
 
  }
