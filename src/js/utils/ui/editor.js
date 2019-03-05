@@ -15,18 +15,6 @@ import node from '../node.js';
  * @param {String}		options.tag		HTML tag wrapping the content
  *
  */
-
- /**
- *
- * @TODO	Verify if id exists
- * @TODO	Verify if slug exists
- * @TODO	Update input
- * @TODO	Retrieve command state
- * 
- */
-
-
-
  export default function( source, options ){
 
  	const _d = document;
@@ -239,19 +227,22 @@ import node from '../node.js';
  					icon: 'cico cico-link',
  					title: __cometi18n.ui.ilink,
  					render: function( button ){
+ 						var inner, input, createLink;
  						const inline = _d.createElement( 'div' );
- 						const input = _d.createElement( 'input' );
- 						const createLink = _d.createElement( 'button' );
 
+ 						inner = '<div class="comet-absui comet-tooltip">';
+ 						inner += '<input type="text" class="comet-input value="" />';
+ 						inner += '<button class="comet-button comet-done">';
+ 						inner += '<span class="comet-icon cico cico-break"></span><span class="comet-title comet-tooltip">' + __cometi18n.ui.ilink + '</span>';
+ 						inner += '</button>';
+ 						inner += '</div>';
 
  						inline.className = 'comet-inline';
-
- 						createLink.className = 'comet-button comet-done';
- 						createLink.innerHTML = '<span class="comet-icon cico cico-break"></span><span class="comet-title comet-tooltip">' + __cometi18n.ui.ilink + '</span>';
-
+ 						inline.innerHTML = inner;
  						inline.appendChild( button );
- 						inline.appendChild( input );
- 						inline.appendChild( createLink );
+
+ 						input = inline.firstChild.firstChild;
+ 						createLink = inline.firstChild.lastChild;
 
  						node( createLink ).on( 'click', function( ev, ui ){
  							const val = utils.isString( input.value ) ? utils.trim( utils.stripTags( input.value ) ) : '';
@@ -260,6 +251,7 @@ import node from '../node.js';
  							ev.preventDefault();
 
  							onbutton.default( state, val );
+
  						});
 
  						return inline;
@@ -304,7 +296,7 @@ import node from '../node.js';
  				fragment.appendChild( oToolbar );
 
  				node( oToolbar.firstChild.lastChild ).on( 'click', __core.toolbar.close );
- 				node( oToolbar.firstChild.firstChild ).on( 'mousedown', __core.toolbar.drag );
+ 				node( oToolbar.firstChild.firstChild ).on( 'mousedown', __core.toolbar.drag.dragstart );
 
  				for( b = 0; b < buttons.length; b++ ){
  					button = buttons[b];
@@ -340,7 +332,111 @@ import node from '../node.js';
  				_d.body.appendChild( fragment );
  				return __global().set( __core.toolbar.slug, meta, true );
 
+ 			},
+
+ 			set_position: function( data ){
+ 				var offsetTop, offsetLeft, min_top, min_left, max_top, max_left, top, left;
+
+ 				if( !utils.isObject( data ) || !( 'toolbar' in data ) || !( 'document' in data ) || !( 'frame' in data ) ){
+ 					return false;
+
+ 				}
+ 				offsetTop = data.frame.target.offsetTop;
+ 				offsetLeft = data.frame.target.offsetLeft;
+
+ 				if( !( 'pageY' in data ) || !( 'pageX' in data ) ){
+ 					top = offsetTop + 20;
+ 					left = offsetLeft + 20;
+
+ 				}else{
+
+ 				min_top = offsetTop;
+ 				min_left = offsetLeft;
+
+ 				max_left = ( data.frame.width + offsetLeft ) - data.toolbar.width;
+ 				max_top = ( data.frame.height + offsetTop ) - data.toolbar.height;
+
+ 				top = data.pageY <= min_top ? min_top : ( data.pageY >= max_top ? max_top : data.pageY );
+ 				left = data.pageX <= min_left ? min_left : ( data.pageX >= max_left ? max_left : data.pageX );
  			}
+
+ 					data.toolbar.target.style.top = top + 'px';
+ 					data.toolbar.target.style.left = left + 'px';
+
+ 				return true;
+
+ 			},
+
+ 			get_ui: function(){
+ 				const oDoc = _d.documentElement;
+ 				const _oDoc = node( oDoc );
+ 				const frame = utils.getNode( 'frame' );
+ 				const _frame = node( frame );
+ 				const toolbar = __core.toolbar.get().node;
+ 				const _toolbar = node( toolbar );
+
+ 				return {
+ 					toolbar: {
+ 						target: toolbar,
+ 						node: _toolbar,
+ 						width: _toolbar.width(),
+ 						height: _toolbar.height()
+ 					},
+ 					document: {
+ 						target: oDoc,
+ 						node: _oDoc,
+ 						width: _oDoc.width(),
+ 						height: _oDoc.height(),
+ 					},
+ 					frame: {
+ 						target: frame,
+ 						node: _frame,
+ 						width: _frame.width(),
+ 						height: _frame.height(),
+
+ 					}
+ 				};
+
+ 			},
+
+
+
+ 			drag: {
+
+ 				is_dragging: false,
+
+ 				dragstart: function( ev, ui ){
+ 					const __object = __core.toolbar.get_ui();
+
+ 					ev.preventDefault();
+
+ 					__core.toolbar.drag.is_dragging = true;
+
+ 					__object.document.node.on( 'mouseup', __core.toolbar.drag.dragstop );
+ 					__object.document.node.on( 'mousemove', __core.toolbar.drag.dragging, __object );
+
+
+ 				},
+
+ 				dragstop: function( ev, ui ){
+ 					__core.toolbar.drag.is_dragging = false;
+
+ 				},
+
+ 				dragging: function( ev, ui, __object ){
+
+ 					if( !__core.toolbar.drag.is_dragging ){
+ 						return;
+
+ 					}
+ 					__object.pageY = ev.pageY;
+ 					__object.pageX = ev.pageX;
+ 					__core.toolbar.set_position( __object );
+
+ 				}
+
+ 			}
+
 
  		},
 
