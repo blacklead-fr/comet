@@ -714,7 +714,6 @@ const sidebar = {
 					close: {
 						do: function( e, ui ){
 							target_.reset();
-							//__editor( true );
 						}
 					}
 
@@ -1066,18 +1065,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./panel/fields/editor.js */ "./src/js/editor/panel/fields/editor.js");
-/* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/layout.js */ "./src/js/utils/layout.js");
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _panel_tabs_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./panel/tabs.js */ "./src/js/editor/panel/tabs.js");
-/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./redefine.js */ "./src/js/editor/redefine.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./target.js */ "./src/js/editor/target.js");
-/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./data.js */ "./src/js/editor/data.js");
-/* harmony import */ var _panel_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./panel.js */ "./src/js/editor/panel.js");
-/* harmony import */ var _id_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./id.js */ "./src/js/editor/id.js");
-
+/* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/layout.js */ "./src/js/utils/layout.js");
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _panel_tabs_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./panel/tabs.js */ "./src/js/editor/panel/tabs.js");
+/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./redefine.js */ "./src/js/editor/redefine.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./target.js */ "./src/js/editor/target.js");
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./data.js */ "./src/js/editor/data.js");
+/* harmony import */ var _panel_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./panel.js */ "./src/js/editor/panel.js");
+/* harmony import */ var _id_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./id.js */ "./src/js/editor/id.js");
 
 
 
@@ -1138,7 +1135,7 @@ __webpack_require__.r(__webpack_exports__);
         },
 
         getTarget: function( target ){
-            const _target = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( target );
+            const _target = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( target );
 
             if( !_target.isNode() ){
                 return false;
@@ -1185,7 +1182,7 @@ __webpack_require__.r(__webpack_exports__);
         },
 
         getParent: function( target, className ){
-            const _target = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( target );
+            const _target = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( target );
 
             return ( _target.isNode() ? ( _target.hasClass( className ) ? target : __core.getParent( target.parentNode, className ) ) : false );
 
@@ -1266,7 +1263,7 @@ __webpack_require__.r(__webpack_exports__);
             const options = __cometi18n.options;
             var body, option, _option, item;
 
-            if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( options ) || types.indexOf( type ) < 0 ){
+            if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( options ) || types.indexOf( type ) < 0 ){
                 menu.innerHTML = __cometi18n.messages.error.noMenu;
                 return;
 
@@ -1279,10 +1276,10 @@ __webpack_require__.r(__webpack_exports__);
                 button.dataset.role = role;
 
                 if( role === 'move' ){
-                    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( button ).sort( __menu.onsort( target, _type ) );
+                    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button ).sort( __menu.onsort( target, _type ) );
 
                 }else{
-                    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( button ).on( 'click', __menu.onclick, { role: role, type: _type, target: target, targetType: type } );
+                    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button ).on( 'click', __menu.onclick, { role: role, type: _type, target: target, targetType: type } );
 
                 }
                 return button;
@@ -1291,7 +1288,7 @@ __webpack_require__.r(__webpack_exports__);
 
             for( option in options ){
 
-                if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( item = options[option] ) || types.indexOf( option ) < 0 || __core.preventType( type, option ) ){
+                if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( item = options[option] ) || types.indexOf( option ) < 0 || __core.preventType( type, option ) ){
                     continue;
 
                 }
@@ -1327,7 +1324,7 @@ __webpack_require__.r(__webpack_exports__);
         },
 
         destroy: function(){
-            Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( '.' + classes.menu ).remove();
+            Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( '.' + classes.menu ).remove();
 
         },
 
@@ -1364,9 +1361,9 @@ __webpack_require__.r(__webpack_exports__);
 
             var get;
 
-            const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
+            const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
-            const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
+            const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_6__["default"])();
 
             const priv = {
 
@@ -1375,7 +1372,7 @@ __webpack_require__.r(__webpack_exports__);
                     const targetNode = __core.getParent( e.target, 'cpb-section' );
                     var id, nid, sdata;
 
-                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                         return false;
 
                     }
@@ -1384,7 +1381,7 @@ __webpack_require__.r(__webpack_exports__);
 
                         case 'edit':
 
-                        sdata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].getSettingsFrom( 'section' );
+                        sdata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getSettingsFrom( 'section' );
 
                         target_.set({
                             id: id,
@@ -1394,23 +1391,23 @@ __webpack_require__.r(__webpack_exports__);
 
                         return {
                             title: __cometi18n.options.section.edit,
-                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_4__["default"])( sdata, data_.get( id, type ) )
+                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_3__["default"])( sdata, data_.get( id, type ) )
 
                         };
 
                         case 'del':
 
                         data_.remove( id, type );
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).remove();
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).remove();
                         return true;
 
                         case 'dup':
 
-                        if( !( nid = data_.clone( id, type ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData() ).section( nid ) ) ){
+                        if( !( nid = data_.clone( id, type ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_0__["default"])( data_.getData() ).section( nid ) ) ){
                             return false;
 
                         }
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).after( ret );
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).after( ret );
                         return true;
 
                         default:
@@ -1425,7 +1422,7 @@ __webpack_require__.r(__webpack_exports__);
                     const targetNode = __core.getParent( e.target, 'cpb-row' );
                     var id, parentNode, pid, nid, rdata;
 
-                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                         return false;
 
                     }
@@ -1434,7 +1431,7 @@ __webpack_require__.r(__webpack_exports__);
 
                         case 'edit':
 
-                        rdata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].getSettingsFrom( 'row' );
+                        rdata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getSettingsFrom( 'row' );
 
                         target_.set({
                             id: id,
@@ -1444,31 +1441,31 @@ __webpack_require__.r(__webpack_exports__);
 
                         return {
                             title: __cometi18n.options.row.edit,
-                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_4__["default"])( rdata, data_.get( id, type ) )
+                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_3__["default"])( rdata, data_.get( id, type ) )
                         };
 
                         case 'del':
 
-                        if( !( parentNode = __core.getParent( targetNode, 'cpb-section' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( pid ) ) ){
+                        if( !( parentNode = __core.getParent( targetNode, 'cpb-section' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( pid ) ) ){
                             return false;
 
                         }
                         data_.remove( id, type, pid );
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).remove();
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).remove();
                         return true;
 
                         case 'dup':
 
-                        if( !( parentNode = __core.getParent( targetNode, 'cpb-section' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( pid ) ) ){
+                        if( !( parentNode = __core.getParent( targetNode, 'cpb-section' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( pid ) ) ){
                             return false;
 
                         }
 
-                        if( !( nid = data_.clone( id, type, pid ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData() ).row( nid ) ) ){
+                        if( !( nid = data_.clone( id, type, pid ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_0__["default"])( data_.getData() ).row( nid ) ) ){
                             return false;
 
                         }
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).after( ret );
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).after( ret );
                         return true;
 
                         default:
@@ -1483,7 +1480,7 @@ __webpack_require__.r(__webpack_exports__);
                     const targetNode = __core.getParent( e.target, 'cpb-column' );
                     var id, parentNode, pid, nid, cdata;
 
-                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                         return false;
 
                     }
@@ -1492,7 +1489,7 @@ __webpack_require__.r(__webpack_exports__);
 
                         case 'edit':
 
-                        cdata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].getSettingsFrom( 'column' );
+                        cdata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getSettingsFrom( 'column' );
 
                         target_.set({
                             id: id,
@@ -1502,34 +1499,34 @@ __webpack_require__.r(__webpack_exports__);
 
                         return {
                             title: __cometi18n.options.column.edit,
-                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_4__["default"])( cdata, data_.get( id, type ) )
+                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_3__["default"])( cdata, data_.get( id, type ) )
                         };
 
                         case 'del':
 
-                        if( !( parentNode = __core.getParent( targetNode, 'cpb-row' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( pid ) ) ){
+                        if( !( parentNode = __core.getParent( targetNode, 'cpb-row' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( pid ) ) ){
                             return false;
 
                         }
                         parentNode = targetNode.parentNode;
                         data_.remove( id, type, pid );
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).remove();
-                        _redefine_js__WEBPACK_IMPORTED_MODULE_5__["default"].columns( parentNode );
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).remove();
+                        _redefine_js__WEBPACK_IMPORTED_MODULE_4__["default"].columns( parentNode );
                         return true;
 
                         case 'dup':
 
-                        if( !( parentNode = __core.getParent( targetNode, 'cpb-row' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( pid ) ) ){
+                        if( !( parentNode = __core.getParent( targetNode, 'cpb-row' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( pid ) ) ){
                             return false;
 
                         }
 
-                        if( !( nid = data_.clone( id, type, pid ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData() ).column( nid ) ) ){
+                        if( !( nid = data_.clone( id, type, pid ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_0__["default"])( data_.getData() ).column( nid ) ) ){
                             return false;
 
                         }
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).after( ret );
-                        _redefine_js__WEBPACK_IMPORTED_MODULE_5__["default"].columns( targetNode.parentNode );
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).after( ret );
+                        _redefine_js__WEBPACK_IMPORTED_MODULE_4__["default"].columns( targetNode.parentNode );
                         return true;
 
                         default:
@@ -1544,7 +1541,7 @@ __webpack_require__.r(__webpack_exports__);
                     const targetNode = __core.getParent( e.target, 'cpb-element' );
                     var id, parentNode, pid, nid, _type, tmp, x, dren, _child, edata;
 
-                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                    if( !targetNode || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( targetNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                         return false;
 
                     }
@@ -1553,12 +1550,12 @@ __webpack_require__.r(__webpack_exports__);
 
                         case 'edit':
 
-                        if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( tmp = data_.get( id, type ) ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isStringEmpty( _type = tmp._type ) ){
+                        if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( tmp = data_.get( id, type ) ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isStringEmpty( _type = tmp._type ) ){
                             return false;
 
                         }
 
-                        if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( edata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].getElement( _type ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( edata.tabs ) ){
+                        if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( edata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getElement( _type ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( edata.tabs ) ){
                             return false;
 
                         }
@@ -1571,31 +1568,31 @@ __webpack_require__.r(__webpack_exports__);
 
                         return {
                             title: __cometi18n.options.element.edit,
-                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_4__["default"])( edata.tabs, tmp )
+                            tabs: Object(_panel_tabs_js__WEBPACK_IMPORTED_MODULE_3__["default"])( edata.tabs, tmp )
                         };
 
                         case 'del':
 
-                        if( !( parentNode = __core.getParent( targetNode, 'cpb-column' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( pid ) ) ){
+                        if( !( parentNode = __core.getParent( targetNode, 'cpb-column' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( pid ) ) ){
                             return false;
 
                         }
                         data_.remove( id, type, pid );
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).remove();
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).remove();
                         return true;
 
                         case 'dup':
 
-                        if( !( parentNode = __core.getParent( targetNode, 'cpb-column' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( pid ) ) ){
+                        if( !( parentNode = __core.getParent( targetNode, 'cpb-column' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( parentNode, 'id' ) ) || !( pid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( pid ) ) ){
                             return false;
 
                         }
 
-                        if( !( nid = data_.clone( id, type, pid ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData() ).element( nid ) ) ){
+                        if( !( nid = data_.clone( id, type, pid ) ) || !( ret = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_0__["default"])( data_.getData() ).element( nid ) ) ){
                             return false;
 
                         }
-                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).after( ret );
+                        Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).after( ret );
                         return true;
 
                         default:
@@ -1609,26 +1606,25 @@ __webpack_require__.r(__webpack_exports__);
             
             ev.preventDefault();
 
-            if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isFunction( priv[e.type] ) || roles.indexOf( e.role ) < 0 ){
+            if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isFunction( priv[e.type] ) || roles.indexOf( e.role ) < 0 ){
                 __menu.destroy();
                 return;
 
             }
 
-            if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( get = priv[e.type]() ) || !( 'tabs' in get ) || !( 'title' in  get ) ){
+            if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isObject( get = priv[e.type]() ) || !( 'tabs' in get ) || !( 'title' in  get ) ){
                 __menu.destroy();
                 return;
 
             }
 
-            Object(_panel_js__WEBPACK_IMPORTED_MODULE_9__["default"])({
+            Object(_panel_js__WEBPACK_IMPORTED_MODULE_8__["default"])({
                 title: get.title,
                 content: 'content' in get.tabs ? get.tabs.content : '',
                 tabs: 'tabs' in get.tabs ? get.tabs.tabs : '',
                 close: {
                     do: function( e, ui ){
                         target_.reset();
-                        Object(_panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__["default"])( true );
                     }
                 }
 
@@ -1650,7 +1646,7 @@ __webpack_require__.r(__webpack_exports__);
                         const sectionNode = __core.getParent( targetNode, classes.section );
                         var id;
 
-                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( sectionNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( sectionNode, 'id' ) ) || !_utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ){
+                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( sectionNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( sectionNode, 'id' ) ) || !_utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ){
                             return;
 
                         }
@@ -1660,19 +1656,19 @@ __webpack_require__.r(__webpack_exports__);
 
                     },
                     stop: function( e, ui, sectionNode ){
-                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
                         var id, t, _closest, closest;
 
                         sectionNode.removeAttribute( 'style' );
 
-                        if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( sectionNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                        if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( sectionNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                             return;
 
                         }
                         t = 'last';
-                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui ).next( '.cpb-section' );
-                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( closest );
-                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( t ) ) ? t : 'last';
+                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ).next( '.cpb-section' );
+                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( closest );
+                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( t ) ) ? t : 'last';
 
                         id_.remove( id, 'sections', id );
                         id_.insert( id, 'sections', id, t );
@@ -1691,7 +1687,7 @@ __webpack_require__.r(__webpack_exports__);
                         const rowNode = __core.getParent( targetNode, classes.row );
                         var id;
 
-                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( rowNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( rowNode, 'id' ) ) || !_utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ){
+                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( rowNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( rowNode, 'id' ) ) || !_utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ){
                             return;
 
                         }
@@ -1701,25 +1697,25 @@ __webpack_require__.r(__webpack_exports__);
 
                     },
                     stop: function( e, ui, rowNode ){
-                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
                         var id, sid, nsid, t, closest, _closest;
 
-                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( rowNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( rowNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( rowNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( rowNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                             return;
 
                         }
-                        if( !( sid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( __core.getParent( rowNode, classes.section ), 'id' ) ) || !( sid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( sid ) ) ){
+                        if( !( sid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( __core.getParent( rowNode, classes.section ), 'id' ) ) || !( sid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( sid ) ) ){
                             return;
 
                         }
 
-                        if( !( nsid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( __core.getParent( ui, classes.section ), 'id' ) ) || !( nsid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( nsid ) ) ){
+                        if( !( nsid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( __core.getParent( ui, classes.section ), 'id' ) ) || !( nsid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( nsid ) ) ){
                             return;
 
                         }
-                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui ).next( '.cpb-row' );
-                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( closest );
-                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( t ) ) ? t : 'last';
+                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ).next( '.cpb-row' );
+                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( closest );
+                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( t ) ) ? t : 'last';
 
                         rowNode.removeAttribute( 'style' );
                         id_.remove( id, 'rows', sid );
@@ -1740,7 +1736,7 @@ __webpack_require__.r(__webpack_exports__);
                         const columnNode = __core.getParent( targetNode, classes.column );
                         var id;
 
-                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( columnNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( columnNode, 'id' ) ) || !( _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( columnNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( columnNode, 'id' ) ) || !( _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                             return;
 
                         }
@@ -1750,26 +1746,26 @@ __webpack_require__.r(__webpack_exports__);
 
                     },
                     stop: function( e, ui, columnNode ){
-                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
                         var containerNode, uiContainerNode, id, rid, nrid, t, closest, _closest;
 
-                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( columnNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( columnNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( columnNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( columnNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                             return;
 
                         }
 
-                        if( ( containerNode = columnNode.parentNode ) === null || !( rid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( containerNode.parentNode, 'id' ) ) || !( rid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( rid ) ) ){
+                        if( ( containerNode = columnNode.parentNode ) === null || !( rid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( containerNode.parentNode, 'id' ) ) || !( rid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( rid ) ) ){
                             return;
 
                         }
 
-                        if( !Object(_data_js__WEBPACK_IMPORTED_MODULE_8__["default"])().get( rid, 'rows' ) || ( uiContainerNode = ui.parentNode ) === null || !( nrid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( uiContainerNode.parentNode, 'id' ) ) || !( nrid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( nrid ) ) ){
+                        if( !Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])().get( rid, 'rows' ) || ( uiContainerNode = ui.parentNode ) === null || !( nrid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( uiContainerNode.parentNode, 'id' ) ) || !( nrid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( nrid ) ) ){
                             return;
 
                         }
-                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui ).next( '.cpb-column' );
-                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( closest );
-                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( t ) ) ? t : 'last';
+                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ).next( '.cpb-column' );
+                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( closest );
+                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( t ) ) ? t : 'last';
 
                         columnNode.removeAttribute( 'style' );
                         id_.remove( id, 'columns', rid );
@@ -1777,8 +1773,8 @@ __webpack_require__.r(__webpack_exports__);
                         uiContainerNode.replaceChild( columnNode , ui );
 
                         if( rid !== nrid ){
-                            _redefine_js__WEBPACK_IMPORTED_MODULE_5__["default"].columns( containerNode );
-                            _redefine_js__WEBPACK_IMPORTED_MODULE_5__["default"].columns( uiContainerNode );
+                            _redefine_js__WEBPACK_IMPORTED_MODULE_4__["default"].columns( containerNode );
+                            _redefine_js__WEBPACK_IMPORTED_MODULE_4__["default"].columns( uiContainerNode );
 
                         }
                     }
@@ -1795,7 +1791,7 @@ __webpack_require__.r(__webpack_exports__);
                         const elementNode = __core.getParent( targetNode, classes.element );
                         var id;
 
-                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( elementNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( elementNode, 'id' ) ) || !_utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ){
+                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( elementNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( elementNode, 'id' ) ) || !_utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ){
                             return;
 
                         }
@@ -1805,26 +1801,26 @@ __webpack_require__.r(__webpack_exports__);
 
                     },
                     stop: function( e, ui, elementNode ){
-                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_10__["default"])();
+                        const id_ = Object(_id_js__WEBPACK_IMPORTED_MODULE_9__["default"])();
                         var id, cid, ncid, t, p, closest, _closest;
 
-                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( elementNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( elementNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ){
+                        if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( elementNode ).isNode() || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( elementNode, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ){
                             return;
 
                         }
 
-                        if( !( cid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( __core.getParent( elementNode, classes.column ), 'id' ) ) || !( cid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( cid ) ) ){
+                        if( !( cid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( __core.getParent( elementNode, classes.column ), 'id' ) ) || !( cid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( cid ) ) ){
                             return;
 
                         }
 
-                        if( !Object(_data_js__WEBPACK_IMPORTED_MODULE_8__["default"])().get( cid, 'columns' ) || !( ncid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( __core.getParent( ui, classes.column ), 'id' ) ) || !( ncid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( ncid ) ) ){
+                        if( !Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])().get( cid, 'columns' ) || !( ncid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( __core.getParent( ui, classes.column ), 'id' ) ) || !( ncid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( ncid ) ) ){
                             return;
 
                         }
-                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui ).next( '.cpb-element' );
-                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( closest );
-                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( t ) ) ? t : 'last';
+                        closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ).next( '.cpb-element' );
+                        _closest = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( closest );
+                        t = _closest.isNode() && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( _closest.prop(), 'id' ) ) && ( t = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( t ) ) ? t : 'last';
 
                         elementNode.removeAttribute( 'style' );
                         id_.remove( id, 'elements', cid );
@@ -1845,8 +1841,8 @@ __webpack_require__.r(__webpack_exports__);
 
     };
 
-    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( _d.documentElement ).on( 'contextmenu click', __menu.create );
-    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( _w ).on( 'resize', __menu.destroy );
+    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _d.documentElement ).on( 'contextmenu click', __menu.create );
+    Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( _w ).on( 'resize', __menu.destroy );
 
 });
 
@@ -3097,445 +3093,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/js/editor/panel/fields/editor.js":
-/*!**********************************************!*\
-  !*** ./src/js/editor/panel/fields/editor.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../redefine.js */ "./src/js/editor/redefine.js");
-/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../target.js */ "./src/js/editor/target.js");
-/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../data.js */ "./src/js/editor/data.js");
-
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function( destroy ){
-	const oTid = 'comet-editorToolbar';//'comet-toolbar';	
-	const selection = {};
-	const target = Object(_target_js__WEBPACK_IMPORTED_MODULE_4__["default"])();
-	const id = target.id();
-	const item = target.item();
-	const element = target.node();
-	const type = target.type();
-	const classes = {
-		active: 'cpb-active',
-		textarea: 'comet-fieldEditor',
-		editor: 'cpb-editable'
-	};
-	const textarea = document.getElementsByClassName( classes.textarea );
-	var neditor = 0;
-	var oToolbar = document.getElementById( oTid );
-
-	destroy = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isBool( destroy ) ? destroy : false;
-
-	function _destroy(){
-		const editors = document.getElementsByClassName( classes.editor );
-		var e, _editor;
-
-		if( editors.length < 1 ){
-			return;
-
-		}
-
-		for( e = 0; e < editors.length; e++ ){
-
-			if( ( _editor = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( editors[e] ) ).isNode() ){
-				editors[e].removeAttribute( 'contenteditable' );
-				_editor.removeClass( classes.active );
-
-			}
-
-		}
-
-	}
-
-	function editor(){
-		var editors, _editor, e;
-
-		const prop = {
-
-			triggered: function( tested ){
-				const cid = _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__["default"].id( _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__["default"].dataset( tested, 'id' ) );
-				var cm = prop.matched( tested );
-
-				return ( ( cm && ( ( id === cid && !item ) || ( item && item === cid ) ) ) ? cm : false );
-
-			},
-
-			matched: function( tested ){
-				const need = _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__["default"].dataset( tested, 'match' );
-				var t = 0;
-
-				for( t; t < textarea.length; t++ ){
-
-					if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( textarea[t] ).isNode() || _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( textarea[t].name ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( textarea[t].name ) !== need ){
-						continue;
-
-					}
-					return textarea[t];
-
-				}
-				return false;
-
-			},
-
-			focus: function( ev, ui ){
-				var buttons, _target;
-
-				ev.preventDefault();
-
-				if( window.getSelection && window.getSelection().modify ){
-					selection.range = window.getSelection().getRangeAt(0);
-					selection.clicked = true;
-
-				}
-
-				if( ( buttons = oToolbar.getElementsByClassName( 'comet-tbButton' ) ).length < 1 || !( ( _target = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( ev.target ) ).isNode() ) ){
-					return;
-
-				}
-
-				function isCommand( button, command ){
-					const cmd = _utils_parse_js__WEBPACK_IMPORTED_MODULE_1__["default"].dataset( button, 'command' );
-
-					return ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( cmd ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( cmd ) === command );
-
-				}
-
-				function parent( comp ){
-					var command, command1, _button, b;
-
-					if( Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( comp ).hasClass( classes.editor ) || comp.parentNode === null ){
-						return;
-
-					}
-
-					switch( comp.nodeName.toLowerCase() ){
-						case 'b':
-						case 'bold':
-						case 'bolder':
-						case 'strong':
-						command = 'bold';
-						break;
-						case 'i':
-						case 'em':
-						case 'italic':
-						command = 'italic';
-						break;
-						case 'u':
-						case 'ins':
-						case 'underline':
-						command = 'underline';
-						break;
-						case 'del':
-						case 'strike':
-						case 'strikethrough':
-						command = 'strikeThrough';
-						break;
-						case 'a':
-						case 'link':
-						command = 'link';
-						break;
-						default:
-						return;
-					}
-
-					for( b = 0; b < buttons.length; b++ ){
-
-						if( !( ( _button = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( buttons[b] ) ).isNode() ) || !isCommand( buttons[b], command ) ){
-							continue;
-
-						}
-						_button.addClass( classes.active );
-
-					}
-					parent( comp.parentNode );
-
-				}
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( buttons ).removeClass( classes.active );
-				parent( _target.prop() );
-
-			},
-
-			change: function( ev, ui ){
-				const ct = prop.matched( ui );
-
-				if( !ct ){
-					return;
-
-				}
-				ct.value = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( ui.innerHTML, '<p><strong><ins><del><sup><sub><b><i><span><u><em><strike><a><h1><h2><h3><h4><h5><h6><hr><br><img><caption>' );
-				Object(_data_js__WEBPACK_IMPORTED_MODULE_5__["default"])().catchAndSet( id, type );
-
-			}
-
-		};
-
-		if( destroy ){
-			_destroy();
-			return;
-
-		}
-
-		if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( element ).isNode() || ( editors = element.getElementsByClassName( classes.editor ) ).length < 1 || textarea.length < 1 ){
-			return;
-
-		}
-
-		for( e = 0; e < editors.length; e++ ){
-
-			if( !( ( _editor = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( editors[e] ) ).isNode() ) ){
-				continue;
-
-			}
-
-			if( destroy || !prop.triggered( editors[e] ) ){
-				editors[e].removeAttribute( 'contenteditable' );
-				_editor.removeClass( classes.active );
-				continue;
-
-			}
-			editors[e].setAttribute( 'contenteditable', 'true' );
-			_editor.addClass( classes.active );
-			_editor.on( 'click', prop.focus );
-			_editor.on( 'input', prop.change );
-			neditor++;
-
-		}
-
-	}
-
-	function toolbar(){
-		const frame = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getNode( 'frame' );
-		var _oToolbar = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( oToolbar );
-		const toolbarExists = ( _oToolbar.isNode() );
-
-		const prop = {
-
-			create: function(){
-				const buttons = prop.buttons();
-				var button, oButton, inner, bClasses, b;
-
-				oToolbar = document.createElement( 'div' );
-				oToolbar.id = oTid;
-
-				for( b = 0; b < buttons.length; b++ ){
-					button = buttons[b];
-					oButton = document.createElement( 'button' );
-					oButton.dataset.command = button.command;
-					oButton.className = 'comet-button comet-tbButton';
-					bClasses = 'comet-title';
-					inner = '';
-
-					if( 'icon' in button ){
-						inner += '<span class="comet-icon ' + button.icon + '"></span>';
-						bClasses += ' comet-tooltip';
-
-					}
-
-					if( 'title' in button ){
-						inner += '<span class="' + bClasses + '">' + button.title + '</span>';
-
-					}
-					oButton.innerHTML = inner;
-
-					if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isFunction( button.render ) ){
-						oToolbar.appendChild( button.render( oButton ) );
-
-					}else{
-						oToolbar.appendChild( oButton );
-
-					}
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( oButton ).on( 'click', button.do );
-
-				}
-				frame.before( oToolbar );
-
-			},
-
-			buttons: function(){
-
-				const onbutton = {
-
-					default: function( command, val ){
-						var sel, range;
-
-						val = !_utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( val ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( val ) : null;
-
-						if( !window.getSelection || !window.getSelection().modify || selection.range === null ){
-							return;
-
-						}
-						sel = window.getSelection();
-
-						if( selection.clicked ){
-							sel.removeAllRanges();
-							sel.addRange( selection.range );
-
-						}
-
-						if( sel.type === 'Caret' ){
-							sel.modify('move', 'backward', 'word');
-							sel.modify('extend', 'forward', 'word');
-
-						}
-						range = sel.getRangeAt(0);
-						document.execCommand( command, false, val );
-						selection.clicked = false;
-
-					},
-
-					toggle: function( ui ){
-						const _ui = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( ui );
-
-						if( _ui.hasClass( classes.active ) ){
-							_ui.removeClass( classes.active );
-							return false;
-
-						}
-						_ui.addClass( classes.active );
-						return true;
-
-					}
-
-
-				};
-
-				return [
-				{
-					command: 'bold',
-					icon: 'cico cico-bold',
-					title: __cometi18n.ui.bold,
-					do: function( ev, ui ){
-						ev.preventDefault();
-						onbutton.toggle( ui );
-						onbutton.default( 'bold' );
-
-					}
-				},
-
-				{
-					command: 'italic',
-					icon: 'cico cico-italic',
-					title: __cometi18n.ui.italic,
-					do: function( ev, ui ){
-						ev.preventDefault();
-						onbutton.toggle( ui );
-						onbutton.default( 'italic' );
-
-					}
-				},
-
-				{
-					command: 'underline',
-					icon: 'cico cico-underline',
-					title: __cometi18n.ui.underline,
-					do: function( ev, ui ){
-						ev.preventDefault();
-						onbutton.toggle( ui );
-						onbutton.default( 'underline' );
-
-					}
-				},
-
-				{
-					command: 'strikeThrough',
-					icon: 'cico cico-striketrough',
-					title: __cometi18n.ui.st,
-					do: function( ev, ui ){
-						ev.preventDefault();
-						onbutton.toggle( ui );
-						onbutton.default( 'strikeThrough' );
-
-					}
-				},
-
-				{
-					command: 'link',
-					icon: 'cico cico-link',
-					title: __cometi18n.ui.ilink,
-					render: function( button ){
-						const inline = document.createElement( 'div' );
-						const input = document.createElement( 'input' );
-						const createLink = document.createElement( 'button' );
-
-
-						inline.className = 'comet-inline';
-
-						createLink.className = 'comet-button comet-done';
-						createLink.innerHTML = '<span class="comet-icon cico cico-break"></span><span class="comet-title comet-tooltip">' + __cometi18n.ui.ilink + '</span>';
-
-						inline.appendChild( button );
-						inline.appendChild( input );
-						inline.appendChild( createLink );
-
-						Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( createLink ).on( 'click', function( ev, ui ){
-							const val = _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( input.value ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( input.value ) ) : '';
-							const state = val === '' ? 'unlink' : 'createLink';
-
-							ev.preventDefault();
-
-							onbutton.default( state, val );
-						});
-
-						return inline;
-
-					},
-					do: function( ev, ui ){
-						const _p = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_2__["default"])( ui.parentNode );
-						
-						ev.preventDefault();
-
-						if( onbutton.toggle( ui ) ){
-							_p.addClass( classes.active );
-							return;
-
-						}
-						_p.removeClass( classes.active );
-
-					}
-				}];
-
-			}
-
-		};
-
-		if( destroy || neditor < 1 ){
-
-			if( toolbarExists ){
-				_oToolbar.remove();
-
-			}
-			frame.style.height = '';
-			frame.style.top = '';
-			return;
-
-		}
-
-		if( !toolbarExists ){
-			prop.create();
-
-		}
-
-	}
-
-	editor();
-	toolbar();
-
-});
-
-/***/ }),
-
 /***/ "./src/js/editor/panel/fields/icon.js":
 /*!********************************************!*\
   !*** ./src/js/editor/panel/fields/icon.js ***!
@@ -3730,8 +3287,6 @@ __webpack_require__.r(__webpack_exports__);
 			const decoded = _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].decode( value );
 			const icon = ( !decoded ? false : _utils_icon_js__WEBPACK_IMPORTED_MODULE_3__["default"].get_icon( decoded.set_id, decoded.icon_id ) );
 			var n = 0;
-
-			console.log( value, decoded, icon );
 
 			while( n < wcn.length ){
 
@@ -4901,7 +4456,7 @@ const __create = function( tabs, data ){
 							oh.innerHTML = '<img src="' + _value + '"/>';
 							Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_8__["default"])( oh ).on( 'click', __img.open );
 
-							button.className = classes.button + ' comet-remove';
+							button.className = buttonClass + ' comet-remove';
 							button.title = remove;
 							button.innerHTML = '<span class="cico cico-x"></span>';
 							oh.appendChild( button );
@@ -5471,16 +5026,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./panel/fields/editor.js */ "./src/js/editor/panel/fields/editor.js");
-/* harmony import */ var _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/sanitize.js */ "./src/js/utils/sanitize.js");
-/* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/layout.js */ "./src/js/utils/layout.js");
-/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./redefine.js */ "./src/js/editor/redefine.js");
-/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
-/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./target.js */ "./src/js/editor/target.js");
-/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./data.js */ "./src/js/editor/data.js");
-
+/* harmony import */ var _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/sanitize.js */ "./src/js/utils/sanitize.js");
+/* harmony import */ var _utils_layout_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/layout.js */ "./src/js/utils/layout.js");
+/* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
+/* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
+/* harmony import */ var _redefine_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./redefine.js */ "./src/js/editor/redefine.js");
+/* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
+/* harmony import */ var _target_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./target.js */ "./src/js/editor/target.js");
+/* harmony import */ var _data_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./data.js */ "./src/js/editor/data.js");
 
 
 
@@ -5500,9 +5053,9 @@ __webpack_require__.r(__webpack_exports__);
 
 	const data = {};
 
-	const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_8__["default"])();
+	const data_ = Object(_data_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
 
-	const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
+	const target_ = Object(_target_js__WEBPACK_IMPORTED_MODULE_6__["default"])();
 
 	const targetNode = target_.node();
 
@@ -5519,7 +5072,7 @@ __webpack_require__.r(__webpack_exports__);
 
 		background: function( content ){
 
-			const _content = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( content );
+			const _content = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( content );
 			var inner, dren, background;
 
 			if( !_content.isNode() ){
@@ -5528,7 +5081,7 @@ __webpack_require__.r(__webpack_exports__);
 			}
 
 			if( ( dren = _content.children( 'cpb-backgroundComponents' ) ).length > 0 ){
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( dren ).remove();
+				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( dren ).remove();
 
 			}
 			background = _d.createElement( 'div' );
@@ -5536,12 +5089,12 @@ __webpack_require__.r(__webpack_exports__);
 			content.appendChild( background );
 			inner = '';
 
-			if( 'vid' in uidata && __core.is_true( uidata.vid ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( uidata.vurl ) ){
-				inner += '<video class="cpb-backgroundVideo" src="' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].stripTags( uidata.vurl ) ) + '" loop autoplay muted preload="auto"></video>';
+			if( 'vid' in uidata && __core.is_true( uidata.vid ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( uidata.vurl ) ){
+				inner += '<video class="cpb-backgroundVideo" src="' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( uidata.vurl ) ) + '" loop autoplay muted preload="auto"></video>';
 
 			}
 
-			if( 'ov' in uidata && __core.is_true( uidata.ov ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( uidata.ovc ) ){
+			if( 'ov' in uidata && __core.is_true( uidata.ov ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( uidata.ovc ) ){
 				inner += '<div class="cpb-backgroundOverlay"></div>';
 
 			}
@@ -5563,7 +5116,7 @@ __webpack_require__.r(__webpack_exports__);
 
 				isSibling: function( column ){
 					var id;
-					return ( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( column ).hasClass( className ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( column, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) ? false : id );
+					return ( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( column ).hasClass( className ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].dataset( column, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( id ) ) ? false : id );
 
 				},
 
@@ -5644,11 +5197,11 @@ __webpack_require__.r(__webpack_exports__);
 
 			for( c = 0; c < dren.length; c++ ){
 
-				if( !( __id = __priv.isSibling( dren[c] ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( get = data_.get( __id, _type ) ) ){
+				if( !( __id = __priv.isSibling( dren[c] ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( get = data_.get( __id, _type ) ) ){
 					continue;
 
 				}
-				sw = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__["default"].number( { value: get.wsize, min: 10, default: 10 } );
+				sw = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].number( { value: get.wsize, min: 10, default: 10 } );
 
 				if( dren[c] === targetNode ){
 					targetWidth = sw;
@@ -5664,21 +5217,21 @@ __webpack_require__.r(__webpack_exports__);
 				width = width + sw;
 
 			}
-			value = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__["default"].number( { value: parseFloat( value ), min: 10, default: 10 } );
+			value = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].number( { value: parseFloat( value ), min: 10, default: 10 } );
 			delta = targetWidth - value;
-			siblingWidth = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__["default"].number( { value: ( siblingWidth + delta ), min: 10, default: 10 } );
+			siblingWidth = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].number( { value: ( siblingWidth + delta ), min: 10, default: 10 } );
 			width = width + value + siblingWidth;
 
 			if( width > 100 ){
 				delta = width - 100;
 				width = width - siblingWidth;
-				siblingWidth = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__["default"].number( { value: ( siblingWidth - delta ), min: 10, default: 10 } );
+				siblingWidth = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].number( { value: ( siblingWidth - delta ), min: 10, default: 10 } );
 				width = width + siblingWidth;
 
 				if( width > 100 ){
 					delta = width - 100;
 					width = width - value;
-					value = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_1__["default"].number( { value: ( value - delta ), min: 10, default: 10 } );
+					value = _utils_sanitize_js__WEBPACK_IMPORTED_MODULE_0__["default"].number( { value: ( value - delta ), min: 10, default: 10 } );
 
 				}
 
@@ -5689,7 +5242,7 @@ __webpack_require__.r(__webpack_exports__);
 
 			}
 			data_.set( sibling.id, _type, { wsize: siblingWidth } );
-			Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_2__["default"])( data_.getData(), 'css' ).column( sibling.id );
+			Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData(), 'css' ).column( sibling.id );
 			ui.value = value;
 			return value;
 
@@ -5699,7 +5252,7 @@ __webpack_require__.r(__webpack_exports__);
 
 	};
 
-	if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( ui ).isNode() || !( _id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( target_.id() ) ) || !( _type = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].type( target_.type() ) ) || !targetNode ){
+	if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ).isNode() || !( _id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].id( target_.id() ) ) || !( _type = _utils_parse_js__WEBPACK_IMPORTED_MODULE_2__["default"].type( target_.type() ) ) || !targetNode ){
 		return false;
 
 	}
@@ -5709,12 +5262,12 @@ __webpack_require__.r(__webpack_exports__);
 
 	}
 
-	if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isString( ui.name ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isStringEmpty( slug = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].stripTags( ui.name ) ) ) ){
+	if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isString( ui.name ) || _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isStringEmpty( slug = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].trim( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripTags( ui.name ) ) ) ){
 		return false;
 
 	}
-	uidata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].isObject( uidata = data_.get( _id, _type ) ) ? uidata : {};
-	data[slug] = _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].encode_chars( _utils_utils_js__WEBPACK_IMPORTED_MODULE_4__["default"].stripOnly( ui.value, '<script><link><body><html><meta>' ) );
+	uidata = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( uidata = data_.get( _id, _type ) ) ? uidata : {};
+	data[slug] = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].encode_chars( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].stripOnly( ui.value, '<script><link><body><html><meta>' ) );
 
 	if( index === 2 && ui.type ){
 
@@ -5739,14 +5292,14 @@ __webpack_require__.r(__webpack_exports__);
 
 		case 'sections':
 		data_.set( _id, 'sections', data );
-		__core.background( Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).child( 'cpb-sectionContent' ) );
-		Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_2__["default"])( data_.getData(), 'css' ).section( _id );
+		__core.background( Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).child( 'cpb-sectionContent' ) );
+		Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData(), 'css' ).section( _id );
 		return;
 
 		case 'rows':
 		data_.set( _id, 'rows', data );
-		__core.background( Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).child( 'cpb-rowContent' ) );
-		Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_2__["default"])( data_.getData(), 'css' ).row( _id );
+		__core.background( Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).child( 'cpb-rowContent' ) );
+		Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData(), 'css' ).row( _id );
 		return;
 
 		case 'columns':
@@ -5757,19 +5310,18 @@ __webpack_require__.r(__webpack_exports__);
 		}
 		data[slug] = cvalue;
 		data_.set( _id, 'columns', data );
-		__core.background( Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_6__["default"])( targetNode ).child( 'cpb-columnContent' ) );
-		Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_2__["default"])( data_.getData(), 'css' ).column( _id );
+		__core.background( Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( targetNode ).child( 'cpb-columnContent' ) );
+		Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData(), 'css' ).column( _id );
 		return;
 
 		case 'elements':
 		data_.set( _id, 'elements', data );
 
-		if( !( re = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_2__["default"])( data_.getData() ).element( _id, true ) ) ){
+		if( !( re = Object(_utils_layout_js__WEBPACK_IMPORTED_MODULE_1__["default"])( data_.getData() ).element( _id, true ) ) ){
 			return false;
 
 		}
 		targetNode.parentNode.replaceChild( re, targetNode );
-		Object(_panel_fields_editor_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 		return true;
 
 		default:
@@ -11893,7 +11445,8 @@ utils.escUrl = function( url ){
 		
 	}
 
-	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
+	//url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
+	return url;
 
 	return encodeURI( url );
 
@@ -11903,13 +11456,13 @@ utils.encode_chars = function( str ){
 	const __core = {
 
 		map: {
-			'&': '&amp;',
+			//'&': '&amp;',
 			'(': '&#40;',
 			')': '&#41;',
 			',': '&#44;',
 			//'/': '&#47;',
 			':': '&#58;',
-			';': '&#59;',
+			//';': '&#59;',
 			'[': '&#91;',
 			'\\': '&#92;',
 			']': '&#93;',
@@ -11933,13 +11486,13 @@ utils.encode_chars = function( str ){
 		return str;
 
 	}
-	return str.replace(/[&\/,\[\]\\`{}\(\):;|~«»]/g, __core.callback );
+	return str.replace(/[,\[\]\\`{}\(\):|~«»]/g, __core.callback );
 
 };
 
-/*utils.decode_chars = function( str ){
+utils.decode_chars = function( str ){
 
-};*/
+};
 
 utils.json_encode = function( obj, raw ){
 

@@ -17,7 +17,7 @@ function comet_get_post_edit_link( $id, $default = true ){
 }
 
 function comet_message( $str = '', $type = 'note', $echo = false ){
-  $types = array( 'warning', 'error', 'success', 'note' );
+  $types = [ 'warning', 'error', 'success', 'note' ];
   $type = ( is_string( $type ) && in_array( $type = trim( strtolower( $type ) ), $types ) ? $type : 'note' );
   $str = esc_html( is_string( $str ) ? strip_tags( $str, comet_inline_tags() ) : '' );
 
@@ -61,30 +61,6 @@ function comet_get_mytemplate( $id, $meta = false ){
 
 }
 
-/*function comet_updateMyTemplate( $data = array() ){
-  $r = -1;
-  if( is_array( $data ) ) {
-    $arr = array(
-      'comment_status'  => 'closed',
-      'ping_status'     => 'closed',
-      'post_title'      => isset( $data['title'] ) ? trim( $data['title'] ) : '',
-      'post_status'     => 'publish',
-      'post_type'       => 'comet_mytemplates',
-      'post_content'    => '',
-      'meta_input'      => array(
-        '_cometMetaData' => isset( $data['meta'] ) && is_array( $data['meta'] ) ? $data['meta'] : ''
-      )
-    );
-    if( isset( $data['id'] ) && is_numeric( $data['id'] ) ){
-      $arr['ID'] = (int)$data['id'];
-    }
-    $r = wp_insert_post( $arr );
-  }else{
-    $r = -2;
-  }
-  return $r;
-}*/
-
 function comet_get_post( $id = null ){
   global $comet_lib;
 
@@ -97,131 +73,6 @@ function comet_get_post( $id = null ){
 
 }
 
-/*function comet_updatePost( $data = array() ){
-  $r = 0;
-
-  if( is_array( $data ) ) {
-
-    $metaboxes = array();
-
-    $esc_data = array();
-
-    if( isset( $data['_post'] ) && is_string( $data['_post'] ) ){
-      parse_str( $data['_post'], $metaboxes );
-    }
-
-    /*if( isset( $metaboxes['title'] ) && is_string( $metaboxes['title'] ) ){
-      $esc_data['post_title'] = sanitize_title( $metaboxes['title'] );
-    }*/
-
-    /*if( isset( $data['title'] ) && is_string( $data['title'] ) ){
-      $esc_data['post_title'] = sanitize_title( $data['title'] );
-    }
-
-    if( isset( $data['content'] ) ){
-      $esc_data['post_content'] = wp_kses_post( $data['content'] );
-    }
-
-    if( isset( $data['post_type'] ) ){
-      $esc_data['post_type'] = $data['post_type'];
-    }
-
-    $esc_data['meta_input'] = array();
-
-    if( isset( $data['meta'] ) && is_array( $data['meta'] ) ){
-      $esc_data['meta_input']['_cometMetaData'] = $data['meta'];
-    }
-
-    /*if( isset( $data['style'] ) ){
-      $esc_data['meta_input']['_cometStyle'] = $data['style'];
-    }*/
-
-   /* if( isset( $data['comment'] ) && in_array( $data['comment'], array( 'closed', 'open' ), true ) ){
-      $esc_data['comment_status'] = $data['comment'];
-    }
-
-    if( isset( $data['ping'] ) && in_array( $data['ping'], array( 'closed', 'open' ), true ) ){
-      $esc_data['ping_status'] = $data['ping'];
-    }
-
-    if( isset( $metaboxes['status'] ) && in_array( $metaboxes['status'], array( 'inherit', 'future', 'publish', 'pending', 'private', 'trash', 'auto-draft', 'draft' ), true ) ){
-      $esc_data['post_status'] = $metaboxes['status'];
-    }
-
-    if( isset( $metaboxes['excerpt'] ) && is_string( $metaboxes['excerpt'] ) ){
-      $esc_data['post_excerpt'] = sanitize_text_field( $metaboxes['excerpt'] );
-    }
-
-    if( isset( $data['id'] ) && is_numeric( $data['id'] ) ){
-      $esc_data['ID'] = (int)$data['id'];
-      $r = wp_update_post( $esc_data );
-    }else{
-      $r = wp_insert_post( $esc_data );
-    }
-  }
-  return $r;
-}*/
-
-/*function comet_deleteMyTemplate( $id ){
-  $r = false;
-  $id = (int)$id;
-  if( is_numeric( $id ) && $id >= 0 ){
-   $r = wp_delete_post( $id, true );
-  }
-  return $r;
-}*/
-
-/*function comet_updatePostMeta( $id, $data = array() ){
-  $r = -1;
-  if( is_numeric( $id ) ){
-    $r = update_post_meta( (int)$id, '_cometMetaData', $data );
-  }else{
-    $r = -2;
-  }
-  return $r;
-}
-
-function comet_getPostMeta( $id ){
-  $r = -1;
-  if( is_numeric( $id ) ){
-    $r = get_post_meta( (int)$id, '_cometMetaData', true );
-  }else{
-    $r = -2;
-  }
-  return $r;
-}
-
-function comet_parse_items( $ids, $items ){
-  if( !is_string( $ids ) || !is_array( $items ) ){
-      return false;
-    }
-
-    $ids = explode( ',', $ids );
-
-    if( sizeof( $ids ) < 1 ){
-      return false;
-    }
-
-    $rt = [];
-    $n = 0;
-    foreach( $ids as $c => $id ){
-      $id = (int)$id;
-      if( !is_int( $id ) || !isset( $items[$id] ) ){
-        continue;
-      }
-      $rt[$id] = $items[$id];
-    }
-    return $rt;
-  }*/
-
-/*function comet_get_template( $id ){
-
-  $post = comet_get_post( $id );
-  
-  return ( $post->has_post() && ( $the_post = $post->get_post() ) && isset( $the_post->post_type ) && $the_post->post_type === 'comet_mytemplates' ? $the_post : false );
-
-}*/
-
 function comet_layout(){
   global $comet_lib;
 
@@ -230,19 +81,6 @@ function comet_layout(){
   return comet_autoload( "{$comet_lib}\Comet_Layout", "{$path}includes/class-layout.php" );
   
 }
-
-/*function comet_getPostId(){
-  $id = get_queried_object_id();
-
-  if( $id === 0 ){
-    if( isset( $_GET['post'] ) && is_numeric( $_GET['post'] ) ){
-      $id = (int)$_GET['post'];
-    }elseif( isset( $_GET['id'] ) && is_numeric( $_GET['id'] ) ){
-      $id = (int)$_GET['id'];
-    }
-  }
-  return $id;
-}*/
 
 function comet_iconsets(){
   global $comet_lib;
@@ -289,18 +127,14 @@ function comet_get_fonts( $r = false ){
 
 }
 
-/*function comet_updateFonts( $fonts = array() ){
-  return update_option( 'comet_fonts', $fonts );
-
-}*/
-
 function comet_fonts_url(){
 
   if( !is_array( $fonts = comet_get_fonts() ) ){
     return false;
 
   }
-  return 'https://fonts.googleapis.com/css?family=' . implode( '|', $fonts );
+  $str = implode( '|', $fonts );
+  return "https://fonts.googleapis.com/css?family={$str}";
 
 }
 
@@ -398,7 +232,7 @@ function comet_parse_json( $data ){
 
 function comet_allowed_tags( $toStr = true ){
 
-  $tags = array( 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'section', 'span', 'aside', 'figure', 'img', 'sup', 'sub', 'code', 'pre', 'blockquote', 'a', 'article', 'audio', 'b', 'br', 'strong', 'u', 'i', 'canvas', 'svg', 'button', 'caption', 'cite', 'col', 'colgroup', 'dd', 'del', 'dl', 'dt', 'em', 'embed', 'fieldset', 'input', 'select', 'textarea', 'video', 'figcaption', 'form', 'footer', 'header', 'iframe', 'li', 'ul', 'ol', 'label', 'nav', 'mark', 'legend', 'object', 'optgroup', 'option', 'param', 'q', 'cite', 's', 'small', 'source', 'table', 'tbody', 'tfoot', 'td', 'tr', 'thead', 'th', 'track', 'title', 'var' );
+  $tags = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'section', 'span', 'aside', 'figure', 'img', 'sup', 'sub', 'code', 'pre', 'blockquote', 'a', 'article', 'audio', 'b', 'br', 'strong', 'u', 'i', 'canvas', 'svg', 'button', 'caption', 'cite', 'col', 'colgroup', 'dd', 'del', 'dl', 'dt', 'em', 'embed', 'fieldset', 'input', 'select', 'textarea', 'video', 'figcaption', 'form', 'footer', 'header', 'iframe', 'li', 'ul', 'ol', 'label', 'nav', 'mark', 'legend', 'object', 'optgroup', 'option', 'param', 'q', 'cite', 's', 'small', 'source', 'table', 'tbody', 'tfoot', 'td', 'tr', 'thead', 'th', 'track', 'title', 'var' ];
 
   if( isset( $toStr ) && !$toStr ){
     return $tags;
@@ -416,7 +250,7 @@ function comet_allowed_tags( $toStr = true ){
 
 function comet_inline_tags( $toString = true ){
 
-  $tags = array( 'span', 'img', 'sup', 'sub', 'code', 'a', 'b', 'br', 'strong', 'u', 'i', 'del', 'em', 'li', 'ul', 'ol', 'small', 'strike' );
+  $tags = [ 'span', 'img', 'sup', 'sub', 'code', 'a', 'b', 'br', 'strong', 'u', 'i', 'del', 'em', 'li', 'ul', 'ol', 'small', 'strike' ];
 
   if( is_bool( $toString ) && !$toString ){
     return $tags;

@@ -50,6 +50,7 @@ gulp.task( 'js:verify', function(){
             'semi': [ 'error', 'always'],
             'strict': 1,
             'no-use-before-define': 'off',
+            'no-console': 2
         }
     }))
     .pipe(eslint.format())

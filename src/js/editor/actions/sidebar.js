@@ -352,7 +352,6 @@ const sidebar = {
 					close: {
 						do: function( e, ui ){
 							target_.reset();
-							//__editor( true );
 						}
 					}
 

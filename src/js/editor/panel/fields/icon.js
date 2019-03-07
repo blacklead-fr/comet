@@ -178,8 +178,6 @@ export default function( slug, field, data ){
 			const icon = ( !decoded ? false : _icon.get_icon( decoded.set_id, decoded.icon_id ) );
 			var n = 0;
 
-			console.log( value, decoded, icon );
-
 			while( n < wcn.length ){
 
 				if( wcn[n] !== input ){

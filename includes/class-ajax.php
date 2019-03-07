@@ -119,11 +119,6 @@ class Comet_Ajax {
             echo 0;
             break;
 
-            /*case 'meta':
-
-            echo ( isset( $p['id'] ) && is_array( $d = comet_getPostMeta( $p['id'] ) ) ? json_encode( $d ) : 0 );
-            break;*/
-
             case 'get':
 
             $meta = isset( $p['meta'] ) && in_array( $p['meta'], [ 'true', 'TRUE', true, 1 ] ) ? true : false;

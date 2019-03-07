@@ -4,34 +4,9 @@ if( !defined( 'ABSPATH' ) ){
 
 }
 
-/*function comet_is_editing( $post = null ){
-
-  if( is_admin() ){
-    $screen = get_current_screen();
-    $pb = is_object( $screen ) && isset( $screen->base ) ? trim( $screen->base ) : null;
-    if( $pb === 'post' ){
-      $g = isset( $_GET ) ? $_GET : null;
-      if( is_array( $g ) && isset( $g['action'] ) && isset( $g['comet'] ) && isset( $g['post'] ) && is_numeric( $g['post'] ) ){
-        $action = trim( $g['action'] );
-        if( $action === 'edit' ){
-          if( !is_numeric( $post ) ){
-            return true;
-          }
-          if( (int)$g['post'] === (int)$post ){
-            return true;
-          }
-        }
-      }
-    }
-  }
-
-  return false;
-
-}*/
-
 function comet_get_args(){
 
-  return ( isset( $_GET ) && is_array( $_GET ) ? $_GET : array() );
+  return ( isset( $_GET ) && is_array( $_GET ) ? $_GET : [] );
 
 }
 
@@ -54,19 +29,7 @@ function comet_die( $message = false, $title = '' ){
 
   }
   $_die->render();
-  exit;/*
-  require_once 'class-die.php';
-
-  if( class_exists( '\Comet\Admin\Comet_Die' ) ){
-    $Die = new \Comet\Admin\Comet_Die( $message, $title );
-
-    if( $Die instanceof \Comet\Admin\Comet_Die && method_exists( $Die, 'render' ) ){
-      $Die->render();
-
-    }
-
-  }
-  exit;*/
+  exit;
 
 }
 
@@ -109,7 +72,7 @@ function comet_print_style( $src = '', $version = null, $media = 'all' ){
     return;
 
   }
-  $media = is_string( $media ) && in_array( strtolower( $media ), array( 'print', 'screen', 'speech' ) ) ? $media : 'all';
+  $media = is_string( $media ) && in_array( strtolower( $media ), [ 'print', 'screen', 'speech' ] ) ? $media : 'all';
   $src = trim( strip_tags( $src ) );
 
   if( is_string( $version ) || is_numeric( $version ) ){
@@ -145,37 +108,4 @@ function comet_inline_style( $style ){
   echo '<style type="text/css">' . strip_tags( $style ) . '</style>' . "\r\n";
 
 }
-
-/*function comet_print_style( $src = '', $version = null, $media = 'all' ){
-
-  if( !is_string( $src ) ){
-    return;
-
-  }
-  $media = is_string( $media ) && in_array( strtolower( $media ), array( 'print', 'screen', 'speech' ) ) ? $media : 'all';
-  $src = trim( strip_tags( $src ) );
-
-  if( is_string( $version ) || is_numeric( $version ) ){
-    $src = add_query_args( 'ver', trim( strip_tags( $version ) ), $src );
-
-  }
-  echo '<link rel="stylesheet" type="text/css" href="' . esc_url( $src ) . '" media="' . $media . '" />' . "\n";
-
-}
-
-function comet_print_script( $src = '', $version = null ){
-
-  if( !is_string( $src ) ){
-    return;
-
-  }
-  $src = trim( strip_tags( $src ) );
-
-  if( is_string( $version ) || is_numeric( $version ) ){
-    $src = add_query_args( 'ver', trim( strip_tags( $version ) ), $src );
-
-  }
-  echo '<script src="' . esc_url( $src ) . '"></script>' . "\n";
-
-}*/
 ?>

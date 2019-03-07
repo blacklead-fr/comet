@@ -30,7 +30,7 @@ class fonts extends Comet_Interface{
         $this->help = $help;
         $slug = $this->slug;
 
-        add_action( "comet_admin_header_{$slug}", array( $this, 'style' ) );
+        add_action( "comet_admin_header_{$slug}", [ $this, 'style' ] );
 
     }
 
@@ -53,7 +53,7 @@ class fonts extends Comet_Interface{
     protected function content(){
 
         $fonts = comet_get_fonts( [] );
-        $weight = array( 100, 200, 300, 400, 500, 600, 700, 800, 900 );
+        $weight = [ 100, 200, 300, 400, 500, 600, 700, 800, 900 ];
 
         $li = '';
         $total = 0;
@@ -83,9 +83,7 @@ class fonts extends Comet_Interface{
         echo '</div>';
         echo '</div>';
 
-        echo '<ul id="comet-mapFonts">';
-        echo $li;
-        echo '</ul>';
+        echo "<ul id=\"comet-mapFonts\">{$li}</ul>";
 
     }
 }

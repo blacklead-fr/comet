@@ -70,7 +70,7 @@ class Comet {
 	 * @access   protected
 	 * @var      array    $registered    The plugin dependencies.
 	 */
-	private $registered = array();
+	private $registered = [];
 
 
 	public function __construct(){

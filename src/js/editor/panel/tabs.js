@@ -745,7 +745,7 @@ const __create = function( tabs, data ){
 							oh.innerHTML = '<img src="' + _value + '"/>';
 							node( oh ).on( 'click', __img.open );
 
-							button.className = classes.button + ' comet-remove';
+							button.className = buttonClass + ' comet-remove';
 							button.title = remove;
 							button.innerHTML = '<span class="cico cico-x"></span>';
 							oh.appendChild( button );

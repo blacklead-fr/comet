@@ -1,4 +1,3 @@
-import editor from './panel/fields/editor.js';
 import sanitize from '../utils/sanitize.js';
 import layout from '../utils/layout.js';
 import parse from '../utils/parse.js';
@@ -287,7 +286,6 @@ export default function( ui ){
 
 		}
 		targetNode.parentNode.replaceChild( re, targetNode );
-		editor();
 		return true;
 
 		default:

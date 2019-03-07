@@ -9,9 +9,9 @@ require_once 'class-utils.php';
 
 class Comet_Register extends Comet_Utils {
 
-	protected $data = array();
+	protected $data = [];
 
-	private $items = array();
+	private $items = [];
 
 	private function has_tab( $tab_id, $toItems = false ){
 
@@ -64,15 +64,15 @@ class Comet_Register extends Comet_Utils {
 		}
 
 		if( !is_array( $this->data ) ){
-			$this->data = array();
+			$this->data = [];
 
 		}
 
-		$this->data[$slug] = array(
+		$this->data[$slug] = [
 			'slug'		=> $slug,
 			'name'		=> ( is_string( $name ) ? trim( $name ) : '' ),
 			'tabs'		=> $this->items
-		);
+		];
 		return $slug;
 
 
@@ -90,7 +90,7 @@ class Comet_Register extends Comet_Utils {
 		$cData = $toItems ? $this->items : $this->data;
 
 		if( !is_array( $this->data ) ){
-			$cData = array();
+			$cData = [];
 
 		}
 
@@ -102,11 +102,11 @@ class Comet_Register extends Comet_Utils {
 			}
 
 		}
-		array_push( $cData, array(
+		array_push( $cData, [
 			'slug'		=> $slug,
 			'name'		=> ( is_string( $name ) ? trim( $name ) : '' ),
-			'sections'	=> array()
-		) );
+			'sections'	=> []
+		] );
 		$this->set_data($cData, $toItems );
 		return count( $cData ) - 1;
 
@@ -125,7 +125,7 @@ class Comet_Register extends Comet_Utils {
 		$cData = $toItems ? $this->items : $this->data;
 
 		if( !isset( $cData[$tab_id]['sections'] ) || !is_array( $cData[$tab_id]['sections'] ) ){
-			$cData[$tab_id]['sections'] = array();
+			$cData[$tab_id]['sections'] = [];
 
 		}
 
@@ -137,17 +137,17 @@ class Comet_Register extends Comet_Utils {
 			}
 
 		}
-		array_push( $cData[$tab_id]['sections'], array(
+		array_push( $cData[$tab_id]['sections'], [
 			'slug'		=> $slug,
 			'name'		=> ( is_string( $name ) ? trim( $name ) : '' ),
-			'fields'	=> array()
-		) );
+			'fields'	=> []
+		] );
 		$this->set_data( $cData, $toItems );
 		return count( $cData[$tab_id]['sections'] ) - 1;
 
 	}
 
-	protected function register_field( $tab_id, $section_id, $slug, $options = array(), $toItems = false ){
+	protected function register_field( $tab_id, $section_id, $slug, $options = [], $toItems = false ){
 
 		$tab_id = intval( $tab_id );
 		$section_id = intval( $section_id );
@@ -161,7 +161,7 @@ class Comet_Register extends Comet_Utils {
 		$cData = $toItems ? $this->items : $this->data;
 
 		if( !isset( $cData[$tab_id]['sections'][$section_id]['fields'] ) && !is_array( $cData[$tab_id]['sections'][$section_id]['fields'] ) ){
-			$cData[$tab_id]['sections'][$section_id] += [ 'fields' => array() ];
+			$cData[$tab_id]['sections'][$section_id] += [ 'fields' => [] ];
 
 		}
 		$cData[$tab_id]['sections'][$section_id]['fields'] += [ $slug => $options ];

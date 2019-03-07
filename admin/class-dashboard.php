@@ -14,9 +14,9 @@ class Comet_Dashboard extends Comet_Pages {
 
 	public function __construct(){
 
-		add_action( 'comet_admin_header', array( $this, 'styles' ) );
-		add_action( 'comet_admin_footer', array( $this, 'scripts' ) );
-		add_filter( 'comet_admin_body_class', array( $this, 'body_class' ) );
+		add_action( 'comet_admin_header', [ $this, 'styles' ] );
+		add_action( 'comet_admin_footer', [ $this, 'scripts' ] );
+		add_filter( 'comet_admin_body_class', [ $this, 'body_class' ] );
 
 		$this->set( '\Comet\Admin\Dashboard\main', $this->base_path . 'class-main.php' );
 
@@ -48,13 +48,16 @@ class Comet_Dashboard extends Comet_Pages {
 	}
 
 	public function styles(){
-		comet_print_style( COMET_URL . 'src/css/cico.min.css' );
+
+		$url = COMET_URL;
+
+		comet_print_style( "{$url}src/css/cico.min.css" );
 
 		if( $this->is_page( 'preview' ) ){
 			return;
 
 		}
-		comet_print_style( COMET_URL . 'src/css/admin.css' );
+		comet_print_style( "{$url}src/css/admin.css" );
 
 	}
 
@@ -64,6 +67,7 @@ class Comet_Dashboard extends Comet_Pages {
 			return;
 
 		}
+		$url = COMET_URL;
 		$opt = get_option( 'comet_settings' );
 		$key = is_array( $opt ) && isset( $opt['googlekey'] ) ? trim( $opt['googlekey'] ) : '';
 		$i18n = comet_get_i18n( 'admin' );
@@ -82,7 +86,7 @@ class Comet_Dashboard extends Comet_Pages {
 			]
 		);
 		comet_localize( $i18n->get_id(), $i18n->get() );
-		comet_print_script( COMET_URL . 'src/js/admin.js' );
+		comet_print_script( "{$url}src/js/admin.js" );
 
 	}
 

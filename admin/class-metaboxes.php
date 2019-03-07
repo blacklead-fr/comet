@@ -14,7 +14,7 @@ class Comet_Metaboxes extends Comet_Page {
     $post = $this->post;
     $post_type = $post->post_type;
 
-    $thumbnail_support = current_theme_supports( 'post-thumbnails', $post_type ) && post_type_supports( $post_type, 'thumbnail' );
+    /*$thumbnail_support = current_theme_supports( 'post-thumbnails', $post_type ) && post_type_supports( $post_type, 'thumbnail' );
 
     if ( ! $thumbnail_support && 'attachment' === $post_type && $post->post_mime_type ) {
       if ( wp_attachment_is( 'audio', $post ) ) {
@@ -23,9 +23,7 @@ class Comet_Metaboxes extends Comet_Page {
         $thumbnail_support = post_type_supports( 'attachment:video', 'thumbnail' ) || current_theme_supports( 'post-thumbnails', 'attachment:video' );
       }
     }
-
-    // Soon
-    /*foreach ( get_object_taxonomies( $post ) as $tax_name ) {
+    foreach ( get_object_taxonomies( $post ) as $tax_name ) {
       $taxonomy = get_taxonomy( $tax_name );
       if ( ! $taxonomy->show_ui || false === $taxonomy->meta_box_cb ) {
         continue;
@@ -55,7 +53,6 @@ class Comet_Metaboxes extends Comet_Page {
     /*if ( $thumbnail_support && current_user_can( 'upload_files' ) ) {
       add_meta_box( 'postimagediv', __( 'Thumbnail', 'comet' ), array( $this, 'thumbnail' ), null, 'side', 'low' );
     }*/
-    // Soon
     /*if ( post_type_supports( $post_type, 'trackbacks' ) ) {
       add_meta_box( 'trackbacksdiv', __( 'Send Trackbacks' ), 'post_trackback_meta_box', null, 'normal', 'low' );
     }
@@ -67,7 +64,12 @@ class Comet_Metaboxes extends Comet_Page {
   public function status( $post, $box ){
 
     $this->post_status( $post, $box );
-    $this->post_format( $post, $box );
+    //$this->post_format( $post, $box );
+
+    // @TODO  Post format
+    // @TODO  Post thumbnail
+    // @TODO  Custom save action
+    // @TODO  Taxonomies
 
   }
 

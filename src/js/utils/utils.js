@@ -120,7 +120,8 @@ utils.escUrl = function( url ){
 		
 	}
 
-	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
+	//url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
+	return url;
 
 	return encodeURI( url );
 
@@ -130,13 +131,13 @@ utils.encode_chars = function( str ){
 	const __core = {
 
 		map: {
-			'&': '&amp;',
+			//'&': '&amp;',
 			'(': '&#40;',
 			')': '&#41;',
 			',': '&#44;',
 			//'/': '&#47;',
 			':': '&#58;',
-			';': '&#59;',
+			//';': '&#59;',
 			'[': '&#91;',
 			'\\': '&#92;',
 			']': '&#93;',
@@ -160,13 +161,13 @@ utils.encode_chars = function( str ){
 		return str;
 
 	}
-	return str.replace(/[&\/,\[\]\\`{}\(\):;|~«»]/g, __core.callback );
+	return str.replace(/[,\[\]\\`{}\(\):|~«»]/g, __core.callback );
 
 };
 
-/*utils.decode_chars = function( str ){
+utils.decode_chars = function( str ){
 
-};*/
+};
 
 utils.json_encode = function( obj, raw ){
 

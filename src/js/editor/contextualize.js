@@ -1,4 +1,3 @@
-import __editor from './panel/fields/editor.js';
 import layout from '../utils/layout.js';
 import utils from '../utils/utils.js';
 import parse from '../utils/parse.js';
@@ -549,7 +548,6 @@ export default function(){
                 close: {
                     do: function( e, ui ){
                         target_.reset();
-                        __editor( true );
                     }
                 }
 

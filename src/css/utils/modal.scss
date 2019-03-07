@@ -33,6 +33,8 @@
         > .comet-body {
             height: calc( 100% - 76px );
             overflow: auto;
+
+            iframe { height: 100%; }
         }
 
         > .comet-header {

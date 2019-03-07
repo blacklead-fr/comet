@@ -10,36 +10,36 @@ class Comet_Utils {
 
     static protected function numbers( $label, $desc = '', $std = '0', $res = false ){
 
-        return array(
+        return [
             'label'  => $label,
             'desc'   => $desc,
             'std'    => $std,
             'type'   => 'numbers',
             'responsive' => $res || $res === 'true' || $res === 1 || $res === '1' ? 'true' : 'false',
-            'values' => array(
-                't'    => array(
+            'values' => [
+                't'    => [
                     'label' => __( 'Top', 'comet' ),
                     'std'   => $std,
-                ),
-                'r'  => array(
+                ],
+                'r'  => [
                     'label' => __( 'Right', 'comet' ),
                     'std'   => $std,
-                ),
-                'b' => array(
+                ],
+                'b' => [
                     'label' => __( 'Bottom', 'comet' ),
                     'std'   => $std,
-                ),
-                'l'   => array(
+                ],
+                'l'   => [
                     'label' => __( 'Left', 'comet' ),
                     'std'   => $std,
-                ),
-            )
-        );
+                ],
+            ]
+        ];
 
     }
 
     static protected function backgroundPosition(){
-        $position = array();
+        $position = [];
 
         for( $choice = 1; $choice <= 9; $choice++ ){
 
@@ -134,20 +134,20 @@ class Comet_Utils {
 
     static protected function backgroundRepeat(){
 
-        return array(
+        return [
             'r'  => __( 'Repeat', 'comet' ),
             'x'  => __( 'Repeat horizontally', 'comet' ),
             'y'  => __( 'Repeat vertically', 'comet' ),
             's'  => __( 'Space', 'comet' ),
             'rd' => __( 'Round', 'comet' ),
             'no' => __( 'No repeat', 'comet' )
-        );
+        ];
 
     }
 
     static protected function borderStyle(){
 
-        return array(
+        return [
             'solid'  => __( 'Solid', 'comet' ),
             'dotted' => __( 'Dotted', 'comet' ),
             'dashed' => __( 'Dashed', 'comet' ),
@@ -155,16 +155,16 @@ class Comet_Utils {
             'inset'  => __( 'Inset', 'comet' ),
             'outset' => __( 'Outset', 'comet' ),
             'none'   => __( 'None', 'comet' )
-        );
+        ];
 
     }
 
     static protected function grid( $max = 3 ){
-        $grid = array();
+        $grid = [];
         $max = ( $max = (int)$max ) > 0 ? $max : 3;
 
         for( $count = 1; $count <= $max; $count++ ){
-            $grid[$count] = sprintf( _n('1 column','%d columns', $count, 'comet' ), $count );
+            $grid[$count] = sprintf( _n( '1 column', '%d columns', $count, 'comet' ), $count );
 
         }
         return $grid;
@@ -174,10 +174,10 @@ class Comet_Utils {
     static protected function imageSizes(){
         global $_wp_additional_image_sizes;
 
-        $sizes = array();
+        $sizes = [];
 
         foreach( get_intermediate_image_sizes() as $_size ){
-            if( in_array( $_size, array('thumbnail', 'medium', 'medium_large', 'large') ) ){
+            if( in_array( $_size, [ 'thumbnail', 'medium', 'medium_large', 'large' ] ) ){
                 $width = get_option( "{$_size}_size_w" );
                 $height = get_option( "{$_size}_size_h" );
 
@@ -200,7 +200,7 @@ class Comet_Utils {
 
     static protected function listStyle(){
 
-        return array(
+        return [
             'none'                 => __( 'None', 'comet' ),
             'img'                  => __( 'Custom image', 'comet' ),
             'disc'                 => __( 'Disc', 'comet' ),
@@ -223,13 +223,13 @@ class Comet_Utils {
             'upper_alpha'          => __( 'Upper alpha', 'comet' ),
             'upper_latin'          => __( 'Upper latin', 'comet' ),
             'upper_roman'          => __( 'Upper roman', 'comet' )
-        );
+        ];
 
     }
 
     static protected function fonts(){
 
-        $default = array(
+        $default = [
             '0'               => __( 'Default', 'comet' ),
             'arial'           => 'Arial',
             'arial black'     => 'Arial Black',
@@ -239,7 +239,7 @@ class Comet_Utils {
             'tahoma'          => 'Tahoma',
             'times new roman' => 'Times New Roman',
             'verdana'         => 'Verdana',
-        );
+        ];
 
         $fonts = comet_get_fonts( [] );
 
@@ -258,9 +258,9 @@ class Comet_Utils {
 
     static protected function weight(){
 
-        $w = array(
+        $w = [
             '0' => __( 'Default', 'comet' ) 
-        );
+        ];
 
         for( $a = 1; $a < 10; $a++ ){
             $v = $a * 100;

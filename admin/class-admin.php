@@ -16,10 +16,10 @@ namespace Comet\Admin;
 
 	public function __construct(){
 
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_filter( 'replace_editor', array( $this, 'editor' ), 10, 2 );
-		add_filter( 'page_row_actions', array( $this, 'action' ), 10, 2 );
-		add_filter( 'post_row_actions', array( $this, 'action' ), 10, 2 );
+		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+		add_filter( 'replace_editor', [ $this, 'editor' ], 10, 2 );
+		add_filter( 'page_row_actions', [ $this, 'action' ], 10, 2 );
+		add_filter( 'post_row_actions', [ $this, 'action' ], 10, 2 );
 
 	}
 
@@ -35,7 +35,7 @@ namespace Comet\Admin;
 			82
 		);
 
-		add_action( "load-{$hook}", array( $this, 'page' ) );
+		add_action( "load-{$hook}", [ $this, 'page' ] );
 
 	}
 
