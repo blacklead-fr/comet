@@ -1,7 +1,6 @@
 import __global from '../utils/global.js';
 import parse from '../utils/parse.js';
 import utils from '../utils/utils.js';
-import node from '../utils/node.js';
 
 export default function(){
 	const global_ = __global();
@@ -75,9 +74,8 @@ export default function(){
 
 		node: function(){
 			const target = prop.get();
-			var _t;
 
-			return ( !utils.isObject( target ) || !utils.isObject( target.node )/*!( _t = node( target.node ) ).isNode()*/ ? false : target.node/*_t.prop()*/ );
+			return ( !utils.isObject( target ) || !utils.isObject( target.node ) ? false : target.node );
 
 
 		},

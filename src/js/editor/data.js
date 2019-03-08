@@ -1,14 +1,11 @@
 import global from '../utils/global.js';
 import parse from '../utils/parse.js';
 import utils from '../utils/utils.js';
-import node from '../utils/node.js';
-import __target from './target.js';
 import __id from './id.js';
 
 export default function (){
 	const prop = {};
 	const global_ = global();
-	const target_ = __target();
 
 	prop.getData = function(){
 		var data = global_.get( 'data' );
@@ -55,14 +52,16 @@ export default function (){
 			case 'rows':
 			case 'sections':
 			return 'sections';
+
 			case 'columns':
 			return 'rows';
-			break;
+
 			case 'elements':
 			return 'columns';
-			break;
+
 			case 'items':
 			return 'elements';
+
 			default:
 			return false;
 		}
@@ -75,14 +74,16 @@ export default function (){
 		switch( type ){
 			case 'sections':
 			return 'rows';
+
 			case 'rows':
 			return 'columns';
+
 			case 'columns':
 			return 'elements';
-			break;
+
 			case 'elements':
 			return 'items';
-			break;
+			
 			default:
 			return false;
 		}
@@ -108,11 +109,11 @@ export default function (){
 
 			case 'sections':
 			//data = utils.getSettingsFrom( 'section' );
-			//break;
+			break;
 
 			case 'rows':
 			//data = utils.getSettingsFrom( 'row' );
-			//break;
+			break;
 
 			case 'columns':
 			//data = utils.getSettingsFrom( 'column' );
@@ -304,7 +305,7 @@ export default function (){
 		const metaData = prop.getData();
 		const id_ = __id();
 		var tmp = {};
-		var children, _children, cid, ids, a, nid, nnid, r, n;
+		var children, _children, cid, ids, nid, nnid, i;
 
 		pid = pid && ( pid = parse.id( pid ) ) ? pid : 0;
 
@@ -355,66 +356,6 @@ export default function (){
 
 	};
 
-	/*prop.catchAndSet = function( id, type ){
-		const metaData = prop.getData();
-		const fields = document.getElementsByClassName( 'comet-field' );
-		const data = {};
-		var tmp, f, fid, ftype, _field, field, val;
-
-		if( ( tmp = target_.item() ) && ( tmp = parse.id( tmp ) ) && target_.state() === 'items' && type === 'elements' ){
-			type = 'items';
-			id = tmp;
-
-		}
-
-		if( !( id = parse.id( id ) ) || !( type = this.hasType( type ) ) || fields.length < 1 ){
-			return false;
-
-		}
-
-		if( !utils.isObject( metaData[type][id] ) ){
-			metaData[type][id] = {};
-
-		}
-
-		for( f in fields ){
-
-			if( !( ( _field = node( fields[f] ) ).isNode() ) || !( ftype = parse.dataset( ( field = _field.prop() ), 'type' ) ) || utils.isStringEmpty( fid = field.name ) ){
-				continue;
-
-			}
-			fid = utils.trim( fid );
-			val = !utils.isNumber( val = field.value ) && !utils.isString( val ) ? '' : val.toString();
-
-			switch( ftype ){
-				case 'radio':
-
-				if( field.checked ){
-					data[fid] = val;
-
-				}
-
-				break;
-				case 'checkbox':
-
-				if( !field.checked ){
-					val = 'false';
-
-				}
-				data[fid] = val;
-
-				break;
-				default:
-				data[fid] = val;
-				
-
-			}
-
-		}
-		return this.set( id, type, data );
-
-	};*/
-
 	return prop;
 
-};
+}

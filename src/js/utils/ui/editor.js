@@ -4,6 +4,8 @@ import parse from '../parse.js';
 import utils from '../utils.js';
 import node from '../node.js';
 
+/* global document, window, __cometi18n */
+
 /**
  * 
  * @param {Object}		source			Node to replace by the editor
@@ -114,8 +116,10 @@ import node from '../node.js';
 
  			},
 
- 			close: function( ev, ui ){
+ 			close: function( ev ){
  				const meta = __core.toolbar.get();
+
+ 				ev.preventDefault();
 
  				if( !meta ){
  					return;
@@ -130,7 +134,8 @@ import node from '../node.js';
  				const onbutton = {
 
  					default: function( command, val ){
- 						var sel, range;
+ 						var sel;
+ 						//var range;
 
  						val = !utils.isStringEmpty( val ) ? utils.trim( val ) : null;
 
@@ -151,7 +156,7 @@ import node from '../node.js';
  							sel.modify('extend', 'forward', 'word');
 
  						}
- 						range = sel.getRangeAt(0);
+ 						//range = sel.getRangeAt(0);
  						_d.execCommand( command, false, val );
  						__core.selection.clicked = false;
 
@@ -244,7 +249,7 @@ import node from '../node.js';
  						input = inline.firstChild.firstChild;
  						createLink = inline.firstChild.lastChild;
 
- 						node( createLink ).on( 'click', function( ev, ui ){
+ 						node( createLink ).on( 'click', function( ev ){
  							const val = utils.isString( input.value ) ? utils.trim( utils.stripTags( input.value ) ) : '';
  							const state = val === '' ? 'unlink' : 'createLink';
 
@@ -405,7 +410,7 @@ import node from '../node.js';
 
  				is_dragging: false,
 
- 				dragstart: function( ev, ui ){
+ 				dragstart: function( ev ){
  					const __object = __core.toolbar.get_ui();
 
  					ev.preventDefault();
@@ -418,7 +423,7 @@ import node from '../node.js';
 
  				},
 
- 				dragstop: function( ev, ui ){
+ 				dragstop: function(){
  					__core.toolbar.drag.is_dragging = false;
 
  				},
@@ -459,7 +464,7 @@ import node from '../node.js';
 
  			},
 
- 			keypress: function( ev, ui ){
+ 			keypress: function( ev ){
 
  				if( ev.keyCode === 13 ){
  					ev.preventDefault();
@@ -470,7 +475,7 @@ import node from '../node.js';
 
  			},
 
- 			focus: function( ev, ui ){
+ 			focus: function( ev ){
  				const meta = __core.toolbar.get();
  				var buttons, _selection;
 
@@ -499,7 +504,7 @@ import node from '../node.js';
  				}
 
  				function parent( comp ){
- 					var command, command1, _button, b;
+ 					var command, _button, b;
 
  					if( node( comp ).hasClass( __core.classes.editor ) || comp.parentNode === null ){
  						return;

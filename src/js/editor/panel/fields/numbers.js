@@ -5,6 +5,8 @@ import update from '../../update.js';
 import __target from '../../target.js';
 import __data from '../../data.js';
 
+/* global document, __cometi18n */
+
 export default function( id, field, data ){
 
 	var inner, _dd, v, values, _id, _responsive, tmp;

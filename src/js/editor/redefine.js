@@ -6,6 +6,8 @@ import parse from '../utils/parse.js';
 import node from '../utils/node.js';
 import __data from './data.js';
 
+/* global window, __cometdata */
+
 const redefine = {
 
 	workflow: function(){
@@ -46,7 +48,7 @@ const redefine = {
 
 	gradient: function( comp ){
 		const o = [];
-		var _p, colors, c, fields, f, _color, val, stop, encode;
+		var _p, colors, c, fields, f, _color, val, _g, stop, encode;
 
 		if( !node( comp ).isNode() || !( ( _p = node( comp.parentNode ) ).isNode() ) || ( colors = _p.prop().children ).length < 1 ){
 			return false;

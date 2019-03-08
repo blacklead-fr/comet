@@ -4,13 +4,15 @@ import utils from '../utils/utils.js';
 import redefine from './redefine.js';
 import node from '../utils/node.js';
 
+/* global document, __cometi18n */
+
 export default function( options ){
 	const _d = document;
 	const _global = __global();
 	const editor = utils.getNode( 'editor' );
 	const id = 'comet-panel';
 	const fragment = _d.createDocumentFragment();
-	var panel, inner, body, header, button, buttons, title, tabs, content;
+	var panel, body, header, button, title, tabs;
 
 	options = utils.isObject( options ) ? options : {};
 	options.close = utils.isObject( options.close ) ? options.close : {};

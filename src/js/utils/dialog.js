@@ -1,6 +1,8 @@
 import utils from './utils.js';
 import node from './node.js';
 
+/* global document, __cometi18n */
+
 export default function( options ){
 	const _d = document;
 	const id = 'comet-confirm-box';

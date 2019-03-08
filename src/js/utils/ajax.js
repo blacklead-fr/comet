@@ -1,5 +1,7 @@
 import utils from './utils.js';
 
+/* global __cometdata, XMLHttpRequest */
+
 export default function( data ){
     const ret = {
 

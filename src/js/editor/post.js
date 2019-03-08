@@ -1,6 +1,8 @@
 import sanitize from '../utils/sanitize.js';
 import utils from '../utils/utils.js';
 
+/* global document */
+
 export default function( entry ){
 
 	var fragment = null;
@@ -34,7 +36,7 @@ export default function( entry ){
 
 		ul: function( isOl ){
 			const items = [];
-			var tmp, i;
+			var tmp, i, citems;
 
 			if( !current || ( citems = current.children ).length < 1 ){
 				return false;

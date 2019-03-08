@@ -2,7 +2,10 @@ import sanitize from './sanitize.js';
 import utils from './utils.js';
 import sort from './sort.js';
 
+/* global document, window, Node, setInterval, clearInterval, XMLHttpRequest */
+
 export default function ( node ){
+	const _d = document;
 	const origin = node;
 	const prop = {};
 	const priv = {};
@@ -52,7 +55,7 @@ export default function ( node ){
 			node.insertAdjacentElement( position, entry );
 			return true;
 
-		};
+		}
 
 		if( prop.isNode() ){
 			return doing();
@@ -178,7 +181,7 @@ export default function ( node ){
 		}
 
 		if( ( node = utils.trim( node ) ).indexOf( ',' ) > -1 ){
-			node = document.querySelectorAll( node );
+			node = _d.querySelectorAll( node );
 			return node;
 
 		}
@@ -186,17 +189,17 @@ export default function ( node ){
 		tmp = node.substring( 1 );
 
 		if( id === '#' ){
-			node = document.getElementById( tmp );
+			node = _d.getElementById( tmp );
 			return node;
 
 		}
 
 		if( id === '.' ){
-			node = document.getElementsByClassName( tmp );
+			node = _d.getElementsByClassName( tmp );
 			return node;
 
 		}
-		node = document.querySelectorAll( node );
+		node = _d.querySelectorAll( node );
 		return node;
 
 	};
@@ -243,7 +246,7 @@ export default function ( node ){
 	};
 
 	prop.isDocument = function(){
-		return ( node === document );
+		return ( node === _d );
 
 	};
 
@@ -258,7 +261,7 @@ export default function ( node ){
 	};
 
 	prop.isHidden = function(){
-		return ( el.offsetParent === null );
+		return ( !prop.isNode() || node.offsetParent === null );
 
 	};
 
@@ -271,7 +274,7 @@ export default function ( node ){
 
 	prop.hasClass = function( classe ){
 		const classes = prop.classList();
-		var a, cl;
+		var a;
 
 		if( classes.length < 1 || utils.isStringEmpty( classe ) ){
 			return false;
@@ -365,7 +368,6 @@ export default function ( node ){
 		function add(){
 			const classes = prop.classList();
 			const j = [];
-			var exists = false;
 			var a, cl;
 
 			for( a in classes ){
@@ -471,7 +473,7 @@ export default function ( node ){
 	prop.children = function( className, callback ){
 		const nds = [];
 		const isCallbackAfunction = utils.isFunction( callback );
-		var a, ch, n, ns, r;
+		var a, ch, n;
 
 		if( !prop.isNode() || utils.isStringEmpty( className ) ||node.children.length < 1 ){
 			return false;
@@ -729,7 +731,7 @@ export default function ( node ){
 		var n, ns, nn;
 
 		function fire(){
-			const ev = document.createEvent( 'HTMLEvents' );
+			const ev = _d.createEvent( 'HTMLEvents' );
 			ev.initEvent( eventName, false, true );
 			node.dispatchEvent( ev );
 
@@ -933,7 +935,6 @@ export default function ( node ){
 		var field, f, fields, opts, o, type;
 
 		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = node.elements ).length > 0 ){
-			return;
 
 			for( f in fields ){
 				field = fields[f];
@@ -979,4 +980,4 @@ export default function ( node ){
 
 	return prop;
 	
-};
+}

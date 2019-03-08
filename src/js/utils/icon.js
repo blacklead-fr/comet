@@ -54,7 +54,6 @@ const __icon = {
 	},
 
 	decode: function( entry ){
-		var sets;
 
 		if( utils.isStringEmpty( entry ) || !utils.isArray( ( entry = ( utils.trim( entry ) ).split( ':' ) ), 2 ) ){
 			return false;

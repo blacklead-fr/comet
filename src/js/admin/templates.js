@@ -6,6 +6,8 @@ import parse from '../utils/parse.js';
 import node from '../utils/node.js';
 import ajax from '../utils/ajax.js';
 
+/* global document, window, __cometi18n, __cometdata, FileReader, Blob */
+
 export default function(){
 
 	const _d = document;
@@ -60,7 +62,7 @@ export default function(){
 
 			const __core = {
 
-				open: function( ev, ui ){
+				open: function( ev ){
 					const fragment = _d.createDocumentFragment();
 					const wrapper = _d.createElement( 'div' );
 					var inner;
@@ -220,7 +222,7 @@ export default function(){
 
 			const __core = {
 
-				open: function( ev, ui ){
+				open: function(){
 					const input = _d.getElementById( 'comet-importTemplateFile' );
 					var wrapper;
 
@@ -244,7 +246,7 @@ export default function(){
 
 				import: function( ev, ui, wrapper ){
 					const files = ui.files;
-					var importing, file, f, reader, fragment, button, items, item, d, o, id, n;
+					var importing, file, f, reader, fragment, button, items, item;
 
 					if( !files || files.length < 1 ){
 						return;
@@ -310,8 +312,8 @@ export default function(){
 					wrapper.innerHTML = '';
 					wrapper.appendChild( fragment );
 
-					node( button ).on( 'click', function( ev, ui ){
-						ev.preventDefault();
+					node( button ).on( 'click', function( ev_ ){
+						ev_.preventDefault();
 
 						if( importing !== 0 ){
 							return;
@@ -368,7 +370,7 @@ export default function(){
 				},
 
 				export: function( ev, ui, edata ){
-					var wrapper, name, pp, _message;
+					var name, pp, _message;
 
 					ev.preventDefault();
 

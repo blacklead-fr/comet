@@ -1,5 +1,7 @@
 import utils from './utils.js';
 
+/* global window, Comet */
+
 export default function (){
 
 	window.Comet = typeof Comet !== 'object' ? {} : Comet;
@@ -44,4 +46,4 @@ export default function (){
 	};
 
 	return prop;
-};
+}

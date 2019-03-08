@@ -124,7 +124,7 @@ export default function (){
 		function remove( _id, str ){
 			const nids = [];
 			var a = 0;
-			var cid, ids, a;
+			var cid, ids;
 
 			if( !utils.isArray( ( ids = parse.ids( str, 'array' ) ), 1 ) ){
 				return false;
@@ -190,9 +190,9 @@ export default function (){
 			return true;
 
 		}else if( ( pid = data_.hasId( parent, pid ) ) ){
-			str = utils.isString( metaData[cat][catId][_in] ) ? metaData[cat][catId][_in] : '';
+			str = utils.isString( metaData[parent][pid][_in] ) ? metaData[parent][pid][_in] : '';
 			str = ( utils.trim( str, ',' ) ).replace( id, nid );
-			metaData[cat][catId][_in] = str;
+			metaData[parent][pid][_in] = str;
 			data_.setData( metaData );
 			return true;
 
@@ -202,6 +202,5 @@ export default function (){
 	};
 
 	return prop;
-
 	
-};
+}

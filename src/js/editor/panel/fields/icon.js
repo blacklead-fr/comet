@@ -1,9 +1,10 @@
 import utils from '../../../utils/utils.js';
-import parse from '../../../utils/parse.js';
 import modal from '../../../utils/modal.js';
 import _icon from '../../../utils/icon.js';
 import node from '../../../utils/node.js';
 import update from '../../update.js';
+
+/* global document, __cometi18n */
 
 export default function( slug, field, data ){
 
@@ -104,11 +105,10 @@ export default function( slug, field, data ){
 
 		},
 
-		open: function( ev, ui ){
+		open: function( ev ){
 			const sets = utils.getSvgSets();
 			var first_id = false;
 			var count = 1;
-			var option = '';
 			var id, header, inner, body;
 
 			ev.preventDefault();
@@ -157,7 +157,7 @@ export default function( slug, field, data ){
 			node( header.lastChild ).on( 'input', __core.search );
 		},
 
-		delete: function( ev, ui ){
+		delete: function( ev ){
 			ev.preventDefault();
 			ev.stopPropagation();
 			value = '';

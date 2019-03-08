@@ -9,6 +9,8 @@ import __data from './data.js';
 import panel from './panel.js';
 import __id from './id.js';
 
+/* global document, window, __cometi18n */
+
 export default function(){
 
     const _d = document;
@@ -156,7 +158,7 @@ export default function(){
 
         },
 
-        create: function( ev, ui ){
+        create: function( ev ){
             var fragment, menuNode, target;
 
             if( !__menu.isMenu( ev.target ) ){
@@ -293,7 +295,7 @@ export default function(){
                 section: function(){
                     const type = 'sections';
                     const targetNode = __core.getParent( e.target, 'cpb-section' );
-                    var id, nid, sdata;
+                    var id, nid, sdata, ret;
 
                     if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
                         return false;
@@ -343,7 +345,7 @@ export default function(){
                 row: function(){
                     const type = 'rows';
                     const targetNode = __core.getParent( e.target, 'cpb-row' );
-                    var id, parentNode, pid, nid, rdata;
+                    var id, parentNode, pid, nid, rdata, ret;
 
                     if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
                         return false;
@@ -401,7 +403,7 @@ export default function(){
                 column: function(){
                     const type = 'columns';
                     const targetNode = __core.getParent( e.target, 'cpb-column' );
-                    var id, parentNode, pid, nid, cdata;
+                    var id, parentNode, pid, nid, cdata, ret;
 
                     if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
                         return false;
@@ -462,7 +464,7 @@ export default function(){
                 element: function(){
                     const type = 'elements';
                     const targetNode = __core.getParent( e.target, 'cpb-element' );
-                    var id, parentNode, pid, nid, _type, tmp, x, dren, _child, edata;
+                    var id, parentNode, pid, nid, _type, tmp, edata, ret;
 
                     if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
                         return false;
@@ -546,7 +548,7 @@ export default function(){
                 content: 'content' in get.tabs ? get.tabs.content : '',
                 tabs: 'tabs' in get.tabs ? get.tabs.tabs : '',
                 close: {
-                    do: function( e, ui ){
+                    do: function(){
                         target_.reset();
                     }
                 }
@@ -565,7 +567,7 @@ export default function(){
                     placeholder: 'cpb-edSortPlaceholder',
                     cursor: 'cpb-elementCursor',
                     containment: '#cpb-content',
-                    start: function( e, ui ){
+                    start: function(){
                         const sectionNode = __core.getParent( targetNode, classes.section );
                         var id;
 
@@ -606,7 +608,7 @@ export default function(){
                     placeholder: 'cpb-edSortPlaceholder',
                     cursor: 'cpb-elementCursor',
                     containment: '#cpb-content',
-                    start: function( e, ui ){
+                    start: function(){
                         const rowNode = __core.getParent( targetNode, classes.row );
                         var id;
 
@@ -655,7 +657,7 @@ export default function(){
                     placeholder: 'cpb-edSortPlaceholder',
                     cursor: 'cpb-elementCursor',
                     containment: '#cpb-content',
-                    start: function( e, ui ){
+                    start: function(){
                         const columnNode = __core.getParent( targetNode, classes.column );
                         var id;
 
@@ -710,7 +712,7 @@ export default function(){
                     placeholder: 'cpb-edSortPlaceholder',
                     cursor: 'cpb-elementCursor',
                     containment: '#cpb-content',
-                    start: function( e, ui ){
+                    start: function(){
                         const elementNode = __core.getParent( targetNode, classes.element );
                         var id;
 
@@ -725,7 +727,7 @@ export default function(){
                     },
                     stop: function( e, ui, elementNode ){
                         const id_ = __id();
-                        var id, cid, ncid, t, p, closest, _closest;
+                        var id, cid, ncid, t, closest, _closest;
 
                         if( !node( elementNode ).isNode() || !( id = parse.dataset( elementNode, 'id' ) ) || !( id = parse.id( id ) ) ){
                             return;

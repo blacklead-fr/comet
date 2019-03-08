@@ -127,7 +127,7 @@ export default function( options ){
 
 	node( '.' + options.classes.ref ).on( 'click', function( ev, ui ){
 		var current = false;
-		var ref, _pt, _tmp, _tabs, tabs, _wrap, body, t, b, c, dren, _child;
+		var ref, _pt, _tmp, _tabs, tabs, _wrap, body, t_, b, c, dren, _child;
 		
 		ev.preventDefault();
 
@@ -184,13 +184,13 @@ export default function( options ){
 
 		}
 
-		for( t in tabs ){
+		for( t_ in tabs ){
 
-			if( !node( tabs[t] ).isNode() ){
+			if( !node( tabs[t_] ).isNode() ){
 				continue;
 
 			}
-			node( tabs[t] ).removeClass( options.classes.active );
+			node( tabs[t_] ).removeClass( options.classes.active );
 
 		}
 		_pt.addClass( options.classes.active );

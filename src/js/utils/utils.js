@@ -1,6 +1,7 @@
 import __global from './global.js';
 import parse from './parse.js';
-import node from './node.js';
+
+/* global window */
 
 const utils = {};
 
@@ -114,58 +115,14 @@ utils.escUrl = function( url ){
 		return url;
 	}
 	
-	if ( 0 !== url.indexOf( 'mailto:' ) ) {
+	if ( url.indexOf( 'mailto:' ) !== 0 ) {
 		strip = [ '%0d', '%0a', '%0D', '%0A' ];
 		url = _deepReplace( strip, url);
 		
 	}
-
-	//url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
-	return url;
+	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
 
 	return encodeURI( url );
-
-};
-
-utils.encode_chars = function( str ){
-	const __core = {
-
-		map: {
-			//'&': '&amp;',
-			'(': '&#40;',
-			')': '&#41;',
-			',': '&#44;',
-			//'/': '&#47;',
-			':': '&#58;',
-			//';': '&#59;',
-			'[': '&#91;',
-			'\\': '&#92;',
-			']': '&#93;',
-			'`': '&#96;',
-			'{': '&#123;',
-			'|': '&#124;',
-			'}': '&#125;',
-			'~': '&#126;',
-			'«': '&laquo;',
-			'»': '&raquo;',
-		},
-
-		callback: function( m ){
-			return __core.map[m];
-
-		}
-
-	};
-
-	if( !utils.isString( str ) ){
-		return str;
-
-	}
-	return str.replace(/[,\[\]\\`{}\(\):|~«»]/g, __core.callback );
-
-};
-
-utils.decode_chars = function( str ){
 
 };
 
@@ -185,7 +142,6 @@ utils.json_encode = function( obj, raw ){
 
 };
 
-
 utils.getVideo = function( url, media ){
 	const origin = url;
 	var regex, tmp;
@@ -193,7 +149,7 @@ utils.getVideo = function( url, media ){
 	switch( media ){
 		case 'vimeo':
 		case 'VIMEO':
-		regex = /(https?)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)/;
+		regex = /(https?)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^/]*)\/videos\/|)(\d+)(?:|\/\?)/;
 		tmp = regex.exec( url );
 
 		if( utils.isString( tmp[5] ) ){
@@ -208,7 +164,7 @@ utils.getVideo = function( url, media ){
 		url = url.replace( /(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
 
 		if( utils.isString( url[2] ) ){
-			tmp = url[2].split(/[^0-9a-z_\-]/i);
+			tmp = url[2].split(/[^0-9a-z\-_]/i);
 
 			if( utils.isString( tmp[0] ) ){
 				return tmp[0];
@@ -446,7 +402,7 @@ utils.getAllowedTags = function( tag ){
 
 utils.addQueryArgs = function( args, url ){
 	var cut = null;
-	var key, value, n, _url, nkv, kv, ex, e, _ex, _e, __e, __ex, _args, h, ioHash, ioQ;
+	var key, value, n, _url, kv, ex, e, _ex, _e, __e, h, ioHash, ioQ;
 
 	if( !utils.isString( url ) ){
 		return '';
@@ -512,6 +468,48 @@ utils.addQueryArgs = function( args, url ){
 		n++;
 	}
 	return _url;
+
+};
+
+utils.deprecated = {
+
+	encode_chars: function( str ){
+		const __core = {
+
+			map: {
+				//'&': '&amp;',
+				'(': '&#40;',
+				')': '&#41;',
+				',': '&#44;',
+				//'/': '&#47;',
+				':': '&#58;',
+				//';': '&#59;',
+				'[': '&#91;',
+				'\\': '&#92;',
+				']': '&#93;',
+				'`': '&#96;',
+				'{': '&#123;',
+				'|': '&#124;',
+				'}': '&#125;',
+				'~': '&#126;',
+				'«': '&laquo;',
+				'»': '&raquo;',
+			},
+
+			callback: function( m ){
+				return __core.map[m];
+
+			}
+
+		};
+
+		if( !utils.isString( str ) ){
+			return str;
+
+		}
+		return str.replace(/[,[]\\`{}():|~«»]/g, __core.callback );
+
+	}
 
 };
 

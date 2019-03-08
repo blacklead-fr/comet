@@ -1,7 +1,6 @@
 import sanitize from '../../utils/sanitize.js';
 import notification from '../notification.js';
 import message from '../../utils/message.js';
-import __global from '../../utils/global.js';
 import dialog from '../../utils/dialog.js';
 import modal from '../../utils/modal.js';
 import utils from '../../utils/utils.js';
@@ -10,11 +9,13 @@ import ajax from '../../utils/ajax.js';
 import template from './template.js';
 import __data from '../data.js';
 
+/* global document, window, __cometi18n, __cometdata */
+
 const cockpit = {
 
 	toggle: function( _n ){
 
-		node( _n ).on( 'click', function( ev, ui ){
+		node( _n ).on( 'click', function( ev ){
 			const pit = utils.getNode( 'cockpit' );
 			const toggled = 'is_toggled';
 			var _pit;
@@ -39,7 +40,7 @@ const cockpit = {
 
 	settings: function( _n ){
 
-		node( _n ).on( 'click', function( ev, ui ){
+		node( _n ).on( 'click', function( ev ){
 			const pit = utils.getNode( 'generalSettings' );
 			const toggled = 'is_toggled';
 			var _pit;
@@ -90,10 +91,9 @@ const cockpit = {
 
 			},
 
-			open: function( ev, ui ){
-				const args = {};
+			open: function( ev ){
 				var mod = false;
-				var id, content, inner, div, input, button, form;
+				var content, inner, form;
 
 				ev.preventDefault();
 
@@ -205,14 +205,14 @@ const cockpit = {
 
 	exit: function( _n ){
 
-		node( _n ).on( 'click', function( ev, ui ){
+		node( _n ).on( 'click', function( ev ){
 			ev.preventDefault();
 
 			dialog({
 
 				message: __cometi18n.messages.warning.exit,
 
-				confirm: function( ev, ui ){
+				confirm: function(){
 
 					window.location.replace( __cometdata.dashboard_url );
 

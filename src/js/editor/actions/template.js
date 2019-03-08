@@ -7,6 +7,8 @@ import node from '../../utils/node.js';
 import ajax from '../../utils/ajax.js';
 import __data from '../data.js';
 
+/* global document, __cometi18n, __cometdata */
+
 export default function( _node ){
 
 	var tm_modal = false;
@@ -17,9 +19,8 @@ export default function( _node ){
 
 	const __core = {
 
-		open: function( ev, ui){
-			const args = {};
-			var header, body, temp, inner;
+		open: function( ev ){
+			var header, body, inner;
 			
 			ev.preventDefault();
 
@@ -69,11 +70,11 @@ export default function( _node ){
 
 		insert:  function( e, ui, id ){
 
-			const __core = {
+			const __ins = {
 
 				clone: function( data ){
 					var from = false;
-					var ids, a, count, id;
+					var ids, a, count, id_;
 
 					if( !utils.isObject( data ) || utils.isStringEmpty( data._sections ) ){
 						return false;
@@ -88,13 +89,13 @@ export default function( _node ){
 
 					for( a = 0; a < ids.length; a++ ){
 
-						if( !( id = __core._clone( 'sections', ids[a], data, '0' ) ) ){
+						if( !( id_ = __ins._clone( 'sections', ids[a], data, '0' ) ) ){
 							continue;
 
 						}
 
 						if( count === 0 ){
-							from = id;
+							from = id_;
 
 						}
 						count++;
@@ -104,11 +105,11 @@ export default function( _node ){
 
 				},
 
-				_clone: function( type, id, data, pid ){
+				_clone: function( type, id_, data, pid ){
 					const _data = __data();
 					const types = [ 'items', 'elements', 'columns', 'rows', 'sections' ];
 					var children = [];
-					var childtype, _childtype, children, n_id, a;
+					var childtype, _childtype, n_id, a;
 
 					if( !utils.isString( type ) || types.indexOf( type.toLowerCase() ) < 0 ){
 						return false;
@@ -120,19 +121,19 @@ export default function( _node ){
 
 					}
 
-					if( !utils.isObject( data[type][id] ) ){
-						data[type][id] = {};
+					if( !utils.isObject( data[type][id_] ) ){
+						data[type][id_] = {};
 
 					}
 
-					if( !( n_id = __data().create( ( type === 'elements' ? data[type][id]._type : type ), pid, 'last', data[type][id] ) ) ){
+					if( !( n_id = __data().create( ( type === 'elements' ? data[type][id_]._type : type ), pid, 'last', data[type][id_] ) ) ){
 						return false;
 
 					}
 					childtype = _data.getChild( type );
 
-					if( childtype && ( _childtype = '_' + childtype ) && utils.isObject( data[type][id] ) && !utils.isStringEmpty( data[type][id][_childtype] ) ){
-						children = parse.ids( data[type][id][_childtype], 'array' );
+					if( childtype && ( _childtype = '_' + childtype ) && utils.isObject( data[type][id_] ) && !utils.isStringEmpty( data[type][id_][_childtype] ) ){
+						children = parse.ids( data[type][id_][_childtype], 'array' );
 
 					}
 					__data().removeIds( n_id, type );
@@ -143,7 +144,7 @@ export default function( _node ){
 					}
 
 					for( a = 0; a < children.length; a++ ){
-						__core._clone( childtype, children[a], data, n_id );
+						__ins._clone( childtype, children[a], data, n_id );
 
 					}
 					return n_id;
@@ -175,7 +176,7 @@ export default function( _node ){
 						notification( __cometi18n.messages.error.ltemplate, 400 );
 
 					}
-					from = __core.clone( data['meta'] );
+					from = __ins.clone( data['meta'] );
 					layout( __data().getData() ).init( frame, from );
 					notification( __cometi18n.messages.success.ltemplate, 200 );
 
@@ -301,4 +302,4 @@ export default function( _node ){
 
 	node( _node ).on( 'click', __core.open );
 
-};
+}

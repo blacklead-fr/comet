@@ -106,9 +106,9 @@ __webpack_require__.r(__webpack_exports__);
 
 (function( cometAdmin ){
 
-  cometAdmin( window, document);
+  cometAdmin();
 
-}(function( win, doc ){
+}(function(){
 
   Object(_dashboard_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_templates_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
@@ -131,6 +131,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_node_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/node.js */ "./src/js/utils/node.js");
 
 
+/* global document */
+
 /* harmony default export */ __webpack_exports__["default"] = (function(){
 
 	const _d = document;
@@ -147,13 +149,13 @@ __webpack_require__.r(__webpack_exports__);
 
 			const prop = {
 
-				open: function( ev, ui ){
+				open: function( ev ){
 					ev.preventDefault();
 					sidebar.style.display = 'block';
 
 				},
 
-				close: function( ev, ui ){
+				close: function( ev ){
 					ev.preventDefault();
 					sidebar.style.display = 'none';
 
@@ -189,7 +191,7 @@ __webpack_require__.r(__webpack_exports__);
 				const _ui = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_0__["default"])( ui );
 				const sc = 'comet-dashboardSlide';
 				var sibling = null;
-				var s, slides, slide_;
+				var s, slides;
 
 				ev.preventDefault();
 
@@ -253,6 +255,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* global document, XMLHttpRequest, __cometi18n, __cometdata, console */
+
 /* harmony default export */ __webpack_exports__["default"] = (function(){
 
 	const _d = document;
@@ -270,7 +274,7 @@ __webpack_require__.r(__webpack_exports__);
 
 		get: function( onrequest ){
 			const request = new XMLHttpRequest();
-			request.open( 'GET', 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + cometdata.apikey, true );
+			request.open( 'GET', 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + __cometdata.apikey, true );
 
 			request.onload = function(){
 				const data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].json( this.response );
@@ -568,7 +572,6 @@ __webpack_require__.r(__webpack_exports__);
 				default:
 				return false;
 			}
-			return false;
 
 		},
 
@@ -576,6 +579,8 @@ __webpack_require__.r(__webpack_exports__);
 	};
 
 	const prop = {
+
+		_isImporting: false,
 
 		lazy: function( check, ui ){
 			var id, font;
@@ -667,14 +672,17 @@ __webpack_require__.r(__webpack_exports__);
 			prop._isImporting = true;
 			ui.innerHTML = '<span class="comet-waitWhileIcon cico cico-spin"></span>';
 
+			// @TODO
+
+			return;
+
 			Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
-				action: 'comet_ajAdmin',
 				do: 'sfonts',
-				data: collection
+				data: _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].json_encode( prop.toObject( appData.collection ) )
 
 			}).done(function( r ){
 				var o = '';
-				var map, a, font, f, i, o;
+				var map, a, font, f, i;
 
 				r = parseInt( r );
 				ui.innerHTML = __cometi18n.ui.import;
@@ -715,12 +723,32 @@ __webpack_require__.r(__webpack_exports__);
 
 			}
 			data.preview.style.fontWeight = weight;
-		} 
+		},
+
+		toObject: function( arr ) {
+			const rv = {};
+			var i = 0;
+			var count = 0;
+
+			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( arr ) ){
+				return {};
+
+			}
+
+			for( i; i < arr.length; i++ ){
+
+				if( arr[i] !== undefined ){
+					rv[count] = arr[i];
+					count++;
+
+				}
+			}
+			return rv;
+		}
 
 	};
 
-	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( open ).on( 'click', function( ev, ui ){
-		const i = 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + cometdata.apikey;
+	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( open ).on( 'click', function( ev ){
 		const h_fragment = _d.createDocumentFragment();
 		const c_fragment = _d.createDocumentFragment();
 		const h_wrapper = _d.createElement( 'div' );
@@ -774,7 +802,7 @@ __webpack_require__.r(__webpack_exports__);
 			count: count
 		});
 
-		appData.collection = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( cometdata.fonts ) ? cometdata.fonts : [];
+		appData.collection = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
 
 		if( appData.collection.length > 0 ){
 
@@ -844,6 +872,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* global document, window, __cometi18n, __cometdata, FileReader, Blob */
+
 /* harmony default export */ __webpack_exports__["default"] = (function(){
 
 	const _d = document;
@@ -898,7 +928,7 @@ __webpack_require__.r(__webpack_exports__);
 
 			const __core = {
 
-				open: function( ev, ui ){
+				open: function( ev ){
 					const fragment = _d.createDocumentFragment();
 					const wrapper = _d.createElement( 'div' );
 					var inner;
@@ -1058,7 +1088,7 @@ __webpack_require__.r(__webpack_exports__);
 
 			const __core = {
 
-				open: function( ev, ui ){
+				open: function(){
 					const input = _d.getElementById( 'comet-importTemplateFile' );
 					var wrapper;
 
@@ -1082,7 +1112,7 @@ __webpack_require__.r(__webpack_exports__);
 
 				import: function( ev, ui, wrapper ){
 					const files = ui.files;
-					var importing, file, f, reader, fragment, button, items, item, d, o, id, n;
+					var importing, file, f, reader, fragment, button, items, item;
 
 					if( !files || files.length < 1 ){
 						return;
@@ -1148,8 +1178,8 @@ __webpack_require__.r(__webpack_exports__);
 					wrapper.innerHTML = '';
 					wrapper.appendChild( fragment );
 
-					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button ).on( 'click', function( ev, ui ){
-						ev.preventDefault();
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button ).on( 'click', function( ev_ ){
+						ev_.preventDefault();
 
 						if( importing !== 0 ){
 							return;
@@ -1206,7 +1236,7 @@ __webpack_require__.r(__webpack_exports__);
 				},
 
 				export: function( ev, ui, edata ){
-					var wrapper, name, pp, _message;
+					var name, pp, _message;
 
 					ev.preventDefault();
 
@@ -1322,6 +1352,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./src/js/utils/utils.js");
 
 
+/* global __cometdata, XMLHttpRequest */
+
 /* harmony default export */ __webpack_exports__["default"] = (function( data ){
     const ret = {
 
@@ -1392,6 +1424,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node.js */ "./src/js/utils/node.js");
 
 
+
+/* global document, __cometi18n */
 
 /* harmony default export */ __webpack_exports__["default"] = (function( options ){
 	const _d = document;
@@ -1489,6 +1523,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils.js */ "./src/js/utils/utils.js");
 
 
+/* global window, Comet */
+
 /* harmony default export */ __webpack_exports__["default"] = (function (){
 
 	window.Comet = typeof Comet !== 'object' ? {} : Comet;
@@ -1533,7 +1569,7 @@ __webpack_require__.r(__webpack_exports__);
 	};
 
 	return prop;
-});;
+});
 
 /***/ }),
 
@@ -1550,6 +1586,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node.js */ "./src/js/utils/node.js");
 
 
+
+/* global document */
 
 /* harmony default export */ __webpack_exports__["default"] = (function( message, status ){
 
@@ -1731,6 +1769,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* global document, __cometi18n */
+
 /* harmony default export */ __webpack_exports__["default"] = (function ( options ){
 	const _d = document;
 	const fragment = _d.createDocumentFragment();
@@ -1878,7 +1918,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* global document, window, Node, setInterval, clearInterval, XMLHttpRequest */
+
 /* harmony default export */ __webpack_exports__["default"] = (function ( node ){
+	const _d = document;
 	const origin = node;
 	const prop = {};
 	const priv = {};
@@ -1928,7 +1971,7 @@ __webpack_require__.r(__webpack_exports__);
 			node.insertAdjacentElement( position, entry );
 			return true;
 
-		};
+		}
 
 		if( prop.isNode() ){
 			return doing();
@@ -2054,7 +2097,7 @@ __webpack_require__.r(__webpack_exports__);
 		}
 
 		if( ( node = _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].trim( node ) ).indexOf( ',' ) > -1 ){
-			node = document.querySelectorAll( node );
+			node = _d.querySelectorAll( node );
 			return node;
 
 		}
@@ -2062,17 +2105,17 @@ __webpack_require__.r(__webpack_exports__);
 		tmp = node.substring( 1 );
 
 		if( id === '#' ){
-			node = document.getElementById( tmp );
+			node = _d.getElementById( tmp );
 			return node;
 
 		}
 
 		if( id === '.' ){
-			node = document.getElementsByClassName( tmp );
+			node = _d.getElementsByClassName( tmp );
 			return node;
 
 		}
-		node = document.querySelectorAll( node );
+		node = _d.querySelectorAll( node );
 		return node;
 
 	};
@@ -2119,7 +2162,7 @@ __webpack_require__.r(__webpack_exports__);
 	};
 
 	prop.isDocument = function(){
-		return ( node === document );
+		return ( node === _d );
 
 	};
 
@@ -2134,7 +2177,7 @@ __webpack_require__.r(__webpack_exports__);
 	};
 
 	prop.isHidden = function(){
-		return ( el.offsetParent === null );
+		return ( !prop.isNode() || node.offsetParent === null );
 
 	};
 
@@ -2147,7 +2190,7 @@ __webpack_require__.r(__webpack_exports__);
 
 	prop.hasClass = function( classe ){
 		const classes = prop.classList();
-		var a, cl;
+		var a;
 
 		if( classes.length < 1 || _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isStringEmpty( classe ) ){
 			return false;
@@ -2241,7 +2284,6 @@ __webpack_require__.r(__webpack_exports__);
 		function add(){
 			const classes = prop.classList();
 			const j = [];
-			var exists = false;
 			var a, cl;
 
 			for( a in classes ){
@@ -2347,7 +2389,7 @@ __webpack_require__.r(__webpack_exports__);
 	prop.children = function( className, callback ){
 		const nds = [];
 		const isCallbackAfunction = _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isFunction( callback );
-		var a, ch, n, ns, r;
+		var a, ch, n;
 
 		if( !prop.isNode() || _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].isStringEmpty( className ) ||node.children.length < 1 ){
 			return false;
@@ -2605,7 +2647,7 @@ __webpack_require__.r(__webpack_exports__);
 		var n, ns, nn;
 
 		function fire(){
-			const ev = document.createEvent( 'HTMLEvents' );
+			const ev = _d.createEvent( 'HTMLEvents' );
 			ev.initEvent( eventName, false, true );
 			node.dispatchEvent( ev );
 
@@ -2809,7 +2851,6 @@ __webpack_require__.r(__webpack_exports__);
 		var field, f, fields, opts, o, type;
 
 		if( prop.isNode() && node.nodeName.toLowerCase() === 'form' && ( fields = node.elements ).length > 0 ){
-			return;
 
 			for( f in fields ){
 				field = fields[f];
@@ -2855,7 +2896,7 @@ __webpack_require__.r(__webpack_exports__);
 
 	return prop;
 	
-});;
+});
 
 /***/ }),
 
@@ -2873,10 +2914,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* global document */
+
 const parse = {
 
 	dataset: function( ui, match ){
-		var data = false;
 
 		if( !Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( ui ).isNode() || _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( match ) ){
 			return false;
@@ -3002,6 +3044,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+/* global document */
 
 const sanitize = {};
 
@@ -3135,7 +3179,7 @@ sanitize.value = function( entry, def ){
 };
 
 sanitize.color = function( str ){
-	const regex = /^(#[0-9a-f]{3}|#(?:[0-9a-f]{2}){2,4}|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))$/i;
+	const regex = /^(#[0-9a-f]{3}|#(?:[0-9a-f]{2}){2,4}|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d.]+%?\))$/i;
 
 	if( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) && regex.test( str = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( str ) ) ){
 		return str;
@@ -3193,14 +3237,14 @@ sanitize.content = function(){
 		o += _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
 
 	}
-	return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].encode_chars( o );
+	return o;
 
 };
 
 sanitize.post = function( str ){
 	const allowed = '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><sub><sup><title>';
 
-	return ( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].encode_chars( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str, allowed ) ) : '' );
+	return ( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].stripTags( str, allowed ) : '' );
 
 };
 
@@ -3268,7 +3312,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/* global document, setInterval, clearInterval */
+
 /* harmony default export */ __webpack_exports__["default"] = (function ( options ){
+	const _d = document;
 	const func = {};
 	const ID = 'comet' + Math.random().toString(36).substr(2, 9);
 	var current = null;
@@ -3292,11 +3339,11 @@ __webpack_require__.r(__webpack_exports__);
 
 	options.cursor = !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( options.cursor ) ? '' : _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( options.cursor );
 
-	options.containment = 'containment' in options ? options.containment : document.body;
+	options.containment = 'containment' in options ? options.containment : _d.body;
 
 	options.bodyClass = !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isString( options.bodyClass ) ? 'cpb-sorting' : _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( options.bodyClass );
 
-	placeholder = document.createElement( 'div' );
+	placeholder = _d.createElement( 'div' );
 	placeholder.id = ID;
 	placeholder.className = 'placeholder ' + options.placeholder;
 	win = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( options.containment );
@@ -3322,7 +3369,7 @@ __webpack_require__.r(__webpack_exports__);
 		}
 
 		if( !tcur ){
-			cursor = document.createElement( 'div' );
+			cursor = _d.createElement( 'div' );
 			cursor.id = 'comet-uiCursor';
 
 			if( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( options.cursor ) ){
@@ -3331,7 +3378,7 @@ __webpack_require__.r(__webpack_exports__);
 			}
 
 			cursor.innerHTML = '<span class="cico cico-move"></span>';
-			Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( document.body ).append( cursor );
+			Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _d.body ).append( cursor );
 		}
 
 		if( tcur ){
@@ -3429,7 +3476,7 @@ __webpack_require__.r(__webpack_exports__);
 
 	function explode( str ){
 		const o = [];
-		var ex, i, c, a;
+		var ex, i, a;
 
 		if( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( str ) || !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( ( ex = ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( str ) ).split( ',' ) ), 1 ) ){
 			return false;
@@ -3467,9 +3514,9 @@ __webpack_require__.r(__webpack_exports__);
 		}
 		return o;
 
-	};
+	}
 
-	Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( document.documentElement ).on( 'mousemove', function( e, ui ){
+	Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _d.documentElement ).on( 'mousemove', function( e ){
 		const y = e.pageY;
 		var top, height;
 
@@ -3513,7 +3560,7 @@ __webpack_require__.r(__webpack_exports__);
 			current = ui;
 			func.cursor( e );
 
-			if( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( options.bodyClass ) && !( nd = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( document.body ) ).hasClass( options.bodyClass ) ){
+			if( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( options.bodyClass ) && !( nd = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _d.body ) ).hasClass( options.bodyClass ) ){
 				nd.addClass( options.bodyClass );
 
 			}
@@ -3540,10 +3587,8 @@ __webpack_require__.r(__webpack_exports__);
 		}, 500 );
 	});
 
-	Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( document.documentElement ).on( 'mouseup', function( e, ui ){
-		const transient = 'cpb-transientPlaceholder';
-		var po;
-		var nui, nu, n;
+	Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _d.documentElement ).on( 'mouseup', function( e ){
+		var po, nu;
 		e.preventDefault();
 		clearInterval( state );
 		clearInterval( interval );
@@ -3553,11 +3598,11 @@ __webpack_require__.r(__webpack_exports__);
 
 		}
 
-		if( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( options.bodyClass ) && ( ( nu = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( document.body ) ).hasClass( options.bodyClass ) ) ){
+		if( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( options.bodyClass ) && ( ( nu = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( _d.body ) ).hasClass( options.bodyClass ) ) ){
 			nu.removeClass( options.bodyClass );
 
 		}
-		po = document.getElementById( ID );
+		po = _d.getElementById( ID );
 
 		if( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isFunction( options.stop ) && current !== null && po !== null ){
 			options.stop( e, po, current );
@@ -3596,7 +3641,7 @@ __webpack_require__.r(__webpack_exports__);
 
 	} );
 
-});;
+});
 
 /***/ }),
 
@@ -3696,10 +3741,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _global_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./global.js */ "./src/js/utils/global.js");
 /* harmony import */ var _parse_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parse.js */ "./src/js/utils/parse.js");
-/* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node.js */ "./src/js/utils/node.js");
 
 
 
+/* global window */
 
 const utils = {};
 
@@ -3813,58 +3858,14 @@ utils.escUrl = function( url ){
 		return url;
 	}
 	
-	if ( 0 !== url.indexOf( 'mailto:' ) ) {
+	if ( url.indexOf( 'mailto:' ) !== 0 ) {
 		strip = [ '%0d', '%0a', '%0D', '%0A' ];
 		url = _deepReplace( strip, url);
 		
 	}
-
-	//url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
-	return url;
+	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
 
 	return encodeURI( url );
-
-};
-
-utils.encode_chars = function( str ){
-	const __core = {
-
-		map: {
-			//'&': '&amp;',
-			'(': '&#40;',
-			')': '&#41;',
-			',': '&#44;',
-			//'/': '&#47;',
-			':': '&#58;',
-			//';': '&#59;',
-			'[': '&#91;',
-			'\\': '&#92;',
-			']': '&#93;',
-			'`': '&#96;',
-			'{': '&#123;',
-			'|': '&#124;',
-			'}': '&#125;',
-			'~': '&#126;',
-			'«': '&laquo;',
-			'»': '&raquo;',
-		},
-
-		callback: function( m ){
-			return __core.map[m];
-
-		}
-
-	};
-
-	if( !utils.isString( str ) ){
-		return str;
-
-	}
-	return str.replace(/[,\[\]\\`{}\(\):|~«»]/g, __core.callback );
-
-};
-
-utils.decode_chars = function( str ){
 
 };
 
@@ -3884,7 +3885,6 @@ utils.json_encode = function( obj, raw ){
 
 };
 
-
 utils.getVideo = function( url, media ){
 	const origin = url;
 	var regex, tmp;
@@ -3892,7 +3892,7 @@ utils.getVideo = function( url, media ){
 	switch( media ){
 		case 'vimeo':
 		case 'VIMEO':
-		regex = /(https?)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|)(\d+)(?:|\/\?)/;
+		regex = /(https?)?:\/\/(www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^/]*)\/videos\/|)(\d+)(?:|\/\?)/;
 		tmp = regex.exec( url );
 
 		if( utils.isString( tmp[5] ) ){
@@ -3907,7 +3907,7 @@ utils.getVideo = function( url, media ){
 		url = url.replace( /(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
 
 		if( utils.isString( url[2] ) ){
-			tmp = url[2].split(/[^0-9a-z_\-]/i);
+			tmp = url[2].split(/[^0-9a-z\-_]/i);
 
 			if( utils.isString( tmp[0] ) ){
 				return tmp[0];
@@ -4145,7 +4145,7 @@ utils.getAllowedTags = function( tag ){
 
 utils.addQueryArgs = function( args, url ){
 	var cut = null;
-	var key, value, n, _url, nkv, kv, ex, e, _ex, _e, __e, __ex, _args, h, ioHash, ioQ;
+	var key, value, n, _url, kv, ex, e, _ex, _e, __e, h, ioHash, ioQ;
 
 	if( !utils.isString( url ) ){
 		return '';
@@ -4211,6 +4211,48 @@ utils.addQueryArgs = function( args, url ){
 		n++;
 	}
 	return _url;
+
+};
+
+utils.deprecated = {
+
+	encode_chars: function( str ){
+		const __core = {
+
+			map: {
+				//'&': '&amp;',
+				'(': '&#40;',
+				')': '&#41;',
+				',': '&#44;',
+				//'/': '&#47;',
+				':': '&#58;',
+				//';': '&#59;',
+				'[': '&#91;',
+				'\\': '&#92;',
+				']': '&#93;',
+				'`': '&#96;',
+				'{': '&#123;',
+				'|': '&#124;',
+				'}': '&#125;',
+				'~': '&#126;',
+				'«': '&laquo;',
+				'»': '&raquo;',
+			},
+
+			callback: function( m ){
+				return __core.map[m];
+
+			}
+
+		};
+
+		if( !utils.isString( str ) ){
+			return str;
+
+		}
+		return str.replace(/[,[]\\`{}():|~«»]/g, __core.callback );
+
+	}
 
 };
 

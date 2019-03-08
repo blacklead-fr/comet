@@ -1,6 +1,8 @@
 import utils from '../utils/utils.js';
 import node from '../utils/node.js';
 
+/* global document, __cometi18n */
+
 export default function ( str, status ){
     const _d = document;
     const cockpit = _d.getElementById( 'comet-cockpit' );

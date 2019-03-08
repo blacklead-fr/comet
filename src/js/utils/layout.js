@@ -6,6 +6,8 @@ import parse from './parse.js';
 import style from './style.js';
 import css from './css.js';
 
+/* global document, console */
+
 export default function ( data, g_css ){
 
 	const _d = document;
@@ -309,7 +311,7 @@ export default function ( data, g_css ){
 		},
 
 		column: function( id ){
-			var e, html, column, ids, cl, tmp, fragment, element;
+			var e, html, column, ids, cl, fragment, element;
 
 			if( !_priv.hasConnection( 'columns' ) || !( id = parse.id( id ) ) || !utils.isObject( data.columns[id] ) ){
 				return false;
@@ -394,9 +396,9 @@ export default function ( data, g_css ){
 		},
 
 	};
-	g_css = ( ( utils.isBool( g_css ) && g_css ) || ( utils.isString( g_css ) && 'css' === utils.trim( g_css.toLowerCase() ) ) );
+	g_css = ( ( utils.isBool( g_css ) && g_css ) || ( utils.isString( g_css ) && utils.trim( g_css.toLowerCase() ) === 'css' ) );
 	prop.css = g_css;
 
 	return prop;
 
-};
+}

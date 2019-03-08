@@ -1,5 +1,7 @@
 import node from '../utils/node.js';
 
+/* global document */
+
 export default function(){
 
 	const _d = document;
@@ -16,13 +18,13 @@ export default function(){
 
 			const prop = {
 
-				open: function( ev, ui ){
+				open: function( ev ){
 					ev.preventDefault();
 					sidebar.style.display = 'block';
 
 				},
 
-				close: function( ev, ui ){
+				close: function( ev ){
 					ev.preventDefault();
 					sidebar.style.display = 'none';
 
@@ -58,7 +60,7 @@ export default function(){
 				const _ui = node( ui );
 				const sc = 'comet-dashboardSlide';
 				var sibling = null;
-				var s, slides, slide_;
+				var s, slides;
 
 				ev.preventDefault();
 

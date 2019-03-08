@@ -2,9 +2,7 @@
 /* Last edit: Jan, 25 2019 */
 
 import contextualize from './contextualize.js';
-import sanitize from '../utils/sanitize.js';
 import __global from '../utils/global.js';
-import dialog from '../utils/dialog.js';
 import layout from '../utils/layout.js';
 import c__ from './actions/cockpit.js';
 import s__ from './actions/sidebar.js';
@@ -14,6 +12,8 @@ import post_elements from './post.js';
 import ajax from '../utils/ajax.js';
 import node from '../utils/node.js';
 import __data from './data.js';
+
+/* global document, window, Comet, alert, __cometi18n, __cometdata, setInterval, clearInterval */
 
 'use strict';
 
@@ -177,7 +177,7 @@ import __data from './data.js';
       tmp.innerHTML = __cometi18n.cockpit.clearNx;
       tmp1.appendChild( tmp );
 
-      node( tmp ).on( 'click', function( ev, ui ){
+      node( tmp ).on( 'click', function( ev ){
         ev.preventDefault();
         notes.innerHTML = '';
         

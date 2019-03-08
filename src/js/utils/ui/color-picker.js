@@ -2,6 +2,8 @@ import utils from '../utils.js';
 import range from './range.js';
 import node from '../node.js';
 
+/* global document, window */
+
 export default function( source, options ){
 
     var dragging = false;
@@ -87,7 +89,7 @@ export default function( source, options ){
         },
 
         rgb_: function( x ){
-            const regex = /(rgba?)\(\s*(\d{1,3})\s*\,\s*(\d{1,3})\s*\,\s*(\d{1,3})\s*(\,\s*([\d\.]+)\s*)?\)/i;
+            const regex = /(rgba?)\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(,\s*((0?\.\d*)|\d?)\s*)?\)/i;
             var match, type, r, g, b, a;
 
             if( utils.isString( x ) ){

@@ -2,6 +2,8 @@ import parse from './parse.js';
 import utils from './utils.js';
 import node from './node.js';
 
+/* global document */
+
 export default function( id, type ){
 
 	const _d = document;

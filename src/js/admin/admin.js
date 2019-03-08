@@ -6,9 +6,9 @@ import fonts from './fonts.js';
 
 (function( cometAdmin ){
 
-  cometAdmin( window, document);
+  cometAdmin();
 
-}(function( win, doc ){
+}(function(){
 
   dashboard();
   templates();

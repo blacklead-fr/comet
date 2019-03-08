@@ -2,6 +2,8 @@ import utils from './utils.js';
 import parse from './parse.js';
 import node from './node.js';
 
+/* global document */
+
 const sanitize = {};
 
 sanitize.number = function( entry ){
@@ -134,7 +136,7 @@ sanitize.value = function( entry, def ){
 };
 
 sanitize.color = function( str ){
-	const regex = /^(#[0-9a-f]{3}|#(?:[0-9a-f]{2}){2,4}|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d\.]+%?\))$/i;
+	const regex = /^(#[0-9a-f]{3}|#(?:[0-9a-f]{2}){2,4}|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d.]+%?\))$/i;
 
 	if( !utils.isStringEmpty( str ) && regex.test( str = utils.trim( str ) ) ){
 		return str;
@@ -192,14 +194,14 @@ sanitize.content = function(){
 		o += utils.stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
 
 	}
-	return utils.encode_chars( o );
+	return o;
 
 };
 
 sanitize.post = function( str ){
 	const allowed = '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><sub><sup><title>';
 
-	return ( !utils.isStringEmpty( str ) ? utils.encode_chars( utils.stripTags( str, allowed ) ) : '' );
+	return ( !utils.isStringEmpty( str ) ? utils.stripTags( str, allowed ) : '' );
 
 };
 

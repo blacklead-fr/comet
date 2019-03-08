@@ -3,9 +3,9 @@ import parse from './parse.js';
 import utils from './utils.js';
 import _icon from './icon.js';
 import ajax from './ajax.js';
-import node from './node.js';
-
 import editor from './ui/editor.js';
+
+/* global document */
 
 const html = {
 
@@ -25,7 +25,7 @@ const html = {
         const tags = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'span', 'div', 'aside', 'code', 'pre', 'blockquote', 'article', 'section', 'main' ];
         const allowed = '<span><br><ins><u><i><em><strong><b><strike><del><a><abbr><address><code><hr><mark><sup><sub><s>';
         var attr = '';
-        var editable, content, tag, med_id, classes, o;
+        var editable, content, tag, classes, o;
 
         if( !utils.isObject( entry ) ){
             return '';

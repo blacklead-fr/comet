@@ -1,6 +1,8 @@
 import utils from './utils.js';
 import node from './node.js';
 
+/* global document */
+
 export default function( message, status ){
 
 	const _d = document;

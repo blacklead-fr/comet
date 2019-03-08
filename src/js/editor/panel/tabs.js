@@ -14,6 +14,8 @@ import panel from '../panel.js';
 import __data from '../data.js';
 import __id from '../id.js';
 
+/* global document, wp, __cometi18n */
+
 const __create = function( tabs, data ){
 
 	const _d = document;
@@ -127,7 +129,7 @@ const __create = function( tabs, data ){
 				const data_ = __data();
 				const target_ = __target();
 				var element_id, item_id, elementNode;
-				var id, _t, lyt;
+				var _t, lyt;
 
 				ev.preventDefault();
 
@@ -160,7 +162,6 @@ const __create = function( tabs, data ){
 					bodyClass: '',
 
 					start: function( ev, ui ){
-						var tmp;
 
 						if( ui.parentNode === null ){
 							return;
@@ -210,7 +211,7 @@ const __create = function( tabs, data ){
 			const oTabs = _d.createDocumentFragment();
 			const oContent = _d.createDocumentFragment();
 			var count = 1;
-			var a, isItems, t, tab, tid, content;
+			var a, isItems, t, tab, content;
 
 			if( utils.isObject( tabs ) ){
 
@@ -296,7 +297,7 @@ const __create = function( tabs, data ){
 
 		},
 
-		item: function( id, title ){
+		item: function( id ){
 			const item = _d.createElement( 'div' );
 			var inner, dren, args;
 
@@ -327,7 +328,7 @@ const __create = function( tabs, data ){
 
 		fields: function( fields ){
 			const oFields = _d.createDocumentFragment();
-			var f, a, field, type, meta;
+			var f, a, field, meta;
 
 			if( utils.isObject( fields ) ){
 
@@ -596,7 +597,7 @@ const __create = function( tabs, data ){
 						opacity: true,
 						input: true,
 						clear: true,
-						onchange: function( ui, source, color ){
+						onchange: function( ui, source ){
 							update( source );
 
 						}
@@ -632,7 +633,7 @@ const __create = function( tabs, data ){
 
 					f_gradient( _node, {
 						size: 20,
-						onchange: function( ui, gdt ){
+						onchange: function( ui ){
 							update( ui );
 
 						}
@@ -658,7 +659,7 @@ const __create = function( tabs, data ){
 
 					const __img = {
 
-						open: function( ev, ui ){
+						open: function( ev ){
 							var args, media;
 							
 							ev.preventDefault();
@@ -701,7 +702,7 @@ const __create = function( tabs, data ){
 
 						},
 
-						delete: function( ev, ui ){
+						delete: function( ev ){
 							ev.preventDefault();
 							ev.stopPropagation();
 							_value = '';

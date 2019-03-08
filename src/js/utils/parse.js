@@ -1,10 +1,11 @@
 import utils from './utils.js';
 import node from './node.js';
 
+/* global document */
+
 const parse = {
 
 	dataset: function( ui, match ){
-		var data = false;
 
 		if( !node( ui ).isNode() || utils.isStringEmpty( match ) ){
 			return false;

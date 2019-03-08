@@ -5,6 +5,8 @@ import parse from '../utils/parse.js';
 import ajax from '../utils/ajax.js';
 import node from '../utils/node.js';
 
+/* global document, XMLHttpRequest, __cometi18n, __cometdata, console */
+
 export default function(){
 
 	const _d = document;
@@ -22,7 +24,7 @@ export default function(){
 
 		get: function( onrequest ){
 			const request = new XMLHttpRequest();
-			request.open( 'GET', 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + cometdata.apikey, true );
+			request.open( 'GET', 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + __cometdata.apikey, true );
 
 			request.onload = function(){
 				const data = parse.json( this.response );
@@ -320,7 +322,6 @@ export default function(){
 				default:
 				return false;
 			}
-			return false;
 
 		},
 
@@ -328,6 +329,8 @@ export default function(){
 	};
 
 	const prop = {
+
+		_isImporting: false,
 
 		lazy: function( check, ui ){
 			var id, font;
@@ -419,14 +422,17 @@ export default function(){
 			prop._isImporting = true;
 			ui.innerHTML = '<span class="comet-waitWhileIcon cico cico-spin"></span>';
 
+			// @TODO
+
+			return;
+
 			ajax({
-				action: 'comet_ajAdmin',
 				do: 'sfonts',
-				data: collection
+				data: utils.json_encode( prop.toObject( appData.collection ) )
 
 			}).done(function( r ){
 				var o = '';
-				var map, a, font, f, i, o;
+				var map, a, font, f, i;
 
 				r = parseInt( r );
 				ui.innerHTML = __cometi18n.ui.import;
@@ -467,12 +473,32 @@ export default function(){
 
 			}
 			data.preview.style.fontWeight = weight;
-		} 
+		},
+
+		toObject: function( arr ) {
+			const rv = {};
+			var i = 0;
+			var count = 0;
+
+			if( !utils.isArray( arr ) ){
+				return {};
+
+			}
+
+			for( i; i < arr.length; i++ ){
+
+				if( arr[i] !== undefined ){
+					rv[count] = arr[i];
+					count++;
+
+				}
+			}
+			return rv;
+		}
 
 	};
 
-	node( open ).on( 'click', function( ev, ui ){
-		const i = 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + cometdata.apikey;
+	node( open ).on( 'click', function( ev ){
 		const h_fragment = _d.createDocumentFragment();
 		const c_fragment = _d.createDocumentFragment();
 		const h_wrapper = _d.createElement( 'div' );
@@ -526,7 +552,7 @@ export default function(){
 			count: count
 		});
 
-		appData.collection = utils.isArray( cometdata.fonts ) ? cometdata.fonts : [];
+		appData.collection = utils.isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
 
 		if( appData.collection.length > 0 ){
 

@@ -55,7 +55,7 @@ function mu( top, right, bottom, left, vunit, hunit ){
 	return utils.trim( o );
 
 
-};
+}
 
 css.render = function( style, value ){
 
@@ -560,24 +560,24 @@ css.gradient = function( style, angle, colors ){
 	
 };
 
-css.responsive = function( device, css ){
+css.responsive = function( device, css_ ){
 	const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
 	var index;
 
-	if( utils.isStringEmpty( css ) || ( index = devices.indexOf( device ) ) < 0 ){
+	if( utils.isStringEmpty( css_ ) || ( index = devices.indexOf( device ) ) < 0 ){
 		return '';
 
 	}
-	return '@media only screen and (max-width:' + ( index <= 2 ? 400 : 800 ) + 'px){' + css + '}';
+	return '@media only screen and (max-width:' + ( index <= 2 ? 400 : 800 ) + 'px){' + css_ + '}';
 
 };
 
-css.element = function( id, target, css, device ){
+css.element = function( id, target, css_, device ){
 	const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
 	const index = utils.isString( device ) ? devices.indexOf( device ) : -1;
 	var targetClass;
 
-	if( !utils.isNumber( id ) || !utils.isString( css ) ){
+	if( !utils.isNumber( id ) || !utils.isString( css_ ) ){
 		return '';
 
 	}
@@ -585,7 +585,7 @@ css.element = function( id, target, css, device ){
 	targetClass += '.cpb-element.cpb-elementNode' + id;
 	targetClass += utils.isString( target ) ? ' ' + utils.trim( target ) : '';
 
-	return targetClass + '{' + utils.trim( css ) + '}';
+	return targetClass + '{' + utils.trim( css_ ) + '}';
 
 };
 

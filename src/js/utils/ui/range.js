@@ -1,6 +1,9 @@
 import node from '../node.js';
 
+/* global document, window */
+
 export default function( source, options ){
+	const _d = document;
 	var dragging = false;
 	var x;
 
@@ -94,7 +97,7 @@ export default function( source, options ){
 	}
 
 	function onrange( ev, ui, data ){
-		var x, width, dwidth, val, delta, per, v;
+		var _x, width, dwidth, val, delta, per, v;
 		
 		ev.preventDefault();
 		ev.stopPropagation();
@@ -104,14 +107,14 @@ export default function( source, options ){
 
 		}
 
-		if( !( width = node( data.range ).width() ) || !( x = data.range.getBoundingClientRect().left ) ){
+		if( !( width = node( data.range ).width() ) || !( _x = data.range.getBoundingClientRect().left ) ){
 			return;
 
 		}
 		v = getValues( data.source );
 		dwidth = ( dwidth = sanitizeValue( node( data.dragger ).width() ) ) > 0 ? dwidth : 0;
 
-		if( typeof ( delta = parseInt( ev.pageX - x ) ) !== 'number' || isNaN( delta ) ){
+		if( typeof ( delta = parseInt( ev.pageX - _x ) ) !== 'number' || isNaN( delta ) ){
 			delta = 0;
 
 		}
@@ -208,10 +211,10 @@ export default function( source, options ){
 			return;
 
 		}
-		range = document.createElement( 'div' );
+		range = _d.createElement( 'div' );
 		range.className = 'comet-eRange';
 
-		dragger = document.createElement( 'button' );
+		dragger = _d.createElement( 'button' );
 		dragger.className = 'comet-eRDragger';
 		range.appendChild( dragger );
 
@@ -220,11 +223,11 @@ export default function( source, options ){
 		data.dragger = dragger;
 
 		if( options.buttons ){
-			dec = document.createElement( 'button' );
+			dec = _d.createElement( 'button' );
 			dec.className = 'comet-eRDecrease comet-button';
 			dec.innerHTML = '-';
 
-			inc = document.createElement( 'button' );
+			inc = _d.createElement( 'button' );
 			inc.className = 'comet-eRIncrease comet-button';
 			inc.innerHTML = '+';
 
@@ -245,9 +248,9 @@ export default function( source, options ){
 		initDragger( data.dragger, v.value, v.min, v.max, v.step );
 		node( dragger ).on( 'mousedown', onstart, data );
 		node( range ).on( 'click mousemove', onrange, data );
-		node( _ui ).on( 'setValue', function( ev, ui ){
-			const v = getValues( _ui );
-			initDragger( data.dragger, v.value, v.min, v.max, v.step );
+		node( _ui ).on( 'setValue', function(){
+			const gv = getValues( _ui );
+			initDragger( data.dragger, gv.value, gv.min, gv.max, gv.step );
 
 		});
 
@@ -258,7 +261,7 @@ export default function( source, options ){
 		
 		create( source );
 
-	}else if( source !== document && source !== window && typeof source === 'object' && source.length > 0 ){
+	}else if( source !== _d && source !== window && typeof source === 'object' && source.length > 0 ){
 
 		for( x in source ){
 
@@ -273,6 +276,6 @@ export default function( source, options ){
 		return;
 
 	}
-	node( document.documentElement ).on( 'mouseup', onstop );
+	node( _d.documentElement ).on( 'mouseup', onstop );
 
 }

@@ -7,6 +7,8 @@ import utils from './utils.js';
 import ajax from './ajax.js';
 import layout from './layout.js';
 
+/* global document, window, Comet, __cometdata */
+
 'use strict';
 
 (function( cometView ) {

@@ -4,7 +4,10 @@ import cp from './color-picker.js';
 import utils from '../utils.js';
 import node from '../node.js';
 
+/* global document */
+
 export default function( source, options ){
+	const _d = document;
 	var dragging = false;
 	var handler = false;
 	var currentSource = false;
@@ -15,7 +18,7 @@ export default function( source, options ){
 
 	}
 
-	if( typeof options !== 'object' ){
+	if( !utils.isObject( options ) ){
 		options = {};
 
 	}
@@ -25,7 +28,7 @@ export default function( source, options ){
 		var ds, d;
 
 		if( !dragging || !handler || !utils.isObject( data ) || !( 'range' in data ) || !( 'manager' in data ) ){
-			ds = document.getElementsByClassName( 'comet-eGDelete' );
+			ds = _d.getElementsByClassName( 'comet-eGDelete' );
 
 			for( d = 0; d < ds.length; d++ ){
 
@@ -55,7 +58,7 @@ export default function( source, options ){
 		ui.setAttribute( 'aria-label', position + '%' );
 
 		if( tooltip.length < 1 ){
-			tooltip = document.createElement( 'span' );
+			tooltip = _d.createElement( 'span' );
 			tooltip.className = 'comet-ui-position';
 			tooltip.innerHTML = position + '%';
 			ui.appendChild( tooltip );
@@ -103,7 +106,7 @@ export default function( source, options ){
 	}
 
 	function onmanager( ev, ui, data ){
-		var dgs, width, nb, offset, count, dragger, input, dg, d;
+		var dgs, width, nb, offset, count, dragger, input, d;
 
 		ev.preventDefault();
 
@@ -132,13 +135,13 @@ export default function( source, options ){
 			return;
 
 		}
-		dragger = document.createElement( 'button' );
+		dragger = _d.createElement( 'button' );
 		dragger.className = 'comet-eGDragger';
 		data.range.appendChild( dragger );
 		dragger.style.left =  width + 'px';
 		handler = false;
 		dragging = false;
-		input = document.createElement( 'input' );
+		input = _d.createElement( 'input' );
 		input.type = 'hidden';
 		input.value = '#000000';
 		dragger.appendChild( input );
@@ -189,9 +192,10 @@ export default function( source, options ){
 		
 	}
 
-	function onstop( ev, ui ){
+	function onstop( ev ){
 		const colors = [];
-		var range, width, draggers, dragger, _dragger, x, stop;
+		//var width, stop;
+		var range, draggers, _dragger, x;
 
 		ev.preventDefault();
 
@@ -202,7 +206,7 @@ export default function( source, options ){
 
 		if( handler && currentSource && handler.parentNode !== null ){
 			range = handler.parentNode;
-			width = node( range ).width() - options.size;
+			//width = node( range ).width() - options.size;
 			draggers = range.children;
 
 			for( x in draggers ){
@@ -240,12 +244,13 @@ export default function( source, options ){
 			opacity: true,
 			input: true,
 			clear: false,
-			onchange: function( e, i, d ){
+			onchange: function(){
 				const range = data.range;
-				const width = node( range ).width() - options.size;
+				//const width = node( range ).width() - options.size;
 				const draggers = range.children;
 				const colors = [];
-				var x, stop, _dragger;
+				var x, _dragger;
+				//var stop;
 
 				for( x in draggers ){
 
@@ -275,16 +280,17 @@ export default function( source, options ){
 		const wrap = ui.parentNode;
 		const data = {};
 		var colors = gradient.decode( ui.value );
-		var range, dragger, input, manager, width, c, color, item, size;
+		var range, dragger, input, manager, c, item;
+		//var width, color, size;
 
 		if( wrap === null ){
 			return;
 
 		}
-		range = document.createElement( 'div' );
+		range = _d.createElement( 'div' );
 		range.className = 'comet-eGRange';
 
-		manager = document.createElement( 'button' );
+		manager = _d.createElement( 'button' );
 		manager.className = 'comet-eGManager comet-eGAdd';
 		manager.name = 'add';
 		manager.innerHTML = '<span class="cico cico-plus"></span>';
@@ -292,7 +298,7 @@ export default function( source, options ){
 		wrap.appendChild( range );
 		wrap.appendChild( manager );
 
-		width = node( range ).width() - options.size;
+		//width = node( range ).width() - options.size;
 
 		data.source = ui;
 		data.range = range;
@@ -324,17 +330,17 @@ export default function( source, options ){
 
 		for( c = 0; c < colors.length; c++ ){
 
-			if( !utils.isObject( item = colors[c] ) || !( color = sanitize.color( item.color ) ) ){
+			if( !utils.isObject( item = colors[c] ) || sanitize.color( item.color ) === '' ){
 				continue;
 
 			}
-			dragger = document.createElement( 'button' );
+			dragger = _d.createElement( 'button' );
 			dragger.className = 'comet-eGDragger';
 			/*size = sanitize.number( { value: item.stop ( ( item.stop * width ) / 100 ), min: 0, default: 0 } );*/
 			//dragger.style.left =  'calc(' + item.stop + '% - ' + ( options.size / 2 ) + 'px )'/*size + 'px'*/;
 			setPosition( dragger, item.stop );
 			range.appendChild( dragger );
-			input = document.createElement( 'input' );
+			input = _d.createElement( 'input' );
 			input.type = 'hidden';
 			input.value = colors[c].color;
 			dragger.appendChild( input );
@@ -348,7 +354,7 @@ export default function( source, options ){
 	}
 
 	(function(){
-		var x, _source, tmp;
+		var x, _source;
 
 		if( ( ( _source = node( source ) ).isNode() ) ){
 
@@ -369,7 +375,7 @@ export default function( source, options ){
 			return;
 
 		}
-		node( document ).on( 'mouseup', onstop );
+		node( _d.documentElement ).on( 'mouseup', onstop );
 
 	})();
 

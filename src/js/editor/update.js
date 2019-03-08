@@ -2,16 +2,17 @@ import sanitize from '../utils/sanitize.js';
 import layout from '../utils/layout.js';
 import parse from '../utils/parse.js';
 import utils from '../utils/utils.js';
-import redefine from './redefine.js';
 import node from '../utils/node.js';
 import __target from './target.js';
 import __data from './data.js';
+
+/* global document */
 
 export default function( ui ){
 
 	var uidata = false;
 
-	var _id, index, _type, a, re, slug, cvalue;
+	var _id, index, _type, re, slug, cvalue;
 
 	const _d = document;
 
@@ -231,7 +232,7 @@ export default function( ui ){
 
 	}
 	uidata = utils.isObject( uidata = data_.get( _id, _type ) ) ? uidata : {};
-	data[slug] = utils.encode_chars( utils.stripOnly( ui.value, '<script><link><body><html><meta>' ) );
+	data[slug] = utils.stripOnly( ui.value, '<script><link><body><html><meta>' );
 
 	if( index === 2 && ui.type ){
 

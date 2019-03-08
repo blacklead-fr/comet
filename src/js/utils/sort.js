@@ -1,7 +1,10 @@
 import utils from './utils.js';
 import node from './node.js';
 
+/* global document, setInterval, clearInterval */
+
 export default function ( options ){
+	const _d = document;
 	const func = {};
 	const ID = 'comet' + Math.random().toString(36).substr(2, 9);
 	var current = null;
@@ -25,11 +28,11 @@ export default function ( options ){
 
 	options.cursor = !utils.isString( options.cursor ) ? '' : utils.trim( options.cursor );
 
-	options.containment = 'containment' in options ? options.containment : document.body;
+	options.containment = 'containment' in options ? options.containment : _d.body;
 
 	options.bodyClass = !utils.isString( options.bodyClass ) ? 'cpb-sorting' : utils.trim( options.bodyClass );
 
-	placeholder = document.createElement( 'div' );
+	placeholder = _d.createElement( 'div' );
 	placeholder.id = ID;
 	placeholder.className = 'placeholder ' + options.placeholder;
 	win = node( options.containment );
@@ -55,7 +58,7 @@ export default function ( options ){
 		}
 
 		if( !tcur ){
-			cursor = document.createElement( 'div' );
+			cursor = _d.createElement( 'div' );
 			cursor.id = 'comet-uiCursor';
 
 			if( !utils.isStringEmpty( options.cursor ) ){
@@ -64,7 +67,7 @@ export default function ( options ){
 			}
 
 			cursor.innerHTML = '<span class="cico cico-move"></span>';
-			node( document.body ).append( cursor );
+			node( _d.body ).append( cursor );
 		}
 
 		if( tcur ){
@@ -162,7 +165,7 @@ export default function ( options ){
 
 	function explode( str ){
 		const o = [];
-		var ex, i, c, a;
+		var ex, i, a;
 
 		if( utils.isStringEmpty( str ) || !utils.isArray( ( ex = ( utils.trim( str ) ).split( ',' ) ), 1 ) ){
 			return false;
@@ -200,9 +203,9 @@ export default function ( options ){
 		}
 		return o;
 
-	};
+	}
 
-	node( document.documentElement ).on( 'mousemove', function( e, ui ){
+	node( _d.documentElement ).on( 'mousemove', function( e ){
 		const y = e.pageY;
 		var top, height;
 
@@ -246,7 +249,7 @@ export default function ( options ){
 			current = ui;
 			func.cursor( e );
 
-			if( !utils.isStringEmpty( options.bodyClass ) && !( nd = node( document.body ) ).hasClass( options.bodyClass ) ){
+			if( !utils.isStringEmpty( options.bodyClass ) && !( nd = node( _d.body ) ).hasClass( options.bodyClass ) ){
 				nd.addClass( options.bodyClass );
 
 			}
@@ -273,10 +276,8 @@ export default function ( options ){
 		}, 500 );
 	});
 
-	node( document.documentElement ).on( 'mouseup', function( e, ui ){
-		const transient = 'cpb-transientPlaceholder';
-		var po;
-		var nui, nu, n;
+	node( _d.documentElement ).on( 'mouseup', function( e ){
+		var po, nu;
 		e.preventDefault();
 		clearInterval( state );
 		clearInterval( interval );
@@ -286,11 +287,11 @@ export default function ( options ){
 
 		}
 
-		if( !utils.isStringEmpty( options.bodyClass ) && ( ( nu = node( document.body ) ).hasClass( options.bodyClass ) ) ){
+		if( !utils.isStringEmpty( options.bodyClass ) && ( ( nu = node( _d.body ) ).hasClass( options.bodyClass ) ) ){
 			nu.removeClass( options.bodyClass );
 
 		}
-		po = document.getElementById( ID );
+		po = _d.getElementById( ID );
 
 		if( utils.isFunction( options.stop ) && current !== null && po !== null ){
 			options.stop( e, po, current );
@@ -329,4 +330,4 @@ export default function ( options ){
 
 	} );
 
-};
+}

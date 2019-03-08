@@ -12,13 +12,15 @@ import __target from '../target.js';
 import __data from '../data.js';
 import panel from '../panel.js';
 
+/* global document, __cometi18n, __cometdata */
+
 const sidebar = {
 
 	toggle: function( _n ){
 
 		node( _n ).on( 'click', function( ev, ui ){
 			const enabled = 'cpb-active';
-			var _tmp, tmp, _p, field, elements, x, _element, search;
+			var _tmp, tmp, _p, elements, x, _element, search;
 
 			ev.preventDefault();
 
@@ -207,10 +209,10 @@ const sidebar = {
 			placeholder: 'cpb-edPlaceholder',
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
-			stop: function( e, ui, current ){
+			stop: function( e, ui ){
 				const data_ = __data();
 				const _ui = node( ui );
-				var sid, rid, cid, columns, _column, sibid, nb, _p, p, r, re, a, w, tmp, position;
+				var sid, rid, cid, columns, _column, sibid, nb, _p, p, re, a, w, tmp, position;
 
 				if( !( _p = node( ui.parentNode ) ).isNode() || !_ui.isNode() || !( p = _p.prop() ) ){
 					return;
@@ -302,7 +304,7 @@ const sidebar = {
 			placeholder: 'cpb-edSortPlaceholder',
 			cursor: 'cpb-elementCursor',
 			containment: '#cpb-content',
-			stop: function( e, ui, current ){
+			stop: function( ev, ui, current ){
 				const data_ = __data();
 				const target_ = __target();
 				var preload, _ui, closest, _closest, id, t, pid, defname, lyt, element, tabs, edata;
@@ -350,7 +352,7 @@ const sidebar = {
 					content: 'content' in tabs ? tabs.content : '',
 					tabs: 'tabs' in tabs ? tabs.tabs : '',
 					close: {
-						do: function( e, ui ){
+						do: function(){
 							target_.reset();
 						}
 					}
