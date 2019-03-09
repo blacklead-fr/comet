@@ -258,7 +258,15 @@ class Comet_i18n {
 			'selFonts'		=> __( 'Select fonts', 'comet' ),
 			'fonts'			=> __( 'Fonts', 'comet' ),
 			'newTemplate'	=> __( 'Create new template', 'comet' ),
-			'finish'		=> __( 'Finish downloading', 'comet' )
+			'addFont'		=> __( 'Add new font', 'comet' ),
+			'finish'		=> __( 'Finish downloading', 'comet' ),
+			'nFont'			=> [
+				'font'	=> __( '%s font', 'comet' ),
+				'fonts'	=> __( '%s fonts', 'comet' ),
+			],
+			'custom'		=> __( 'Custom', 'comet' ),
+			'resource'		=> __( 'Resource type', 'comet' ),
+			'embed'			=> __( 'Embed code', 'comet' )
 
 		] );
 
@@ -274,7 +282,8 @@ class Comet_i18n {
 			'error'		=> [
 				'export'		=> __( 'An error has been occurred while exporting the template.', 'comet' ),
 				'noTemplate'	=> __( 'Template not found.', 'comet' ),
-				'failedFonts'	=> __( 'Failed to connect with Google Fonts. Please verify your API key.', 'comet' )
+				'failedFonts'	=> __( 'Failed to connect with Google Fonts. Please verify your API key.', 'comet' ),
+				'noFonts'		=> __( 'No fonts found.', 'comet' )
 			],
 			'success'	=> [
 				'export'		=> __( 'The template has been correctly created and ready to be downloaded. Click the link below to download the template.', 'comet' ),

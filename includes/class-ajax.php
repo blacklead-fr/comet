@@ -129,8 +129,8 @@ class Comet_Ajax {
             case 'sfonts':
             $r = -1;
 
-            if( current_user_can( 'manage_options' ) && isset( $p['data'] ) && is_array( $p['data'] ) ){
-                update_option( 'comet_fonts', $p['data'] );
+            if( current_user_can( 'manage_options' ) && isset( $p['data'] ) && is_array( $data = comet_parse_json( $p['data'] ) ) ){
+                update_option( 'comet_fonts', $data );
                 $r = 1;
             }
             echo $r;

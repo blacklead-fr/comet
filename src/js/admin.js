@@ -242,7 +242,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_ui_viewport_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/ui/viewport.js */ "./src/js/utils/ui/viewport.js");
+/* harmony import */ var _utils_message_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/message.js */ "./src/js/utils/message.js");
 /* harmony import */ var _utils_modal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/modal.js */ "./src/js/utils/modal.js");
 /* harmony import */ var _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utils/utils.js */ "./src/js/utils/utils.js");
 /* harmony import */ var _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/parse.js */ "./src/js/utils/parse.js");
@@ -255,594 +255,214 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* global document, XMLHttpRequest, __cometi18n, __cometdata, console */
+/* global document, __cometi18n, __cometdata, console */
 
 /* harmony default export */ __webpack_exports__["default"] = (function(){
 
 	const _d = document;
 
-	const open = _d.getElementById( 'comet-addFont' );
+	const __core = {
 
-	const appData = {
-		style: null,
-		collection: [],
-		fonts: [],
-
-	};
-
-	const _wfs = {
-
-		get: function( onrequest ){
-			const request = new XMLHttpRequest();
-			request.open( 'GET', 'https://www.googleapis.com/webfonts/v1/webfonts?key=' + __cometdata.apikey, true );
-
-			request.onload = function(){
-				const data = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].json( this.response );
-				var status = 0;
-
-				if( request.status >= 200 && request.status < 400 && _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( data.items ) ){
-					appData.fonts = data.items;
-
-				}else{
-					status = 1;
-					console.log( 'Error' );
-
-				}
-				onrequest( status );
-
-			};
-			request.send();
+		data: {
+			collection: [],
+			counter: false,
+			loadInfo: false,
+			modal: false
 
 		},
 
-		load: function( param ){
-			const s = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( param.s ) ? _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( param.s ) : '';
-			const items = [];
-			var fragment = null;
-			var i, item, o, font, ch, select, a, b, v, button, weight;
+		file: function( options ){
 
-			if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( param.body ).isNode() || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( appData.fonts, 1 ) ){
-				return;
+			const __file = {
+
+				call: function( embed ){
+
+				},
+
+				read: function( file ){
+					const rawFile = new XMLHttpRequest();
+
+					rawFile.open( 'GET', file, false);
+					rawFile.onreadystatechange = function(){
+						var response = '';
+						
+						if( rawFile.readyState === 4 ){
+
+							if(rawFile.status === 200 || rawFile.status == 0){
+								response = rawFile.responseText;
+								alert( response );
+							}
+						}
+					}
+					rawFile.send(null);
+
+				},
+
+				save: function(){
+
+				},
+
+				sanitize: function(){
+
+				}
+			};
+
+		},
+
+		utils: {
+
+			resourceTypes: {
+				google: 'Google Fonts',
+				typeKit: 'TypeKit',
+				custom: __cometi18n.ui.custom
+
+			},
+
+			is_resource: function( value ){
+
+				return ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( value ) && value in __core.utils.resourceTypes );
 
 			}
-			fragment = _d.createDocumentFragment();
 
-			for( i = 0; i < appData.fonts.length; i++ ){
+		},
 
-				if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( font = appData.fonts[i] ) || !( 'family' in font ) ){
-					continue;
+		actions: {
 
-				}
+			font: {
 
-				if( s !== '' && ( font.family.toLowerCase() ).search( s ) === -1 ){
-					continue;
+				is_importing: false,
 
-				}
-				item = _d.createElement( 'div' );
-				item.className = 'comet-font comet-item';
+				add: function( ev ){
+					const fragment = _d.createDocumentFragment();
+					const wrapper = _d.createElement( 'div' );
+					var inner, wfields;
 
-				fragment.appendChild( item );
+					ev.preventDefault();
 
-				o = '<h4 class="comet-title">' + font.family + '</h4>';
-				o += '<div class="comet-controls">';
-				o += '<select class="comet-input">';
-				a = 0;
-				weight = 400;
+					wrapper.className = 'comet-savebox comet-wrapper';
 
-				if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( font.variants ) ){
+					fragment.appendChild( wrapper );
 
-					for( b = 0; b < font.variants.length; b++ ){
+					inner = '<div class="comet-saveform">';
+					inner += '<label>';
+					inner += '<p>' + __cometi18n.ui.resource + '</p>';
+					inner += '<select class="comet-input comet-capture" name="resource">';
+					inner += '<option value="google">Google Fonts</option>';
+					inner += '<option value="typeKit">TypeKit</option>';
+					//inner += '<option value="custom">' + __cometi18n.ui.custom + '</option>';
+					inner += '</select>';
+					inner += '</label>';
 
-						if( !( v = kit.sanitize_variant( font.variants[b] ) ) ){
-							continue;
+					inner += '<label>';
+					inner += '<p>' + __cometi18n.ui.embed + '</p>';
+					inner += '<textarea class="comet-input comet-capture" name="embed"></textarea>';
+					inner += '</label>';
 
+					inner += '<button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.import + '">' + __cometi18n.ui.import + '</button>';
+					inner += '</div>';
+					wrapper.innerHTML = inner;
+
+					wfields = wrapper.lastChild.children;
+
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( wrapper.lastChild.lastChild ).on(
+						'click',
+						__core.actions.font.import,
+						{
+							resource: wfields[0].lastChild,
+							embed: wfields[1].lastChild
 						}
+						);
 
-						if( a === 0 ){
-							weight = v.weight;
+					__core.data.modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+						classes: 'comet-fontsbox',
+						header: '<h4>' + __cometi18n.ui.addFont + '</h4>',
+						content: fragment,
 
-						}
-						o += '<option value="' + v.weight + '">' + v.name + ' ' + v.weight + '</option>';
-						a++;
+					});
+
+
+				},
+
+				remove: function(){
+
+				},
+
+				import: function( ev, ui, _data ){
+
+					ev.preventDefault();
+
+					if( __core.actions.font.is_importing ){
+						return;
+
+					}
+					__core.actions.font.is_importing = true;
+					Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( ui ).addClass( 'comet-waitwhile' );
+					ui.innerHTML = '<span class="cico cico-spin"></span>';
+
+					if( !__core.utils.is_resource( _data.resource.value ) ){
+						return;
 
 					}
 
-				}else{
-					o += '<option value="400">Regular 400</option>';
+				},
 
-				}
-				o += '</select>';
-				o += '<button class="comet-button comet-buttonPrimary" title="' + __cometi18n.ui.select + '">+</button>';
-				o += '</div>';
-				o += '<div class="comet-preview" style="font-family:' + "'" + font.family + "', " + font.category + ';font-weight:' + weight + ';">';
-				o += 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-				o += '</div>';
+			},
 
-				item.dataset.id = i;
-				item.innerHTML = o;
-				ch = item.children;
-				select = ch[1].firstChild;
-				button = ch[1].lastChild;
+			set: {
+				counter: function(){
 
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button ).on( 'click', prop.add, { select: select, font: font, list: param.list, count: param.count });
-				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( select ).on( 'change', prop.weight, { preview: item.lastChild, font: font });
+				},
 
-				items[items.length] = item;
+				loadTime: function(){
 
-			}
+				},
 
-			if( items.length < 1 && s !== '' ){
-				param.body.innerHTML = 'No fonts found.';
-				return;
-
-			}
-			param.body.appendChild( fragment );
-			Object(_utils_ui_viewport_js__WEBPACK_IMPORTED_MODULE_0__["default"])( param.body.parentNode, items, prop.lazy );
-
-		},
-
-		file: function( font, s_variant ){
-			var s, a;
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( font ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( s_variant ) ){
-				return false;
-
-			}
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( s_variant.variants ) ){
-				return false;
-
-			}
-
-			for( a = 0; a < s_variant.variants.length; a++ ){
-
-				if( !( ( s = s_variant.variants[a] ) in font.files ) ){
-					continue;
-
-				}
-				return font.files[s];
-
-			}
-			return false;
-
-		},
+			},
 
 
-		push: function( font, variant ){
-			var o, st, file;
-
-			if( !( variant = kit.sanitize_variant( variant ) ) ){
-				return false;
-
-			}
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( font._cometVarLoaded ) ){
-				font._cometVarLoaded = [];
-
-			}
-
-			if( font._cometVarLoaded.indexOf( variant.weight ) > -1 || !( file = _wfs.file( font, variant ) ) ){
-				return true;
-
-			}
-			font._cometVarLoaded[font._cometVarLoaded.length] = variant.weight;
-			st = _d.createElement( 'style' );
-			o = '@font-face{';
-			o += "font-family:'" + font.family + "';";
-			o += 'font-style:normal;';
-			o += 'font-weight:' + variant.weight + ';';
-			o += "src: url('" + file + "') format('truetype');";
-			o += '}';
-			st.innerHTML = o;
-			_d.head.appendChild( st );
-			return true;
 
 		}
 
 	};
 
-	const kit = {
+	(function(){
+		const source = _d.getElementById( 'comet-sourceframe8679171600336466' );
+		var fragment, wrapper, header, h_inner, body, b_inner;
 
-		weight: [ 100, 200, 300, 400, 500, 600, 700, 800, 900 ],
-
-		item: function( id, count ){
-			var li, o;
-
-			o = '<span>' + id + '</span>';
-			o += '<button class="comet-button cico cico-x"></button>';
-
-			li = _d.createElement( 'div' );
-			li.dataset.id = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( id );
-			li.innerHTML = o;
-
-			Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( li.lastChild ).on( 'click', prop.remove, count );
-
-			return li;
-
-		},
-
-		sanitize_variant: function( variant ){
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isSet( variant ) ){
-				return false;
-
-			}
-
-			switch( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( variant.toString() ) ){
-
-				case 100:
-				case '100':
-				case 'thin':
-				case 'Thin':
-				case 'THIN':
-				return {
-					name: 'Thin',
-					weight: 100,
-					variants: [ 100, '100', 'thin', 'Thin', 'THIN' ],
-				};
-
-				case 200:
-				case '200':
-				case 'extra-light':
-				case 'Extra-Light':
-				case 'EXTRA-LIGHT':
-				return {
-					name: 'Extra-Light',
-					weight: 200,
-					variants: [ 200, '200', 'extra-light', 'Extra-Light', 'EXTRA-LIGHT' ],
-				};
-
-				case 300:
-				case '300':
-				case 'light':
-				case 'Light':
-				case 'LIGHT':
-				return {
-					name: 'Light',
-					weight: 300,
-					variants: [ 300, '300', 'light', 'Light', 'LIGHT' ],
-				};
-
-				case 400:
-				case '400':
-				case 'regular':
-				case 'Regular':
-				case 'REGULAR':
-				return {
-					name: 'Regular',
-					weight: 400,
-					variants: [ 400, '400', 'regular', 'Regular', 'REGULAR' ],
-				};
-
-				case 500:
-				case '500':
-				case 'medium':
-				case 'Medium':
-				case 'MEDIUM':
-				return {
-					name: 'Medium',
-					weight: 500,
-					variants: [ 500, '500', 'medium', 'Medium', 'MEDIUM' ],
-				};
-
-				case 600:
-				case '600':
-				case 'semi-bold':
-				case 'Semi-Bold':
-				case 'SEMI-BOLD':
-				return {
-					name: 'Semi-Bold',
-					weight: 600,
-					variants: [ 600, '600', 'semi-bold', 'Semi-Bold', 'SEMI-BOLD' ],
-				};
-
-				case 700:
-				case '700':
-				case 'bold':
-				case 'Bold':
-				case 'BOLD':
-				return {
-					name: 'Bold',
-					weight: 700,
-					variants: [ 700, '700', 'bold', 'Bold', 'BOLD' ],
-				};
-
-				case 800:
-				case '800':
-				case 'extra-bold':
-				case 'Extra-Bold':
-				case 'EXTRA-BOLD':
-				return {
-					name: 'Extra-Bold',
-					weight: 800,
-					variants: [ 800, '800', 'extra-bold', 'Extra-Bold', 'EXTRA-BOLD' ],
-				};
-
-				case 900:
-				case '900':
-				case 'heavy':
-				case 'Heavy':
-				case 'HEAVY':
-				return {
-					name: 'Heavy',
-					weight: 900,
-					variants: [ 900, '900', 'heavy', 'Heavy', 'HEAVY' ],
-				};
-
-				default:
-				return false;
-			}
-
-		},
-
-
-	};
-
-	const prop = {
-
-		_isImporting: false,
-
-		lazy: function( check, ui ){
-			var id, font;
-
-
-			if( !check || !ui ){
-				return false;
-
-			}
-
-			if( !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( ui, 'id' ) ) || !( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].id( id ) ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( font = appData.fonts[id] ) ){
-				return false;
-
-			}
-			_wfs.push( font, ui.lastChild.style.fontWeight );		
-
-		},
-
-		add: function( ev, ui, data ){
-			var weight, id;
-
-			ev.preventDefault();
-
-			if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( data.select ).isNode() || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.font ) || !( 'family' in data.font ) ){
-				return;
-
-			}
-
-			if( kit.weight.indexOf( weight = parseInt( data.select.value ) ) < 0 ){
-				return;
-
-			}
-
-			if( appData.collection.indexOf( id = ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( data.font.family ) + ':' + weight ) ) > -1 ){
-				return;
-
-			}
-			appData.collection[appData.collection.length] = id;
-			data.count.innerHTML = appData.collection.length;
-			data.list.appendChild( kit.item( id, data.count ) );
-
-
-		},
-
-		remove: function( ev, ui, count ){
-			var id, index;
-
-			ev.preventDefault();
-
-			if( ui.parentNode === null || ui.parentNode.parentNode === null ){
-				return;
-
-			}
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( id = _utils_parse_js__WEBPACK_IMPORTED_MODULE_3__["default"].dataset( ui.parentNode, 'id' ) ) || ( index = appData.collection.indexOf( id = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( id ) ) ) < 0 ){
-				return;
-
-			}
-			appData.collection.splice( index, 1 );
-			count.innerHTML = appData.collection.length;
-			ui.parentNode.parentNode.removeChild( ui.parentNode );
-
-
-		},
-
-		search: function( ev, ui, data ){
-			var val;
-
-			ev.preventDefault();
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( appData.fonts ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( val = ui.value ) ){
-				data.body.innerHTML = 'No font found.';
-				return;
-
-			}
-			data.s = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( val.toLowerCase() );
-			data.body.innerHTML = '';
-			_wfs.load( data );
-
-		},
-
-		import: function( ev, ui ){
-			ev.preventDefault();
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( appData.collection ) || prop._isImporting ){
-				return;
-
-			}
-			prop._isImporting = true;
-			ui.innerHTML = '<span class="comet-waitWhileIcon cico cico-spin"></span>';
-
-			// @TODO
-
+		if( source === null || source.parentNode === null ){
 			return;
 
-			Object(_utils_ajax_js__WEBPACK_IMPORTED_MODULE_4__["default"])({
-				do: 'sfonts',
-				data: _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].json_encode( prop.toObject( appData.collection ) )
-
-			}).done(function( r ){
-				var o = '';
-				var map, a, font, f, i;
-
-				r = parseInt( r );
-				ui.innerHTML = __cometi18n.ui.import;
-
-				if( r !== 1 || !( map = _d.getElementById( 'comet-mapFonts' ) ) || map === null ){
-					return;
-
-				}
-
-				prop._modal.destroy();
-
-				for( a = 0; a < appData.collection.length; a++ ){
-
-					if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( font = appData.collection[a] ) || !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( ( f = ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].trim( font ) ).split(':') ), 2 ) || kit.weight.indexOf( i = parseInt( f[1] ) ) < 0 ){
-						continue;
-
-					}
-					o += '<li><h4>' + f[0] + ' ' + i +'</h4>';
-					o += '<p style="font-family:' + f[0] + ';font-weight:' + i + ';">';
-					o += 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-					o += '</p>';
-					o += '</li>';
-
-				}
-				map.innerHTML = o;
-
-			});
-
-		},
-
-		weight: function( ev, ui, data ){
-			const weight = parseInt( ui.value );
-
-			ev.preventDefault();
-
-			if( !Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( data.preview ).isNode() || [ 100, 200, 300, 400, 500, 600, 700, 800, 900 ].indexOf( weight ) < 0 ){
-				return;
-
-			}
-			data.preview.style.fontWeight = weight;
-		},
-
-		toObject: function( arr ) {
-			const rv = {};
-			var i = 0;
-			var count = 0;
-
-			if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( arr ) ){
-				return {};
-
-			}
-
-			for( i; i < arr.length; i++ ){
-
-				if( arr[i] !== undefined ){
-					rv[count] = arr[i];
-					count++;
-
-				}
-			}
-			return rv;
 		}
+		fragment = _d.createDocumentFragment();
+		header = _d.createElement( 'div' );
+		header.className = 'comet-header comet-top comet-wrapper';
 
-	};
+		h_inner = '<div class="comet-column">';
+		h_inner += '<h4></h4>';
+		h_inner += '<span></span>';
+		h_inner += '</div>';
+		h_inner += '<div class="comet-column">';
+		h_inner += '<button class="comet-button comet-buttonPrimary" title="' + __cometi18n.ui.addFont + '"><span class="cico cico-plus"></span></button>';
+		h_inner += '</div>';
 
-	Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( open ).on( 'click', function( ev ){
-		const h_fragment = _d.createDocumentFragment();
-		const c_fragment = _d.createDocumentFragment();
-		const h_wrapper = _d.createElement( 'div' );
-		const c_wrapper = _d.createElement( 'div' );
-		var a, header, basket, list, count;
+		header.innerHTML = h_inner;
 
-		ev.preventDefault();
+		body = _d.createElement( 'div' );
+		body.className = 'comet-body comet-fontslist comet-wrapper';
+		body.innerHTML = 'coucou';
 
-		h_fragment.appendChild( h_wrapper );
-		c_fragment.appendChild( c_wrapper );
+		fragment.appendChild( header );
+		fragment.appendChild( body );
 
-		header = '<div class="comet-column col1">';
-		header += '<input type="text" class="comet-input" placeholder="' + __cometi18n.ui.search + '"/>';
-		header += '</div>';
+		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( header.lastChild.firstChild ).on( 'click', __core.actions.font.add );
 
-		header += '<div class="comet-column col2">';
-		header += '<h4>' + __cometi18n.messages.selFonts + '</h4>';
-		header += '</div>';
+		__core.data.counter = header.firstChild.firstChild;
+		__core.data.loadInfo = header.firstChild.lastChild;
 
-		header += '<div class="comet-column col3">';
+		source.parentNode.replaceChild( fragment, source );
 
-		header += '<div id="comet-addFontsCollection" class="comet-fontsBasket">';
 
-		header += '<header id="comet-addFontsCollectionHeader" class="comet-header">';
-		header += '<span class="comet-count"></span>' + __cometi18n.ui.fonts;
-		header += '</header>';
-
-		header += '<div>';
-		header += '<div class="comet-fontsList text-center">';
-		//header += ol;
-		header += '</div>';
-
-		header += '<div class="text-center">';
-		header += '<button class="comet-button comet-buttonPrimary">' + __cometi18n.ui.import + '</button>';
-		header += '</div>';
-		header += '</div>';
-
-		header += '</div>';
-
-		header += '</div>';
-
-		h_wrapper.innerHTML = header;
-		basket = h_wrapper.lastChild.firstChild;
-		count = basket.firstChild.firstChild;
-		list = basket.lastChild.firstChild;
-
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( basket.lastChild.lastChild.firstChild ).on( 'click', prop.import );
-		Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( h_wrapper.firstChild.firstChild ).on( 'input', prop.search, {
-			body: c_wrapper,
-			list: list,
-			count: count
-		});
-
-		appData.collection = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
-
-		if( appData.collection.length > 0 ){
-
-			for( a = 0; a < appData.collection.length; a++ ){
-				list.appendChild( kit.item( appData.collection[a], count ) );
-
-			}
-
-		}else{
-			list.innerHTML = __cometi18n.messages.selFonts;
-
-		}
-		count.innerHTML = appData.collection.length;
-		c_wrapper.innerHTML = '<div><span class="comet-waitWhileIcon cico cico-spin"></span>' + __cometi18n.messages.warning.wait + '</div>';
-		
-		prop._modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
-			classes: 'comet-fontsbox',
-			header: h_fragment,
-			content: c_fragment,
-
-		});
-
-		_wfs.get(function(r){
-
-			if( r === 1 ){
-				c_wrapper.innerHTML = '<div><span class="cico cico-exclamation"></span>' + __cometi18n.messages.error.failedFonts + '</div>';
-				return;
-
-			}
-			c_wrapper.innerHTML = '';
-			_wfs.load({
-				body: c_wrapper,
-				list: list,
-				count: count
-
-			});
-
-		});
-
-	});
+	})();
 
 });
 
@@ -881,20 +501,6 @@ __webpack_require__.r(__webpack_exports__);
 	const _w = window;
 
 	const __bun = {
-
-		message: function( text, type ){
-			const m = _d.createElement( 'p' );
-			m.className = 'comet-message comet-' + type;
-			m.innerHTML = text;
-			return m;
-
-		},
-
-		icons: {
-			wait: '<span class="comet-waitWhileIcon cico cico-spin"></span>',
-			arrow: '<span class="cico cico-arrow-right-alt"></span>'
-
-		},
 
 		toggle: function( button, state ){
 			const waitwhile = 'comet-waitwhile';
@@ -3641,91 +3247,6 @@ __webpack_require__.r(__webpack_exports__);
 
 	} );
 
-});
-
-/***/ }),
-
-/***/ "./src/js/utils/ui/viewport.js":
-/*!*************************************!*\
-  !*** ./src/js/utils/ui/viewport.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils.js */ "./src/js/utils/utils.js");
-/* harmony import */ var _node_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../node.js */ "./src/js/utils/node.js");
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = (function( viewport, target, view ){
-
-	var width, height;
-
-	const _viewport = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( viewport );
-
-	const _target = Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( target );
-
-	const triggers = [ 'scroll', 'load' ];
-
-	const __ = {
-
-		check: function( element ){
-			const x = element.getBoundingClientRect();
-
-			return ( x.top >= 0 && x.left >= 0 && x.right <= width && x.bottom <= height );
-
-		},
-
-		view: function( ev, ui ){
-			var ctr, a;
-
-			if( _target.isView() ){
-				return;
-
-			}
-
-			if( _target.isNode() ){
-				view( __.check( _target.prop() ), _target.prop() );
-				return;
-
-			}
-
-			if( ( ctr = _target.get() ).length < 1 ){
-				return;
-
-			}
-
-			for( a = 0; a < ctr.length; a++ ){
-
-				if( Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( ctr[a] ).isNode() ){
-					view( __.check( ctr[a] ), ctr[a] );
-
-				}
-
-			}
-
-
-		}
-
-	};
-
-	if( ( !_viewport.isNode() && !_viewport.isView() ) || !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isFunction( view ) ){
-		return false;
-
-	}
-	width = _viewport.width();
-	height = _viewport.height();
-
-	triggers.forEach(function( trigger ){
-
-		_viewport.on( trigger, __.view );
-
-	});
-
-	Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( window ).on( 'resize', __.view );
-	
 });
 
 /***/ }),

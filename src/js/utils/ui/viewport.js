@@ -20,7 +20,7 @@ export default function( viewport, target, view ){
 
 		},
 
-		view: function( ev, ui ){
+		view: function(){
 			var ctr, a;
 
 			if( _target.isView() ){

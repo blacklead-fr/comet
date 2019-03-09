@@ -30,7 +30,7 @@ gulp.task( 'css:verify', function(){
 
 gulp.task( 'js:verify', function(){
 
-    return gulp.src( [ 'src/js/**/*.js', '!src/js/*js', '!src/js/utils/ui/viewport.js', '!src/js/utils/viewport.js', '!src/js/utils/book.js' ] )
+    return gulp.src( [ 'src/js/**/*.js', '!src/js/*js', '!src/js/utils/viewport.js', '!src/js/utils/book.js' ] )
 
     .pipe(eslint({
         'env': {

@@ -19,27 +19,40 @@
 			display: flex;
 			flex-wrap: wrap;
 			padding: 30px;
-		}
-	}
 
-	.comet-font.comet-item {
-		width: 25%;
-		padding: 30px;
+			> .comet-message { width: 100%; }
 
-		.comet-button { margin-left: 5px; }
+			.comet-font.comet-item {
+				width: 25%;
+				padding: 30px;
 
-		.comet-preview {
-			border-top: 2px solid $liLight;
-			font-size: 35px;
-			line-height: 1.1;
-			padding-top: 10px;
-			margin-top: 10px;
+				.comet-preview {
+					border-top: 2px solid $liLight;
+					font-size: 35px;
+					line-height: 1.1;
+					padding-top: 10px;
+					margin-top: 10px;
+				}
+
+				.comet-controls {
+					display: flex;
+					align-items: center;
+
+					.comet-button {
+						margin-left: 5px;
+						font-size: 21px;
+						line-height: 1;
+						padding: 7px 15px;
+					}
+				}
+			}
 		}
 	}
 }
 
 .comet-fontsBasket {
 	position: relative;
+	display: inline-block;
 
 	> .comet-header {
 		background: $liDark;
@@ -57,33 +70,32 @@
 	}
 
 	.comet-fontsList {
-		display: flex;
-		width: 100%;
-		flex-wrap: wrap;
 		overflow-y: auto;
 		height: 250px;
 
-		> * {
-			width: auto;
+		> div {
+			width: 100%;
 			background: $liLight;
-			margin: 0 1% 20px;
+			margin: 5px 0;
 			padding: 5px 10px;
+			font-size: 13px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			@include border_radius( 5px );
-		}
 
-		.comet-button {
-			padding: 0;
-			border: 2px solid red;
-			margin-left: 5px;
-			color: red;
-			font-size: 15px;
-			line-height: 20px;
-			width: 20px;
-			height: 20px;
+			&:hover { font-size: 15px; }
 
-			&:hover {
-				background: red;
-				color: white;
+			.comet-button {
+				padding: 0;
+				margin-left: 5px;
+				font-size: 11px;
+				line-height: 1;
+				width: auto;
+				height: auto;
+
+				&:hover { color: red; }
+
 			}
 
 		}
@@ -96,14 +108,32 @@
 		top: 100%;
 		background: white;
 		width: 250px;
-		height: 300px;
+		height: 310px;
 		z-index: 1;
-		@include border_radius( 5px 0 5px 5px );
+		margin-top: 5px;
+		@include border_radius( 5px );
 		@include box_shadow( 0 0 5px 0 $daLight );
 
-		> * { padding: 10px; }
+		&:before {
+			content: '';
+			width: 0;
+			height: 0;
+			position: absolute;
+			bottom: 100%;
+			right: 20px;
+			border-left: 5px solid transparent;
+			border-right: 5px solid transparent;
+			border-bottom: 5px solid white;
+		}
 
-		> div:nth-of-type(2) { border-top: 1px solid $liLight; }
+		> div {
+			padding: 10px;
+
+			&:nth-of-type(2){
+				border-top: 1px solid $liLight;
+				text-align: center;
+			}
+		}
 
 	}
 

@@ -16,20 +16,6 @@ export default function(){
 
 	const __bun = {
 
-		message: function( text, type ){
-			const m = _d.createElement( 'p' );
-			m.className = 'comet-message comet-' + type;
-			m.innerHTML = text;
-			return m;
-
-		},
-
-		icons: {
-			wait: '<span class="comet-waitWhileIcon cico cico-spin"></span>',
-			arrow: '<span class="cico cico-arrow-right-alt"></span>'
-
-		},
-
 		toggle: function( button, state ){
 			const waitwhile = 'comet-waitwhile';
 			const _button = node( button );

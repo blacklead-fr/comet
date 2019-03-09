@@ -52,6 +52,11 @@ class fonts extends Comet_Interface{
 
     protected function content(){
 
+        echo '<div id="comet-sourceframe8679171600336466">';
+        comet_message( __( 'Wait while initializing fonts.', 'comet' ), 'warning', true );
+        echo '</div>';
+        return;
+
         $fonts = comet_get_fonts( [] );
         $weight = [ 100, 200, 300, 400, 500, 600, 700, 800, 900 ];
 
