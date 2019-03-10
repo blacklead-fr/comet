@@ -21,30 +21,255 @@ export default function(){
 
 		},
 
-		file: function( options ){
+		file: function( entry ){
 
 			const __file = {
 
-				call: function( embed ){
+				catch: {
+
+					url: function(){
+						var url;
+
+						const __regex = {
+							import: /@import\s+url\(\'?\"?([^'")]+)\'?\"?\);?/i,
+							link: /<link[^>]*href="?'?([^'"]+)'?"?[^>\/]*\/?>/i,
+						};
+
+						const __try = {
+
+							matching: function( type ){
+								var m;
+
+								type = utils.isString( type ) ? utils.trim( type.toLowerCase() ) : false;
+
+								return ( !type || !( type in __regex ) || ( m = entry.match( __regex[type] ) ) === null || !utils.isString( m[1] ) ? false : utils.trim( m[1] ) );
+
+
+							},
+
+							import: function(){
+								return __try.matching( 'import' );
+
+							},
+
+							link: function(){
+								return __try.matching( 'link' );
+
+							}
+
+						};
+
+						return ( utils.isString( entry ) ? ( !( url = __try.link() ) ? ( !( __try.import() ) ? false : url ) : url ) : false );
+
+					},
+
+					fonts: function( raw ){
+
+						const __try = {
+
+							regex: {
+								fontFace: /@font-face\s*\{[^}]+\}/gmi,
+								fontFamily: /font-family\:\s*(?:'|")?([^'"()]+)(?:'|")?/i,
+								fontWeight: /font-weight\:\s*([a-z0-9\s]+)/i
+							},
+
+							matching: function( _raw, type ){
+								var m;
+
+								type = utils.isString( type ) ? utils.trim( type ) : false;
+
+								return ( !utils.isString( _raw ) || !type || !( type in __try.regex ) || ( m = _raw.match( __try.regex[type] ) ) === null ? false : m );
+
+
+							},
+
+							fontFace: function( _raw ){
+								const m = __try.matching( _raw, 'fontFace' );
+								return ( !m || m.length < 1 ? false : m );
+
+							},
+
+							fontFamily: function( _raw ){
+								const m = __try.matching( _raw, 'fontFamily' );
+								return ( !m || !utils.isString( m[1] ) ? false : utils.trim( m[1] ) );
+
+							},
+
+							fontWeight: function( _raw ){
+								const m = __try.matching( _raw, 'fontWeight' );
+								return ( !m ? false : __fonts.sanitizeWeight( m[1] ) );
+
+							}
+
+						};
+
+						const __fonts = {
+
+							names: [],
+
+							fonts: [],
+
+							toObject: function(){
+								const fonts = {};
+								var i = 0;
+
+								if( __fonts.fonts.length < 1 ){
+									return {};
+
+								}
+
+								for( i; i < __fonts.fonts.length; i++ ){
+
+									fonts[i] = __fonts.fonts[i];
+
+								}
+								return fonts;
+
+							},
+
+							get: function(){
+								var ff, i, wei, fam, index;
+
+								if( !( ff = __try.fontFace( raw ) ) ){
+									return false;
+
+								}
+
+								for( i = 0; i < ff.length; i++ ){
+
+									if( !( wei = __try.fontWeight( ff[i] ) ) || !( fam = __try.fontFamily( ff[i] ) ) ){
+										continue;
+
+									}
+									__fonts.addFont( fam, wei, ff[i] );
+
+								}
+								return __fonts.fonts;
+
+							},
+
+							addFont: function( family, weight, _raw ){
+								var index = __fonts.names.indexOf( family );
+								var __raw;
+
+								if( index < 0 ){
+									index = __fonts.fonts.length;
+									__fonts.names[index] = family;
+									__fonts.fonts[index] = {
+										family: family,
+										weight: {}
+									};
+
+								}
+
+								if( !utils.isObject( __fonts.fonts[index].weight ) || utils.isArray( __fonts.fonts[index].weight ) ){
+									__fonts.fonts[index].weight = {};
+
+								}
+
+								if( utils.isString( _raw ) ){
+									__raw = utils.isString( __raw = __fonts.fonts[index].weight[weight] ) ? __raw : '';
+									__fonts.fonts[index].weight[weight] = __raw + _raw;
+
+								}
+								return index;
+
+							},
+
+							sanitizeWeight: function( weight ){
+
+								weight = utils.isString( weight ) ? utils.trim( weight.toLowerCase() ) : weight;
+
+								switch( weight ){
+
+									case 'thin':
+									case 'hairline':
+									case '100':
+									case 100:
+									return 100;
+
+									case 'extra light':
+									case 'ultra light':
+									case '200':
+									case 200:
+									return 200;
+
+									case 'light':
+									case '300':
+									case 300:
+									return 300;
+
+									case 'normal':
+									case '400':
+									case 400:
+									return 400;
+
+									case 'medium':
+									case '500':
+									case 500:
+									return 500;
+
+									case 'semi bold':
+									case 'demi bold':
+									case '600':
+									case 600:
+									return 600;
+
+									case 'bold':
+									case '700':
+									case 700:
+									return 700;
+
+									case 'extra bold':
+									case 'ultra bold':
+									case '800':
+									case 800:
+									return 800;
+
+									case 'black':
+									case 'heavy':
+									case '900':
+									case 900:
+									return 900;
+
+									default:
+									return false;
+
+								}
+
+
+							}
+
+						};
+
+						return utils.isString( raw ) ? __fonts.get() : false;
+
+					}
+
 
 				},
 
-				read: function( file ){
+				call: function( file ){
 					const rawFile = new XMLHttpRequest();
 
-					rawFile.open( 'GET', file, false);
+					rawFile.open( 'GET', file, true );
 					rawFile.onreadystatechange = function(){
 						var response = '';
 						
-						if( rawFile.readyState === 4 ){
+						if( rawFile.readyState !== 4 ){
+							return;
 
-							if(rawFile.status === 200 || rawFile.status == 0){
-								response = rawFile.responseText;
-								alert( response );
-							}
 						}
+
+						if( rawFile.status === 200 || rawFile.status == 0 ){
+							response = __file.catch.fonts( rawFile.responseText );
+							console.log( response );
+							return true;
+						}
+						//@TODO: error;
+
 					}
-					rawFile.send(null);
+					rawFile.send( null );
 
 				},
 
@@ -55,7 +280,18 @@ export default function(){
 				sanitize: function(){
 
 				}
+
 			};
+
+			var r_url;
+
+			if( !( r_url = __file.catch.url() ) ){
+				console.log( 'mmee');
+				return;
+
+			}
+			__file.call( r_url );
+
 
 		},
 
@@ -93,7 +329,9 @@ export default function(){
 
 					fragment.appendChild( wrapper );
 
-					inner = '<div class="comet-saveform">';
+					inner = '<div class="comet-messages comet-wrapper"></div>';
+
+					inner += '<div class="comet-saveform">';
 					inner += '<label>';
 					inner += '<p>' + __cometi18n.ui.resource + '</p>';
 					inner += '<select class="comet-input comet-capture" name="resource">';
@@ -153,6 +391,8 @@ export default function(){
 						return;
 
 					}
+
+					__core.file( _data.embed.value );
 
 				},
 
