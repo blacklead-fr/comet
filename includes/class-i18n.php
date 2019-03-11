@@ -283,7 +283,10 @@ class Comet_i18n {
 				'export'		=> __( 'An error has been occurred while exporting the template.', 'comet' ),
 				'noTemplate'	=> __( 'Template not found.', 'comet' ),
 				'failedFonts'	=> __( 'Failed to connect with Google Fonts. Please verify your API key.', 'comet' ),
-				'noFonts'		=> __( 'No fonts found.', 'comet' )
+				'noFonts'		=> __( 'No fonts found.', 'comet' ),
+				'unreachFont'	=> __( 'Unreachable font. Please make sure the embed code is valid.', 'comet' ),
+				'noFont'		=> __( 'Font not found.', 'comet' ),
+				'failFont'		=> __( 'Font has not been imported correctly.', 'comet' )
 			],
 			'success'	=> [
 				'export'		=> __( 'The template has been correctly created and ready to be downloaded. Click the link below to download the template.', 'comet' ),

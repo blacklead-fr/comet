@@ -12,7 +12,11 @@ class Comet_Dashboard extends Comet_Pages {
 
 	private $base_path = COMET_PATH . 'admin/';
 
+	private $fonts = [];
+
 	public function __construct(){
+
+		$this->fonts = comet_get_fonts();
 
 		add_action( 'comet_admin_header', [ $this, 'styles' ] );
 		add_action( 'comet_admin_footer', [ $this, 'scripts' ] );
@@ -54,6 +58,11 @@ class Comet_Dashboard extends Comet_Pages {
 		comet_print_style( "{$url}src/css/cico.min.css" );
 
 		if( $this->is_page( 'preview' ) ){
+
+			if( is_array( $this->fonts ) && isset( $this->fonts['css'] ) ){
+				comet_inline_style( $this->fonts['css'] );
+
+			}
 			return;
 
 		}
@@ -80,7 +89,7 @@ class Comet_Dashboard extends Comet_Pages {
 				'security'		=> wp_create_nonce( 'comet-ajax-nonce' ),
 				'edit_url'		=> admin_url( 'post.php' ),
 				'myTemplates'	=> comet_get_dashboard_url( 'mytemplates' ),
-				'fonts'			=> comet_get_fonts(),
+				'fonts'			=> ( is_array( $this->fonts ) && isset( $this->fonts['fonts'] ) && is_array( $this->fonts['fonts'] ) ? $this->fonts['fonts'] : [] ),
 				'apikey'		=> $key,
 				'user'			=> 'true'
 			]

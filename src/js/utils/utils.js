@@ -43,6 +43,23 @@ utils.isArray = function( entry, length ){
 
 };
 
+utils.toObject = function( entry ){
+	const obj = {};
+	var i = 0;
+
+	if( !utils.isArray( entry, 1 ) ){
+		return obj;
+
+	}
+
+	for( i; i < entry.length; i++ ){
+		obj[i] = entry[i];
+
+	}
+	return obj;
+
+};
+
 utils.trim = function( entry ){
 	const type = typeof entry;
 	var s = '', c;

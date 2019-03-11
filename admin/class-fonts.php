@@ -36,11 +36,12 @@ class fonts extends Comet_Interface{
 
     public function style(){
 
-        if( !( $url = comet_fonts_url() ) ){
+        /*if( !( $url = comet_fonts_url() ) ){
             return;
 
         }
-        comet_print_style( $url );
+        comet_print_style( $url );*/
+
 
     }
 

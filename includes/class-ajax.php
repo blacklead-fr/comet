@@ -102,7 +102,7 @@ class Comet_Ajax {
             echo $r;
             break;
 
-            case 'dtemplate':
+            case 'dtemplate'://@TODO rename
 
             echo ( isset( $p['id' ] ) && ( $post = comet_get_post( $p['id' ] ) )->has_post() && $post->delete_post() ? 1 : 0 );
             break;
@@ -124,16 +124,6 @@ class Comet_Ajax {
             $meta = isset( $p['meta'] ) && in_array( $p['meta'], [ 'true', 'TRUE', true, 1 ] ) ? true : false;
 
             echo ( isset( $p['id' ] ) && ( $post = comet_get_post( $p['id' ] ) )->has_post() ? json_encode( $post->get_post( $meta ) ) : 0 );
-            break;
-
-            case 'sfonts':
-            $r = -1;
-
-            if( current_user_can( 'manage_options' ) && isset( $p['data'] ) && is_array( $data = comet_parse_json( $p['data'] ) ) ){
-                update_option( 'comet_fonts', $data );
-                $r = 1;
-            }
-            echo $r;
             break;
 
             default:

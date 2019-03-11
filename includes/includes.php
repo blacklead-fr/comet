@@ -33,6 +33,58 @@ function comet_message( $str = '', $type = 'note', $echo = false ){
 
 }
 
+function comet_get_fonts( $status = 'any', $onreturn = 'both' ){
+
+  $onreturn = is_string( $onreturn ) ? strtolower( $onreturn ) : 'both';
+  $onreturn = in_array( $onreturn, [ 'fonts', 'css' ] ) ? $onreturn : 'both';
+
+  $args = [
+    'post_type'       => 'comet_fonts',
+    'post_status'     => $status,
+    'nopaging'        => true,
+    'posts_per_page'  => -1,
+    'has_password'    => false
+  ];
+
+  $Fonts = new WP_Query( $args );
+  $fonts = [];
+  $css = '';
+
+  if ( $Fonts->have_posts() ){
+
+    while ( $Fonts->have_posts() ){
+      $Fonts->the_post();
+      $id = get_the_ID();
+      $meta = get_post_meta( $id, '_cometMetaData', true );
+
+      if( !is_array( $meta ) || count( $meta ) < 1 ){
+        continue;
+
+      }
+      $fonts[] = [
+        'id'      => $id,
+        'family'  => get_the_title(),
+        'weight'  => isset( $meta['weight'] ) && is_array( $meta['weight'] ) ? $meta['weight'] : []
+
+      ];
+
+      foreach( $meta['weight'] as $weight => $value ){
+
+        if( is_string( $value ) ){
+          $css .= $value;
+
+        }
+
+      }
+
+    }
+    wp_reset_postdata();
+  
+  }
+  return ( $onreturn === 'fonts' ? $fonts : ( $onreturn === 'css' ? $css : [ 'fonts' => $fonts, 'css' => $css ] ) );
+
+}
+
 function comet_get_mytemplates( $args = [], $query = true ){
 
   $default = [
@@ -122,7 +174,7 @@ function comet_get_svgicon( $entry ){
 
 }
 
-function comet_get_fonts( $r = false ){
+/*function comet_get_fonts( $r = false ){
   return get_option( 'comet_fonts', $r );
 
 }
@@ -146,7 +198,7 @@ function comet_enqueue_fonts(){
   }
   wp_enqueue_style( 'webfont', esc_url( $url ) );
 
-}
+}*/
 
 function comet_get_header( $name = null ){
 

@@ -38,11 +38,11 @@ class Comet_Includes extends Comet{
 	}
 
 	/**
-	 * Create post types used by Comet.
+	 * Register comet_mytemplates post type.
 	 *
 	 * @since    1.0.0
 	 */
-	private function create_post_types() {
+	private function register_mytemplates() {
 		
 		$labels = [
 			'name'                  => _x( 'My templates', 'Post Type General Name', 'comet' ),
@@ -62,7 +62,7 @@ class Comet_Includes extends Comet{
 			'view_items'            => __( 'View templates', 'comet' ),
 			'search_items'          => __( 'Search template', 'comet' ),
 			'not_found'             => __( 'Not found', 'comet' ),
-			'not_found_in_trash'    => __( 'Not found in Trash', 'comet' ),
+			'not_found_in_trash'    => __( 'Not found in trash', 'comet' ),
 			'featured_image'        => __( 'Featured Image', 'comet' ),
 			'set_featured_image'    => __( 'Set featured image', 'comet' ),
 			'remove_featured_image' => __( 'Remove featured image', 'comet' ),
@@ -99,13 +99,76 @@ class Comet_Includes extends Comet{
 	}
 
 	/**
+	 * Register comet_fonts post type.
+	 *
+	 * @since    1.1.0
+	 */
+	private function register_fonts() {
+		
+		$labels = [
+			'name'                  => _x( 'Fonts', 'Post Type General Name', 'comet' ),
+			'singular_name'         => _x( 'Font', 'Post Type Singular Name', 'comet' ),
+			'menu_name'             => __( 'Fonts', 'comet' ),
+			'name_admin_bar'        => __( 'Fonts', 'comet' ),
+			'archives'              => __( 'Fonts', 'comet' ),
+			'attributes'            => __( 'Fonts', 'comet' ),
+			'parent_item_colon'     => __( 'Parent font:', 'comet' ),
+			'all_items'             => __( 'All fonts', 'comet' ),
+			'add_new_item'          => __( 'Add New font', 'comet' ),
+			'add_new'               => __( 'Add New', 'comet' ),
+			'new_item'              => __( 'New font', 'comet' ),
+			'edit_item'             => __( 'Edit font', 'comet' ),
+			'update_item'           => __( 'Update font', 'comet' ),
+			'view_item'             => __( 'View font', 'comet' ),
+			'view_items'            => __( 'View fonts', 'comet' ),
+			'search_items'          => __( 'Search font', 'comet' ),
+			'not_found'             => __( 'Not found', 'comet' ),
+			'not_found_in_trash'    => __( 'Not found in trash', 'comet' ),
+			'featured_image'        => __( 'Featured Image', 'comet' ),
+			'set_featured_image'    => __( 'Set featured image', 'comet' ),
+			'remove_featured_image' => __( 'Remove featured image', 'comet' ),
+			'use_featured_image'    => __( 'Use as featured image', 'comet' ),
+			'insert_into_item'      => __( 'Insert into font', 'comet' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this font', 'comet' ),
+			'items_list'            => __( 'Fonts list', 'comet' ),
+			'items_list_navigation' => __( 'Fonts list navigation', 'comet' ),
+			'filter_items_list'     => __( 'Filter fonts list', 'comet' ),
+		];
+		
+		$args = [
+			'label'                 => __( 'Fonts', 'comet' ),
+			'labels'                => $labels,
+			'supports'              => [ 'title', 'author', 'custom-fields' ],
+			'hierarchical'          => false,
+			'public'                => false,
+			'show_ui'               => true,
+			'show_in_menu'          => false,
+			'menu_position'         => 5,
+			'show_in_admin_bar'     => false,
+			'show_in_nav_menus'     => false,
+			'can_export'            => true,
+			'has_archive'           => false,
+			'exclude_from_search'   => true,
+			'publicly_queryable'    => false,
+			'rewrite'               => false,
+			'capability_type'       => 'page',
+			'show_in_rest'          => false,
+		];
+
+		register_post_type( 'comet_fonts', $args );
+
+	}
+
+	/**
 	 * Init action.
 	 *
 	 * @since     1.0.0
 	 */ 
 	public function init() {
 
-		$this->create_post_types();
+		$this->register_mytemplates();
+
+		$this->register_fonts();
 
 		/*if( !is_array( $post_types = comet_get_supported_post_types() ) ){
 			return;

@@ -17,7 +17,6 @@ export default function ( options ){
 	options.close.icon = !utils.isStringEmpty( options.close.icon ) ? utils.trim( options.close.icon ) : '<span class="cico cico-x"></span>';
 
 	modal = _d.createElement( 'div' );
-	//modal.className = 'comet-dialog comet-dialogGlobal';
 	modal.className = 'comet-modal comet-ui' + ( !utils.isStringEmpty( options.classes ) ? ' ' + utils.trim( options.classes ) : ( utils.isArray( options.classes ) ? ' ' + ( options.classes ).join( ' ' ) : '' ) );
 
 
@@ -51,48 +50,6 @@ export default function ( options ){
 	button.title = options.close.title;
 	button.innerHTML = options.close.icon;
 	modal.appendChild( button );
-/*
-
-
-	inner = document.createElement( 'div' );
-	inner.className = 'comet-dialogbox';
-
-	header = document.createElement( 'div' );
-	header.className = 'comet-dialogHeader';
-
-	if( !utils.isStringEmpty( options.header ) ){
-		header.innerHTML = options.header;
-
-	}else if( ( nh = node( options.header ) ).isNode() ){
-		header.appendChild( nh.prop() );
-
-	}
-
-	button = document.createElement( 'button' );
-	button.className = 'comet-button comet-dialogCloseButton';
-	button.title = options.close.title;
-	button.innerHTML = options.close.icon;
-
-	content = document.createElement( 'div' );
-	content.className = 'comet-dialogContent';
-
-	if( !utils.isStringEmpty( options.content ) ){
-		content.innerHTML = options.content;
-
-	}else if( ( nh = node( options.content ) ).isNode() ){
-		content.appendChild( nh.prop() );
-
-	}else{
-		content.innerHTML = i18n.messages.unreach;
-
-	}
-	header.appendChild( button );
-	inner.appendChild( header );
-	inner.appendChild( content );
-
-	modal.appendChild( inner );
-
-	document.body.appendChild( modal );*/
 
 	node( button ).on( 'click', function( ev, ui ){
 		ev.preventDefault();

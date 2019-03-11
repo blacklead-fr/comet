@@ -7186,7 +7186,6 @@ __webpack_require__.r(__webpack_exports__);
 	options.close.icon = !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( options.close.icon ) ? _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( options.close.icon ) : '<span class="cico cico-x"></span>';
 
 	modal = _d.createElement( 'div' );
-	//modal.className = 'comet-dialog comet-dialogGlobal';
 	modal.className = 'comet-modal comet-ui' + ( !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isStringEmpty( options.classes ) ? ' ' + _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].trim( options.classes ) : ( _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isArray( options.classes ) ? ' ' + ( options.classes ).join( ' ' ) : '' ) );
 
 
@@ -7220,48 +7219,6 @@ __webpack_require__.r(__webpack_exports__);
 	button.title = options.close.title;
 	button.innerHTML = options.close.icon;
 	modal.appendChild( button );
-/*
-
-
-	inner = document.createElement( 'div' );
-	inner.className = 'comet-dialogbox';
-
-	header = document.createElement( 'div' );
-	header.className = 'comet-dialogHeader';
-
-	if( !utils.isStringEmpty( options.header ) ){
-		header.innerHTML = options.header;
-
-	}else if( ( nh = node( options.header ) ).isNode() ){
-		header.appendChild( nh.prop() );
-
-	}
-
-	button = document.createElement( 'button' );
-	button.className = 'comet-button comet-dialogCloseButton';
-	button.title = options.close.title;
-	button.innerHTML = options.close.icon;
-
-	content = document.createElement( 'div' );
-	content.className = 'comet-dialogContent';
-
-	if( !utils.isStringEmpty( options.content ) ){
-		content.innerHTML = options.content;
-
-	}else if( ( nh = node( options.content ) ).isNode() ){
-		content.appendChild( nh.prop() );
-
-	}else{
-		content.innerHTML = i18n.messages.unreach;
-
-	}
-	header.appendChild( button );
-	inner.appendChild( header );
-	inner.appendChild( content );
-
-	modal.appendChild( inner );
-
-	document.body.appendChild( modal );*/
 
 	Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( button ).on( 'click', function( ev, ui ){
 		ev.preventDefault();
@@ -11342,6 +11299,23 @@ utils.isArray = function( entry, length ){
 	length = this.isSet( length ) ? ( this.isNumber( length = parseInt( length ) ) && !isNaN( length ) && length > 0 ? length : false ) : false;
 
 	return Array.isArray( entry ) && ( ( length && entry.length >= length ) || !length );
+
+};
+
+utils.toObject = function( entry ){
+	const obj = {};
+	var i = 0;
+
+	if( !utils.isArray( entry, 1 ) ){
+		return obj;
+
+	}
+
+	for( i; i < entry.length; i++ ){
+		obj[i] = entry[i];
+
+	}
+	return obj;
 
 };
 
