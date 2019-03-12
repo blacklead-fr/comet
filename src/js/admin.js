@@ -617,6 +617,7 @@ __webpack_require__.r(__webpack_exports__);
 			resourceTypes: {
 				google: 'Google Fonts',
 				typeKit: 'TypeKit',
+				typography: 'Typography.com (H&Co)',
 				custom: __cometi18n.ui.custom
 
 			},
@@ -678,6 +679,7 @@ __webpack_require__.r(__webpack_exports__);
 				inner += '<select class="comet-input comet-capture" name="resource">';
 				inner += '<option value="google">Google Fonts</option>';
 				inner += '<option value="typeKit">TypeKit</option>';
+				inner += '<option value="typography">Typography.com (H&Co)</option>';
 				//inner += '<option value="custom">' + __cometi18n.ui.custom + '</option>';
 				inner += '</select>';
 				inner += '</label>';
@@ -703,7 +705,7 @@ __webpack_require__.r(__webpack_exports__);
 					);
 
 				__core.data.modal = Object(_utils_modal_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
-					classes: 'comet-fontsbox',
+					classes: 'comet-fontbox',
 					header: '<h4>' + __cometi18n.ui.addFont + '</h4>',
 					content: fragment,
 					done: function(){
@@ -712,6 +714,7 @@ __webpack_require__.r(__webpack_exports__);
 							return 1;
 
 						}
+						__core.data.modal = false;
 
 					}
 
@@ -749,9 +752,8 @@ __webpack_require__.r(__webpack_exports__);
 							delete __core.data.collection[gdata.index];
 
 						}
-						console.log( __core.data.collection );
-
-
+						__core.actions.set.counter();
+						__core.actions.set.loadTime();
 
 					}
 
@@ -823,7 +825,7 @@ __webpack_require__.r(__webpack_exports__);
 				},
 
 				state: function( importing ){
-					const button = __core.data.modal.fontBoxUi;
+					const button = __core.data.modal.fontBoxUi.import;
 					const _button = Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( button );
 					importing = ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isBool( importing ) && importing );
 					__core.data.isImporting = importing;
@@ -851,18 +853,22 @@ __webpack_require__.r(__webpack_exports__);
 				const fragment = _d.createDocumentFragment();
 				const card = _d.createElement( 'div' );
 				const name = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data ) && _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isString( data.family ) ? data.family : false;
-				var inner;
+				var inner, count;
 
 				if( !name ){
 					return;
 
 				}
+				count = _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isArray( data.weight ) ? data.weight.length : ( _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].isObject( data.weight ) ? Object.keys( data.weight ).length : 0 );
 				fragment.appendChild( card );
 				inner = '<div class="comet-previewbox comet-sampletext">';
 				inner += '<p class="comet-inner comet-text" style="font-family:' + name + ';">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>';
 				inner += '</div>';
 				inner += '<div class="comet-info comet-wrapper">';
+				inner += '<div class="comet-fontinfo">';
 				inner += '<span class="comet-fontname">' + _utils_utils_js__WEBPACK_IMPORTED_MODULE_2__["default"].capitalize( name ) + '</span>';
+				inner += '<span class="comet-fontstyle">' + ( count === 1 ? '1 style' : count + ' styles' ) + '</span>';
+				inner += '</div>';
 				inner += '<div class="comet-actions comet-ui">';
 				inner += '<button class="comet-button" title="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span></button>';
 				inner += '</div>';

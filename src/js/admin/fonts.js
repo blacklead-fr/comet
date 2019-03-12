@@ -367,6 +367,7 @@ export default function(){
 			resourceTypes: {
 				google: 'Google Fonts',
 				typeKit: 'TypeKit',
+				typography: 'Typography.com (H&Co)',
 				custom: __cometi18n.ui.custom
 
 			},
@@ -431,6 +432,7 @@ export default function(){
 				inner += '<select class="comet-input comet-capture" name="resource">';
 				inner += '<option value="google">Google Fonts</option>';
 				inner += '<option value="typeKit">TypeKit</option>';
+				inner += '<option value="typography">Typography.com (H&Co)</option>';
 				//inner += '<option value="custom">' + __cometi18n.ui.custom + '</option>';
 				inner += '</select>';
 				inner += '</label>';
@@ -456,7 +458,7 @@ export default function(){
 					);
 
 				__core.data.modal = modal({
-					classes: 'comet-fontsbox',
+					classes: 'comet-fontbox',
 					header: '<h4>' + __cometi18n.ui.addFont + '</h4>',
 					content: fragment,
 					done: function(){
@@ -465,6 +467,7 @@ export default function(){
 							return 1;
 
 						}
+						__core.data.modal = false;
 
 					}
 
@@ -502,9 +505,8 @@ export default function(){
 							delete __core.data.collection[gdata.index];
 
 						}
-						console.log( __core.data.collection );
-
-
+						__core.actions.set.counter();
+						__core.actions.set.loadTime();
 
 					}
 
@@ -576,7 +578,7 @@ export default function(){
 				},
 
 				state: function( importing ){
-					const button = __core.data.modal.fontBoxUi;
+					const button = __core.data.modal.fontBoxUi.import;
 					const _button = node( button );
 					importing = ( utils.isBool( importing ) && importing );
 					__core.data.isImporting = importing;
@@ -604,18 +606,22 @@ export default function(){
 				const fragment = _d.createDocumentFragment();
 				const card = _d.createElement( 'div' );
 				const name = utils.isObject( data ) && utils.isString( data.family ) ? data.family : false;
-				var inner;
+				var inner, count;
 
 				if( !name ){
 					return;
 
 				}
+				count = utils.isArray( data.weight ) ? data.weight.length : ( utils.isObject( data.weight ) ? Object.keys( data.weight ).length : 0 );
 				fragment.appendChild( card );
 				inner = '<div class="comet-previewbox comet-sampletext">';
 				inner += '<p class="comet-inner comet-text" style="font-family:' + name + ';">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>';
 				inner += '</div>';
 				inner += '<div class="comet-info comet-wrapper">';
+				inner += '<div class="comet-fontinfo">';
 				inner += '<span class="comet-fontname">' + utils.capitalize( name ) + '</span>';
+				inner += '<span class="comet-fontstyle">' + ( count === 1 ? '1 style' : count + ' styles' ) + '</span>';
+				inner += '</div>';
 				inner += '<div class="comet-actions comet-ui">';
 				inner += '<button class="comet-button" title="' + __cometi18n.ui.delete + '"><span class="cico cico-trash"></span></button>';
 				inner += '</div>';

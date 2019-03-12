@@ -1,7 +1,119 @@
 @import '../utils/variables';
 @import '../utils/mixins';
 
-.comet-fontsbox{
+.comet-fonts.comet-dashboard.comet-page .comet-boxed.comet-content {
+
+	> .comet-header > .comet-column {
+
+		.comet-button {
+			padding: 10px;
+			@include border_radius( 30em );
+
+			> .cico { display: block; }
+
+		}
+
+		&:first-child {
+			flex-wrap: wrap;
+
+			> h4 { width: 100%; }
+
+			> .comet-gauge {
+				padding: 5px;
+				margin-top: 5px;
+				font-size: 13px;
+				color: white;
+				@include border_radius( 30em );
+
+				&.is-fast { background: #52B952; }
+
+				&.is-moderate { background: #F9AB36; }
+
+				&.is-slow { background: #EC4A4A; }
+
+			}
+
+		}
+	}
+
+	> .comet-body.comet-fontslist {
+		display: flex;
+		justify-content: flex-start;
+		flex-wrap: wrap;
+
+		> .comet-font.comet-card {
+			width: calc( 33.33% - 20px );
+			margin-right: 30px;
+			margin-top: 30px;
+			overflow: hidden;
+			border: 1px solid $daLight;
+			@include border_radius( 3px );
+
+			&:nth-of-type(3n) { margin-right: 0; }
+
+			&:hover { @include box_shadow( 0 0 10px 0 $daLight ); }
+
+			> .comet-previewbox.comet-sampletext {
+				background: white;
+				color: black;
+				padding: 10px;
+				height: 150px;
+				font-size: 23px;
+				overflow: hidden;
+				border-bottom: 1px solid $daLight;
+			}
+
+			> .comet-info.comet-wrapper {
+				padding: 10px;
+				display: flex;
+				justify-content: space-between;
+				background: #EBF3F9;
+
+				.comet-fontname {
+					font-weight: 600;
+					display: block;
+				}
+
+				.comet-fontstyle {
+					font-size: 14px;
+					display: block;
+				}
+
+				.comet-button {
+					padding: 0;
+
+					> .cico { display: block; }
+
+					&:hover > .cico.cico-trash { color: red; }
+
+				}
+
+
+			}
+
+		}
+	}
+}
+
+.comet-modal.comet-fontbox > .comet-inner > .comet-body > .comet-savebox.comet-wrapper {
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 20px;
+
+	> .comet-saveform {
+		margin-top: 20px;
+
+		label {
+			margin-bottom: 20px;
+
+			> p { margin-bottom: 5px; }
+
+		}
+	}
+
+}
+
+/*.comet-fontsbox{
 
 	> .comet-inner{
 
@@ -165,4 +277,4 @@
 	height: 30px;
 	line-height: 30px;
 	text-align: center;
-}
+}*/
