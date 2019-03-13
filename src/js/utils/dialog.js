@@ -35,7 +35,11 @@ export default function( options ){
 	inner = '<div class="comet-inner">';
 	inner += '<div class="comet-textbox"><p>' + options.message + '</p></div>';
 	inner += '<div class="comet-buttonset">';
-	inner += '<button class="comet-button comet-cancel">' + options.ui.cancel + '</button>';
+
+	if( options.hasCancel !== false ){
+		inner += '<button class="comet-button comet-cancel">' + options.ui.cancel + '</button>';
+		
+	}
 	inner += '<button class="comet-button comet-buttonPrimary comet-done">' + options.ui.done + '</button>';
 	inner += '</div>';
 	inner += '</div>';
@@ -58,6 +62,11 @@ export default function( options ){
 
 		options.data = utils.isObject( options.data ) ? options.data : { value: options.data };
 		options.data.dialog = {
+			buttonset: {
+				cancel: buttonset.firstChild,
+				done: buttonset.lastChild
+			},
+			textbox: confirm.firstChild.firstChild,
 			target: confirm,
 			destroy: function(){
 				node( confirm ).remove();
@@ -75,6 +84,11 @@ export default function( options ){
 	_d.body.appendChild( fragment );
 
 	return {
+		buttonset: {
+			cancel: buttonset.firstChild,
+			done: buttonset.lastChild
+		},
+		textbox: confirm.firstChild.firstChild,
 		target: confirm,
 		destroy: function(){
 			node( confirm ).remove();

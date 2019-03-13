@@ -272,7 +272,11 @@ class Comet_i18n {
 
 		$this->add( 'messages', [
 			'selFile'	=> __( 'Select one or multiple template to import.', 'comet' ),
-			'selFonts'	=> __( 'Select fonts to import.', 'comet' ),
+			'selFonts1'	=> __( 'Import fonts from your favorite cloud font providers.', 'comet' ),
+			'selFonts2'	=> __( 'Here\'s how to get started with importing great fonts to Comet.', 'comet' ),
+			'fontSt1'	=> __( 'Browse thousands of fonts from a cloud provider such Google Fonts, TypeKit (Adobe Fonts) or Typography.com (H&Co).', 'comet' ),
+			'fontSt2'	=> __( 'Copy the embed code (link or @import) provided. In Comet > Fonts click the button to add a new font and paste the code in the Embed code field then click import.', 'comet' ),
+			'fontSt3'	=> __( 'You can now use it all over your pages just by selecting font from element controls. That\'s it!', 'comet' ),
 			'redirect'	=> __( 'You will be redirected to the edit page automatically. If it fails please click the link:', 'comet' ),
 			'editPage'	=> __( 'Go to the edit page', 'comet' ),
 			'warning'	=> [
@@ -286,12 +290,14 @@ class Comet_i18n {
 				'noFonts'		=> __( 'No fonts found.', 'comet' ),
 				'unreachFont'	=> __( 'Unreachable font. Please make sure the embed code is valid.', 'comet' ),
 				'noFont'		=> __( 'Font not found.', 'comet' ),
-				'failFont'		=> __( 'Font has not been imported correctly.', 'comet' )
+				'failFont'		=> __( 'Font has not been imported correctly.', 'comet' ),
+				'delFont'		=> __( 'The font and its styles have not been deleted.', 'comet' )
 			],
 			'success'	=> [
 				'export'		=> __( 'The template has been correctly created and ready to be downloaded. Click the link below to download the template.', 'comet' ),
 				'newTemplate'	=> __( 'The template has been correctly created.', 'comet' ),
 				'delTemplate'	=> __( 'The template has been correctly deleted.', 'comet' ),
+				'delFont'		=> __( 'The font and its styles have been correctly deleted.', 'comet' ),
 			]
 
 		] );

@@ -6005,7 +6005,11 @@ __webpack_require__.r(__webpack_exports__);
 	inner = '<div class="comet-inner">';
 	inner += '<div class="comet-textbox"><p>' + options.message + '</p></div>';
 	inner += '<div class="comet-buttonset">';
-	inner += '<button class="comet-button comet-cancel">' + options.ui.cancel + '</button>';
+
+	if( options.hasCancel !== false ){
+		inner += '<button class="comet-button comet-cancel">' + options.ui.cancel + '</button>';
+		
+	}
 	inner += '<button class="comet-button comet-buttonPrimary comet-done">' + options.ui.done + '</button>';
 	inner += '</div>';
 	inner += '</div>';
@@ -6028,6 +6032,11 @@ __webpack_require__.r(__webpack_exports__);
 
 		options.data = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].isObject( options.data ) ? options.data : { value: options.data };
 		options.data.dialog = {
+			buttonset: {
+				cancel: buttonset.firstChild,
+				done: buttonset.lastChild
+			},
+			textbox: confirm.firstChild.firstChild,
 			target: confirm,
 			destroy: function(){
 				Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( confirm ).remove();
@@ -6045,6 +6054,11 @@ __webpack_require__.r(__webpack_exports__);
 	_d.body.appendChild( fragment );
 
 	return {
+		buttonset: {
+			cancel: buttonset.firstChild,
+			done: buttonset.lastChild
+		},
+		textbox: confirm.firstChild.firstChild,
 		target: confirm,
 		destroy: function(){
 			Object(_node_js__WEBPACK_IMPORTED_MODULE_1__["default"])( confirm ).remove();
