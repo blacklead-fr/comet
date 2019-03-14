@@ -241,16 +241,19 @@ class Comet_Utils {
             'verdana'         => 'Verdana',
         ];
 
-        $fonts = comet_get_fonts( [] );
+        $fonts = comet_get_fonts( 'publish', 'fonts' );
 
-        foreach( $fonts as $id => $font ){
-            $f = explode( ':', $font );
+        if( is_array( $fonts ) && count( $fonts ) > 0 ){
 
-            if( is_string( $f[0] ) && !isset( $default[$f[0]] ) ){
-                $default[$f[0]] = $f[0];
+            foreach( $fonts as $index => $font ){
+
+                if( isset( $font['family'] ) && is_string( $font['family'] ) ){
+                    $name = $font['family'];
+                    $default[$name] = $name;
+
+                }
 
             }
-
         }
         return $default;
 
@@ -258,17 +261,15 @@ class Comet_Utils {
 
     static protected function weight(){
 
-        $w = [
-            '0' => __( 'Default', 'comet' ) 
-        ];
+        $w = [];
 
         for( $a = 1; $a < 10; $a++ ){
             $v = $a * 100;
             $w[$v] = $v;
 
         }
-
         return $w;
+
     }
 
     static protected function is_true( $entry ){

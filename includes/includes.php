@@ -49,38 +49,35 @@ function comet_get_fonts( $status = 'any', $onreturn = 'both' ){
   $Fonts = new WP_Query( $args );
   $fonts = [];
   $css = '';
+  
+  while ( $Fonts->have_posts() ){
+    $Fonts->the_post();
+    $id = $Fonts->post->ID;
+    $meta = get_post_meta( $id, '_cometMetaData', true );
 
-  if ( $Fonts->have_posts() ){
+    if( !is_array( $meta ) || count( $meta ) < 1 ){
+      continue;
 
-    while ( $Fonts->have_posts() ){
-      $Fonts->the_post();
-      $id = get_the_ID();
-      $meta = get_post_meta( $id, '_cometMetaData', true );
+    }
+    $fonts[] = [
+      'id'      => $id,
+      'family'  => get_the_title(),
+      'weight'  => isset( $meta['weight'] ) && is_array( $meta['weight'] ) ? $meta['weight'] : []
 
-      if( !is_array( $meta ) || count( $meta ) < 1 ){
-        continue;
+    ];
 
-      }
-      $fonts[] = [
-        'id'      => $id,
-        'family'  => get_the_title(),
-        'weight'  => isset( $meta['weight'] ) && is_array( $meta['weight'] ) ? $meta['weight'] : []
+    foreach( $meta['weight'] as $weight => $value ){
 
-      ];
-
-      foreach( $meta['weight'] as $weight => $value ){
-
-        if( is_string( $value ) ){
-          $css .= $value;
-
-        }
+      if( is_string( $value ) ){
+        $css .= $value;
 
       }
 
     }
-    wp_reset_postdata();
-  
+
   }
+  wp_reset_postdata();
+
   return ( $onreturn === 'fonts' ? $fonts : ( $onreturn === 'css' ? $css : [ 'fonts' => $fonts, 'css' => $css ] ) );
 
 }
@@ -270,7 +267,7 @@ function comet_get_supported_post_types(){
 function comet_parse_json( $data ){
 
   if( is_string( $data ) ){
-    $data = json_decode( urldecode( stripslashes( $data ) ), true );
+    $data = json_decode( urldecode( $data ), true );
 
   }
 

@@ -271,6 +271,7 @@ __webpack_require__.r(__webpack_exports__);
 			modal: false,
 			isImporting: false,
 			isDeleting: false,
+			hasFonts: false,
 
 		},
 
@@ -525,7 +526,7 @@ __webpack_require__.r(__webpack_exports__);
 										continue;
 
 									}
-									__file.save( args );
+									__file.save( args, -1, -1 );
 
 								}
 								return;
@@ -547,6 +548,7 @@ __webpack_require__.r(__webpack_exports__);
 				},
 
 				save: function( font, id, index ){
+
 					const _data = {
 						do: 'save',
 						data: _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].json_encode( font )
@@ -588,6 +590,8 @@ __webpack_require__.r(__webpack_exports__);
 						}
 
 						if( __file.counter.count < 1 ){
+							__core.actions.set.counter();
+							__core.actions.set.loadTime();
 							__core.data.isImporting = false;
 							__core.data.modal.destroy();
 
@@ -780,7 +784,7 @@ __webpack_require__.r(__webpack_exports__);
 								}
 
 								if( _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isObject( gdata = __core.utils.getFontData( _data.id ) ) ){
-									delete __core.data.collection[gdata.index];
+									__core.data.collection.splice( gdata.index, 1 );
 
 								}
 								__core.actions.set.counter();
@@ -915,6 +919,11 @@ __webpack_require__.r(__webpack_exports__);
 
 				Object(_utils_node_js__WEBPACK_IMPORTED_MODULE_5__["default"])( card.lastChild.lastChild.firstChild ).on( 'click', __core.actions.remove, { card: card, id: data.id } );
 
+				if( !__core.data.hasFonts ){
+					__core.data.fontsBox.innerHTML = '';
+					__core.data.hasFonts = true;
+
+				}
 				__core.data.fontsBox.appendChild( card );
 
 
@@ -1007,7 +1016,7 @@ __webpack_require__.r(__webpack_exports__);
 			return;
 
 		}
-		__core.data.collection = [];//utils.isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
+		__core.data.collection = _utils_utils_js__WEBPACK_IMPORTED_MODULE_3__["default"].isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
 		fragment = _d.createDocumentFragment();
 		header = _d.createElement( 'div' );
 		header.className = 'comet-header comet-top comet-wrapper';
@@ -1035,15 +1044,16 @@ __webpack_require__.r(__webpack_exports__);
 		__core.data.fontsBox = body;
 
 		if( __core.data.collection.length > 0 ){
+			__core.data.hasFonts = true;
 
 			for( i = 0; i < __core.data.collection.length; i++ ){
 				__core.actions.addCard( __core.data.collection[i] );
 				__core.actions.addCss( __core.data.collection[i] );
 
 			}
-			console.log( __core.data.collection );
 
 		}else{
+			__core.data.hasFonts = false;
 			b_inner = '<div class="comet-introduction comet-tutorial">';
 			b_inner += '<h2>' + __cometi18n.messages.error.noFonts + '</h2>';
 			b_inner += '<p>' + __cometi18n.messages.selFonts1 + '<br>' + __cometi18n.messages.selFonts2 + '</p>';
@@ -1068,7 +1078,6 @@ __webpack_require__.r(__webpack_exports__);
 			body.innerHTML = b_inner;
 
 		}
-
 		source.parentNode.replaceChild( fragment, source );
 		__core.actions.set.loadTime();
 		__core.actions.set.counter();

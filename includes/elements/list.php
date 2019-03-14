@@ -57,19 +57,21 @@ class listItems extends Comet_Element {
         }
         content.innerHTML = '<ul class="' + classes + '"></ul>';
 
-        toolkit.utils.foreachItem( data, function( iid, idata ){
+        o += toolkit.utils.foreachItem( data, function( iid, idata ){
             var iclasses = 'cpb-item cpb-inner';
             iclasses += ' cpb-item' + iid;
             iclasses += ' ' + toolkit.sanitize.alignment( idata.alg );
 
-            o += toolkit.html.content({
+            return '<li class="' + iclasses + '">' + (toolkit.utils.isString( idata.ctnt ) ? data.ctnt : '' ) + '</li>';
+
+            /*o += toolkit.html.content({
                 classes: iclasses,
                 editable: true,
                 tag: 'li',
                 match: 'ctnt',
                 id: iid,
                 inner: idata.ctnt
-            });
+            });*/
 
         });
         content.firstChild.innerHTML = o;

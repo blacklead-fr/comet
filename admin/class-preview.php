@@ -66,11 +66,6 @@ class preview extends Comet_Page {
         $css .= 'body > .comet-message > p{text-align:center;margin:10px;color:#404146;max-width:500px;font:300 17px/1.5 sans-serif;padding:20px;background:#FFF0F0;color:red;}';
 
         comet_inline_style( $css );
-
-        if( ( $fonts = comet_fonts_url() ) ){
-            comet_print_style( $fonts );
-
-        }
         comet_print_style( "{$url}src/css/view.css", COMET_VERSION );
 
     }

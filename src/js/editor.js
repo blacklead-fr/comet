@@ -4060,13 +4060,13 @@ const __create = function( tabs, data ){
 
 						for( v in values ){
 
-							if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( values[v] ) ){
+							if( !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isString( values[v] ) && !_utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].isNumber( values[v] ) ){
 								continue;
 
 							}
 							_option = _d.createElement( 'option' );
 							_option.value = v;
-							_option.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( values[v] );
+							_option.innerHTML = _utils_utils_js__WEBPACK_IMPORTED_MODULE_7__["default"].stripTags( values[v].toString() );
 
 							if( v === value ){
 								_option.selected = true;

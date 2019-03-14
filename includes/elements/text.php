@@ -56,17 +56,7 @@ class text extends Comet_Element{
 			slug: 'content',
 			content: data.el.content,
 			tag: data.el.tag
-
-	});
-
-		/*content.firstChild.innerHTML = toolkit.html.content({
-			editable: true,
-			id: id,
-			match: 'content',
-			inner: data.el.content,
-			tag: data.el.tag,
-		});*/
-
+		});
 
 		<?php
 
@@ -92,7 +82,7 @@ class text extends Comet_Element{
 
 		}
 
-		if( !toolkit.utils.isStringEmpty( data.el.fo ) ){
+		if( !toolkit.utils.isStringEmpty( data.el.fo ) && data.el.fo !== '0' ){
 			css += toolkit.css.render( 'font-family', toolkit.utils.trim( data.el.fo ) );
 
 		}
@@ -229,16 +219,17 @@ class text extends Comet_Element{
 
 		$this->register_field( $tid, $sid, 'fw', array(
 			'label'   => __( 'Weight', 'comet' ),
-			'desc'    => __( 'If the exact weight given is unavailable, then the closest weight will be applied.', 'comet' ),
+			'desc'    => __( 'The weight property sets how thick or thin characters in text should be displayed.', 'comet' ),
 			'type'    => 'select',
-			'std'     => '',
+			'std'     => '400',
 			'values'  => Comet_Utils::weight()
 		) );
 
 		$this->register_field( $tid, $sid, 'lh', array(
-			'label'   => __( 'Line height', 'comet' ),
-			'type'    => 'range',
-			'std'     => '',
+			'label'		=> __( 'Line height', 'comet' ),
+			'desc'		=> __( 'The line height property specifies the height of a line.', 'comet' ),
+			'type'		=> 'range',
+			'std'		=> '1',
 			'min'     => '1',
 			'max'     => '5',
 			'step'    => '0.1',

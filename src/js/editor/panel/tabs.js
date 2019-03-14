@@ -405,13 +405,13 @@ const __create = function( tabs, data ){
 
 						for( v in values ){
 
-							if( !utils.isString( values[v] ) ){
+							if( !utils.isString( values[v] ) && !utils.isNumber( values[v] ) ){
 								continue;
 
 							}
 							_option = _d.createElement( 'option' );
 							_option.value = v;
-							_option.innerHTML = utils.stripTags( values[v] );
+							_option.innerHTML = utils.stripTags( values[v].toString() );
 
 							if( v === value ){
 								_option.selected = true;

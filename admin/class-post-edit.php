@@ -274,8 +274,9 @@ class Comet_Post_Edit extends Comet_Metaboxes{
         wp_enqueue_media();
         wp_enqueue_style( 'cico', "{$base_url}src/css/cico.min.css", [], COMET_VERSION );
         wp_enqueue_style( "{$slug}-editor", "{$base_url}src/css/editor.css", [], COMET_VERSION );
-        wp_enqueue_style( "{$slug}-public", "{$base_url}src/css/view.css", [], COMET_VERSION );
-        // TODO: RTL;
+        wp_enqueue_style( "{$slug}-view", "{$base_url}src/css/view.css", [], COMET_VERSION );
+        wp_add_inline_style( "{$slug}-view", comet_get_fonts( 'publish', 'css' ) );
+        // @TODO RTL
 
     }
 

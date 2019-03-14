@@ -121,7 +121,7 @@ class Comet_Ajax {
 
             case 'get':
 
-            $meta = isset( $p['meta'] ) && in_array( $p['meta'], [ 'true', 'TRUE', true, 1 ] ) ? true : false;
+            $meta = ( isset( $p['meta'] ) && in_array( $p['meta'], [ 'true', 'TRUE', true, 1 ] ) );
 
             echo ( isset( $p['id' ] ) && ( $post = comet_get_post( $p['id' ] ) )->has_post() ? json_encode( $post->get_post( $meta ) ) : 0 );
             break;

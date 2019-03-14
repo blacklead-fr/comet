@@ -21,6 +21,7 @@ export default function(){
 			modal: false,
 			isImporting: false,
 			isDeleting: false,
+			hasFonts: false,
 
 		},
 
@@ -275,7 +276,7 @@ export default function(){
 										continue;
 
 									}
-									__file.save( args );
+									__file.save( args, -1, -1 );
 
 								}
 								return;
@@ -297,6 +298,7 @@ export default function(){
 				},
 
 				save: function( font, id, index ){
+
 					const _data = {
 						do: 'save',
 						data: utils.json_encode( font )
@@ -338,6 +340,8 @@ export default function(){
 						}
 
 						if( __file.counter.count < 1 ){
+							__core.actions.set.counter();
+							__core.actions.set.loadTime();
 							__core.data.isImporting = false;
 							__core.data.modal.destroy();
 
@@ -533,7 +537,7 @@ export default function(){
 								}
 
 								if( utils.isObject( gdata = __core.utils.getFontData( _data.id ) ) ){
-									delete __core.data.collection[gdata.index];
+									__core.data.collection.splice( gdata.index, 1 );
 
 								}
 								__core.actions.set.counter();
@@ -668,6 +672,11 @@ export default function(){
 
 				node( card.lastChild.lastChild.firstChild ).on( 'click', __core.actions.remove, { card: card, id: data.id } );
 
+				if( !__core.data.hasFonts ){
+					__core.data.fontsBox.innerHTML = '';
+					__core.data.hasFonts = true;
+
+				}
 				__core.data.fontsBox.appendChild( card );
 
 
@@ -760,7 +769,7 @@ export default function(){
 			return;
 
 		}
-		__core.data.collection = [];//utils.isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
+		__core.data.collection = utils.isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
 		fragment = _d.createDocumentFragment();
 		header = _d.createElement( 'div' );
 		header.className = 'comet-header comet-top comet-wrapper';
@@ -788,15 +797,16 @@ export default function(){
 		__core.data.fontsBox = body;
 
 		if( __core.data.collection.length > 0 ){
+			__core.data.hasFonts = true;
 
 			for( i = 0; i < __core.data.collection.length; i++ ){
 				__core.actions.addCard( __core.data.collection[i] );
 				__core.actions.addCss( __core.data.collection[i] );
 
 			}
-			console.log( __core.data.collection );
 
 		}else{
+			__core.data.hasFonts = false;
 			b_inner = '<div class="comet-introduction comet-tutorial">';
 			b_inner += '<h2>' + __cometi18n.messages.error.noFonts + '</h2>';
 			b_inner += '<p>' + __cometi18n.messages.selFonts1 + '<br>' + __cometi18n.messages.selFonts2 + '</p>';
@@ -821,7 +831,6 @@ export default function(){
 			body.innerHTML = b_inner;
 
 		}
-
 		source.parentNode.replaceChild( fragment, source );
 		__core.actions.set.loadTime();
 		__core.actions.set.counter();
