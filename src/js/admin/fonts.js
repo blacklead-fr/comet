@@ -5,7 +5,7 @@ import utils from '../utils/utils.js';
 import ajax from '../utils/ajax.js';
 import node from '../utils/node.js';
 
-/* global document, __cometi18n, __cometdata, console */
+/* global document, __cometi18n, __cometdata, XMLHttpRequest */
 
 export default function(){
 
@@ -44,8 +44,8 @@ export default function(){
 						const __try = {
 
 							regex: {
-								import: /@import\s+url\(\s*\'?\"?([^'")]+)\'?\"?\s*\)\s*;/i,
-								link: /<link[^>]*href="?'?([^'"]+)'?"?[^>\/]*\/?>/i,
+								import: /@import\s+url\(\s*'?"?([^'")]+)'?"?\s*\)\s*;/i,
+								link: /<link[^>]*href="?'?([^'"]+)'?"?[^>/]*\/?>/i,
 							},
 
 							matching: function( type ){
@@ -80,8 +80,8 @@ export default function(){
 
 							regex: {
 								fontFace: /@font-face\s*\{[^}]+\}/gmi,
-								fontFamily: /font-family\:\s*(?:'|")?([^'";]+)(?:'|")?\s*;/i,
-								fontWeight: /font-weight\:\s*([a-z0-9\s]+)\s*;/i
+								fontFamily: /font-family:\s*(?:'|")?([^'";]+)(?:'|")?\s*;/i,
+								fontWeight: /font-weight:\s*([a-z0-9\s]+)\s*;/i
 							},
 
 							matching: function( _raw, type ){
@@ -121,7 +121,7 @@ export default function(){
 							fonts: [],
 
 							get: function(){
-								var ff, i, wei, fam, index;
+								var ff, i, wei, fam;
 
 								if( !( ff = __try.fontFace( raw ) ) ){
 									return false;
@@ -254,7 +254,7 @@ export default function(){
 
 						}
 
-						if( rawFile.status === 200 || rawFile.status == 0 ){
+						if( rawFile.status === 200 || rawFile.status === 0 ){
 							response = __file.catch.fonts( rawFile.responseText );
 
 							if( utils.isArray( response ) ){
@@ -292,7 +292,7 @@ export default function(){
 						}
 						message( __cometi18n.messages.error.noFont, 400 ).set( __core.data.modal.fontBoxUi.messagesBox );
 
-					}
+					};
 					rawFile.send( null );
 
 				},
@@ -597,7 +597,7 @@ export default function(){
 				loadTime: function(){
 					const count = __core.data.collection.length;
 					var state = 'Slow';
-					var classes = 'comet-gauge comet-indicator'
+					var classes = 'comet-gauge comet-indicator';
 
 					if( count <= 2 ){
 						state = 'Fast';
@@ -763,7 +763,7 @@ export default function(){
 
 	(function(){
 		const source = _d.getElementById( 'comet-sourceframe8679171600336466' );
-		var fragment, wrapper, header, h_inner, b_inner, body, i;
+		var fragment, header, h_inner, b_inner, body, i;
 
 		if( source === null || source.parentNode === null ){
 			return;

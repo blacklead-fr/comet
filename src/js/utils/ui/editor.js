@@ -568,7 +568,7 @@ import node from '../node.js';
  				const data = {};
  				var textarea;
 
- 				data[meta_element.slug] = utils.encode_chars( sanitized_content );
+ 				data[meta_element.slug] = sanitized_content;
  				__data().set( meta_element.id, 'elements', data );
 
  				if( !( textarea = __core.get.textarea() ) ){

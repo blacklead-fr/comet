@@ -71,22 +71,17 @@ export default function( options ){
 	redefine.workflow();
 
 	node( button ).on( 'click', function( ev, ui ){
-		var _exit;
 		
 		ev.preventDefault();
-
-		if( utils.isFunction( options.close.do ) ){
-			_exit = options.close.do( ev, ui );
-
-		}
-
-		if( utils.isBool( _exit ) && !_exit ){
-			return;
-
-		}
+		
 		node( panel ).remove();
 		_global.set( 'panel', false, true );
 		redefine.workflow();
+
+		if( utils.isFunction( options.close.do ) ){
+			options.close.do( ev, ui );
+
+		}
 
 	});
 

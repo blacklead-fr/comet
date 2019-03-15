@@ -32,7 +32,7 @@ class gallery extends Comet_Element {
         const ty = [ 'o', 'c' ].indexOf( data.el.ty ) > -1 ? data.el.ty : 'm';
         const cap = ( [ 'c', 'true', true, 1, '1' ].indexOf( data.el.oh ) > -1 );
         const wrapper = document.createElement( 'div' );
-        var columns = toolkit.sanitize.number({ value: data.el.col, min: ( ty === 'o' ? 3 : 1 ), max: 5, default: 3 });
+        const columns = toolkit.sanitize.number({ value: data.el.col, min: ( ty === 'o' ? 3 : 1 ), max: 5, default: 3 });
         var i = 0;
         var state = 1;
         var classes;
@@ -60,7 +60,7 @@ class gallery extends Comet_Element {
             var item, hr, a;
 
             if( !img ){
-                return false;
+                return '';
 
             }
             item = document.createElement( 'div' );
@@ -102,7 +102,6 @@ class gallery extends Comet_Element {
                 i++;
 
             }
-            return io;
 
         });
 
@@ -256,10 +255,9 @@ class gallery extends Comet_Element {
         ) );*/
 
         $this->register_field( $tid, $sid, 'oh', array(
-            'label'  => __( 'Caption', 'comet' ),
-            'desc'   => __( 'Show caption on hover ?', 'comet' ),
+            'label'  => __( 'Caption on hover ?', 'comet' ),
             'type'   => 'checkbox',
-            'std'    => 'true'
+            'std'    => 'false'
         ) );
 
         $this->register_field( $tid, $sid, 'an', array(

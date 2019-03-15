@@ -1,13 +1,13 @@
 === Comet - Page builder ===
-Contributors: blacklead
+Contributors: blacklead, intnico
 Donate link: https://blacklead.fr/comet
 Author URI: https://blacklead.fr
 Plugin URI: https://blacklead.fr/comet
 Tags: drag and drop, page builder, visual editor, columns, rows, sections, elements
-Requires at least: 4.7
-Tested up to: 4.9.7
+Requires at least: 4.9
+Tested up to: 5.1.1
 Requires PHP: 5.5
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -182,6 +182,11 @@ No, Comet is really easy to use and you don't have to learn code.
 
 
 == Changelog ==
+
+= 1.0.2 - September 3, 2018 =
+* Fix - Return to dashboard link
+* Fix - comet-admin.js not minified correctly
+* Fix - Minor bug on comet-public.js
 
 = 1.0.1 - July 24, 2018 =
 * New - Added icon size and shadow for Button

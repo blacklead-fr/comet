@@ -12,7 +12,7 @@ export default function( ui ){
 
 	var uidata = false;
 
-	var _id, index, _type, re, slug, cvalue;
+	var _id, _i_id, index, _type, re, slug, cvalue;
 
 	const _d = document;
 
@@ -280,7 +280,14 @@ export default function( ui ){
 		return;
 
 		case 'elements':
-		data_.set( _id, 'elements', data );
+
+		if( [ 'ITEMS', 'items' ].indexOf( target_.state() ) > -1 && ( _i_id = parse.id( target_.item() ) ) ){
+			data_.set( _i_id, 'items', data );
+
+		}else{
+			data_.set( _id, 'elements', data );
+
+		}
 
 		if( !( re = layout( data_.getData() ).element( _id, true ) ) ){
 			return false;

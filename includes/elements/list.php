@@ -55,26 +55,17 @@ class listItems extends Comet_Element {
             classes += ' cpb-list' + tmp;
 
         }
-        content.innerHTML = '<ul class="' + classes + '"></ul>';
-
+        o = '<ul class="' + classes + '">';
         o += toolkit.utils.foreachItem( data, function( iid, idata ){
             var iclasses = 'cpb-item cpb-inner';
             iclasses += ' cpb-item' + iid;
             iclasses += ' ' + toolkit.sanitize.alignment( idata.alg );
 
-            return '<li class="' + iclasses + '">' + (toolkit.utils.isString( idata.ctnt ) ? data.ctnt : '' ) + '</li>';
-
-            /*o += toolkit.html.content({
-                classes: iclasses,
-                editable: true,
-                tag: 'li',
-                match: 'ctnt',
-                id: iid,
-                inner: idata.ctnt
-            });*/
+            return '<li class="' + iclasses + '">' + ( toolkit.utils.isString( idata.ctnt ) ? idata.ctnt : '' ) + '</li>';
 
         });
-        content.firstChild.innerHTML = o;
+        o += '</ul>';
+        content.innerHTML = o;
 
         <?php
 

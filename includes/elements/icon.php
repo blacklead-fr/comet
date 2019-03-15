@@ -190,8 +190,7 @@ class icon extends Comet_Element {
         ) );
 
         $this->register_field( $tid, $sid, 'tar', array(
-            'label' => __( 'Target', 'comet' ),
-            'desc'  => __( 'Open the link in a new tab ?', 'comet' ),
+            'label' => __( 'Open in a new tab ?', 'comet' ),
             'type'  => 'checkbox',
             'std'   => 'true'
         ) );

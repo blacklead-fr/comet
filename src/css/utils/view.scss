@@ -321,6 +321,7 @@
             }
 
             &.cpb-wrapper{
+                overflow: hidden;
 
                 .cpb-aside > * { width: 100%; }
 
@@ -328,6 +329,7 @@
                     align-items: center;
                     display: flex;
                     text-align: center;
+                    text-decoration: none;
                 }
             }
 

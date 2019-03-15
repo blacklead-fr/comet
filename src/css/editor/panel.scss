@@ -114,7 +114,7 @@
 						align-items: center;
 						position: relative;
 
-						.comet-tooltip{
+						.comet-tooltip {
 
 							> .comet-icon {
 								display: block;
@@ -125,10 +125,22 @@
 								cursor: pointer;
 							}
 
-							&:hover > .comet-inner {
-								left: 0;
-								right: 0;
+							> .comet-description {
+								background: rgba( 0, 0, 0, .8 );
+								left: -99999em;
+								top: 0;
+								position: absolute;
+								color: white;
+								width: calc( 100% - 10px );
+								max-width: 100%;
+								font: 300 13px/1.5 sans-serif;
+								padding: 5px;
+								@include border_radius( 3px );
+								@include transition( top .1s ease-in-out );
+
 							}
+
+							&:hover > .comet-description { left: 0; top: 100%; }
 
 						}
 					}
@@ -498,15 +510,24 @@
 				opacity: .7;
 
 				&:hover { opacity: 1; }
+
 			}
 
 			.comet-wrapper.comet-numbers {
 				display: flex;
+				justify-content: space-between;
 
 				> .comet-number {
 					display: none;
+					width: calc( 25% - 1px );
 
-					&.comet-active, > label { display: block; }
+					input { width: 100%; }
+
+					&.comet-active, > label {
+						display: block;
+						font-size: 13px;
+
+					}
 
 				}
 

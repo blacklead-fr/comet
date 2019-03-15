@@ -3,7 +3,7 @@
 
 $bcolor: #BBB;
 
-#comet-editorSidebar{
+.comet-editor .comet > .comet-sidebar {
     width: 50px;
     background: $daDark;
     overflow: visible;
@@ -35,7 +35,7 @@ $bcolor: #BBB;
         }
 
         .comet-listElements{
-            height: calc( 100% - 125px );
+            height: calc( 100% - 116px );
             padding: 10px 20px;
             overflow-y: auto;
             overflow-x: hidden;

@@ -201,10 +201,9 @@ class image extends Comet_Element {
 		) );
 
 		$this->register_field( $tid, $sid, 'tar', array(
-			'label'  => __( 'Target', 'comet' ),
+			'label'  => __( 'Open in a new tab ?', 'comet' ),
 			'type'   => 'checkbox',
 			'std'    => 'true',
-			'desc'   => __( 'Open the link in a new tab ?', 'comet' ),
 		) );
 
 		$tid = $this->register_tab( 'design', __( 'Design', 'comet' ) );
