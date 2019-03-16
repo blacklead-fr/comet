@@ -159,6 +159,30 @@ utils.json_encode = function( obj, raw ){
 
 };
 
+utils.encode_chars = function( str ){
+	const __core = {
+
+		map: {
+			'\\': '&#92;',
+			"'": '&#39;',
+			'"': '&#34;',
+		},
+
+		callback: function( m ){
+			return __core.map[m];
+
+		}
+
+	};
+
+	if( !utils.isString( str ) ){
+		return str;
+
+	}
+	return str.replace(/[\\'"]/g, __core.callback );
+
+};
+
 utils.getVideo = function( url, media ){
 	const origin = url;
 	var regex, tmp;
@@ -485,48 +509,6 @@ utils.addQueryArgs = function( args, url ){
 		n++;
 	}
 	return _url;
-
-};
-
-utils.deprecated = {
-
-	encode_chars: function( str ){
-		const __core = {
-
-			map: {
-				//'&': '&amp;',
-				'(': '&#40;',
-				')': '&#41;',
-				',': '&#44;',
-				//'/': '&#47;',
-				':': '&#58;',
-				//';': '&#59;',
-				'[': '&#91;',
-				'\\': '&#92;',
-				']': '&#93;',
-				'`': '&#96;',
-				'{': '&#123;',
-				'|': '&#124;',
-				'}': '&#125;',
-				'~': '&#126;',
-				'«': '&laquo;',
-				'»': '&raquo;',
-			},
-
-			callback: function( m ){
-				return __core.map[m];
-
-			}
-
-		};
-
-		if( !utils.isString( str ) ){
-			return str;
-
-		}
-		return str.replace(/[,[]\\`{}():|~«»]/g, __core.callback );
-
-	}
 
 };
 

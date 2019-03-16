@@ -76,7 +76,7 @@ class Comet {
 	public function __construct(){
 
 		$path = $this->base_path;
-		$this->description = __( '', 'comet' );
+		$this->description = __( 'The visual page builder that\'s light, fast and modern. Bring your ideas to life fast through the drag & drop and the advanced features.', 'comet' );
 
 		$this->register( '\Comet\Comet_Includes', "{$path}includes/class-includes.php" );
 		$this->register( '\Comet\Comet_Ajax', "{$path}includes/class-ajax.php" );

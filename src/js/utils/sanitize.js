@@ -177,6 +177,18 @@ sanitize.data = function( data, id ){
 
 sanitize.content = function(){
 	const elements = document.getElementsByClassName( 'cpb-elementContent' );
+	const __core = {
+
+		map: {
+			"'": '&#39;',
+		},
+
+		callback: function( m ){
+			return __core.map[m];
+
+		}
+
+	};
 	var o, e;
 
 	if( !utils.isObject( elements ) ){
@@ -194,7 +206,7 @@ sanitize.content = function(){
 		o += utils.stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
 
 	}
-	return o;
+	return o.replace(/[']/g, __core.callback );
 
 };
 

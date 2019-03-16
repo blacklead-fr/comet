@@ -15,13 +15,13 @@ class settings extends Comet_Interface{
 
     protected $slug = 'settings';
 
-    private $settings = array();
+    private $settings = [];
 
     private $is_action = false;
 
-    private $post = array();
+    private $post = [];
 
-    private $options = array();
+    private $options = [];
 
     public function __construct(){
 
@@ -43,14 +43,14 @@ class settings extends Comet_Interface{
             )
         );
 
-        $this->set_setting(
+        /*$this->set_setting(
             'googlekey',
             array(
                 'label'		=> __( 'Google API key', 'comet' ),
                 'desc'		=> __( 'Google Fonts requires authentication (API key). Comet uses it only from the dashboard.', 'comet' ) . ' <a target="_blank" href="'. esc_url( 'https://developers.google.com/fonts/docs/developer_api#identifying_your_application_to_google' ). '">' . __( 'Read more', 'comet' ) . '</a>.',
                 'type'		=> '_text',
             )
-        );
+        );*/
 
         $this->set_setting(
             'uninstall',

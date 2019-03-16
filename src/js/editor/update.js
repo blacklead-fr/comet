@@ -232,7 +232,8 @@ export default function( ui ){
 
 	}
 	uidata = utils.isObject( uidata = data_.get( _id, _type ) ) ? uidata : {};
-	data[slug] = utils.stripOnly( ui.value, '<script><link><body><html><meta>' );
+	data[slug] = utils.encode_chars( utils.stripOnly( ui.value, '<script><link><body><html><meta>' ) );
+	console.log( data[slug] );
 
 	if( index === 2 && ui.type ){
 

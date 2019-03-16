@@ -101,7 +101,7 @@ export default function(){
 					ajax({
 						do: 'save',
 						data: utils.json_encode({
-							post_title: utils.encode_chars( name ),
+							post_title: name,
 							post_type: 'comet_mytemplates',
 							post_content: '',
 							meta: {},

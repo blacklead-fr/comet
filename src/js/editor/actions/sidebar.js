@@ -149,7 +149,7 @@ const sidebar = {
 						continue;
 
 					}
-					f_data[field.name] = utils.encode_chars( field.value );
+					f_data[field.name] = field.value;
 
 				}
 

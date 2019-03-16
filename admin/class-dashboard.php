@@ -77,8 +77,6 @@ class Comet_Dashboard extends Comet_Pages {
 
 		}
 		$url = COMET_URL;
-		$opt = get_option( 'comet_settings' );
-		$key = is_array( $opt ) && isset( $opt['googlekey'] ) ? trim( $opt['googlekey'] ) : '';
 		$i18n = comet_get_i18n( 'admin' );
 
 		comet_localize( 
@@ -90,7 +88,6 @@ class Comet_Dashboard extends Comet_Pages {
 				'edit_url'		=> admin_url( 'post.php' ),
 				'myTemplates'	=> comet_get_dashboard_url( 'mytemplates' ),
 				'fonts'			=> ( is_array( $this->fonts ) && isset( $this->fonts['fonts'] ) && is_array( $this->fonts['fonts'] ) ? $this->fonts['fonts'] : [] ),
-				'apikey'		=> $key,
 				'user'			=> 'true'
 			]
 		);

@@ -109,6 +109,8 @@ class Comet_Ajax {
 
             case 'save':
 
+            //echo urldecode( $p['data'] );
+
             if( isset( $p['data'] ) && ( $data = comet_parse_json( $p['data'] ) ) ){
                 $id = isset( $p['id' ] ) ? $p['id'] : -1;
                 $post = comet_get_post( $id );

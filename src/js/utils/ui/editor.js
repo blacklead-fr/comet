@@ -564,7 +564,7 @@ import node from '../node.js';
  			},
 
  			change: function( ev, ui ){
- 				const sanitized_content = utils.stripTags( ui.innerHTML, __core.get.tags( false ) );
+ 				const sanitized_content = utils.encode_chars( utils.stripTags( ui.innerHTML, __core.get.tags( false ) ) );
  				const data = {};
  				var textarea;
 

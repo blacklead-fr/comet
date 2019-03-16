@@ -307,7 +307,7 @@ class Comet_Utils {
 
         $src = is_string( $src ) ? esc_url( strip_tags( $src ) ) : '';
         $alt = is_string( $alt ) ? esc_attr( $alt ) : '';
-        $size = is_array( $size = getimagesize( $src ) ) && isset( $size[3] ) ? $size[3] : '';
+        $size = ini_get( 'allow_url_fopen' ) && is_array( $size = getimagesize( $src ) ) && isset( $size[3] ) ? $size[3] : '';
 
         return "<img class=\"cpb-image\" {$size} src=\"{$src}\" alt=\"{$alt}\" />";
 
