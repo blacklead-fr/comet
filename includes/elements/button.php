@@ -23,7 +23,7 @@ class button extends Comet_Element {
     	$text = isset( $edata['text'] ) && is_string( $edata['text'] ) ? trim( strip_tags( $edata['text'] ) ) : '';
     	$icon = isset( $edata['icon'] ) && is_string( $edata['icon'] ) ? comet_get_svgicon( $edata['icon'] ) : '';
 
-        $classe = 'cpb-button cpb-wrapper ' . Comet_Utils::get_alignment( $edata['alg'] );
+        $classe = 'cpb-button cpb-wrapper ' . Comet_Utils::get_alignment( isset( $edata['alg'] ) ? $edata['alg'] : 'c' );
 
         $output = "<div class=\"{$classe}\">";
         $ca = 'cpb-link';
@@ -54,7 +54,7 @@ class button extends Comet_Element {
 
         }
         $url = isset( $edata['link'] ) && is_string( $edata['link'] ) ? esc_url( trim( strip_tags( $edata['link'] ) ) ) : '#';
-        $tar = Comet_Utils::is_true( $edata['tar'] ) ? ' target="_blank"' : '';
+        $tar = isset( $edata['tar'] ) && Comet_Utils::is_true( $edata['tar'] ) ? ' target="_blank"' : '';
         $dir = isset( $edata['ipos'] ) && is_string( $edata['ipos'] ) && $edata['ipos'] === 'r' ? 'r' : 'l';
 
         $output .= "<a class=\"{$ca}\" href=\"{$url}\"{$tar}>";

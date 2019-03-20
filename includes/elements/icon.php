@@ -23,7 +23,7 @@ class icon extends Comet_Element {
         $icon = isset( $edata['icon'] ) ? comet_get_svgicon( $edata['icon'] ) : '';
         $url = isset( $edata['url'] ) && is_string( $edata['url'] ) ? esc_url( trim( strip_tags( $edata['url'] ) ) ) : '';
         $tag = 'div';
-        $classes = 'cpb-icon cpb-wrapper ' . Comet_Utils::get_alignment( $edata['alg'] );
+        $classes = 'cpb-icon cpb-wrapper ' . Comet_Utils::get_alignment( isset( $edata['alg'] ) ? $edata['alg'] : 'c' );
 
         $output = "<div class=\"{$classes}\">";
 
@@ -33,7 +33,7 @@ class icon extends Comet_Element {
             $tag = 'a';
             $attr .= " href=\"{$url}\"";
 
-            if( Comet_Utils::is_true( $edata['tar'] ) ){
+            if( isset( $edata['tar'] ) && Comet_Utils::is_true( $edata['tar'] ) ){
                 $attr .= ' target="_blank"';
 
             }

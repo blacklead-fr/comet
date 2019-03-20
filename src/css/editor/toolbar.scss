@@ -12,6 +12,8 @@
 	@include box_shadow( 0 0 5px 2px rgba( 0, 0, 0, .3 ) );
 	@include border_radius( 3px );
 
+	&.comet-hide { display: none; }
+
 	> .comet-header {
 		display: flex;
 		align-items: center;

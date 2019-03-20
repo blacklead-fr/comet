@@ -22,12 +22,15 @@ class image extends Comet_Element {
         $edata = is_array( $data['el'] ) ? $data['el'] : [];
         $link = isset( $edata['link'] ) && is_string( $edata['link'] ) ? esc_url( trim( strip_tags( $edata['link'] ) ) ) : '';
         $tag = $link === '' ? 'div' : 'a';
-        $classes = 'cpb-image cpb-wrapper ' . Comet_Utils::get_alignment( $edata['alg'] );
+        $classes = 'cpb-image cpb-wrapper ' . Comet_Utils::get_alignment( isset( $edata['alg'] ) ? $edata['alg'] : 'c' );
 
         $output = "<div class=\"{$classes}\">";
         $output .= "<{$tag} class=\"cpb-image cpb-inner\"" . ( $tag === 'a' ? " href=\"{$link}\"" . ( Comet_Utils::is_true( $edata['tar'] ) ? ' target="_blank"' : '' ) : '' ) . ">";
 
-        $output .= Comet_Utils::get_image( $edata['img'], $edata['alt'] );
+        if( isset( $edata['img'] ) ){
+            $output .= Comet_Utils::get_image( $edata['img'], isset( $edata['alt'] ) ? $edata['alt'] : '' );
+
+        }
 
         if( isset( $edata['cap'] ) && is_string( $edata['cap'] ) ){
             $aside = strip_tags( $edata['cap'] );

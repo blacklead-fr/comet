@@ -21,12 +21,12 @@ class text extends Comet_Element{
 
 		$edata = is_array( $data['el'] ) ? $data['el'] : [];
 		$content = isset( $edata['content'] ) && is_string( $edata['content'] ) ? $edata['content'] : ''; 
-		$classes = 'cpb-text cpb-wrapper ' . Comet_Utils::get_alignment( isset( $edata['alg'] ) ? $edata['alg'] : 'c' );
+		$classes = 'cpb-text cpb-wrapper ' . Comet_Utils::get_alignment( isset( $edata['alg'] ) ? $edata['alg'] : 'l' );
 		$tags = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre' ];
 		$tag = 'p';
 
 		if( isset( $edata['tag'] ) && is_string( $edata['tag'] ) ){
-			$tag = strtolower( trim( $tag ) );
+			$tag = strtolower( trim( $edata['tag'] ) );
 
 			if( !in_array( $tag, $tags ) ){
 				$tag = 'p';

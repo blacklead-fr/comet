@@ -303,11 +303,35 @@ class Comet_Utils {
 
     }
 
+    static private function get_image_size( $url ){
+        global $wpdb;
+        $img = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE guid='%s';", $url ) );
+
+        if( is_array( $img ) && isset( $img[0] ) ){
+
+            if( is_array( $meta = wp_get_attachment_metadata( $img[0] ) ) && isset( $meta['width'] ) && isset( $meta['height'] ) ){
+                $w = $meta['width'];
+                $h = $meta['height'];
+
+                return "width=\"{$w}\" height=\"{$h}\"";
+
+            }
+
+        }
+
+        if( ini_get( 'allow_url_fopen' ) && is_array( $meta = getimagesize( $url ) ) && isset( $meta[3] ) ){
+            return $meta[3];
+
+        }
+        return '';
+
+    }
+
     static protected function get_image( $src = '', $alt = '' ){
 
         $src = is_string( $src ) ? esc_url( strip_tags( $src ) ) : '';
         $alt = is_string( $alt ) ? esc_attr( $alt ) : '';
-        $size = ini_get( 'allow_url_fopen' ) && is_array( $size = getimagesize( $src ) ) && isset( $size[3] ) ? $size[3] : '';
+        $size = self::get_image_size( $src );
 
         return "<img class=\"cpb-image\" {$size} src=\"{$src}\" alt=\"{$alt}\" />";
 

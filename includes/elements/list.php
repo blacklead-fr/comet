@@ -30,7 +30,7 @@ class listItems extends Comet_Element {
 
         $output .= Comet_Utils::foreach_item( $data, function( $iid, $idata ){
             $idata = is_array( $idata ) ? $idata : [];
-            $iclasses = "cpb-item cpb-inner cpb-item{$iid} " . Comet_Utils::get_alignment( $idata['alg'] );
+            $iclasses = "cpb-item cpb-inner cpb-item{$iid} " . Comet_Utils::get_alignment( isset( $idata['alg'] ) ? $idata['alg'] : 't' );
             $icontent = isset( $idata['ctnt'] ) && is_string( $idata['ctnt'] ) ? $idata['ctnt'] : '';
 
             return "<li class=\"{$iclasses}\">{$icontent}</li>";

@@ -1,33 +1,58 @@
 @import '../utils/variables';
 @import '../utils/mixins';
 
+$opAccent: rgba( 0, 106, 254, 0.8 );
+
 .comet-contextmenu {
     position: absolute;
     z-index: 1;
-    background: rgba( 44, 45, 49, .8 );
+    background: rgba( 0, 0, 0, .6 );
     color: white;
     top: 0;
     right: auto;
     bottom: auto;
     left: 0;
-    border-radius: 3px;
     font: 300 15px/1.2 sans-serif;
     cursor: default;
     width: 150px;
+    padding: 4px 0;
+    @include border_radius( 3px );
 
     .comet-option{
 
         > span {
-            display: block;
+            display: flex;
             padding: 5px 10px;
+            justify-content: space-between;
+            align-items: center;
+
+            > .cico {
+                width: 13px;
+                height: 13px;
+                font-size: 13px;
+                display: block;
+            }
+            
         }
 
         .comet-items{
-            display: none;
-            background: #2C2D31;
+            background: rgba( 0, 0, 0, .6 );
+            position: absolute;
+            top: 0;
+            left: -99999em;
+            width: 150px;
+            padding: 4px 0;
+            @include border_radius( 3px );
+
         }
 
-        &:hover .comet-items{ display: block; }
+        &:hover {
+
+            > span { background: $opAccent; }
+
+            .comet-items{ left: 100%; }
+
+        }
 
     }
 
@@ -41,7 +66,7 @@
         font: 300 15px/1.2 sans-serif;
         cursor: pointer;
 
-        &:hover { background: #404146; }
+        &:hover { background: $opAccent; }
 
     }
 }

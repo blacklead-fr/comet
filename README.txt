@@ -7,7 +7,7 @@ Tags: drag and drop, page builder, visual editor, columns, rows, sections, eleme
 Requires at least: 4.9
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -181,6 +181,11 @@ No, Comet is really easy to use and you don't have to learn code.
 
 
 == Changelog ==
+
+= 1.1.2 - March 17, 2019 =
+* Fix - Saving still not works
+* Fix - Missing settings for some elements
+* Tweak - Get image metadata if it exists in the Wordpress media library before using getimagesize()
 
 = 1.1.1 - March 16, 2019 =
 * Fix - Encoding error

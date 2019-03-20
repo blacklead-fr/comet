@@ -17,6 +17,8 @@ export default function(){
 
     const _w = window;
 
+    const frame = utils.getNode( 'frame' );
+
     const types = [ 'element', 'column', 'row', 'section' ];
 
     const roles = [ 'edit', 'move', 'dup', 'del' ];
@@ -177,16 +179,16 @@ export default function(){
 
             menuNode.className = classes.menu;
 
-            __menu.setPosition( ev, menuNode );
             __menu.setOptions( target.type, target.target, menuNode );
 
             _d.body.appendChild( fragment );
+            __menu.setPosition( ev, menuNode );
 
         },
 
         setOptions: function( type, target, menu ){
             const options = __cometi18n.options;
-            var body, option, _option, item;
+            var body, option, _option, item, count;
 
             if( !utils.isObject( options ) || types.indexOf( type ) < 0 ){
                 menu.innerHTML = __cometi18n.messages.error.noMenu;
@@ -217,6 +219,7 @@ export default function(){
                     continue;
 
                 }
+                count = 0;
                 _option = _d.createElement( 'div' );
                 _option.className = 'comet-option'; 
                 _option.innerHTML = '<span>' + item.title + '</span><div class="comet-items"></div>';
@@ -224,24 +227,32 @@ export default function(){
 
                 if( 'edit' in item ){
                     body.appendChild( create_button( 'edit', option, item.edit ) );
+                    count++;
 
                 }
 
                 if( 'move' in item ){
                     body.appendChild( create_button( 'move', option, item.move ) );
+                    count++;
 
                 }
 
                 if( 'dup' in item ){
                     body.appendChild( create_button( 'dup', option, item.dup ) );
+                    count++;
 
                 }
 
                 if( 'del' in item ){
                     body.appendChild( create_button( 'del', option, item.del ) );
+                    count++;
 
                 }
 
+                if( count > 0 ){
+                    _option.firstChild.innerHTML = item.title + '<span class="cico cico-arrow-right"></span>';
+
+                }
                 menu.appendChild( _option );
 
             }
@@ -259,11 +270,11 @@ export default function(){
             var clickCoordsX = clickCoords.x;
             var clickCoordsY = clickCoords.y;
 
-            var menuWidth = menu.offsetWidth + 4;
+            var menuWidth = menu.offsetWidth + 154;
             var menuHeight = menu.offsetHeight + 4;
 
-            var windowWidth = _w.innerWidth;
-            var windowHeight = _w.innerHeight;
+            var windowWidth = frame.offsetWidth;
+            var windowHeight = frame.offsetHeight;
 
             if( ( windowWidth - clickCoordsX ) < menuWidth ){
                 menu.style.left = windowWidth - menuWidth + 'px';
@@ -758,15 +769,13 @@ export default function(){
                 }
 
             };
-
             return ( type in priv ? priv[type] : {} );
 
         }
 
-
     };
-
     node( _d.documentElement ).on( 'contextmenu click', __menu.create );
     node( _w ).on( 'resize', __menu.destroy );
+    node( frame ).on( 'scroll', __menu.destroy );
 
 }

@@ -20,12 +20,12 @@ class map extends Comet_Element {
     public function render( $data ){
 
         $edata = is_array( $data['el'] ) ? $data['el'] : [];
-        $w = Comet_Utils::sanitize_number( $edata['wi'], 200, 2000, 200 );
-        $h = Comet_Utils::sanitize_number( $edata['he'], 200, 2000, 200 );
+        $w = Comet_Utils::sanitize_number( ( isset( $edata['wi'] ) ? $edata['wi'] : 200 ), 200, 2000, 200 );
+        $h = Comet_Utils::sanitize_number( ( isset( $edata['he'] ) ? $edata['he'] : 200 ), 200, 2000, 200 );
         $args = [
             'output'    => 'embed',
             '=iwloc'    => 'B',
-            'z'         => Comet_Utils::sanitize_number( $edata['zoom'], 0, 21, 10 ),
+            'z'         => Comet_Utils::sanitize_number( ( isset( $edata['zoom'] ) ? $edata['zoom'] : 10 ), 0, 21, 10 ),
             'width'     => $w,
             'height'    => $h,
 
