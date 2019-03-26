@@ -43,15 +43,15 @@ class Column extends Comet_Register {
 
 		$this->deregister_field( 0, 5, 'wsize' );
 
-		$this->register_field( 0, 5, 'wsize', array(
-			'label'   => __( 'Width', 'comet' ),
-			'type'   => 'range',
-			'min'    => '10',
-			'max'    => '100',
-			'step'   => '0.01',
-			'std'    => '100',
-			'unit'   => '%'
-		) );
+		$this->register_field( 0, 5, 'wsize', [
+			'label'	=> __( 'Width', 'comet' ),
+			'type'	=> 'range',
+			'min'	=> '10',
+			'max'	=> '100',
+			'step'	=> '0.01',
+			'std'	=> '100',
+			'unit'	=> '%'
+		] );
 
 	}
 

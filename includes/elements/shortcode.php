@@ -82,11 +82,11 @@ class shortcode extends Comet_Element {
 
 		$sid = $this->register_section( $tid, 'shortcode', __( 'Shortcode', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 's', array(
-			'label'  => __( 'Shortcode', 'comet' ),
-			'type'   => 'textarea',
-			'std'   => '[caption id="2812" align="alignright" width="300"]',
-		) );
+		$this->register_field( $tid, $sid, 's', [
+            'label'  => __( 'Shortcode', 'comet' ),
+            'type'   => 'textarea',
+            'std'   => '[caption id="2812" align="alignright" width="300"]'
+        ] );
 
 		$sid = $this->register_section( $tid, 'spacing', __( 'Spacing', 'comet' ) );
 

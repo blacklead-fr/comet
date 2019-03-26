@@ -142,26 +142,26 @@ class listItems extends Comet_Element {
 
         $sid = $this->register_section( $tid, 'item', __( 'Item', 'comet' ), true );
 
-        $this->register_field( $tid, $sid, 'ico', array(
+        $this->register_field( $tid, $sid, 'ico', [
             'label'  => __( 'Icon', 'comet' ),
             'type'   => 'image',
-        ), true );
+        ], true );
 
-        $this->register_field( $tid, $sid, 'alg', array(
+        $this->register_field( $tid, $sid, 'alg', [
             'label'  => __( 'Vertical alignment', 'comet' ),
             'type'   => 'select',
             'std'    => 't',
-            'values' => array(
+            'values' => [
                 't' => __( 'Top', 'comet' ),
                 'm' => __( 'Middle', 'comet' ),
                 'b' => __( 'Bottom', 'comet' )
-            )
-        ), true );
+            ]
+        ], true );
 
-        $this->register_field( $tid, $sid, 'ctnt', array(
+        $this->register_field( $tid, $sid, 'ctnt', [
             'label'  => __( 'Text', 'comet' ),
-            'type'   => 'editor',
-        ), true );
+            'type'   => 'editor'
+        ], true );
 
         $this->push_items( __( 'Items', 'comet' ) );
 
@@ -173,14 +173,14 @@ class listItems extends Comet_Element {
 
         $sid = $this->register_section( $tid, 'list', __( 'List', 'comet' ) );
 
-        $this->register_field( $tid, $sid, 'sty', array(
+        $this->register_field( $tid, $sid, 'sty', [
             'label'  => __( 'Style', 'comet' ),
             'type'   => 'select',
             'std'    => 'none',
             'values' => Comet_Utils::listStyle()
-        ) );
+        ] );
 
-        $this->register_field( $tid, $sid, 'spa', array(
+        $this->register_field( $tid, $sid, 'spa', [
             'label'  => __( 'Gap', 'comet' ),
             'desc'   => __( 'Define the gap between items.', 'comet'),
             'type'   => 'range',
@@ -188,32 +188,32 @@ class listItems extends Comet_Element {
             'max'    => '200',
             'std'    => '0',
             'unit'   => 'px'
-        ) );
+        ] );
 
-        $this->register_field( $tid, $sid, 'ti', array(
+        $this->register_field( $tid, $sid, 'ti', [
             'label'  => __( 'Text indent', 'comet' ),
             'type'   => 'range',
             'min'    => '0',
             'max'    => '200',
             'std'    => '0',
             'unit'   => 'px'
-        ) );
+        ] );
 
         $sid = $this->register_section( $tid, 'text', __( 'Text', 'comet' ) );
 
-        $this->register_field( $tid, $sid, 'fs', array(
+        $this->register_field( $tid, $sid, 'fs', [
             'label'  => __( 'Size', 'comet' ),
             'type'   => 'range',
             'min'    => '10',
             'max'    => '100',
             'std'    => '15',
             'unit'   => 'px'
-        ) );
+        ] );
 
-        $this->register_field( $tid, $sid, 'tc', array(
+        $this->register_field( $tid, $sid, 'tc', [
             'label'  => __( 'Color', 'comet' ),
-            'type'   => 'color',
-        ) );
+            'type'   => 'color'
+        ] );
 
         $sid = $this->register_section( $tid, 'spacing', __( 'Spacing', 'comet' ) );
 

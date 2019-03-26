@@ -158,88 +158,88 @@ class image extends Comet_Element {
 
 		$sid = $this->register_section( $tid, 'image', __( 'Image', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'img', array(
-			'label'  => __( 'Image', 'comet' ),
-			'type'   => 'image',
-			'std'    => '',
-		) );
+        $this->register_field( $tid, $sid, 'img', [
+            'label'  => __( 'Image', 'comet' ),
+            'type'   => 'image',
+            'std'    => '',
+        ] );
 
-		$this->register_field( $tid, $sid, 'cap', array(
-			'label'  => __( 'Caption', 'comet' ),
-			'type'   => 'text'
-		) );
+		$this->register_field( $tid, $sid, 'cap', [
+            'label'  => __( 'Caption', 'comet' ),
+            'type'   => 'text'
+        ] );
 
-		$this->register_field( $tid, $sid, 'alt', array(
-			'label'  => __( 'Alternative text', 'comet' ),
-			'desc'   => __( 'Alternative text is required for SEO. By default it uses the image filename.', 'comet' ),
-			'type'   => 'text'
-		) );
+		$this->register_field( $tid, $sid, 'alt', [
+            'label'  => __( 'Alternative text', 'comet' ),
+            'desc'   => __( 'Specify an alternate text for the image, if it cannot be displayed.', 'comet' ),
+            'type'   => 'text'
+        ] );
 
-		$this->register_field( $tid, $sid, 'alg', array(
-			'label'  => __( 'Alignment', 'comet' ),
-			'type'   => 'radio',
-			'std'    => 'c',
-			'values' => array(
-				'l'   => array(
-					'title' => __( 'Left', 'comet' ),
-					'icon' => 'cico cico-align-left',
-				),
-				'c' => array(
-					'title' => __( 'Center', 'comet' ),
-					'icon' => 'cico cico-align-center',
-				),
-				'r'  => array(
-					'title' => __( 'Right', 'comet' ),
-					'icon' => 'cico cico-align-right',
-				),
-			)
-		) );
+		$this->register_field( $tid, $sid, 'alg', [
+            'label'  => __( 'Alignment', 'comet' ),
+            'type'   => 'radio',
+            'std'    => 'c',
+            'values' => [
+                'l'   => [
+                    'title' => __( 'Left', 'comet' ),
+                    'icon' => 'cico cico-align-left'
+                ],
+                'c' => [
+                    'title' => __( 'Center', 'comet' ),
+                    'icon' => 'cico cico-align-center'
+                ],
+                'r'  => [
+                    'title' => __( 'Right', 'comet' ),
+                    'icon' => 'cico cico-align-right'
+                ]
+            ]
+        ] );
 
 		$sid = $this->register_section( $tid, 'link', __( 'Link', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'link', array(
-			'label'  => __( 'Link', 'comet' ),
-			'type'   => 'text',
-			'std'    => '',
-		) );
+		$this->register_field( $tid, $sid, 'link', [
+            'label'  => __( 'Link', 'comet' ),
+            'type'   => 'text',
+            'std'    => ''
+        ] );
 
-		$this->register_field( $tid, $sid, 'tar', array(
-			'label'  => __( 'Open in a new tab ?', 'comet' ),
-			'type'   => 'checkbox',
-			'std'    => 'true',
-		) );
+		$this->register_field( $tid, $sid, 'tar', [
+            'label'  => __( 'Open in a new tab', 'comet' ),
+            'type'   => 'checkbox',
+            'std'    => 'true'
+        ] );
 
 		$tid = $this->register_tab( 'design', __( 'Design', 'comet' ) );
 
 		$sid = $this->register_section( $tid, 'caption', __( 'Caption', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'tc', array(
-			'label' => __( 'Color', 'comet' ),
-			'type'  => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'tc', [
+            'label' => __( 'Color', 'comet' ),
+            'type'  => 'color'
+        ] );
 
-		$this->register_field( $tid, $sid, 'tsi', array(
-			'label' => __( 'Size', 'comet' ),
-			'type'   => 'range',
-			'std'    => '12',
-			'min'    => '10',
-			'max'    => '50',
-			'unit'   => 'px',
-		) );
+		$this->register_field( $tid, $sid, 'tsi', [
+            'label' => __( 'Size', 'comet' ),
+            'type'   => 'range',
+            'std'    => '12',
+            'min'    => '10',
+            'max'    => '50',
+            'unit'   => 'px'
+        ] );
 
 		$sid = $this->register_section( $tid, 'background', __( 'Background', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'bg', array(
-			'label' => __( 'Color', 'comet' ),
-			'type'  => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'bg', [
+            'label' => __( 'Color', 'comet' ),
+            'type'  => 'color'
+        ] );
 
 		$sid = $this->register_section( $tid, 'border', __( 'Border', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'bc', array(
-			'label' => __( 'Color', 'comet' ),
-			'type'  => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'bc', [
+            'label' => __( 'Color', 'comet' ),
+            'type'  => 'color'
+        ] );
 
 		$this->register_field( $tid, $sid, 'br', Comet_Utils::numbers( __( 'Border', 'comet' ) ) );
 

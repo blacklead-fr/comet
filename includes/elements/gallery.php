@@ -176,26 +176,26 @@ class gallery extends Comet_Element {
 
         $sid = $this->register_section( $tid, 'image', __( 'Image', 'comet' ), true );
 
-        $this->register_field( $tid, $sid, 'img', array(
+        $this->register_field( $tid, $sid, 'img', [
             'label'  => __( 'Image', 'comet' ),
-            'type'   => 'image',
-        ), true );
+            'type'   => 'image'
+        ], true );
 
-        $this->register_field( $tid, $sid, 'alt', array(
+        $this->register_field( $tid, $sid, 'alt', [
             'label'  => __( 'Alternative text', 'comet' ),
-            'desc'   => __( 'Alternative text is required for SEO. By default it uses the image filename.', 'comet' ),
+            'desc'   => __( 'Specify an alternate text for the image, if it cannot be displayed.', 'comet' ),
             'type'   => 'text'
-        ), true );
+        ], true );
 
-        $this->register_field( $tid, $sid, 'cap', array(
+        $this->register_field( $tid, $sid, 'cap', [
             'label'  => __( 'Caption', 'comet' ),
-            'type'   => 'text',
-        ), true );
+            'type'   => 'text'
+        ], true );
 
-        $this->register_field( $tid, $sid, 'ath', array(
+        $this->register_field( $tid, $sid, 'ath', [
             'label'  => __( 'Author', 'comet' ),
-            'type'   => 'text',
-        ), true );
+            'type'   => 'text'
+        ], true );
 
         $this->push_items( __( 'Images', 'comet' ) );
     }
@@ -206,94 +206,92 @@ class gallery extends Comet_Element {
 
         $sid = $this->register_section( $tid, 'gallery', __( 'Gallery', 'comet' ) );
 
-        $this->register_field( $tid, $sid, 'ty', array(
+        $this->register_field( $tid, $sid, 'ty', [
             'label'    => __( 'Type', 'comet' ),
             'type'     => 'select',
             'std'      => 'm',
-            'switch'   => 'true',
-            'to'       => array(
-                'o'     => array( 'hei' ),
-            ),
-            'values' => array(
+            'switch'   => [
+                'o'     => [ 'hei' ]
+            ],
+            'values' => [
                 'm' => __( 'Masonry', 'comet' ),
-                'o' => __( 'Offset', 'comet' ),
-            )
-        ) );
+                'o' => __( 'Offset', 'comet' )
+            ]
+        ] );
 
-        $this->register_field( $tid, $sid, 'col', array(
+        $this->register_field( $tid, $sid, 'col', [
             'label'  => __( 'Column count', 'comet' ),
             'type'   => 'select',
             'std'    => '3',
             'values' => Comet_Utils::grid( 5 )
-        ) );
+        ] );
 
-        $this->register_field( $tid, $sid, 'pd', array(
+        $this->register_field( $tid, $sid, 'pd', [
             'label'  => __( 'Gap', 'comet' ),
             'type'   => 'range',
             'min'    => '0',
             'max'    => '30',
             'std'    => '0',
-            'unit'   => '%',
-        ) );
+            'unit'   => '%'
+        ] );
 
-        $this->register_field( $tid, $sid, 'hei', array(
-            'label'  => __( 'Height', 'comet' ),
-            'type'   => 'range',
-            'min'    => '100',
-            'max'    => '1000',
-            'std'    => '200',
-            'step'   => '1',
-            'unit'   => 'px',
-            'check'  => 'ty'
-        ) );
+        $this->register_field( $tid, $sid, 'hei', [
+            'label'   => __( 'Height', 'comet' ),
+            'type'    => 'range',
+            'min'     => '100',
+            'max'     => '1000',
+            'std'     => '200',
+            'step'    => '1',
+            'unit'    => 'px',
+            'hidden'  => true
+        ] );
 
-        /*$this->register_field( $tid, $sid, 'lb', array(
-            'label' => __( 'Lightbox', 'comet' ),
-            'desc'  => __( 'Open in a lightbox ?', 'comet' ),
+        /*$this->register_field( $tid, $sid, 'lb', [
+            'label' => __( 'Open in a lightbox', 'comet' ),
             'type'  => 'checkbox',
-            'std'   => 'true',
-        ) );*/
+            'std'   => 'true'
+        ] );*/
 
-        $this->register_field( $tid, $sid, 'oh', array(
-            'label'  => __( 'Caption on hover ?', 'comet' ),
+        $this->register_field( $tid, $sid, 'oh', [
+            'label'  => __( 'Caption on hover', 'comet' ),
             'type'   => 'checkbox',
             'std'    => 'false'
-        ) );
+        ] );
 
-        $this->register_field( $tid, $sid, 'an', array(
+        $this->register_field( $tid, $sid, 'an', [
             'label'  => __( 'Animation', 'comet' ),
             'type'   => 'select',
             'std'    => 'z',
-            'values' => array(
+            'values' => [
                 'n'  => __( 'None', 'comet' ),
                 'z'  => __( 'Zoom', 'comet' ),
                 'r'  => __( 'Rotate', 'comet' ),
                 'b'  => __( 'Blur', 'comet' )
-            )
-        ) );
+            ]
+        ] );
 
         $tid = $this->register_tab( 'design', __( 'Design', 'comet' ) );
 
         $sid = $this->register_section( $tid, 'caption', __( 'Caption', 'comet' ) );
 
-        $this->register_field( $tid, $sid, 'cps', array(
-            'label'=> __( 'Size', 'comet' ),
+        $this->register_field( $tid, $sid, 'cps', [
+            'label'  => __( 'Size', 'comet' ),
             'type'   => 'range',
             'min'    => '10',
             'max'    => '50',
             'std'    => '15',
             'unit'   => 'px'
-        ) );
+        ] );
 
-        $this->register_field( $tid, $sid, 'tc', array(
+        $this->register_field( $tid, $sid, 'tc', [
             'label' => __( 'Color', 'comet' ),
-            'type'  => 'color',
-        ) );
+            'type'  => 'color'
+        ] );
 
-        $this->register_field( $tid, $sid, 'bg', array(
+        $this->register_field( $tid, $sid, 'bg', [
             'label' => __( 'Background', 'comet' ),
-            'type'  => 'color',
-        ) );
+            'type'  => 'color'
+        ] );
 
         $sid = $this->register_section( $tid, 'spacing', __( 'Spacing', 'comet' ) );
 

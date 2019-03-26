@@ -24,139 +24,145 @@ class Base extends Comet_Register {
 
 		$sid = $this->register_section( $tid, 'background', __( 'Background', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'bgt', array(
-			'label'  => __( 'Type', 'comet' ),
-			'type'   => 'select',
-			'std'    => 'color',
-			'switch' => 'true',
-			'to'     => array(
-				'color'    => array( 'bgc' ),
-				'gradient' => array( 'bgor', 'gradient', 'shape', 'angle' ),
-			),
-			'values' => array(
-				'color'    => __( 'Color', 'comet' ),
-				'gradient' => __( 'Gradient', 'comet' ),
-				'none'     => __( 'None', 'comet' ),
-			)
-		) );
+		$this->register_field( $tid, $sid, 'bgt', [
+			'label'		=> __( 'Type', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> 'none',
+			'switch'	=> [
+				'color'		=> [ 'bgc' ],
+				'gradient'	=> [ 'bgor', 'gradient', 'shape', 'angle' ],
+			],
+			'values'	=> [
+				'color'		=> __( 'Color', 'comet' ),
+				'gradient'	=> __( 'Gradient', 'comet' ),
+				'none'		=> __( 'None', 'comet' ),
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'bgc', array(
-			'label'    => __( 'Color', 'comet' ),
-			'check'    => 'bgt:color',
-			'type'     => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'bgc', [
+			'label'		=> __( 'Color', 'comet' ),
+			'type'		=> 'color',
+			'hidden'	=> true,
+		] );
 
-		$this->register_field( $tid, $sid, 'bgor', array(
-			'label'  => __( 'Gradient type', 'comet' ),
-			'check'  => 'bgt:gradient',
-			'type'   => 'select',
-			'std'    => 'linear',
-			'values' => array(
-				'linear' => __( 'Linear', 'comet' ),
-				'radial' => __( 'Radial', 'comet' ),
-			)
-		) );
+		$this->register_field( $tid, $sid, 'bgor', [
+			'label'		=> __( 'Gradient type', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> 'linear',
+			'hidden'	=> true,
+			'switch'	=> [
+				'radial'	=> [ 'shape' ]
+			],
+			'values'	=> [
+				'linear'	=> __( 'Linear', 'comet' ),
+				'radial'	=> __( 'Radial', 'comet' ),
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'gradient', array(
-			'label'  => __( 'Gradient', 'comet' ),
-			'type'   => 'gradient',
-			'check'  => 'bgt:gradient',
-		) );
+		$this->register_field( $tid, $sid, 'gradient', [
+			'label'		=> __( 'Gradient', 'comet' ),
+			'type'		=> 'gradient',
+			'hidden'	=> true
+		] );
 
-		$this->register_field( $tid, $sid, 'shape', array(
-			'label'  => __( 'Shape', 'comet' ),
-			'type'   => 'select',
-			'std'    => 'corner',
-			'check'  => 'bgt:gradient',
-			'values' => array(
-				'side'   => __( 'Side', 'comet' ),
-				'corner' => __( 'Corner', 'comet' ),
-			)
-		) );
+		$this->register_field( $tid, $sid, 'shape', [
+			'label'		=> __( 'Shape', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> 'corner',
+			'hidden'	=> true,
+			'values'	=> [
+				'side'		=> __( 'Side', 'comet' ),
+				'corner'	=> __( 'Corner', 'comet' ),
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'angle', array(
-			'label'  => __( 'Angle', 'comet' ),
-			'check'  => 'bgt:gradient',
-			'type'   => 'range',
-			'min'    => '0',
-			'max'    => '360',
-			'step'    => '1',
-			'std'    => '0',
-			'unit'   => __( 'deg', 'comet' )
-		) );
+		$this->register_field( $tid, $sid, 'angle', [
+			'label'		=> __( 'Angle', 'comet' ),
+			'type'		=> 'range',
+			'min'		=> '0',
+			'max'		=> '360',
+			'step'		=> '1',
+			'std'		=> '0',
+			'unit'		=> __( 'deg', 'comet' ),
+			'hidden'	=> true
+		] );
 
 		$sid = $this->register_section( $tid, 'image', __( 'Image', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'image', array(
-			'type'  => 'image',
-			'label' => __( 'Image','comet'),
-		) );
+		$this->register_field( $tid, $sid, 'image', [
+			'type'		=> 'image',
+			'label'		=> __( 'Image','comet'),
+		] );
 
-		$this->register_field( $tid, $sid, 'pos', array(
-			'type'   => 'select',
-			'label'  => __( 'Position', 'comet' ),
-			'values' => Comet_Utils::backgroundPosition()
-		) );
+		$this->register_field( $tid, $sid, 'pos', [
+			'type'		=> 'select',
+			'label'		=> __( 'Position', 'comet' ),
+			'values'	=> Comet_Utils::backgroundPosition()
+		] );
 
-		$this->register_field( $tid, $sid, 'repeat', array(
-			'type'   => 'select',
-			'label'  => __( 'Repeat', 'comet' ),
-			'values' => Comet_Utils::backgroundRepeat()
-		) );
+		$this->register_field( $tid, $sid, 'repeat', [
+			'type'		=> 'select',
+			'label'		=> __( 'Repeat', 'comet' ),
+			'values'	=> Comet_Utils::backgroundRepeat()
+		] );
 
-		$this->register_field( $tid, $sid, 'size', array(
-			'type'   => 'select',
-			'label'  => __( 'Size', 'comet' ),
-			'std'    => 'auto',
-			'values' => array(
-				'auto'  => __( 'Auto', 'comet' ),
-				'cov'   => __( 'Cover', 'comet' ),
-				'con'   => __( 'Contain', 'comet' ),
-			)
-		) );
+		$this->register_field( $tid, $sid, 'size', [
+			'type'		=> 'select',
+			'label'		=> __( 'Size', 'comet' ),
+			'std'		=> 'auto',
+			'values'	=> [
+				'auto'	=> __( 'Auto', 'comet' ),
+				'cov'	=> __( 'Cover', 'comet' ),
+				'con'	=> __( 'Contain', 'comet' ),
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'att', array(
-			'type'   => 'select',
-			'label'  => __( 'Attachment', 'comet' ),
-			'std'    => 'scr',
-			'values' => array(
-				'scr'  => __( 'Scroll', 'comet' ),
-				'fix'  => __( 'Fixed', 'comet' ),
-			)
-		) );
+		$this->register_field( $tid, $sid, 'att', [
+			'type'		=> 'select',
+			'label'		=> __( 'Attachment', 'comet' ),
+			'std'		=> 'scr',
+			'values'	=> [
+				'scr'	=> __( 'Scroll', 'comet' ),
+				'fix'	=> __( 'Fixed', 'comet' ),
+			]
+		] );
 
 		$sid = $this->register_section( $tid, 'video', __( 'Video', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'vid', array(
-			'label'  => __( 'Video', 'comet' ),
-			'desc'   => __( 'Add a video on the background ?', 'comet' ),
-			'type'   => 'checkbox',
-			'switch' => 'true',
-			'std'    => 'false',
-			'to'     => 'vurl'
-		) );
+		$this->register_field( $tid, $sid, 'vid', [
+			'label'		=> __( 'Background video', 'comet' ),
+			'type'		=> 'checkbox',
+			'switch'	=> [
+				'true'	=> [ 'vurl' ]
+			],
+			'std'		=> 'false',
+		] );
 
-		$this->register_field( $tid, $sid, 'vurl', array(
-			'label'    => __( 'Video', 'comet' ),
-			'desc'     => __( 'There are 3 supported video formats: MP4, WebM, and Ogg. But MP4 is supported by all modern browsers.', 'comet' ),
-			'onload'   => 'hide',
-			'type'     => 'text',
-			'std'      => ''
-		) );
+		$this->register_field( $tid, $sid, 'vurl', [
+			'label'		=> __( 'Video', 'comet' ),
+			'desc'		=> __( 'There are 3 supported video formats: MP4, WebM, and Ogg. But MP4 is supported by all modern browsers.', 'comet' ),
+			'onload'	=> 'hide',
+			'type'		=> 'text',
+			'std'		=> '',
+			'hidden'	=> true
+		] );
 
 		$sid = $this->register_section( $tid, 'overlay', __( 'Overlay', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'ov', array(
-			'label'  => __( 'Overlay', 'comet' ),
-			'desc'   => __( 'Add an overlay on the background ?', 'comet' ),
-			'type'   => 'checkbox',
-			'std'    => 'false',
-		) );
+		$this->register_field( $tid, $sid, 'ov', [
+			'label'		=> __( 'Background overlay', 'comet' ),
+			'type'		=> 'checkbox',
+			'std'		=> 'false',
+			'switch'	=> [
+				'true'	=> [ 'ovc' ]
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'ovc', array(
-			'label'  => __( 'Color','comet' ),
-			'type'   => 'color'
-		) );
+		$this->register_field( $tid, $sid, 'ovc', [
+			'label'		=> __( 'Color','comet' ),
+			'type'		=> 'color',
+			'hidden'	=> true
+		] );
 
 		$sid = $this->register_section( $tid, 'border', __( 'Border', 'comet' ) );
 
@@ -165,45 +171,44 @@ class Base extends Comet_Register {
 			__( 'Set the width of the section\'s four borders. The values must be positive integers.', 'comet' )
 		) );
 
-		$this->register_field( $tid, $sid, 'bc', array(
-			'label'   => __( 'Color', 'comet' ),
-			'type'    => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'bc', [
+			'label'		=> __( 'Color', 'comet' ),
+			'type'		=> 'color',
+		] );
 
-		$this->register_field( $tid, $sid, 'bs', array(
-			'type'   => 'select',
-			'label'  => __('Style','comet'),
-			'values' => Comet_Utils::borderStyle()
-		) );
+		$this->register_field( $tid, $sid, 'bs', [
+			'type'		=> 'select',
+			'label'		=> __('Style','comet'),
+			'values'	=> Comet_Utils::borderStyle()
+		] );
 
 		$this->register_field( $tid, $sid, 'brad', Comet_Utils::numbers( __( 'Radius', 'comet' ) ) );
 
 		$sid = $this->register_section( $tid, 'sizing', __( 'Sizing', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'width', array(
-			'type'   => 'select',
-			'label'  => __( 'Width', 'comet' ),
-			'std'    => 'full',
-			'switch' => 'true',
-			'to'     => array(
-				'cust'    => array( 'wsize' ),
-			),
-			'values' => array(
-				'full'  => __( 'Full', 'comet' ),
-				'cust'  => __( 'Custom', 'comet' )
-			)
-		) );
+		$this->register_field( $tid, $sid, 'width', [
+			'type'		=> 'select',
+			'label'		=> __( 'Width', 'comet' ),
+			'std'		=> 'full',
+			'switch'	=> [
+				'cust'	=> [ 'wsize' ],
+			],
+			'values'	=> [
+				'full'	=> __( 'Full', 'comet' ),
+				'cust'	=> __( 'Custom', 'comet' )
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'wsize', array(
-			'type'   => 'range',
-			'label'  => __( 'Size', 'comet' ),
-			'check'  => 'width:cust',
-			'min'    => '300',
-			'max'    => '5000',
-			'step'   => '1',
-			'std'    => '1000',
-			'unit'   => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'wsize', [
+			'type'		=> 'range',
+			'label'		=> __( 'Size', 'comet' ),
+			'min'		=> '300',
+			'max'		=> '5000',
+			'step'		=> '1',
+			'std'		=> '1000',
+			'unit'		=> 'px',
+			'hidden'	=> true
+		] );
 
 		$sid = $this->register_section( $tid, 'spacing', __( 'Spacing', 'comet' ) );
 

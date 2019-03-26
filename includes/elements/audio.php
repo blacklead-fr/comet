@@ -96,25 +96,23 @@ class audio extends Comet_Element {
 
         $sid = $this->register_section( $tid, 'audio', __( 'Audio', 'comet' ) );
 
-        $this->register_field( $tid, $sid, 'url', array(
-            'label'  => __( 'Audio', 'comet' ),
-            'desc'   => __( 'Filetypes supported: "MP3", "Wav" and "Ogg".', 'comet' ),
-            'type'   => 'text',
-        ) );
+        $this->register_field( $tid, $sid, 'url', [
+            'label'     => __( 'Audio', 'comet' ),
+            'desc'      => __( 'Filetypes supported: "MP3", "Wav" and "Ogg".', 'comet' ),
+            'type'      => 'text'
+        ] );
 
-        $this->register_field( $tid, $sid, 'aut', array(
-            'label'    =>__( 'Autoplay', 'comet' ),
-            'type'     => 'checkbox',
-            'std'      => 'false',
-            'desc'     => __( 'Playing as soon as audio player is ready ?', 'comet' )
-        ) );
+        $this->register_field( $tid, $sid, 'aut', [
+            'label'     =>__( 'Autoplay', 'comet' ),
+            'type'      => 'checkbox',
+            'std'       => 'false'
+        ] );
         
-        $this->register_field( $tid, $sid, 'loop', array(
-            'label'    =>__( 'Loop', 'comet' ),
-            'type'     => 'checkbox',
-            'std'      => 'false',
-            'desc'     => __( 'Start audio over again everytime it is finished ?', 'comet' )
-        ) );
+        $this->register_field( $tid, $sid, 'loop', [
+            'label'     => __( 'Loop', 'comet' ),
+            'type'      => 'checkbox',
+            'std'       => 'false'
+        ] );
 
         $sid = $this->register_section( $tid, 'spacing', __( 'Spacing', 'comet' ) );
 

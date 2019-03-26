@@ -1,5 +1,4 @@
 /* Comet - Copyright (c) 2019 Blacklead */
-/* Last edit: Jan, 25 2019 */
 
 import __global from './global.js';
 import parse from './parse.js';

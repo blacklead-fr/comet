@@ -148,11 +148,11 @@ class text extends Comet_Element{
 
 		$sid = $this->register_section( $tid, 'text', __( 'Text', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'tag', array(
-			'label'   => __( 'HTML Tag', 'comet' ),
-			'type'    => 'select',
-			'std'     => 'p',
-			'values'  => array(
+		$this->register_field( $tid, $sid, 'tag', [
+			'label'		=> __( 'HTML Tag', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> 'p',
+			'values'	=> [
 				'p'				=> __( 'Paragraph', 'comet' ),
 				'h1'			=> __( 'Heading 1', 'comet' ),
 				'h2'			=> __( 'Heading 2', 'comet' ),
@@ -161,150 +161,149 @@ class text extends Comet_Element{
 				'h5'			=> __( 'Heading 5', 'comet' ),
 				'h6'			=> __( 'Heading 6', 'comet' ),
 				'blockquote'	=> __( 'Blockquote', 'comet' ),
-				//'code'       	=> 'code',
+				//'code'		=> 'code',
 				'pre'			=> __( 'Preformatted', 'comet' ),
-			),
-		) );
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'alg', array(
-			'label'   => __( 'Alignment', 'comet' ),
-			'type'    => 'radio',
-			'std'     => 'l',
-			'values'  => array(
-				'l'   => array(
-					'title' => __( 'Left', 'comet' ),
-					'icon'  => 'cico cico-align-left'
-				),
-				'c'   => array(
-					'title' => __( 'Center', 'comet' ),
-					'icon'  => 'cico cico-align-center'
-				),
-				'r'   => array(
-					'title' => __( 'Right', 'comet' ),
-					'icon'  => 'cico cico-align-right'
-				),
-			),
-		) );
+		$this->register_field( $tid, $sid, 'alg', [
+			'label'		=> __( 'Alignment', 'comet' ),
+			'type'		=> 'radio',
+			'std'		=> 'l',
+			'values'		=> [
+				'l'		=> [
+					'title'		=> __( 'Left', 'comet' ),
+					'icon'		=> 'cico cico-align-left'
+				],
+				'c'		=> [
+					'title'		=> __( 'Center', 'comet' ),
+					'icon'		=> 'cico cico-align-center'
+				],
+				'r'		=> [
+					'title'		=> __( 'Right', 'comet' ),
+					'icon'		=> 'cico cico-align-right'
+				]
+			]
+		] );
 
-		$this->register_field( $tid, $sid, 'content', array(
-			'label'   => __( 'Content', 'comet' ),
-			'type'    => 'editor',
-		) );
+		$this->register_field( $tid, $sid, 'content', [
+			'label'		=> __( 'Content', 'comet' ),
+			'type'		=> 'editor'
+		] );
 
 
 		$tid = $this->register_tab( 'design', __( 'Design', 'comet' ) );
 
 		$sid = $this->register_section( $tid, 'typography', __( 'Typography', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'tc', array(
-			'label'   => __( 'Color', 'comet' ),
-			'type'    => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'tc', [
+			'label'		=> __( 'Color', 'comet' ),
+			'type'		=> 'color',
+		] );
 
-		$this->register_field( $tid, $sid, 'fo', array(
-			'label'   => __( 'Font', 'comet' ),
-			'type'    => 'select',
-			'std'     => '',
-			'values'  => Comet_Utils::fonts(),
-		) );
+		$this->register_field( $tid, $sid, 'fo', [
+			'label'		=> __( 'Font', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> '',
+			'values'	=> Comet_Utils::fonts()
+		] );
 
-		$this->register_field( $tid, $sid, 'fs', array(
-			'label'   => __( 'Size', 'comet' ),
-			'type'    => 'range',
-			'std'     => '',
-			'min'     => '10',
-			'max'     => '200',
-			'unit'    => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'fs', [
+			'label'		=> __( 'Size', 'comet' ),
+			'type'		=> 'range',
+			'std'		=> '',
+			'min'		=> '10',
+			'max'		=> '200',
+			'unit'		=> 'px'
+		] );
 
-		$this->register_field( $tid, $sid, 'fw', array(
-			'label'   => __( 'Weight', 'comet' ),
-			'desc'    => __( 'The weight property sets how thick or thin characters in text should be displayed.', 'comet' ),
-			'type'    => 'select',
-			'std'     => '400',
-			'values'  => Comet_Utils::weight()
-		) );
+		$this->register_field( $tid, $sid, 'fw', [
+			'label'		=> __( 'Weight', 'comet' ),
+			'desc'		=> __( 'The weight property sets how thick or thin characters in text should be displayed.', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> '400',
+			'values'	=> Comet_Utils::weight()
+		] );
 
-		$this->register_field( $tid, $sid, 'lh', array(
+		$this->register_field( $tid, $sid, 'lh', [
 			'label'		=> __( 'Line height', 'comet' ),
 			'desc'		=> __( 'The line height property specifies the height of a line.', 'comet' ),
 			'type'		=> 'range',
 			'std'		=> '1',
-			'min'     => '1',
-			'max'     => '5',
-			'step'    => '0.1',
-			'unit'    => ''
-		) );
+			'min'		=> '1',
+			'max'		=> '5',
+			'step'		=> '0.1'
+		] );
 
-		$this->register_field( $tid, $sid, 'ls', array(
-			'label'   => __( 'Letter spacing', 'comet' ),
-			'type'    => 'range',
-			'std'     => '',
-			'min'     => '-5',
-			'max'     => '20',
-			'step'    => '1',
-			'unit'    => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'ls', [
+			'label'		=> __( 'Letter spacing', 'comet' ),
+			'type'		=> 'range',
+			'std'		=> '',
+			'min'		=> '-5',
+			'max'		=> '20',
+			'step'		=> '1',
+			'unit'		=> 'px'
+		] );
 
 		$sid = $this->register_section( $tid, 'shadow', __( 'Text shadow', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'tsc', array(
-                  'label'   => __( 'Color', 'comet' ),
-                  'type'    => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'tsc', [
+			'label'		=> __( 'Color', 'comet' ),
+			'type'		=> 'color'
+		] );
 
-		$this->register_field( $tid, $sid, 'tsb', array(
-                  'label'   => __( 'Blur', 'comet' ),
-                  'type'    => 'range',
-                  'std'     => '0',
-                  'min'     => '0',
-                  'max'     => '50',
-                  'step'    => '1',
-                  'unit'    => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'tsb', [
+			'label'		=> __( 'Blur', 'comet' ),
+			'type'		=> 'range',
+			'std'		=> '0',
+			'min'		=> '0',
+			'max'		=> '50',
+			'step'		=> '1',
+			'unit'		=> 'px'
+		] );
 
-		$this->register_field( $tid, $sid, 'tsv', array(
-                  'label'   => __( 'Vertical', 'comet' ),
-                  'type'    => 'range',
-                  'std'     => '0',
-                  'min'     => '-50',
-                  'max'     => '50',
-                  'step'    => '1',
-                  'unit'    => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'tsv', [
+			'label'		=> __( 'Vertical', 'comet' ),
+			'type'		=> 'range',
+			'std'		=> '0',
+			'min'		=> '-50',
+			'max'		=> '50',
+			'step'		=> '1',
+			'unit'		=> 'px'
+		] );
 
-		$this->register_field( $tid, $sid, 'tsh', array(
-                  'label'   => __( 'Horizontal', 'comet' ),
-                  'type'    => 'range',
-                  'std'     => '0',
-                  'min'     => '-50',
-                  'max'     => '50',
-                  'step'    => '1',
-                  'unit'    => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'tsh', [
+			'label'		=> __( 'Horizontal', 'comet' ),
+			'type'		=> 'range',
+			'std'		=> '0',
+			'min'		=> '-50',
+			'max'		=> '50',
+			'step'		=> '1',
+			'unit'		=> 'px'
+		] );
 
 		$sid = $this->register_section( $tid, 'background', __( 'Background', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'bg', array(
-                  'label'   => __( 'Color', 'comet' ),
-                  'type'    => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'bg', [
+			'label'		=> __( 'Color', 'comet' ),
+			'type'		=> 'color'
+		] );
 
 		$sid = $this->register_section( $tid, 'border', __( 'Border', 'comet' ) );
 
 		$this->register_field( $tid, $sid, 'br', Comet_Utils::numbers( __( 'Width', 'comet' ) ) );
 
-		$this->register_field( $tid, $sid, 'bs', array(
-                  'label'   => __( 'Style', 'comet' ),
-                  'type'    => 'select',
-                  'std'		=> 'none',
-                  'values'	=> Comet_Utils::borderStyle()
-		) );
+		$this->register_field( $tid, $sid, 'bs', [
+			'label'		=> __( 'Style', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> 'none',
+			'values'	=> Comet_Utils::borderStyle()
+		] );
 
-		$this->register_field( $tid, $sid, 'bc', array(
-                  'label'   => __( 'Color', 'comet' ),
-                  'type'    => 'color',
-		) );
+		$this->register_field( $tid, $sid, 'bc', [
+			'label'		=> __( 'Color', 'comet' ),
+			'type'		=> 'color'
+		] );
 
 		$this->register_field( $tid, $sid, 'rd', Comet_Utils::numbers( __( 'Radius', 'comet' ) ) );
 

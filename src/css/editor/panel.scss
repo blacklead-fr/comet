@@ -104,6 +104,8 @@
 					padding: 10px 0;
 					position: relative;
 
+					&.comet-hide { display: none; }
+
 					> .comet-field-wrap {
 						position: relative;
 						padding-top: 5px; 

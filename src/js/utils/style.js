@@ -62,17 +62,13 @@ export default function( id, type ){
 		create: function( css ){
 			const s_id = _priv.id();
 			var _style = null;
-			//var classes;
 
 			css = utils.isString( css ) ? utils.trim( utils.stripTags( css ) ) : null;
 
 			if( !s_id || css === null ){
-				//return '';
 				return false;
 
 			}
-			//classes = 'cpb-style ' + s_id;
-			//return '<style id="' + s_id + '" class="' + classes + '">' + utils.trim( utils.stripTags( css ) ) + '</style>';
 			_style = _d.createElement( 'style' );
 			_style.id = s_id;
 			_style.className = 'cpb-style ' + s_id;
@@ -83,82 +79,12 @@ export default function( id, type ){
 		},
 
 		add: function( css ){
-			/*var _css, p, nhtml;
-
-			function cur( ar ){
-				var a, ara;
-
-				for( a in ar ){
-					if( !( ara = node( ar[a] ) ) || !ara.isNode() || ara.prop().nodeName.toLowerCase() !== 'style' ){
-						continue;
-
-					}
-
-					if( ( p = parse.style( ara.prop().id ) ) ){
-						node( p ).remove();
-
-					}
-					document.head.appendChild( ara.prop() );
-
-				}
-
-			}
-
-			if( utils.isString( css ) ){
-				nhtml = parse.html( css );
-
-				if( utils.isObject( nhtml ) ){
-					cur( nhtml );
-					return true;
-
-				}
-				return false;
-
-			}
-
-			if( ( ( _css = node( css ) ).isNode() ) && _css.prop().nodeName.toLowerCase() === 'style' ){
-
-				if( ( p = parse.style( _css.prop().id ) ) ){
-					node( p ).remove();
-
-				}
-				document.head.appendChild( _css.prop() );
-				return true;
-
-			}
-
-			if( utils.isObject( _css ) && _css.length > 0 ){
-				cur( _css );
-				return true;
-
-			}
-			return false;*/
 
 			return _priv.add( css );
-
 
 		},
 
 		insert: function( css ){
-			/*const s_id = createId( id, type );
-	var s;
-
-	if( !s_id || utils.isStringEmpty( css ) ){
-		return false;
-
-	}
-	css = utils.stripTags( css );
-
-	if( ( s = parse.style( s_id ) ) ){
-		s.innerHTML = css;
-		return;
-
-	}
-	s = document.createElement( 'style' );
-	s.id = s_id;
-	s.className = 'cpb-style ' + s_id;
-	s.innerHTML = css;*/
-
 
 			return _priv.add( css, function( _style, old ){
 
@@ -169,28 +95,28 @@ export default function( id, type ){
 				return false;
 
 			});
-	
-},
+			
+		},
 
-get: function(){
-	const s_id = _priv.id( id, type );
-	return _priv.node( s_id );
+		get: function(){
+			const s_id = _priv.id( id, type );
+			return _priv.node( s_id );
 
-},
+		},
 
-remove: function(){
-	const s = prop.get( id, type );
+		remove: function(){
+			const s = prop.get( id, type );
 
-	if( !s || s.parentNode === null ){
-		return false;
+			if( !s || s.parentNode === null ){
+				return false;
 
-	}
-	s.parentNode.removeChild( s );
-	return true;
+			}
+			s.parentNode.removeChild( s );
+			return true;
 
-}
+		}
 
-};
+	};
 
-return prop;
+	return prop;
 }

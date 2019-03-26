@@ -62,7 +62,6 @@ class preview extends Comet_Page {
         }
         $url = COMET_URL;
         $css = 'body{margin:0;padding:0;border:0;}';
-        $css .= 'p, h1, h2, h3, h4, h5, h6{margin:0;padding:0;}';
         $css .= 'body > .comet-message{height:100%;width:100%;position:absolute;left:0;top:0;display:flex;align-items:center;justify-content:center;}';
         $css .= 'body > .comet-message > p{text-align:center;margin:10px;color:#404146;max-width:500px;font:300 17px/1.5 sans-serif;padding:20px;background:#FFF0F0;color:red;}';
 

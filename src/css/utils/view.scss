@@ -2,7 +2,34 @@
 
 .cpb-content{
 
-    * { @include box_sizing( border-box ); }
+    %reset_spaces {
+        margin: 0;
+        padding: 0;
+        border: 0;
+    }
+
+    p, h1, h2, h3, h4, h5, h6,
+    div, article, section, figure, header, footer, aside, blockquote, cite, ul, li, ol, nav, pre {
+        @extend %reset_spaces;
+        @include box_sizing( border-box );
+        display: block;
+    }
+
+    video, audio, svg, img, iframe, object, embed, canvas {
+        @extend %reset_spaces;
+        display: block;
+        max-width: 100%;
+        max-height: 100%;
+        height: auto;
+        width: auto;
+    }
+
+    code, b, strong, i, em, ins, del, a, q, u, mark,
+    button, sub, sup, s, samp, small, span, strike, time {
+        @extend %reset_spaces;
+        display: inline-block;
+        vertical-align: middle;
+    }
 
     %layout {
         width: 100%;
@@ -95,9 +122,7 @@
     img.cpb-image {
         max-width: 100%;
         max-height: 100%;
-        margin: 0;
         height: auto;
-        display: block;
         width: auto;
     }
 
@@ -529,7 +554,6 @@
         max-width: 100%;
         max-height: 100%;
         min-height: 200px;
-        border: 0;
         background: #DDD;
         color: black;
     }

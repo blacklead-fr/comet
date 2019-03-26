@@ -39,17 +39,17 @@ class Row extends Comet_Register {
 		$base = new Base();
 		$this->set_data( $base->get_data() );
 
-		$this->register_field( 0, 5, 'alg', array(
-			'label'   => __( 'Align', 'comet' ),
-			'type'    => 'select',
-			'std'     => 's',
-			'values'  => array(
-				't'   => __( 'Top', 'comet' ),
-				'c'   => __( 'Center', 'comet' ),
-				'b'   => __( 'Bottom', 'comet' ),
-				's'   => __( 'Stretch (full height)', 'comet' ),
-			)
-		) );
+		$this->register_field( 0, 5, 'alg', [
+			'label'		=> __( 'Align', 'comet' ),
+			'type'		=> 'select',
+			'std'		=> 's',
+			'values'	=> [
+				't'	=> __( 'Top', 'comet' ),
+				'c'	=> __( 'Center', 'comet' ),
+				'b'	=> __( 'Bottom', 'comet' ),
+				's'	=> __( 'Stretch (full height)', 'comet' ),
+			]
+		] );
 
 	}
 

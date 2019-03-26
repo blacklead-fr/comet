@@ -12,6 +12,18 @@ export default function ( data, g_css ){
 
 	const _d = document;
 
+	const __core = {
+
+		utils: { 
+
+			isEntry: function( entry ){
+				return ( [ 'TRUE', true, 'true', 1, '1' ].indexOf( entry ) > -1 );
+
+			},
+		},
+
+	};
+
 	const _priv = {
 
 		css: function( id, type, dt ){
@@ -75,45 +87,45 @@ export default function ( data, g_css ){
 			switch( type ){
 
 				case 'sections':
-				o = classe + '{' + bg + bo + mar + pad + br + '}';
+				o = css.ruleset( classe, ( bg + bo + mar + pad + br ) );
 				break;
 
 				case 'rows':
 				o = '';
 
 				if( dt.width === 'cust' && ( tmp = sanitize.number({ value: dt.wsize, min: 300 }) ) !== null && tmp >= 300 ){
-					o += classe + '{' + css.render( 'max-width', tmp + 'px' ) + '}';
+					o += css.ruleset( classe, css.property( 'max-width', ( tmp + 'px' ) ) );
 
 				}
 				classe += ' .cpb-rowContent';
-				o += classe + '{' + bg + bo + pad + br + mar;
+				tmp = bg + bo + pad + br + mar;
 
 				switch( dt.alg ){
 
 					case 't':
-					o += css.render( 'align-items', 'flex-start' );
+					tmp += css.property( 'align-items', 'flex-start' );
 					break;
 
 					case 'b':
-					o += css.render( 'align-items', 'flex-end' );
+					tmp += css.property( 'align-items', 'flex-end' );
 					break;
 
 					case 'c':
-					o += css.render( 'align-items', 'center' );
+					tmp += css.property( 'align-items', 'center' );
 					break;
 				}
-				o += '}';
+				o += css.ruleset( classe, tmp );
 				break;
 
 				case 'columns':
 				o = '';
 
 				if( ( tmp = sanitize.number({ value: dt.wsize, min: 10, max: 100 }) ) !== null ){
-					o += classe + '{' + css.render( 'width', tmp + '%' ) + '}';
+					o += css.ruleset( classe, css.property( 'width', ( tmp + '%' ) ) );
 
 				}
 				classe += ' .cpb-columnContent';
-				o += classe + '{' + bg + bo + pad + br + mar + '}';
+				o += css.ruleset( classe, ( bg + bo + pad + br + mar ) );
 				break;
 
 				default:
@@ -122,7 +134,7 @@ export default function ( data, g_css ){
 
 			if( 'ov' in dt && 'ovc' in dt ){
 
-				if( [ 'true', true ].indexOf( dt.ov ) > -1 && !utils.isEmpty( tmp = sanitize.color( dt.ovc ) ) ){
+				if( __core.utils.isEntry( dt.ov ) && !utils.isEmpty( tmp = sanitize.color( dt.ovc ) ) ){
 
 					o += classe + ' > .cpb-backgroundComponents > .cpb-backgroundOverlay{background:' + tmp + ';}';
 
@@ -135,19 +147,19 @@ export default function ( data, g_css ){
 			mar = css.margin( dt.martt, dt.marrt, dt.marbt, dt.marlt, 'px', 'px' );
 
 			if( pad !== '' || mar !== '' ){
-				o += '.cpb-tabletMode ' + classe + '{' + pad + mar + '}';
-				o += css.responsive( 't', classe + '{' + pad + mar + '}' );
+				o += css.ruleset( classe, ( pad + mar ), 't' );
+				o += css.responsive( 't', css.ruleset( classe, ( pad + mar ) ) );
+
 
 			}
 			pad = css.padding( dt.padtm, dt.padrm, dt.padbm, dt.padlm, 'px', 'px' );
 			mar = css.margin( dt.martm, dt.marrm, dt.marbm, dt.marlm, 'px', 'px' );
 
 			if( pad !== '' || mar !== '' ){
-				o += '.cpb-mobileMode ' + classe + '{' + pad + mar + '}';
-				o += css.responsive( 'm', classe + '{' + pad + mar + '}' );
+				o += css.ruleset( classe, ( pad + mar ), 'm' );
+				o += css.responsive( 'm', css.ruleset( classe, ( pad + mar ) ) );
 
 			}
-
 			style( id, type ).insert( o );
 
 		},

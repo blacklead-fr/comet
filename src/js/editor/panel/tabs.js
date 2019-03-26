@@ -20,8 +20,11 @@ const __create = function( tabs, data ){
 
 	const _d = document;
 
+	const controls = {};
+
 	const classes = {
 		active: 'comet-active',
+		hide: 'comet-hide',
 		tab: 'comet-tab',
 
 	};
@@ -328,7 +331,7 @@ const __create = function( tabs, data ){
 
 		fields: function( fields ){
 			const oFields = _d.createDocumentFragment();
-			var f, a, field, meta;
+			var f, a, field, meta, oField;
 
 			if( utils.isObject( fields ) ){
 
@@ -338,9 +341,13 @@ const __create = function( tabs, data ){
 						continue;
 
 					}
+					if( !( oField = __core.field( a, f ) ) ){
+						continue;
+
+					}
 					f.type = utils.trim( utils.stripTags( f.type.toLowerCase() ) );
 					field = _d.createElement( 'div' );
-					field.className = 'comet-control comet-control-' + f.type;
+					field.className = 'comet-control comet-control-' + f.type + ( [ true, 'true', 'TRUE', 1, '1' ].indexOf( f.hidden ) > -1 ? ' ' + classes.hide : '' );
 					field.innerHTML = '<div class="comet-meta"></div><div class="comet-field-wrap"></div>';
 					oFields.appendChild( field );
 
@@ -354,7 +361,8 @@ const __create = function( tabs, data ){
 
 					}
 					field.firstChild.innerHTML = meta;
-					field.lastChild.appendChild( __core.field( a, f ) );
+					field.lastChild.appendChild( oField );
+					controls[a] = field;
 				}
 
 			}
@@ -367,6 +375,8 @@ const __create = function( tabs, data ){
 
 			var value = '';
 
+			const isSwitch = ( 'switch' in field && utils.isObject( field.switch ) );
+
 			const fields = {
 
 				text: function(){
@@ -377,6 +387,12 @@ const __create = function( tabs, data ){
 					_node.className = fieldClass;
 					_node.value = value;
 					__core.update( _node );
+
+					if( isSwitch ){
+						__core.switch( _node, field );
+
+					}
+
 					return _node;
 
 				},
@@ -388,6 +404,11 @@ const __create = function( tabs, data ){
 					_node.className = fieldClass;
 					_node.innerHTML = value;
 					__core.update( _node );
+
+					if( isSwitch ){
+						__core.switch( _node, field );
+
+					}
 
 					return _node;
 					
@@ -423,6 +444,11 @@ const __create = function( tabs, data ){
 
 					}
 					__core.update( _node );
+
+					if( isSwitch ){
+						__core.switch( _node, field );
+
+					}
 					return _node;
 					
 				},
@@ -440,6 +466,11 @@ const __create = function( tabs, data ){
 
 					}
 					__core.update( _node );
+
+					if( isSwitch ){
+						__core.switch( _node, field );
+
+					}
 					return _node;
 					
 				},
@@ -457,6 +488,11 @@ const __create = function( tabs, data ){
 						node( dren ).removeClass( classes.active );
 						node( ui ).addClass( classes.active );
 						update( ui.firstElementChild );
+
+						if( isSwitch ){
+							__core.switch( ui.firstElementChild, field );
+
+						}
 
 					};
 
@@ -572,6 +608,7 @@ const __create = function( tabs, data ){
 
 					}
 					__core.update( _node );
+
 					return fragment;
 					
 				},
@@ -786,6 +823,46 @@ const __create = function( tabs, data ){
 
 			});
 
+		},
+
+		switch: function( _node, fieldData ){
+			const sdata = fieldData.switch;
+
+			node( _node ).on( 'input', function( ev, ui ){
+				const value = ui.value;
+				const isCheckbox = ( ui.nodeName === 'INPUT' && ui.type === 'checkbox' );
+				const isChecked = ( isCheckbox && ui.checked );
+				var isValue = false;
+				var a, b, slug;
+
+				for( a in sdata ){
+					isValue = ( value === a );
+
+					if( !utils.isArray( sdata[a] ) ){
+						continue;
+
+					}
+
+					for( b = 0; b < sdata[a].length; b++ ){
+
+						if( !( ( slug = sdata[a][b] ) in controls ) ){
+							continue;
+
+						}
+
+						if( ( !isCheckbox && isValue ) || isChecked ){
+							node( controls[slug] ).removeClass( classes.hide );
+							continue;
+
+						}
+						node( controls[slug] ).addClass( classes.hide );
+
+					}
+
+				}
+
+			});
+
 		}
 
 	};
@@ -795,41 +872,4 @@ const __create = function( tabs, data ){
 
 };
 
-export default __create;/*
-	const obj = {};
-	var oTabs, oContent, a, _a, isItems, t, tab, tid;
-
-	if( !utils.isObject( tabs ) ){
-		return obj;
-
-	}
-	oTabs = '';
-	oContent = '';
-
-	for( a in tabs ){
-		t = tabs[a];
-		_a = utils.trim( a.toString() );
-		isItems = ( _a === 'items' );
-
-		if( !utils.isString( t.name ) || ( !isItems && !utils.isObject( t.sections ) ) || ( isItems && !utils.isObject( t.tabs ) ) ){
-			continue;
-
-		}
-		tid = 'comet-modalTab' + _a;
-		tab = __tab( ( isItems ? t.tabs : t.sections ), data, isItems );
-
-		oTabs += '<a class="comet-modalTabRef" href="#' + tid + '">';
-		oTabs += utils.trim( t.name );
-		oTabs += '</a>';
-
-		oContent += '<div id="' + tid + '" class="comet-modalTab">';
-		oContent += utils.isString( tab ) ? utils.stripOnly( tab, '<script><meta><link>' ) : __cometi18n.messages.error.unreach;
-		oContent += '</div>';
-
-	}
-	obj.tabs = oTabs;
-	obj.content = oContent;
-
-	return obj;
-
-}*/
+export default __create;

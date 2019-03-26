@@ -113,48 +113,48 @@ class map extends Comet_Element {
 
 		$sid = $this->register_section( $tid, 'settings', __( 'Settings', 'comet' ) );
 
-		$this->register_field( $tid, $sid, 'q', array(
-			'label'  => __( 'Address', 'comet' ),
-			'type'   => 'text',
-			'std'    => 'Eiffel Tower, Paris France',
-		) );
+		$this->register_field( $tid, $sid, 'q', [
+            'label'     => __( 'Address', 'comet' ),
+            'type'      => 'text',
+            'std'       => 'Eiffel Tower, Paris France'
+        ] );
 
-		$this->register_field( $tid, $sid, 'zoom', array(
-			'label'  => __( 'Zoom level', 'comet' ),
-			'desc'   => __( 'The initial resolution at which to display the map is set by the zoom property, where zoom 0 corresponds to a map of the Earth fully zoomed out, and higher zoom levels zoom in at a higher resolution.', 'comet' ),
-			'type'   => 'range',
-			'std'    => '18',
-			'min'    => '0',
-			'max'    => '21',
-		) );
+		$this->register_field( $tid, $sid, 'zoom', [
+            'label'  => __( 'Zoom level', 'comet' ),
+            'desc'   => __( 'The initial resolution at which to display the map is set by the zoom property, where zoom 0 corresponds to a map of the Earth fully zoomed out, and higher zoom levels zoom in at a higher resolution.', 'comet' ),
+            'type'   => 'range',
+            'std'    => '18',
+            'min'    => '0',
+            'max'    => '21'
+        ] );
 
-		$this->register_field( $tid, $sid, 'mt', array(
-			'label'  => __( 'Map type', 'comet' ),
-			'type'   => 'select',
-			'std'    => 'r',
-			'values' => array(
-				'r'	=> __( 'Roadmap', 'comet' ),
-				's'	=> __( 'Satellite', 'comet' ),
-			)
-		) );
+		$this->register_field( $tid, $sid, 'mt', [
+            'label'  => __( 'Map type', 'comet' ),
+            'type'   => 'select',
+            'std'    => 'r',
+            'values' => [
+                'r'    => __( 'Roadmap', 'comet' ),
+                's'    => __( 'Satellite', 'comet' )
+            ]
+        ] );
 
-		$this->register_field( $tid, $sid, 'wi', array(
-			'label'  => __( 'Width', 'comet' ),
-			'type'   => 'range',
-			'min'    => '200',
-			'max'    => '2000',
-			'std'    => '500',
-			'unit'   => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'wi', [
+            'label'  => __( 'Width', 'comet' ),
+            'type'   => 'range',
+            'min'    => '200',
+            'max'    => '2000',
+            'std'    => '500',
+            'unit'   => 'px'
+        ] );
 
-		$this->register_field( $tid, $sid, 'he', array(
-			'label'  => __( 'Height', 'comet' ),
-			'type'   => 'range',
-			'min'    => '200',
-			'max'    => '2000',
-			'std'    => '500',
-			'unit'   => 'px'
-		) );
+		$this->register_field( $tid, $sid, 'he', [
+            'label'  => __( 'Height', 'comet' ),
+            'type'   => 'range',
+            'min'    => '200',
+            'max'    => '2000',
+            'std'    => '500',
+            'unit'   => 'px'
+        ] );
 
 		$sid = $this->register_section( $tid, 'spacing', __( 'Spacing', 'comet' ) );
 

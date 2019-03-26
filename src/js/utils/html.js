@@ -10,57 +10,6 @@ import editor from './ui/editor.js';
 const html = {
 
     editor: editor,
-    /* 
-    type: default,
-	inner: '',
-	ed_id: 0,
-	id: 0,
-    match: 0,
-	tag: div,
-	classes: ''
-	editable: false
-    */
-    
-    content: function( entry ){
-        const tags = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'span', 'div', 'aside', 'code', 'pre', 'blockquote', 'article', 'section', 'main' ];
-        const allowed = '<span><br><ins><u><i><em><strong><b><strike><del><a><abbr><address><code><hr><mark><sup><sub><s>';
-        var attr = '';
-        var editable, content, tag, classes, o;
-
-        if( !utils.isObject( entry ) ){
-            return '';
-
-        }
-        tag = utils.isString( entry.tag ) ? ( tags.indexOf( tag = utils.trim( entry.tag.toLowerCase() ) ) > -1 ? tag : 'p' ) : 'p';
-        editable = utils.isBool( entry.editable ) ? entry.editable : false;
-        content = utils.isString( entry.inner ) ? utils.stripTags( entry.inner, allowed ) : '';
-        classes = !utils.isStringEmpty( entry.classes ) ? utils.trim( entry.classes ) : '';
-
-        if( editable && !utils.isStringEmpty( entry.match ) && ( entry.id = parse.id( entry.id ) ) ){
-            classes += ' cpb-editable';
-            attr = ' data-match="' + utils.trim( entry.match ) + '"';
-            attr += ' data-id="' + entry.id + '"';
-
-            if( content.length < 1 ){
-                content = 'Write something here...';
-
-            }
-
-        } 
-        o = '<' + tag;
-
-        if( !utils.isStringEmpty( classes ) ){
-            o += ' class="' + utils.trim( classes ) + '"';
-
-        }
-        o += attr;
-        o += '>';
-        o += content;
-        o += '</' + tag + '>';
-
-        return o;
-
-    },
 
     image: function( entry ){
         var classes, tmp, src, img;
