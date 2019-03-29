@@ -25,9 +25,9 @@ export default function ( node ){
 
 	priv.insert = function( position, entry ){
 		const or = node;
-		var ns, nn, n;
+		var n;
 
-		if( !utils.isString( position ) || utils.isStringEmpty( ( position = utils.trim( position ) ) ) || prop.isView() ){
+		if( !prop.isNode() || prop.isView() || !utils.isString( position ) || utils.isStringEmpty( ( position = utils.trim( position ) ) ) ){
 			return false;
 
 		}
@@ -37,49 +37,40 @@ export default function ( node ){
 
 		}
 
-		function doing(){
+		function _insert( _entry ){
 
-			if( !utils.isStringEmpty( entry ) ){
-				node.insertAdjacentHTML( position, utils.trim( entry ) );
-				return true;
-
-			}
-			node = entry;
-
-			if( !prop.isNode() ){
-				node = origin;
-				return false;
+			if( !utils.isStringEmpty( _entry ) ){
+				node.insertAdjacentHTML( position, _entry );
+				return;
 
 			}
+			node.insertAdjacentElement( position, _entry );
+
+		}
+		node = entry;
+
+		if( prop.isNode() ){
 			node = or;
-			node.insertAdjacentElement( position, entry );
+			_insert();
 			return true;
 
 		}
+		node = or;
 
-		if( prop.isNode() ){
-			return doing();
-
-		}
-		ns = node;
-
-		if( !utils.isObject( ns ) || !utils.isArray( ns ) ){
+		if( entry.length < 1 ){
 			return false;
-
 		}
 
-		for( n in ns ){
-			nn = ns[n];
-			node = nn;
+		for( n = 0; n < entry.length; n++ ){
+			node = entry[n];
 
 			if( !prop.isNode() ){
 				node = or;
 				continue;
 
 			}
-
-			doing();
 			node = or;
+			_insert( entry[n] );
 
 		}
 

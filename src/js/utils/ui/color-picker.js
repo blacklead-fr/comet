@@ -71,23 +71,8 @@ export default function( source, options ){
             },
 
             color: function( x ){
-                var tmp;
 
-                if( !utils.isString( x ) || utils.isEmpty( x ) ){
-                    return null;
-
-                }
-
-                if( ( tmp = this.rgb_( x ) ) !== null ){
-                    return tmp;
-
-                }
-
-                if( ( tmp = this.hex( x ) ) !== null ){
-                    return tmp;
-
-                }
-                return null;
+                return ( utils.isString( x ) && ( __core.parse.rgb( x ) || __core.parse.hex( x ) ) );
 
             },
 
@@ -110,17 +95,20 @@ export default function( source, options ){
 
                         }
                         __color.type = 'hex';
-                        __colore.value = __core.utils.strcolor( 'hex', value );
+                        __color.value = __core.utils.strcolor( 'hex', value );
                         __color.data = [ '#', value ];
                         __color.hsb.values = __core.convert.hexhsb( value );
                         __color.alpha = 1;
+                        return true;
 
                     }
+
                 }
+                return false;
 
             },
 
-            rgb_: function( x ){
+            rgb: function( x ){
                 const regex = /(rgba?)\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(,\s*((0?\.\d*)|\d?)\s*)?\)/i;
                 var match, type, r, g, b, a;
 
@@ -128,19 +116,22 @@ export default function( source, options ){
 
                     if( ( match = x.match( regex ) ) !== null && utils.isString( match[1] ) && ( ( type = match[1].toLowerCase() ) === 'rgba' || type === 'rgb' ) ){
 
-                        r = this.value( match[2], 0, 255, 0 );
-                        g = this.value( match[3], 0, 255, 0 );
-                        b = this.value( match[4], 0, 255, 0 );
-                        a = this.value( match[6], 0, 1, 1, true );
+                        r = __core.parse.value( match[2], 0, 255, 0 );
+                        g = __core.parse.value( match[3], 0, 255, 0 );
+                        b = __core.parse.value( match[4], 0, 255, 0 );
+                        a = __core.parse.value( match[6], 0, 1, 1, true );
 
                         __color.type = type;
                         __color.value = __core.utils.strcolor( type, [ r, g, b, a ] );
                         __color.data = [ type, r, g, b, a ];
                         __color.hsb.values = __core.convert.rgbhsb( [ r, g, b ] );
                         __color.alpha = a;
+                        return true;
 
                     }
+
                 }
+                return false;
 
             },
 
@@ -260,12 +251,12 @@ export default function( source, options ){
             },
 
             hexhsb: function( x ){
-                return this.rgbhsb( this.hexrgb( x ) );
+                return __core.convert.rgbhsb( __core.convert.hexrgb( x ) );
 
             },
 
             hsbhex: function( x ){
-                return this.rgbhex( this.hsbrgb( x ) );
+                return __core.convert.rgbhex( __core.convert.hsbrgb( x ) );
 
             }
 
@@ -570,22 +561,16 @@ export default function( source, options ){
 
                 }
 
-                node( selector ).on( 'change paste cut', function( ev, ui ){
-                    const val = ev.type === 'paste' ? ( ev.clipboardData || window.clipboardData ).getData( 'text' ) : ui.value;
-                    const value = __core.parse.color( val );
+                node( selector ).on( 'input', function( ev, ui ){
+                    const value = ui.value;
                     var color = '';
 
                     ev.preventDefault();
 
-                    if( value === null ){
-                        ui.value = '';
+                    if( !__core.parse.color( value ) ){
                         return;
 
                     }
-                    __color.hsb.values[0] = value.hsb[0];
-                    __color.hsb.values[1] = value.hsb[1];
-                    __color.hsb.values[2] = value.hsb[2];
-                    __color.hsb.values[3] = value.alpha;
                     color = __core.actions.setComponents( data );
 
                     if( utils.isFunction( options.onchange ) ){

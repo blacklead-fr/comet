@@ -39,16 +39,12 @@ sanitize.number = function( entry ){
 };
 
 sanitize.valueUnit = function( value, unit ){
+	const auto = [ 'auto', 'AUTO', 'AUT', 'aut' ];
 
 	if( utils.isString( value ) ){
 
-		if( ( value = utils.trim( value ) ).toLowerCase() === 'auto' ){
+		if( auto.indexOf( utils.trim( value ) ) > -1 ){
 			return 'auto';
-
-		}
-
-		if( utils.isStringEmpty( value ) ){
-			return '';
 
 		}
 
@@ -56,7 +52,7 @@ sanitize.valueUnit = function( value, unit ){
 	unit = utils.isString( unit ) ? sanitize.unit( unit ) : '';
 	value = sanitize.number( { value: value, float: ( unit !== 'px' ) } );
 
-	return ( value === null ? '' : ( value === 0 ? value.toString() : value + unit ) );
+	return ( value === null || value === 0 ? '0' : value + unit );
 };
 
 sanitize.unit = function( unit ){

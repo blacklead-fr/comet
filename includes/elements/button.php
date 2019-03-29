@@ -411,7 +411,7 @@ class button extends Comet_Element {
 		$this->register_field( $tid, $sid, 'bs', [
 			'label'		=> __( 'Type', 'comet' ),
 			'type'		=> 'select',
-			'std'		=> 'solid',
+			'std'		=> 'none',
 			'values'	=> Comet_Utils::borderStyle()
 		] );
 

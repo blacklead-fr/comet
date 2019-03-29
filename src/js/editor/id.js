@@ -30,7 +30,7 @@ export default function (){
 
 	};
 
-	prop.insert = function( id, type, catId, index ){
+	prop.insert = function( id, type, catId, position ){
 		const metaData = data_.getData();
 		var _in, cat, ids, r;
 
@@ -44,11 +44,11 @@ export default function (){
 
 		}
 
-		function injectId( str, tid, position ){
+		function injectId( str ){
 			var tp, a, b;
 
 			if( utils.isStringEmpty( str ) ){
-				return tid.toString();
+				return id.toString();
 
 			}
 
@@ -57,7 +57,7 @@ export default function (){
 					str += ',';
 
 				}
-				str += tid.toString();
+				str += id;
 
 			}else if( position === 'first' ){
 
@@ -65,12 +65,12 @@ export default function (){
 					str = ',' + str;
 
 				}
-				str = tid.toString() + str;
+				str = id + str;
 
 			}else if( ( position = parse.id( position ) ) !== false && ( tp = str.indexOf( position, 0 ) ) > -1 ){
 				b = str.slice( 0, tp );
 				a = str.slice( tp );
-				str = b + id.toString() + ',' + a;
+				str = b + id + ',' + a;
 
 			}
 			return str;
@@ -79,34 +79,34 @@ export default function (){
 		_in = '_' + type;
 
 		if( type === 'sections' ){
-			r = injectId( ( utils.isString( ids = metaData[_in] ) ? ids : '' ), id, index );
+			ids = utils.isString( ids = metaData[_in] ) ? ids : '';
 
-			if( r !== ids ){
+			if( ( r = injectId( ids ) ) !== ids ){
 				metaData[_in] = r;
 				data_.setData( metaData );
 				return true;
 
 			}
+			return false;
 
-		}else if( utils.isObject( metaData[cat] ) ){
+		}
 
-			if( !( catId in metaData[cat] ) ){
-				return false;
+		if( !utils.isObject( metaData[cat] ) || !( catId in metaData[cat] ) ){
+			return false;
 
-			}
+		}
 
-			if( !utils.isObject( metaData[cat][catId] ) ){
-				metaData[cat][catId] = {};
+		if( !utils.isObject( metaData[cat][catId] ) ){
+			metaData[cat][catId] = {};
 
-			}
-			r = injectId( ( utils.isString( ids = metaData[cat][catId][_in] ) ? ids : '' ), id, index );
+		}
+		ids = utils.isString( ids = metaData[cat][catId][_in] ) ? ids : '';
 
-			if( r !== ids ){
-				metaData[cat][catId][_in] = r;
-				data_.setData( metaData );
-				return true;
+		if( ( r = injectId( ids ) ) !== ids ){
+			metaData[cat][catId][_in] = r;
+			data_.setData( metaData );
+			return true;
 
-			}
 		}
 		return false;
 
@@ -121,19 +121,18 @@ export default function (){
 
 		}
 
-		function remove( _id, str ){
+		function remove( str ){
 			const nids = [];
-			var a = 0;
-			var cid, ids;
+			var a, cid, ids;
 
 			if( !utils.isArray( ( ids = parse.ids( str, 'array' ) ), 1 ) ){
 				return false;
 
 			}
 
-			for( a; a < ids.length; a++ ){
+			for( a = 0; a < ids.length; a++ ){
 
-				if( !( cid = parse.id( ids[a] ) ) || cid === _id  ){
+				if( !( cid = parse.id( ids[a] ) ) || cid === id  ){
 					continue;
 
 				}
@@ -148,7 +147,7 @@ export default function (){
 
 		if( type === 'sections' && !utils.isStringEmpty( metaData[_in] ) ){
 
-			if( !( tmp = remove( id, utils.trim( metaData[_in], ',' ) ) ) ){
+			if( !( tmp = remove( utils.trim( metaData[_in], ',' ) ) ) ){
 				return false;
 
 			}
@@ -158,7 +157,7 @@ export default function (){
 
 		}else if( ( pid = data_.hasId( parent, pid ) ) && !utils.isStringEmpty( metaData[parent][pid][_in] ) ){
 
-			if( !( tmp = remove( id, utils.trim( metaData[parent][pid][_in], ',' ) ) ) ){
+			if( !( tmp = remove( utils.trim( metaData[parent][pid][_in], ',' ) ) ) ){
 				return false;
 
 			}

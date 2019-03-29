@@ -9,55 +9,109 @@ const __core = {
 
 	},
 
-	muvalues: function( top, right, bottom, left, vunit, hunit ){
-		var x = null, y = null, o;
+	sanitize: {
 
-		function autoOrNumber( val ){
+		auto: function( entry ){
+			const auto = [ 'auto', 'AUTO', 'aut', 'AUT' ];
 
-			if( utils.isString( val ) ){
+			return ( utils.isString( entry ) && auto.indexOf( utils.trim( entry ) ) > -1 ? 'auto' : false );
 
-				if( ( val = utils.trim( val.toLowerCase() ) ) === 'auto' ){
-					return 'auto';
+		},
 
-				}
+		value: function( entry ){
 
-			}
-			return sanitize.number({ value: val });
+			return ( !__core.sanitize.auto() ? sanitize.number({ value: entry }) : 'auto' );
 
 		}
 
-		top = sanitize.number( top );
-		right = autoOrNumber( right );
-		bottom = sanitize.number( bottom );
-		left = autoOrNumber( left );
+	},
+
+	muvalues: function( top, right, bottom, left, vunit, hunit ){
+		var x = false;
+		var y = false;
+		var o;
+		top = __core.sanitize.value( top );
+		right = __core.sanitize.value( right );
+		bottom = __core.sanitize.value( bottom );
+		left = __core.sanitize.value( left );
 		vunit = sanitize.unit( vunit );
 		hunit = sanitize.unit( hunit );
 
 		if( top === bottom ){
 			y = top;
-		}
-		if( left === right ){
-			x = left;
+
 		}
 
-		if( y !== null && x !== null ){
-			if( y === x ){
-				if( y === 0 ){
-					return 0;
-				}
-				if( vunit === hunit ){
-					return utils.trim( sanitize.valueUnit( y, vunit ) );
-				}
-			}
-			return utils.trim( sanitize.valueUnit( y, vunit ) + ' ' + sanitize.valueUnit( x, hunit ) );
+		if( left === right ){
+			x = left;
+
 		}
-		o = sanitize.valueUnit( top, vunit );
-		o += ' ' + sanitize.valueUnit( right, hunit );
-		o += ' ' + sanitize.valueUnit( bottom, vunit );
+
 		if( x === null ){
-			o += ' ' + sanitize.valueUnit( left, hunit );
+			x = 0;
+
 		}
-		return utils.trim( o );
+
+		if( y === null ){
+			y = 0;
+
+		}
+
+		if( y === false ){
+			top = top === null ? 0 : top;
+			bottom = bottom === null ? 0 : bottom;
+
+			if( top === bottom ){
+				y = top;
+
+			}
+
+		}
+
+		if( x === false ){
+			right = right === null ? 0 : right;
+			left = left === null ? 0 : left;
+
+			if( right === left ){
+				x = right;
+
+			}
+
+		}
+
+		if( y === false || x ===  false ){
+			o = sanitize.valueUnit( top, vunit );
+			o += ' ';
+			o += sanitize.valueUnit( right, hunit );
+			o += ' ';
+			o += sanitize.valueUnit( bottom, vunit );
+
+			if( x === false ){
+				o += ' ';
+				o += sanitize.valueUnit( left, hunit );
+			}
+
+			return o;
+
+		}
+
+		if( y === x ){
+
+			if( y === 0 ){
+				return 0;
+
+			}
+
+			if( vunit === hunit ){
+				return sanitize.valueUnit( y, vunit );
+
+			}
+
+		}
+		o = sanitize.valueUnit( y, vunit );
+		o += ' ';
+		o += sanitize.valueUnit( x, hunit );
+		return o;
 
 	},
 

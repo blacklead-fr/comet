@@ -343,7 +343,7 @@ export default function(){
                             return false;
 
                         }
-                        node( targetNode ).after( ret );
+                        node( targetNode ).after( ret.querySelectorAll( '.cpb-section' ) );
                         return true;
 
                         default:
@@ -401,7 +401,7 @@ export default function(){
                             return false;
 
                         }
-                        node( targetNode ).after( ret );
+                        node( targetNode ).after( ret.querySelectorAll( '.cpb-row' ) );
                         return true;
 
                         default:
@@ -461,7 +461,7 @@ export default function(){
                             return false;
 
                         }
-                        node( targetNode ).after( ret );
+                        node( targetNode ).after( ret.querySelectorAll( '.cpb-column' ) );
                         redefine.columns( targetNode.parentNode );
                         return true;
 
@@ -525,10 +525,11 @@ export default function(){
                         }
 
                         if( !( nid = data_.clone( id, type, pid ) ) || !( ret = layout( data_.getData() ).element( nid ) ) ){
+                            console.log( ret );
                             return false;
 
                         }
-                        node( targetNode ).after( ret );
+                        node( targetNode ).after( ret.querySelectorAll( '.cpb-element' ) );
                         return true;
 
                         default:

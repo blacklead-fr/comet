@@ -275,11 +275,7 @@ export default function (){
 		}
 		removeChildren();
 		id_.remove( id, type, pid );
-
-		/*if( type === 'sections' &&  '_sections' in metaData ){
-			this.remove( id, 'sections' );
-			
-		}*/
+		
 		delete metaData[type][id];
 		prop.setData( metaData );
 		return true;
