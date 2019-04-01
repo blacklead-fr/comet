@@ -1,0 +1,148 @@
+@import '../utils/variables';
+
+.comet-cockpit{
+    z-index: 2;
+    display: none;
+
+    > .comet-sideToggleButton {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: calc( 100% - 300px );
+        z-index: 1;
+        background: rgba( 0, 0, 0, .3 );
+    }
+
+    .comet-inner {
+        background: rgba( 44, 45, 49, .95 );
+        width: 300px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+    }
+
+    .comet-header {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 10px;
+        align-items: center;
+        color: white;
+
+        > p {
+            text-align: center;
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        button {
+            color: white;
+            opacity: .7;
+
+            &:hover { opacity: 1; }
+
+        }
+
+        p button {
+            padding: 0;
+            margin: 0;
+            border: 0;
+            font: 300 13px/1.2 sans-serif;
+            background: none;
+            cursor: pointer;
+        }
+
+        > .comet-button{
+
+            &, .cico {
+                width: 15px;
+                height: 15px;
+                line-height: 15px;
+                font-size: 15px;
+                padding: 0;
+                display: block;
+            }
+
+        }
+
+    }
+
+    .comet-footer {
+        height: 50px;
+
+        .comet-button {
+            height: 50px;
+            line-height: 50px;
+            width: 50px;
+            padding: 0;
+            text-align: center;
+            color: white;
+
+            span { color: white; }
+
+            &:hover{ background: rgba( 0, 0, 0, .2 ); }
+
+        }
+
+    }
+
+    .comet-notifications {
+        height: calc( 100% - 135px );
+        overflow: auto;
+        margin: 0 10px 10px;
+
+        .comet-notification {
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+            background: rgba( 0, 0, 0, .2 );
+
+            .comet-close {
+                padding: 0;
+                position: absolute;
+                top: 4px;
+                right: 999999em;
+                line-height: 12px;
+                height: auto;
+
+                .cico {
+                    color: $daLight;
+                    font-size: 12px;
+                    width: 12px;
+                    height: 12px;
+                }
+
+
+                &:hover .cico { color: white; }
+
+            }
+
+            &:hover .comet-close { right: 4px; }
+
+            &.success p{
+
+                &, * { color: #ADE995; }
+
+            }
+
+            &.error p{
+
+                &, * { color: #E36F6A; }
+
+            }
+
+            &.warning p {
+
+                &, * { color: #F3D567; }
+
+            }
+
+        }
+
+    }
+
+}

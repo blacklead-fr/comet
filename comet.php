@@ -9,7 +9,7 @@
  * Plugin Name:       Comet
  * Plugin URI:        https://blacklead.fr/comet
  * Description:       The visual page builder that's light, fast and modern. Bring your ideas to life fast through the drag & drop and the advanced features.
- * Version:           1.0.1
+ * Version:           1.1.5
  * Author:            blacklead
  * Author URI:        https://blacklead.fr
  * License:           GPL-2.0+
@@ -19,39 +19,28 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if( !defined( 'WPINC' ) ){
 	die;
 }
 
-define( 'COMET_VERSION', '1.0.1' );
+define( 'COMET_VERSION', '1.1.5' );
 define( 'COMET_DEBUG', false );
+define( 'COMET_PATH', plugin_dir_path( __FILE__ ) );
+define( 'COMET_URL', plugin_dir_url( __FILE__ ) );
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-comet-activator.php
- */
-function activate_comet() {
+/*function activate_comet() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-comet-activator.php';
 	Comet_Activator::activate();
 }
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-comet-deactivator.php
- */
 function deactivate_comet() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-comet-deactivator.php';
 	Comet_Deactivator::deactivate();
 }
 
 register_activation_hook( __FILE__, 'activate_comet' );
-register_deactivation_hook( __FILE__, 'deactivate_comet' );
+register_deactivation_hook( __FILE__, 'deactivate_comet' );*/
 
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-comet.php';
+require 'includes/class-comet.php';
 
 /**
  * Begins execution of the plugin.
@@ -64,8 +53,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-comet.php';
  */
 function run_comet() {
 
-	$plugin = new Comet();
+	$plugin = new \Comet\Comet();
 	$plugin->run();
 
 }
 run_comet();
+
+?>

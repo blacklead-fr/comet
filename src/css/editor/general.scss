@@ -1,0 +1,211 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+%sort {
+    padding: 20px;
+    background: rgba( 0, 106, 254, .3 );
+}
+
+%position{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: auto;
+
+} 
+
+.comet-editor {
+
+    &.cpb-sorting .cpb-content {
+
+        .cpb-row { @extend %sort; }
+
+        .cpb-element {
+            @extend %sort;
+
+            &:hover { outline: 0; }
+
+            .comet-editable.comet-ui { background: none; }
+
+        }
+
+        .cpb-column {
+            @extend %sort;
+            @include box_shadow( 0 0 0 2px $daAccent );
+
+            &:hover { outline: 0; }
+
+        }
+
+        .cpb-section {
+            @extend %sort;
+
+            .cpb-row .cpb-rowContent { align-items: stretch; }
+
+        }
+
+        .cpb-backgroundComponents { display: none; }
+
+        .cpb-edPlaceholder,
+        .cpb-edSortPlaceholder {
+            height: 20px;
+            width: 100%;
+            background: $daAccent;
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cpb-rowContent{ 
+            > .cpb-edPlaceholder,
+            > .cpb-edSortPlaceholder {
+                display: inline-block;
+                width: 20px;
+                height: auto;
+            }
+        }
+
+    }
+
+    .cpb-content {
+
+        @extend %position;
+        width: 100%;
+        background: whitesmoke;
+        z-index: 0;
+        position: relative;
+
+        .cpb-element { min-height: 30px; }
+
+        .cpb-column:hover { outline: 2px dotted #969696; }
+
+        .cpb-element:hover { outline: 2px solid #006AFE; }
+
+    }
+
+    #comet-uiCursor {
+        z-index: 99999999999999999;
+        position: absolute;
+        height: 30px;
+        background: white;
+        width: 30px;
+        top: 0;
+        left: 0;
+        right: auto;
+        bottom: auto;
+        color: $daAccent;
+        @include box_shadow( 0 0 10px 0 rgba( 0, 106, 254, .5 ) );
+        @include border_radius( 100% );
+
+        span {
+            color: $daAccent;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 15px;
+            line-height: 30px;
+        }
+
+    }
+
+    .comet-preloader {
+        background: $daDark;
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > div {
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .cico {
+            font-size: 80px;
+            width: 80px;
+            height: 80px;
+            padding: 20px;
+            background: $liDark;
+            @include border_radius( 5px );
+            @include animation( cometanimate 3s infinite );
+        }
+
+        .comet-preloadertext {
+            display: block;
+            margin: 30px 0 0;
+            padding: 0;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+    }
+
+    @keyframes cometanimate {
+        10% { @include border_radius( 10px 5px 80px 10px ); } 
+        20% { @include border_radius( 5px 80px 5px 10px ); }
+        30% { @include border_radius( 80px 10px 5px 5px ); }
+        40% { @include border_radius( 5px 5px 80px 10px ); }
+        50% { @include border_radius( 5px 10px 5px 80px ); }
+        60% { @include border_radius( 5px 80px 80px 10px ); }
+        70% { @include border_radius( 80px ); }
+        80% { @include transform( rotate(0deg) ); }
+        85% {
+            @include transform( rotate(-45deg) );
+            @include border_radius( 5px 80px 80px 10px );
+        }
+        90% {
+            @include transform( rotate(0deg) );
+            @include border_radius( 80px 10px 5px 80px );
+        }
+        95% {
+            @include transform( rotate(-45deg) );
+            @include border_radius( 5px 5px 10px 5px );
+        }
+        100% {
+            @include transform( rotate(0deg) ); 
+            @include border_radius( 5px );
+        }
+    }
+
+    .comet-absfull {
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+    }
+
+    .comet-fixfull {
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+
+    .comet .is_toggled { display: block; }
+
+    #comet-editor{
+        color: $liDark;
+        background: $liDark;
+        z-index: 0;
+    }
+
+    #comet-panel,
+    .comet > .comet-sidebar { @extend %position; }
+
+}

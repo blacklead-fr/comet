@@ -1,355 +1,190 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: comet\n"
-"POT-Creation-Date: 2018-07-20 16:27+0200\n"
-"PO-Revision-Date: 2018-07-20 16:28+0200\n"
+"Project-Id-Version: Comet\n"
+"POT-Creation-Date: 2019-03-16 17:47+0100\n"
+"PO-Revision-Date: 2019-03-16 17:51+0100\n"
 "Last-Translator: \n"
-"Language-Team: Blacklead <contact@blacklead.fr>\n"
-"Language: en\n"
+"Language-Team: Blacklead.fr\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.9\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: ..\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_x;_n;_ex;_nx;_n_noop;_nx_noop;"
+"X-Poedit-KeywordsList: __;_e;_n;_nx;_ex;_n_noop; _nx_noop;"
 "translate_nooped_plural;esc_html__;esc_html_e;esc_html_x;esc_attr__;"
 "esc_attr_e;esc_attr_x;number_format_i18n;date_i18n\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: gulpfile.js\n"
+"X-Poedit-SearchPathExcluded-1: LICENSE.txt\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+"X-Poedit-SearchPathExcluded-3: package-lock.json\n"
+"X-Poedit-SearchPathExcluded-4: package.json\n"
 
-#: admin/class-comet-admin.php:103
-msgid "Are you sure you want to delete permanently?"
-msgstr ""
-
-#: admin/class-comet-admin.php:104
-msgid "An error appears, please try again."
-msgstr ""
-
-#: admin/class-comet-admin.php:105
-msgid "Select one or multiple template to import."
-msgstr ""
-
-#: admin/class-comet-admin.php:106 admin/class-comet-post-edit.php:151
-msgid "Unreachable content."
-msgstr ""
-
-#: admin/class-comet-admin.php:107
-msgid "Failed to delete."
-msgstr ""
-
-#: admin/class-comet-admin.php:108
-msgid "Please wait while the operation is processing."
-msgstr ""
-
-#: admin/class-comet-admin.php:109
-msgid "The template has been correctly deleted."
-msgstr ""
-
-#: admin/class-comet-admin.php:110
-msgid "Select fonts to import."
-msgstr ""
-
-#: admin/class-comet-admin.php:111 admin/class-comet-post-edit.php:157
-msgid "The title is missing."
-msgstr ""
-
-#: admin/class-comet-admin.php:112
-msgid "The template has been correctly created."
-msgstr ""
-
-#: admin/class-comet-admin.php:113
-msgid ""
-"You will be redirected to the edit page automatically. If it fails please "
-"click the link:"
-msgstr ""
-
-#: admin/class-comet-admin.php:114
-msgid "Go to the edit page"
-msgstr ""
-
-#: admin/class-comet-admin.php:117 admin/class-comet-post-edit.php:146
-#: admin/comet-preview.php:32
-msgid "Previewing template"
-msgstr ""
-
-#: admin/class-comet-admin.php:118
-msgid "Delete template"
-msgstr ""
-
-#: admin/class-comet-admin.php:119
-msgid "Export template"
-msgstr ""
-
-#: admin/class-comet-admin.php:120
-msgid "Import template"
-msgstr ""
-
-#: admin/class-comet-admin.php:121
-msgid "Select fonts"
-msgstr ""
-
-#: admin/class-comet-admin.php:122
-msgid "Fonts"
-msgstr ""
-
-#: admin/class-comet-admin.php:123
-msgid "Create new template"
-msgstr ""
-
-#: admin/class-comet-admin.php:126 admin/class-comet-dashboard.php:80
-#: admin/class-comet-post-edit.php:123
-msgid "Close"
-msgstr ""
-
-#: admin/class-comet-admin.php:127 admin/class-comet-post-edit.php:119
-msgid "Cancel"
-msgstr ""
-
-#: admin/class-comet-admin.php:128 admin/class-comet-mytemplates.php:67
-#: admin/class-comet-post-edit.php:129
-msgid "Delete"
-msgstr ""
-
-#: admin/class-comet-admin.php:129 admin/class-comet-post-edit.php:120
-msgid "Done"
-msgstr ""
-
-#: admin/class-comet-admin.php:130 admin/class-comet-post-edit.php:121
-#: admin/class-comet-post-edit.php:287 admin/class-comet-settings.php:125
-msgid "Save"
-msgstr ""
-
-#: admin/class-comet-admin.php:131 admin/class-comet-mytemplates.php:34
-msgid "Import"
-msgstr ""
-
-#: admin/class-comet-admin.php:132 admin/class-comet-mytemplates.php:66
-msgid "Export"
-msgstr ""
-
-#: admin/class-comet-admin.php:133
-msgid "Search..."
-msgstr ""
-
-#: admin/class-comet-admin.php:134 admin/class-comet-post-edit.php:136
-msgid "Select"
-msgstr ""
-
-#: admin/class-comet-admin.php:135
-msgid "Download"
-msgstr ""
-
-#: admin/class-comet-admin.php:162 admin/class-comet-admin.php:164
-#: admin/class-comet-admin.php:165 admin/class-comet-admin.php:166
-#: admin/class-comet-admin.php:167 admin/class-comet-dashboard.php:20
-#: admin/class-comet-post-edit.php:145
-msgid "My templates"
-msgstr ""
-
-#: admin/class-comet-admin.php:163 admin/class-comet-admin.php:192
-msgid "My template"
-msgstr ""
-
-#: admin/class-comet-admin.php:168
-msgid "Parent template:"
-msgstr ""
-
-#: admin/class-comet-admin.php:169
-msgid "All templates"
-msgstr ""
-
-#: admin/class-comet-admin.php:170
-msgid "Add New template"
-msgstr ""
-
-#: admin/class-comet-admin.php:171
-msgid "Add New"
-msgstr ""
-
-#: admin/class-comet-admin.php:172
-msgid "New template"
-msgstr ""
-
-#: admin/class-comet-admin.php:173
-msgid "Edit template"
-msgstr ""
-
-#: admin/class-comet-admin.php:174
-msgid "Update template"
-msgstr ""
-
-#: admin/class-comet-admin.php:175
-msgid "View template"
-msgstr ""
-
-#: admin/class-comet-admin.php:176
-msgid "View templates"
-msgstr ""
-
-#: admin/class-comet-admin.php:177
-msgid "Search template"
-msgstr ""
-
-#: admin/class-comet-admin.php:178
-msgid "Not found"
-msgstr ""
-
-#: admin/class-comet-admin.php:179
-msgid "Not found in Trash"
-msgstr ""
-
-#: admin/class-comet-admin.php:180
-msgid "Featured Image"
-msgstr ""
-
-#: admin/class-comet-admin.php:181
-msgid "Set featured image"
-msgstr ""
-
-#: admin/class-comet-admin.php:182
-msgid "Remove featured image"
-msgstr ""
-
-#: admin/class-comet-admin.php:183
-msgid "Use as featured image"
-msgstr ""
-
-#: admin/class-comet-admin.php:184
-msgid "Insert into template"
-msgstr ""
-
-#: admin/class-comet-admin.php:185
-msgid "Uploaded to this template"
-msgstr ""
-
-#: admin/class-comet-admin.php:186
-msgid "templates list"
-msgstr ""
-
-#: admin/class-comet-admin.php:187
-msgid "templates list navigation"
-msgstr ""
-
-#: admin/class-comet-admin.php:188
-msgid "Filter templates list"
-msgstr ""
-
-#: admin/class-comet-admin.php:248
+#: admin/class-admin.php:85
 #, php-format
 msgid "Edit &#8220;%s&#8221; with Comet"
 msgstr ""
 
-#: admin/class-comet-admin.php:253
+#: admin/class-admin.php:90
 msgid "Edit with Comet"
 msgstr ""
 
-#: admin/class-comet-dashboard.php:12 admin/class-comet-dashboard.php:13
-msgid "Dashboard"
+#: admin/class-die.php:20
+msgid "404 Error"
 msgstr ""
 
-#: admin/class-comet-dashboard.php:16
-msgid ""
-"Welcome to your Comet dashboard! This screen gives you access to the general "
-"features of Comet."
+#: admin/class-die.php:20
+msgid "Page not found."
 msgstr ""
 
-#: admin/class-comet-dashboard.php:16
-msgid ""
-"The Comet logo at the top left is the main menu and provides links to all of "
-"the Comet administration screens."
+#: admin/class-die.php:23
+msgid "Page not found"
 msgstr ""
 
-#: admin/class-comet-dashboard.php:16
-msgid "The cross at the top right allows you to close the Comet dashboard."
-msgstr ""
-
-#: admin/class-comet-dashboard.php:19 admin/class-comet-main.php:30
-#: admin/class-comet-main.php:49
-msgid "Templates"
-msgstr ""
-
-#: admin/class-comet-dashboard.php:26 admin/class-comet-dashboard.php:27
-#: admin/class-comet-main.php:29 admin/class-comet-main.php:44
-#: includes/class-comet-elements.php:75
-msgid "Typography"
-msgstr ""
-
-#: admin/class-comet-dashboard.php:31
+#: admin/class-fonts.php:22
 msgid ""
 "All the fonts you’ve downloaded are listed here and loaded on your site. "
 "Comet provides standard set of fonts but not listed on this screen."
 msgstr ""
 
-#: admin/class-comet-dashboard.php:31
+#: admin/class-fonts.php:24
 msgid ""
 "The fonts library allows you to select fonts to download from Google fonts "
 "and remove fonts of your list."
 msgstr ""
 
-#: admin/class-comet-dashboard.php:31
+#: admin/class-fonts.php:26
 msgid "Note that the fonts affect page load performance (load time)."
 msgstr ""
 
-#: admin/class-comet-dashboard.php:34 admin/class-comet-main.php:28
-#: includes/class-comet-editor-data.php:58
-#: includes/class-comet-elements.php:200
-msgid "Settings"
+#: admin/class-fonts.php:28 admin/class-fonts.php:29 admin/class-main.php:82
+#: admin/class-main.php:97 includes/class-i18n.php:259
+#: includes/class-includes.php:111 includes/class-includes.php:112
+#: includes/class-includes.php:113 includes/class-includes.php:114
+#: includes/class-includes.php:139
+msgid "Fonts"
 msgstr ""
 
-#: admin/class-comet-dashboard.php:35
-msgid "General settings"
+#: admin/class-fonts.php:57
+msgid "Wait while initializing fonts."
 msgstr ""
 
-#: admin/class-comet-dashboard.php:96
+#: admin/class-fonts.php:85 includes/class-i18n.php:264
+#, php-format
+msgid "%s font"
+msgstr ""
+
+#: admin/class-fonts.php:88
+msgid "Library"
+msgstr ""
+
+#: admin/class-interface.php:54 includes/class-i18n.php:50
+msgid "Close"
+msgstr ""
+
+#: admin/class-interface.php:70
 msgid "Help"
 msgstr ""
 
-#: admin/class-comet-dashboard.php:102
+#: admin/class-interface.php:78
 msgid "Documentation"
 msgstr ""
 
-#: admin/class-comet-dashboard.php:103
+#: admin/class-interface.php:79
 msgid "Support"
 msgstr ""
 
-#: admin/class-comet-dashboard.php:118
+#: admin/class-interface.php:93
 msgid "Access denied."
 msgstr ""
 
-#: admin/class-comet-main.php:28 admin/class-comet-main.php:29
-#: admin/class-comet-main.php:30
+#: admin/class-main.php:22
+msgid ""
+"Welcome to your Comet dashboard! This screen gives you access to the general "
+"features of Comet."
+msgstr ""
+
+#: admin/class-main.php:24
+msgid ""
+"The Comet logo at the top left is the main menu and provides links to all of "
+"the Comet administration screens."
+msgstr ""
+
+#: admin/class-main.php:26
+msgid "The cross at the top right allows you to close the Comet dashboard."
+msgstr ""
+
+#: admin/class-main.php:28 admin/class-main.php:29
+msgid "Dashboard"
+msgstr ""
+
+#: admin/class-main.php:62
+msgid "Write a review"
+msgstr ""
+
+#: admin/class-main.php:65
+#, php-format
+msgid "Hi %s !"
+msgstr ""
+
+#: admin/class-main.php:67
+msgid "Welcome to Comet. Here is the dashboard to manage some parts of Comet."
+msgstr ""
+
+#: admin/class-main.php:70
+msgid ""
+"Your opinion is really important to us to bring new ideas and make Comet "
+"better. We truly appreciate the time you may take to write some lines about "
+"your experience with Comet."
+msgstr ""
+
+#: admin/class-main.php:81 admin/class-main.php:82 admin/class-main.php:83
 msgid "Comet dashboard"
 msgstr ""
 
-#: admin/class-comet-main.php:28 admin/class-comet-main.php:29
-#: admin/class-comet-main.php:30
+#: admin/class-main.php:81 admin/class-main.php:82 admin/class-main.php:83
 msgid "Menu"
 msgstr ""
 
-#: admin/class-comet-main.php:35
+#: admin/class-main.php:81 admin/class-settings.php:28
+#: includes/elements/map.php:114 includes/layout/base.php:23
+msgid "Settings"
+msgstr ""
+
+#: admin/class-main.php:83 admin/class-main.php:102
+#: admin/class-mytemplates.php:19 admin/class-mytemplates.php:20
+#: includes/class-i18n.php:218 includes/class-includes.php:50
+#: includes/class-includes.php:51 includes/class-includes.php:52
+#: includes/class-includes.php:53
+msgid "My templates"
+msgstr ""
+
+#: admin/class-main.php:88
 msgid "Getting started with Comet."
 msgstr ""
 
-#: admin/class-comet-main.php:39
+#: admin/class-main.php:92
 msgid "Setup"
 msgstr ""
 
-#: admin/class-comet-main.php:40
+#: admin/class-main.php:93
 #, php-format
 msgid ""
 "Comet requires only one step to get it fully ready. To setup the general "
 "settings go to %s."
 msgstr ""
 
-#: admin/class-comet-main.php:45
+#: admin/class-main.php:98
 #, php-format
 msgid ""
 "Comet allows you to import fonts from Google Fonts easily and use them on "
 "your projects. To manage your fonts go to %s."
 msgstr ""
 
-#: admin/class-comet-main.php:50
+#: admin/class-main.php:103
 #, php-format
 msgid ""
 "With Comet you can save your projects as templates for a later use. You can "
@@ -357,1185 +192,1681 @@ msgid ""
 "go to %s."
 msgstr ""
 
-#: admin/class-comet-main.php:84 admin/class-comet-post-edit.php:137
+#: admin/class-main.php:143 includes/class-i18n.php:208
 msgid "Back"
 msgstr ""
 
-#: admin/class-comet-main.php:87
+#: admin/class-main.php:147
 msgid "Next"
 msgstr ""
 
-#: admin/class-comet-main.php:132
-msgid "Thank you for using Comet!"
-msgstr ""
-
-#: admin/class-comet-main.php:133
-msgid "Please tell us what you think about Comet."
-msgstr ""
-
-#: admin/class-comet-main.php:134
-msgid "Rate Comet"
-msgstr ""
-
-#: admin/class-comet-main.php:144
+#: admin/class-main.php:164
 msgid "Comet"
 msgstr ""
 
-#: admin/class-comet-main.php:145
+#: admin/class-main.php:165
 msgid "Know more about Comet and the features."
 msgstr ""
 
-#: admin/class-comet-main.php:149
+#: admin/class-main.php:169
 msgid "Dashboard overview"
 msgstr ""
 
-#: admin/class-comet-main.php:150
+#: admin/class-main.php:170
 msgid "Getting started with the major components of the UI."
 msgstr ""
 
-#: admin/class-comet-main.php:159
+#: admin/class-main.php:174
 msgid "Editor overview"
 msgstr ""
 
-#: admin/class-comet-main.php:160
+#: admin/class-main.php:175
 msgid "Learn to use the basic layout."
 msgstr ""
 
-#: admin/class-comet-main.php:187
+#: admin/class-main.php:211
 msgid "Read the documentation"
 msgstr ""
 
-#: admin/class-comet-mytemplates.php:28
+#: admin/class-metaboxes.php:44
+msgid "Status"
+msgstr ""
+
+#: admin/class-metaboxes.php:46
+msgid "Title"
+msgstr ""
+
+#: admin/class-metaboxes.php:49
+msgid "Excerpt"
+msgstr ""
+
+#: admin/class-metaboxes.php:86
+msgid "Learn more about excerpt"
+msgstr ""
+
+#: admin/class-metaboxes.php:94
+msgid "Visibility"
+msgstr ""
+
+#: admin/class-metaboxes.php:137
+msgid "Post format"
+msgstr ""
+
+#: admin/class-mytemplates.php:40
 #, php-format
 msgid "%d template"
 msgstr ""
 
-#: admin/class-comet-mytemplates.php:31
+#: admin/class-mytemplates.php:43
 msgid "Create new"
 msgstr ""
 
-#: admin/class-comet-mytemplates.php:64 admin/class-comet-post-edit.php:130
+#: admin/class-mytemplates.php:46 includes/class-i18n.php:252
+msgid "Import"
+msgstr ""
+
+#: admin/class-mytemplates.php:79 includes/class-i18n.php:202
 msgid "Edit"
 msgstr ""
 
-#: admin/class-comet-mytemplates.php:65 includes/class-comet-ajax.php:91
+#: admin/class-mytemplates.php:80 admin/class-preview.php:33
+#: admin/class-preview.php:34 includes/class-i18n.php:210
 msgid "Preview"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:117
-msgid "Locked"
+#: admin/class-mytemplates.php:81 includes/class-i18n.php:253
+msgid "Export"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:118
-msgid "Unlocked"
+#: admin/class-mytemplates.php:82 includes/class-i18n.php:52
+msgid "Delete"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:122
-msgid "Update"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:124
-msgid "Desktop"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:125
-msgid "Tablet"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:126
-msgid "Mobile"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:127
-msgid "Browse"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:128
-msgid "Remove"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:131
-msgid "Bold"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:132
-msgid "Italic"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:133
-msgid "Strikethrough"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:134
-msgid "Insert link"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:135
-msgid "Template name"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:138
-msgid "Search"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:139 admin/class-comet-post-edit.php:140
-msgid "Underline"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:144
-msgid "Select an image"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:147
-msgid "Save as new template"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:148
-msgid "Item settings"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:152
-msgid "Are you sure you want to exit ?"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:153
-msgid "Are you sure you want to clear all?"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:154
-msgid ""
-"Save this page as new template and re-use it on any page or sites you want."
-msgstr ""
-
-#: admin/class-comet-post-edit.php:155
-msgid "Read more about templates"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:156
-msgid "Save operation has failed."
-msgstr ""
-
-#: admin/class-comet-post-edit.php:158
-msgid "Failed to save empty content."
-msgstr ""
-
-#: admin/class-comet-post-edit.php:160
-msgid "The post has been correctly saved."
-msgstr ""
-
-#: admin/class-comet-post-edit.php:163
-msgid "The post has not been saved."
-msgstr ""
-
-#: admin/class-comet-post-edit.php:168
-msgid "Section settings"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:169
-msgid "Move section"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:170
-msgid "Duplicate section"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:171
-msgid "Delete section"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:174
-msgid "Row settings"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:175
-msgid "Move row"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:176
-msgid "Duplicate row"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:177
-msgid "Delete row"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:180
-msgid "Column settings"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:181
-msgid "Move column"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:182
-msgid "Duplicate column"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:183
-msgid "Delete column"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:186
-msgid "Element settings"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:187
-msgid "Move element"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:188
-msgid "Duplicate element"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:189
-msgid "Delete element"
-msgstr ""
-
-#: admin/class-comet-post-edit.php:219
+#: admin/class-post-edit.php:132
 #, php-format
 msgid "%s &#8212; Comet"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:257
-msgid "Elements"
+#: admin/class-post-edit.php:321
+msgid "Post settings"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:259 admin/class-comet-post-edit.php:263
-msgid "Layout"
+#: admin/class-post-edit.php:322
+msgid "Close settings"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:288 admin/class-comet-post-edit.php:294
-msgid "Cockpit"
+#: admin/class-post-edit.php:339 includes/class-i18n.php:59
+#: includes/elements/gallery.php:22 includes/elements/video.php:22
+msgid "Loading..."
 msgstr ""
 
-#: admin/class-comet-post-edit.php:295
-msgid "Close cockpit"
+#: admin/class-preview.php:49 admin/class-preview.php:99
+msgid "An error has been occured. Template not found."
 msgstr ""
 
-#: admin/class-comet-post-edit.php:296
-msgid "Clear notifications"
+#: admin/class-preview.php:50
+msgid "Template not found"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:324
-msgid "Save as template"
+#: admin/class-preview.php:105
+msgid "An error has been occured. Template failed rendering."
 msgstr ""
 
-#: admin/class-comet-post-edit.php:329
-msgid "Templates library"
+#: admin/class-settings.php:29 includes/class-i18n.php:154
+msgid "General settings"
 msgstr ""
 
-#: admin/class-comet-post-edit.php:334
-msgid "Exit"
-msgstr ""
-
-#: admin/class-comet-settings.php:17
-msgid "Settings have not been saved."
-msgstr ""
-
-#: admin/class-comet-settings.php:20
-msgid "Settings have been saved successfully."
-msgstr ""
-
-#: admin/class-comet-settings.php:161
+#: admin/class-settings.php:39
 msgid "Post Types"
 msgstr ""
 
-#: admin/class-comet-settings.php:162
+#: admin/class-settings.php:40
 msgid "Check post types you want Comet works with."
 msgstr ""
 
-#: admin/class-comet-settings.php:188
+#: admin/class-settings.php:49
 msgid "Google API key"
 msgstr ""
 
-#: admin/class-comet-settings.php:189
-msgid "Some Google products such Maps and Fonts require authentication."
+#: admin/class-settings.php:50
+msgid ""
+"Google Fonts requires authentication (API key). Comet uses it only from the "
+"dashboard."
 msgstr ""
 
-#: admin/class-comet-settings.php:189 includes/comet-elements.php:77
+#: admin/class-settings.php:50
 msgid "Read more"
 msgstr ""
 
-#: admin/class-comet-settings.php:195
+#: admin/class-settings.php:58
 msgid "Uninstall (Deep)"
 msgstr ""
 
-#: admin/class-comet-settings.php:196
+#: admin/class-settings.php:59
 msgid "Check the box to completely remove all data on uninstall."
 msgstr ""
 
-#: admin/class-comet-settings.php:200
+#: admin/class-settings.php:62
 msgid "Remove all data on uninstall ?"
 msgstr ""
 
-#: admin/class-comet-typography.php:47
-#, php-format
-msgid "%s font"
+#: admin/class-settings.php:119
+msgid "No settings."
 msgstr ""
 
-#: admin/class-comet-typography.php:50
-msgid "Library"
+#: admin/class-settings.php:167
+msgid "Action not valid."
 msgstr ""
 
-#: admin/comet-preview.php:16
-msgid "Unrechable template"
+#: admin/class-settings.php:170
+msgid "Settings have been saved successfully."
 msgstr ""
 
-#: admin/comet-preview.php:32
-msgid "WordPress"
+#: admin/class-settings.php:174
+msgid "Settings have not been saved."
 msgstr ""
 
-#: includes/class-comet-ajax.php:43
-msgid "Error on execution."
+#: admin/class-settings.php:180 includes/class-i18n.php:54
+msgid "Save"
 msgstr ""
 
-#: includes/class-comet-ajax.php:50
-msgid "User not allowed."
+#: admin/class-settings.php:294 admin/class-settings.php:327
+#: includes/class-element.php:33 includes/class-elements.php:208
+#: includes/class-iconset.php:23 includes/class-iconset.php:46
+msgid "Undefined"
 msgstr ""
 
-#: includes/class-comet-ajax.php:55
-msgid "This operation cannot be verified."
+#: includes/class-ajax.php:20
+msgid "Unregistered element."
 msgstr ""
 
-#: includes/class-comet-ajax.php:69 includes/class-comet-ajax.php:104
-msgid "Nope"
+#: includes/class-ajax.php:34
+msgid "Failed trying to pick data up."
 msgstr ""
 
-#: includes/class-comet-ajax.php:90
-msgid "Insert"
+#: includes/class-ajax.php:46 includes/class-ajax.php:74
+msgid "Error"
 msgstr ""
 
-#: includes/class-comet-editor-data.php:20
-msgid "Align"
+#: includes/class-ajax.php:62
+msgid "Wrong request."
 msgstr ""
 
-#: includes/class-comet-editor-data.php:24
-#: includes/class-comet-elements.php:594 includes/class-comet-utils.php:18
-msgid "Top"
+#: includes/class-ajax.php:80
+msgid "Access denied"
 msgstr ""
 
-#: includes/class-comet-editor-data.php:25 includes/class-comet-elements.php:54
-#: includes/class-comet-elements.php:283 includes/class-comet-elements.php:499
-#: includes/class-comet-elements.php:872 includes/class-comet-utils.php:91
-msgid "Center"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:26
-#: includes/class-comet-elements.php:596 includes/class-comet-utils.php:26
-msgid "Bottom"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:27
-msgid "Stretch (full height)"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:39
-#: includes/class-comet-editor-data.php:196
-#: includes/class-comet-editor-data.php:218
-#: includes/class-comet-elements.php:174 includes/class-comet-elements.php:383
-#: includes/class-comet-elements.php:696 includes/class-comet-elements.php:919
-#: includes/class-comet-elements.php:1122
-msgid "Width"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:61
-#: includes/class-comet-elements.php:159 includes/class-comet-elements.php:322
-#: includes/class-comet-elements.php:911
-msgid "Background"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:64
-#: includes/class-comet-elements.php:385 includes/class-comet-elements.php:681
-msgid "Type"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:73
-#: includes/class-comet-editor-data.php:79
-#: includes/class-comet-editor-data.php:187
-#: includes/class-comet-editor-data.php:201
-#: includes/class-comet-elements.php:78 includes/class-comet-elements.php:126
-#: includes/class-comet-elements.php:162 includes/class-comet-elements.php:171
-#: includes/class-comet-elements.php:535 includes/class-comet-elements.php:552
-#: includes/class-comet-elements.php:652 includes/class-comet-elements.php:759
-#: includes/class-comet-elements.php:927 includes/class-comet-elements.php:1104
-#: includes/class-comet-elements.php:1119
-msgid "Color"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:74
-#: includes/class-comet-editor-data.php:94
-#: includes/class-comet-elements.php:330
-msgid "Gradient"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:75
-#: includes/class-comet-elements.php:440 includes/class-comet-utils.php:120
-#: includes/class-comet-utils.php:155
-msgid "None"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:84
-msgid "Gradient type"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:89
-msgid "Linear"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:90
-msgid "Radial"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:99
-msgid "Shape"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:104
-msgid "Side"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:105
-msgid "Corner"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:109
-#: includes/class-comet-elements.php:350
-msgid "Angle"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:115
-#: includes/class-comet-elements.php:355
-msgid "deg"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:120
-#: includes/class-comet-editor-data.php:124
-#: includes/class-comet-elements.php:466 includes/class-comet-elements.php:473
-#: includes/class-comet-elements.php:476 includes/class-comet-elements.php:1064
-#: includes/class-comet-elements.php:1067
-msgid "Image"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:128
-#: includes/class-comet-elements.php:306
-msgid "Position"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:133 includes/class-comet-utils.php:101
-msgid "Repeat"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:138
-#: includes/class-comet-editor-data.php:231
-#: includes/class-comet-elements.php:88 includes/class-comet-elements.php:363
-#: includes/class-comet-elements.php:539 includes/class-comet-elements.php:644
-#: includes/class-comet-elements.php:855 includes/class-comet-elements.php:1096
-msgid "Size"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:141
-msgid "Auto"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:142
-#: includes/class-comet-elements.php:1013
-msgid "Cover"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:143
-msgid "Contain"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:148
-msgid "Attachment"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:151
-msgid "Scroll"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:152
-msgid "Fixed"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:158
-#: includes/class-comet-editor-data.php:161
-#: includes/class-comet-editor-data.php:169
-#: includes/class-comet-elements.php:671 includes/class-comet-elements.php:678
-#: includes/class-comet-elements.php:691
-msgid "Video"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:162
-msgid "Add a video on the background ?"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:170
-msgid ""
-"There are 3 supported video formats: MP4, WebM, and Ogg. But MP4 is "
-"supported by all modern browsers."
-msgstr ""
-
-#: includes/class-comet-editor-data.php:178
-#: includes/class-comet-editor-data.php:181
-msgid "Overlay"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:182
-msgid "Add an overlay on the background ?"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:193
-#: includes/class-comet-elements.php:168 includes/class-comet-elements.php:381
-#: includes/class-comet-elements.php:549 includes/class-comet-elements.php:555
-#: includes/class-comet-elements.php:917 includes/class-comet-elements.php:1110
-msgid "Border"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:197
-msgid ""
-"Set the width of the section's four borders. The values must be positive "
-"integers."
-msgstr ""
-
-#: includes/class-comet-editor-data.php:205
-#: includes/class-comet-elements.php:325 includes/class-comet-elements.php:616
-#: includes/class-comet-elements.php:921 includes/class-comet-elements.php:1113
-msgid "Style"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:209
-#: includes/class-comet-elements.php:175 includes/class-comet-elements.php:398
-#: includes/class-comet-elements.php:556 includes/class-comet-elements.php:930
-#: includes/class-comet-elements.php:1123
-msgid "Radius"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:214
-msgid "Sizing"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:225 includes/class-comet-utils.php:149
-msgid "Full"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:226
-#: includes/class-comet-elements.php:687 includes/class-comet-elements.php:1040
-msgid "Custom"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:242
-#: includes/class-comet-elements.php:179 includes/class-comet-elements.php:235
-#: includes/class-comet-elements.php:402 includes/class-comet-elements.php:560
-#: includes/class-comet-elements.php:658 includes/class-comet-elements.php:786
-#: includes/class-comet-elements.php:828 includes/class-comet-elements.php:934
-#: includes/class-comet-elements.php:972 includes/class-comet-elements.php:1127
-msgid "Spacing"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:245
-#: includes/class-comet-elements.php:181 includes/class-comet-elements.php:937
-msgid "Padding"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:246
-msgid ""
-"Padding properties are used to generate space around the content. The values "
-"must be positive integers."
-msgstr ""
-
-#: includes/class-comet-editor-data.php:251
-#: includes/class-comet-elements.php:182 includes/class-comet-elements.php:237
-#: includes/class-comet-elements.php:428 includes/class-comet-elements.php:562
-#: includes/class-comet-elements.php:660 includes/class-comet-elements.php:788
-#: includes/class-comet-elements.php:830 includes/class-comet-elements.php:944
-#: includes/class-comet-elements.php:974 includes/class-comet-elements.php:1129
-msgid "Margin"
-msgstr ""
-
-#: includes/class-comet-editor-data.php:252
-msgid ""
-"Margin properties are used to generate space around the section. The values "
-"must be integers."
-msgstr ""
-
-#: includes/class-comet-elements.php:18 includes/class-comet-elements.php:25
-#: includes/class-comet-elements.php:258 includes/class-comet-elements.php:360
-#: includes/class-comet-elements.php:600 includes/class-comet-elements.php:641
+#: includes/class-element.php:53 includes/elements/button.php:267
+#: includes/elements/button.php:378 includes/elements/list.php:162
+#: includes/elements/list.php:202 includes/elements/text.php:16
+#: includes/elements/text.php:149
 msgid "Text"
 msgstr ""
 
-#: includes/class-comet-elements.php:22 includes/class-comet-elements.php:197
-#: includes/class-comet-elements.php:252 includes/class-comet-elements.php:470
-#: includes/class-comet-elements.php:580 includes/class-comet-elements.php:675
-#: includes/class-comet-elements.php:803 includes/class-comet-elements.php:845
-#: includes/class-comet-elements.php:959 includes/class-comet-elements.php:989
-#: includes/class-comet-elements.php:1061
-msgid "General"
+#: includes/class-i18n.php:26
+msgid "An error has been occurred, please try again."
 msgstr ""
 
-#: includes/class-comet-elements.php:28
-msgid "HTML Tag"
+#: includes/class-i18n.php:27
+msgid "The title is missing."
 msgstr ""
 
-#: includes/class-comet-elements.php:45 includes/class-comet-elements.php:274
-#: includes/class-comet-elements.php:490 includes/class-comet-elements.php:863
-msgid "Alignment"
+#: includes/class-i18n.php:28
+msgid "An error has been occurred while deleting."
 msgstr ""
 
-#: includes/class-comet-elements.php:50 includes/class-comet-elements.php:279
-#: includes/class-comet-elements.php:310 includes/class-comet-elements.php:446
-#: includes/class-comet-elements.php:495 includes/class-comet-elements.php:868
-#: includes/class-comet-utils.php:30
-msgid "Left"
+#: includes/class-i18n.php:29
+msgid "Unreachable content."
 msgstr ""
 
-#: includes/class-comet-elements.php:58 includes/class-comet-elements.php:287
-#: includes/class-comet-elements.php:311 includes/class-comet-elements.php:447
-#: includes/class-comet-elements.php:503 includes/class-comet-elements.php:876
-#: includes/class-comet-utils.php:22
+#: includes/class-i18n.php:30
+msgid "An error has been occurred while saving."
+msgstr ""
+
+#: includes/class-i18n.php:37
+msgid "No error found."
+msgstr ""
+
+#: includes/class-i18n.php:43
+msgid "Are you sure you want to delete it permanently ?"
+msgstr ""
+
+#: includes/class-i18n.php:44
+msgid "Please wait while loading. This may take a while."
+msgstr ""
+
+#: includes/class-i18n.php:51
+msgid "Cancel"
+msgstr ""
+
+#: includes/class-i18n.php:53
+msgid "Done"
+msgstr ""
+
+#: includes/class-i18n.php:55
+msgid "Search..."
+msgstr ""
+
+#: includes/class-i18n.php:56
+msgid "Select"
+msgstr ""
+
+#: includes/class-i18n.php:57
+msgid "Enter a title..."
+msgstr ""
+
+#: includes/class-i18n.php:58
+msgid "Previewing template"
+msgstr ""
+
+#: includes/class-i18n.php:151
+msgid "Cockpit"
+msgstr ""
+
+#: includes/class-i18n.php:152
+msgid "Clear notifications"
+msgstr ""
+
+#: includes/class-i18n.php:155
+msgid "Save as template"
+msgstr ""
+
+#: includes/class-i18n.php:156
+msgid "Template library"
+msgstr ""
+
+#: includes/class-i18n.php:157
+msgid "Exit"
+msgstr ""
+
+#: includes/class-i18n.php:163 includes/layout/section.php:21
+msgid "Section"
+msgstr ""
+
+#: includes/class-i18n.php:164
+msgid "Section settings"
+msgstr ""
+
+#: includes/class-i18n.php:165
+msgid "Move section"
+msgstr ""
+
+#: includes/class-i18n.php:166
+msgid "Duplicate section"
+msgstr ""
+
+#: includes/class-i18n.php:167
+msgid "Delete section"
+msgstr ""
+
+#: includes/class-i18n.php:170 includes/layout/row.php:21
+msgid "Row"
+msgstr ""
+
+#: includes/class-i18n.php:171
+msgid "Row settings"
+msgstr ""
+
+#: includes/class-i18n.php:172
+msgid "Move row"
+msgstr ""
+
+#: includes/class-i18n.php:173
+msgid "Duplicate row"
+msgstr ""
+
+#: includes/class-i18n.php:174
+msgid "Delete row"
+msgstr ""
+
+#: includes/class-i18n.php:177 includes/layout/column.php:21
+msgid "Column"
+msgstr ""
+
+#: includes/class-i18n.php:178
+msgid "Column settings"
+msgstr ""
+
+#: includes/class-i18n.php:179
+msgid "Move column"
+msgstr ""
+
+#: includes/class-i18n.php:180
+msgid "Duplicate column"
+msgstr ""
+
+#: includes/class-i18n.php:181
+msgid "Delete column"
+msgstr ""
+
+#: includes/class-i18n.php:184
+msgid "Element"
+msgstr ""
+
+#: includes/class-i18n.php:185
+msgid "Element settings"
+msgstr ""
+
+#: includes/class-i18n.php:186
+msgid "Move element"
+msgstr ""
+
+#: includes/class-i18n.php:187
+msgid "Duplicate element"
+msgstr ""
+
+#: includes/class-i18n.php:188
+msgid "Delete element"
+msgstr ""
+
+#: includes/class-i18n.php:194
+msgid "Locked"
+msgstr ""
+
+#: includes/class-i18n.php:195
+msgid "Unlocked"
+msgstr ""
+
+#: includes/class-i18n.php:196
+msgid "Update"
+msgstr ""
+
+#: includes/class-i18n.php:197
+msgid "Desktop"
+msgstr ""
+
+#: includes/class-i18n.php:198
+msgid "Tablet"
+msgstr ""
+
+#: includes/class-i18n.php:199
+msgid "Mobile"
+msgstr ""
+
+#: includes/class-i18n.php:200
+msgid "Browse"
+msgstr ""
+
+#: includes/class-i18n.php:201
+msgid "Remove"
+msgstr ""
+
+#: includes/class-i18n.php:203
+msgid "Bold"
+msgstr ""
+
+#: includes/class-i18n.php:204
+msgid "Italic"
+msgstr ""
+
+#: includes/class-i18n.php:205
+msgid "Strikethrough"
+msgstr ""
+
+#: includes/class-i18n.php:206
+msgid "Insert link"
+msgstr ""
+
+#: includes/class-i18n.php:207
+msgid "Template name"
+msgstr ""
+
+#: includes/class-i18n.php:209
+msgid "Underline"
+msgstr ""
+
+#: includes/class-i18n.php:211
+msgid "Insert"
+msgstr ""
+
+#: includes/class-i18n.php:212
+msgid "Elements"
+msgstr ""
+
+#: includes/class-i18n.php:213
+msgid "Layout"
+msgstr ""
+
+#: includes/class-i18n.php:214
+msgid "Search an element..."
+msgstr ""
+
+#: includes/class-i18n.php:215
+msgid "Search a template..."
+msgstr ""
+
+#: includes/class-i18n.php:216
+msgid "Search an icon..."
+msgstr ""
+
+#: includes/class-i18n.php:217
+msgid "Select an image"
+msgstr ""
+
+#: includes/class-i18n.php:219
+msgid "Save as new template"
+msgstr ""
+
+#: includes/class-i18n.php:220
+msgid "Item settings"
+msgstr ""
+
+#: includes/class-i18n.php:221
+msgid "Add item"
+msgstr ""
+
+#: includes/class-i18n.php:222
+msgid "Sort"
+msgstr ""
+
+#: includes/class-i18n.php:226
+msgid ""
+"Save this page as new template and re-use it on any page or sites you want."
+msgstr ""
+
+#: includes/class-i18n.php:227
+msgid "Read more about templates"
+msgstr ""
+
+#: includes/class-i18n.php:229
+msgid "Are you sure you want to exit ?"
+msgstr ""
+
+#: includes/class-i18n.php:230
+msgid "Please wait while loading the template."
+msgstr ""
+
+#: includes/class-i18n.php:233
+#, php-format
+msgid "Failed to load %s"
+msgstr ""
+
+#: includes/class-i18n.php:234
+msgid "The post has not been saved."
+msgstr ""
+
+#: includes/class-i18n.php:235
+msgid "Failed to save empty content."
+msgstr ""
+
+#: includes/class-i18n.php:236
+msgid "Undefined menu"
+msgstr ""
+
+#: includes/class-i18n.php:237
+msgid "Failed to load the template."
+msgstr ""
+
+#: includes/class-i18n.php:240
+msgid "The post has been correctly saved."
+msgstr ""
+
+#: includes/class-i18n.php:241
+msgid "The template has been correctly loaded."
+msgstr ""
+
+#: includes/class-i18n.php:251
+msgid "Download"
+msgstr ""
+
+#: includes/class-i18n.php:254
+msgid "Create"
+msgstr ""
+
+#: includes/class-i18n.php:255
+msgid "Delete template"
+msgstr ""
+
+#: includes/class-i18n.php:256
+msgid "Export template"
+msgstr ""
+
+#: includes/class-i18n.php:257
+msgid "Import template"
+msgstr ""
+
+#: includes/class-i18n.php:258
+msgid "Select fonts"
+msgstr ""
+
+#: includes/class-i18n.php:260
+msgid "Create new template"
+msgstr ""
+
+#: includes/class-i18n.php:261
+msgid "Add new font"
+msgstr ""
+
+#: includes/class-i18n.php:262
+msgid "Finish downloading"
+msgstr ""
+
+#: includes/class-i18n.php:265
+#, php-format
+msgid "%s fonts"
+msgstr ""
+
+#: includes/class-i18n.php:267 includes/elements/button.php:445
+#: includes/elements/video.php:187 includes/layout/base.php:193
+msgid "Custom"
+msgstr ""
+
+#: includes/class-i18n.php:268
+msgid "Resource type"
+msgstr ""
+
+#: includes/class-i18n.php:269
+msgid "Embed code"
+msgstr ""
+
+#: includes/class-i18n.php:274
+msgid "Select one or multiple template to import."
+msgstr ""
+
+#: includes/class-i18n.php:275
+msgid "Import fonts from your favorite cloud font providers."
+msgstr ""
+
+#: includes/class-i18n.php:276
+msgid "Here's how to get started with importing great fonts to Comet."
+msgstr ""
+
+#: includes/class-i18n.php:277
+msgid ""
+"Browse thousands of fonts from a cloud provider such Google Fonts, TypeKit "
+"(Adobe Fonts) or Typography.com (H&Co)."
+msgstr ""
+
+#: includes/class-i18n.php:278
+msgid ""
+"Copy the embed code (link or @import) provided. In Comet > Fonts click the "
+"button to add a new font and paste the code in the Embed code field then "
+"click import."
+msgstr ""
+
+#: includes/class-i18n.php:279
+msgid ""
+"You can now use it all over your pages just by selecting font from element "
+"controls. That's it!"
+msgstr ""
+
+#: includes/class-i18n.php:280
+msgid ""
+"You will be redirected to the edit page automatically. If it fails please "
+"click the link:"
+msgstr ""
+
+#: includes/class-i18n.php:281
+msgid "Go to the edit page"
+msgstr ""
+
+#: includes/class-i18n.php:283
+msgid ""
+"Exporting is only supported on computers with up to date and modern browser. "
+"You may encounter compatibility issues and errors if it's not the case."
+msgstr ""
+
+#: includes/class-i18n.php:284
+msgid "You must not exit the current session while importing the templates."
+msgstr ""
+
+#: includes/class-i18n.php:287
+msgid "An error has been occurred while exporting the template."
+msgstr ""
+
+#: includes/class-i18n.php:288
+msgid "Template not found."
+msgstr ""
+
+#: includes/class-i18n.php:289
+msgid "Failed to connect with Google Fonts. Please verify your API key."
+msgstr ""
+
+#: includes/class-i18n.php:290
+msgid "No fonts found."
+msgstr ""
+
+#: includes/class-i18n.php:291
+msgid "Unreachable font. Please make sure the embed code is valid."
+msgstr ""
+
+#: includes/class-i18n.php:292
+msgid "Font not found."
+msgstr ""
+
+#: includes/class-i18n.php:293
+msgid "Font has not been imported correctly."
+msgstr ""
+
+#: includes/class-i18n.php:294
+msgid "The font and its styles have not been deleted."
+msgstr ""
+
+#: includes/class-i18n.php:297
+msgid ""
+"The template has been correctly created and ready to be downloaded. Click "
+"the link below to download the template."
+msgstr ""
+
+#: includes/class-i18n.php:298
+msgid "The template has been correctly created."
+msgstr ""
+
+#: includes/class-i18n.php:299
+msgid "The template has been correctly deleted."
+msgstr ""
+
+#: includes/class-i18n.php:300
+msgid "The font and its styles have been correctly deleted."
+msgstr ""
+
+#: includes/class-includes.php:54
+msgid "Parent template:"
+msgstr ""
+
+#: includes/class-includes.php:55
+msgid "All templates"
+msgstr ""
+
+#: includes/class-includes.php:56
+msgid "Add New template"
+msgstr ""
+
+#: includes/class-includes.php:57 includes/class-includes.php:118
+msgid "Add New"
+msgstr ""
+
+#: includes/class-includes.php:58
+msgid "New template"
+msgstr ""
+
+#: includes/class-includes.php:59
+msgid "Edit template"
+msgstr ""
+
+#: includes/class-includes.php:60
+msgid "Update template"
+msgstr ""
+
+#: includes/class-includes.php:61
+msgid "View template"
+msgstr ""
+
+#: includes/class-includes.php:62
+msgid "View templates"
+msgstr ""
+
+#: includes/class-includes.php:63
+msgid "Search template"
+msgstr ""
+
+#: includes/class-includes.php:64 includes/class-includes.php:125
+msgid "Not found"
+msgstr ""
+
+#: includes/class-includes.php:65 includes/class-includes.php:126
+msgid "Not found in trash"
+msgstr ""
+
+#: includes/class-includes.php:66 includes/class-includes.php:127
+msgid "Featured Image"
+msgstr ""
+
+#: includes/class-includes.php:67 includes/class-includes.php:128
+msgid "Set featured image"
+msgstr ""
+
+#: includes/class-includes.php:68 includes/class-includes.php:129
+msgid "Remove featured image"
+msgstr ""
+
+#: includes/class-includes.php:69 includes/class-includes.php:130
+msgid "Use as featured image"
+msgstr ""
+
+#: includes/class-includes.php:70
+msgid "Insert into template"
+msgstr ""
+
+#: includes/class-includes.php:71
+msgid "Uploaded to this template"
+msgstr ""
+
+#: includes/class-includes.php:72
+msgid "templates list"
+msgstr ""
+
+#: includes/class-includes.php:73
+msgid "templates list navigation"
+msgstr ""
+
+#: includes/class-includes.php:74
+msgid "Filter templates list"
+msgstr ""
+
+#: includes/class-includes.php:78
+msgid "My template"
+msgstr ""
+
+#: includes/class-includes.php:115
+msgid "Parent font:"
+msgstr ""
+
+#: includes/class-includes.php:116
+msgid "All fonts"
+msgstr ""
+
+#: includes/class-includes.php:117
+msgid "Add New font"
+msgstr ""
+
+#: includes/class-includes.php:119
+msgid "New font"
+msgstr ""
+
+#: includes/class-includes.php:120
+msgid "Edit font"
+msgstr ""
+
+#: includes/class-includes.php:121
+msgid "Update font"
+msgstr ""
+
+#: includes/class-includes.php:122
+msgid "View font"
+msgstr ""
+
+#: includes/class-includes.php:123
+msgid "View fonts"
+msgstr ""
+
+#: includes/class-includes.php:124
+msgid "Search font"
+msgstr ""
+
+#: includes/class-includes.php:131
+msgid "Insert into font"
+msgstr ""
+
+#: includes/class-includes.php:132
+msgid "Uploaded to this font"
+msgstr ""
+
+#: includes/class-includes.php:133
+msgid "Fonts list"
+msgstr ""
+
+#: includes/class-includes.php:134
+msgid "Fonts list navigation"
+msgstr ""
+
+#: includes/class-includes.php:135
+msgid "Filter fonts list"
+msgstr ""
+
+#: includes/class-includes.php:192
+msgid "Comet (full width)"
+msgstr ""
+
+#: includes/class-utils.php:21 includes/elements/list.php:155
+#: includes/layout/row.php:47
+msgid "Top"
+msgstr ""
+
+#: includes/class-utils.php:25 includes/elements/button.php:298
+#: includes/elements/button.php:321 includes/elements/button.php:549
+#: includes/elements/icon.php:179 includes/elements/image.php:189
+#: includes/elements/text.php:183
 msgid "Right"
 msgstr ""
 
-#: includes/class-comet-elements.php:64
-msgid "Content"
+#: includes/class-utils.php:29 includes/elements/list.php:157
+#: includes/layout/row.php:49
+msgid "Bottom"
 msgstr ""
 
-#: includes/class-comet-elements.php:72 includes/class-comet-elements.php:319
-#: includes/class-comet-elements.php:529 includes/class-comet-elements.php:610
-#: includes/class-comet-elements.php:753 includes/class-comet-elements.php:901
-#: includes/class-comet-elements.php:1090
+#: includes/class-utils.php:33 includes/elements/button.php:290
+#: includes/elements/button.php:320 includes/elements/button.php:548
+#: includes/elements/icon.php:171 includes/elements/image.php:181
+#: includes/elements/text.php:175
+msgid "Left"
+msgstr ""
+
+#: includes/class-utils.php:80
+msgid "Left top"
+msgstr ""
+
+#: includes/class-utils.php:85
+msgid "Left center"
+msgstr ""
+
+#: includes/class-utils.php:90
+msgid "Left bottom"
+msgstr ""
+
+#: includes/class-utils.php:99
+msgid "Right top"
+msgstr ""
+
+#: includes/class-utils.php:104
+msgid "Right center"
+msgstr ""
+
+#: includes/class-utils.php:109
+msgid "Right bottom"
+msgstr ""
+
+#: includes/class-utils.php:118
+msgid "Top center"
+msgstr ""
+
+#: includes/class-utils.php:123 includes/elements/button.php:294
+#: includes/elements/icon.php:175 includes/elements/image.php:185
+#: includes/elements/text.php:179 includes/layout/row.php:48
+msgid "Center"
+msgstr ""
+
+#: includes/class-utils.php:128
+msgid "Bottom center"
+msgstr ""
+
+#: includes/class-utils.php:138 includes/layout/base.php:103
+msgid "Repeat"
+msgstr ""
+
+#: includes/class-utils.php:139
+msgid "Repeat horizontally"
+msgstr ""
+
+#: includes/class-utils.php:140
+msgid "Repeat vertically"
+msgstr ""
+
+#: includes/class-utils.php:141
+msgid "Space"
+msgstr ""
+
+#: includes/class-utils.php:142
+msgid "Round"
+msgstr ""
+
+#: includes/class-utils.php:143
+msgid "No repeat"
+msgstr ""
+
+#: includes/class-utils.php:151
+msgid "Solid"
+msgstr ""
+
+#: includes/class-utils.php:152
+msgid "Dotted"
+msgstr ""
+
+#: includes/class-utils.php:153
+msgid "Dashed"
+msgstr ""
+
+#: includes/class-utils.php:154
+msgid "Double"
+msgstr ""
+
+#: includes/class-utils.php:155 includes/elements/button.php:496
+msgid "Inset"
+msgstr ""
+
+#: includes/class-utils.php:156
+msgid "Outset"
+msgstr ""
+
+#: includes/class-utils.php:157 includes/class-utils.php:204
+#: includes/elements/button.php:444 includes/elements/button.php:542
+#: includes/elements/gallery.php:268 includes/layout/base.php:39
+msgid "None"
+msgstr ""
+
+#: includes/class-utils.php:167
+msgid "1 column"
+msgstr ""
+
+#: includes/class-utils.php:196 includes/layout/base.php:192
+msgid "Full"
+msgstr ""
+
+#: includes/class-utils.php:205
+msgid "Custom image"
+msgstr ""
+
+#: includes/class-utils.php:206
+msgid "Disc"
+msgstr ""
+
+#: includes/class-utils.php:207
+msgid "Circle"
+msgstr ""
+
+#: includes/class-utils.php:208
+msgid "Square"
+msgstr ""
+
+#: includes/class-utils.php:209
+msgid "Armenian"
+msgstr ""
+
+#: includes/class-utils.php:210
+msgid "Cjk ideographic"
+msgstr ""
+
+#: includes/class-utils.php:211
+msgid "Decimal"
+msgstr ""
+
+#: includes/class-utils.php:212
+msgid "Decimal leading zero"
+msgstr ""
+
+#: includes/class-utils.php:213
+msgid "Georgian"
+msgstr ""
+
+#: includes/class-utils.php:214
+msgid "Hebrew"
+msgstr ""
+
+#: includes/class-utils.php:215
+msgid "Hiragana"
+msgstr ""
+
+#: includes/class-utils.php:216
+msgid "Hiragana iroha"
+msgstr ""
+
+#: includes/class-utils.php:217
+msgid "Katakana"
+msgstr ""
+
+#: includes/class-utils.php:218
+msgid "Katakana iroha"
+msgstr ""
+
+#: includes/class-utils.php:219
+msgid "Lower alpha"
+msgstr ""
+
+#: includes/class-utils.php:220
+msgid "Lower greek"
+msgstr ""
+
+#: includes/class-utils.php:221
+msgid "Lower latin"
+msgstr ""
+
+#: includes/class-utils.php:222
+msgid "Lower roman"
+msgstr ""
+
+#: includes/class-utils.php:223
+msgid "Upper alpha"
+msgstr ""
+
+#: includes/class-utils.php:224
+msgid "Upper latin"
+msgstr ""
+
+#: includes/class-utils.php:225
+msgid "Upper roman"
+msgstr ""
+
+#: includes/class-utils.php:233
+msgid "Default"
+msgstr ""
+
+#: includes/elements/audio.php:16 includes/elements/audio.php:97
+#: includes/elements/audio.php:100
+msgid "Audio"
+msgstr ""
+
+#: includes/elements/audio.php:29
+msgid "Your browser does not support audio"
+msgstr ""
+
+#: includes/elements/audio.php:95 includes/elements/button.php:262
+#: includes/elements/gallery.php:175 includes/elements/gallery.php:205
+#: includes/elements/icon.php:147 includes/elements/image.php:154
+#: includes/elements/list.php:141 includes/elements/map.php:112
+#: includes/elements/shortcode.php:81 includes/elements/text.php:147
+#: includes/elements/video.php:176
+msgid "General"
+msgstr ""
+
+#: includes/elements/audio.php:101
+msgid "Filetypes supported: \"MP3\", \"Wav\" and \"Ogg\"."
+msgstr ""
+
+#: includes/elements/audio.php:106 includes/elements/video.php:218
+msgid "Autoplay"
+msgstr ""
+
+#: includes/elements/audio.php:109
+msgid "Playing as soon as audio player is ready ?"
+msgstr ""
+
+#: includes/elements/audio.php:113
+msgid "Loop"
+msgstr ""
+
+#: includes/elements/audio.php:116
+msgid "Start audio over again everytime it is finished ?"
+msgstr ""
+
+#: includes/elements/audio.php:119 includes/elements/button.php:503
+#: includes/elements/gallery.php:298 includes/elements/icon.php:229
+#: includes/elements/image.php:245 includes/elements/list.php:218
+#: includes/elements/map.php:159 includes/elements/shortcode.php:91
+#: includes/elements/text.php:311 includes/elements/video.php:287
+#: includes/layout/base.php:208
+msgid "Spacing"
+msgstr ""
+
+#: includes/elements/audio.php:121 includes/elements/button.php:532
+#: includes/elements/gallery.php:300 includes/elements/icon.php:240
+#: includes/elements/image.php:249 includes/elements/list.php:220
+#: includes/elements/map.php:161 includes/elements/shortcode.php:93
+#: includes/elements/text.php:315 includes/elements/video.php:289
+#: includes/layout/base.php:218
+msgid "Margin"
+msgstr ""
+
+#: includes/elements/button.php:16 includes/elements/button.php:264
+#: includes/elements/video.php:255
+msgid "Button"
+msgstr ""
+
+#: includes/elements/button.php:269
+msgid "Hello"
+msgstr ""
+
+#: includes/elements/button.php:273 includes/elements/icon.php:185
+#: includes/elements/icon.php:188 includes/elements/image.php:195
+#: includes/elements/image.php:198
+msgid "Link"
+msgstr ""
+
+#: includes/elements/button.php:279 includes/elements/icon.php:193
+#: includes/elements/image.php:204
+msgid "Open in a new tab ?"
+msgstr ""
+
+#: includes/elements/button.php:285 includes/elements/icon.php:166
+#: includes/elements/image.php:176 includes/elements/text.php:170
+msgid "Alignment"
+msgstr ""
+
+#: includes/elements/button.php:302
+msgid "Justified"
+msgstr ""
+
+#: includes/elements/button.php:308 includes/elements/button.php:311
+#: includes/elements/button.php:399 includes/elements/button.php:524
+#: includes/elements/icon.php:16 includes/elements/icon.php:149
+#: includes/elements/icon.php:152 includes/elements/icon.php:203
+#: includes/elements/list.php:146
+msgid "Icon"
+msgstr ""
+
+#: includes/elements/button.php:316 includes/layout/base.php:97
+msgid "Position"
+msgstr ""
+
+#: includes/elements/button.php:325 includes/elements/gallery.php:275
+#: includes/elements/icon.php:198 includes/elements/image.php:209
+#: includes/elements/list.php:172 includes/elements/text.php:195
+#: includes/elements/video.php:253
 msgid "Design"
 msgstr ""
 
-#: includes/class-comet-elements.php:82
-msgid "Font"
+#: includes/elements/button.php:327 includes/elements/gallery.php:294
+#: includes/elements/icon.php:208 includes/elements/image.php:227
+#: includes/elements/text.php:286 includes/layout/base.php:25
+msgid "Background"
 msgstr ""
 
-#: includes/class-comet-elements.php:96
-msgid "Weight"
+#: includes/elements/button.php:330 includes/elements/icon.php:216
+#: includes/elements/list.php:177 includes/elements/text.php:298
+#: includes/layout/base.php:175
+msgid "Style"
 msgstr ""
 
-#: includes/class-comet-elements.php:97
-msgid ""
-"If the exact weight given is unavailable, then the closest weight will be "
-"applied."
+#: includes/elements/button.php:339
+msgid "Flat"
 msgstr ""
 
-#: includes/class-comet-elements.php:103
-msgid "Line height"
+#: includes/elements/button.php:340 includes/layout/base.php:38
+#: includes/layout/base.php:61
+msgid "Gradient"
 msgstr ""
 
-#: includes/class-comet-elements.php:112
-msgid "Letter spacing"
+#: includes/elements/button.php:345 includes/elements/button.php:390
+#: includes/elements/button.php:422
+msgid "Color (inactive)"
 msgstr ""
 
-#: includes/class-comet-elements.php:123
-msgid "Text shadow"
+#: includes/elements/button.php:351 includes/elements/button.php:395
+#: includes/elements/button.php:427
+msgid "Color (active)"
 msgstr ""
 
-#: includes/class-comet-elements.php:130
+#: includes/elements/button.php:357
+msgid "Gradient (inactive)"
+msgstr ""
+
+#: includes/elements/button.php:363
+msgid "Gradient (active)"
+msgstr ""
+
+#: includes/elements/button.php:369 includes/layout/base.php:78
+msgid "Angle"
+msgstr ""
+
+#: includes/elements/button.php:374 includes/layout/base.php:85
+msgid "deg"
+msgstr ""
+
+#: includes/elements/button.php:381 includes/elements/button.php:402
+#: includes/elements/gallery.php:280 includes/elements/icon.php:157
+#: includes/elements/image.php:219 includes/elements/list.php:205
+#: includes/elements/text.php:212 includes/layout/base.php:109
+#: includes/layout/base.php:199
+msgid "Size"
+msgstr ""
+
+#: includes/elements/button.php:410 includes/elements/icon.php:212
+#: includes/elements/image.php:234 includes/elements/image.php:241
+#: includes/elements/text.php:293 includes/layout/base.php:161
+msgid "Border"
+msgstr ""
+
+#: includes/elements/button.php:412 includes/elements/icon.php:214
+#: includes/elements/map.php:142 includes/elements/text.php:295
+#: includes/elements/video.php:198 includes/layout/base.php:164
+#: includes/layout/base.php:185 includes/layout/column.php:47
+msgid "Width"
+msgstr ""
+
+#: includes/elements/button.php:415 includes/elements/button.php:436
+#: includes/elements/gallery.php:210 includes/elements/video.php:181
+#: includes/layout/base.php:28
+msgid "Type"
+msgstr ""
+
+#: includes/elements/button.php:431 includes/elements/icon.php:227
+#: includes/elements/image.php:243 includes/elements/text.php:309
+#: includes/layout/base.php:179
+msgid "Radius"
+msgstr ""
+
+#: includes/elements/button.php:433
+msgid "Shadow"
+msgstr ""
+
+#: includes/elements/button.php:450 includes/elements/gallery.php:289
+#: includes/elements/icon.php:223 includes/elements/image.php:214
+#: includes/elements/image.php:230 includes/elements/image.php:237
+#: includes/elements/list.php:214 includes/elements/text.php:200
+#: includes/elements/text.php:252 includes/elements/text.php:289
+#: includes/elements/text.php:305 includes/elements/video.php:258
+#: includes/layout/base.php:37 includes/layout/base.php:44
+#: includes/layout/base.php:157 includes/layout/base.php:169
+msgid "Color"
+msgstr ""
+
+#: includes/elements/button.php:456
+msgid "Offset x"
+msgstr ""
+
+#: includes/elements/button.php:466
+msgid "Offset y"
+msgstr ""
+
+#: includes/elements/button.php:476 includes/elements/gallery.php:271
+#: includes/elements/text.php:257
 msgid "Blur"
 msgstr ""
 
-#: includes/class-comet-elements.php:139 includes/class-comet-elements.php:405
+#: includes/elements/button.php:486
+msgid "Spread"
+msgstr ""
+
+#: includes/elements/button.php:499
+msgid "Enable to draw the shadow inside the border instead of outside."
+msgstr ""
+
+#: includes/elements/button.php:506 includes/elements/text.php:267
 msgid "Vertical"
 msgstr ""
 
-#: includes/class-comet-elements.php:148 includes/class-comet-elements.php:413
+#: includes/elements/button.php:515 includes/elements/text.php:277
 msgid "Horizontal"
 msgstr ""
 
-#: includes/class-comet-elements.php:193
+#: includes/elements/button.php:534 includes/elements/gallery.php:264
+msgid "Animation"
+msgstr ""
+
+#: includes/elements/button.php:537
+msgid "Effect"
+msgstr ""
+
+#: includes/elements/button.php:538
+msgid "Play an effect on hovering the button."
+msgstr ""
+
+#: includes/elements/button.php:543 includes/elements/gallery.php:269
+msgid "Zoom"
+msgstr ""
+
+#: includes/elements/button.php:544
+msgid "Fade"
+msgstr ""
+
+#: includes/elements/button.php:545
+msgid "Shrink"
+msgstr ""
+
+#: includes/elements/button.php:546
+msgid "Pulse"
+msgstr ""
+
+#: includes/elements/button.php:547
+msgid "Tada"
+msgstr ""
+
+#: includes/elements/button.php:550
+msgid "Up"
+msgstr ""
+
+#: includes/elements/button.php:551
+msgid "Down"
+msgstr ""
+
+#: includes/elements/gallery.php:16 includes/elements/gallery.php:207
+msgid "Gallery"
+msgstr ""
+
+#: includes/elements/gallery.php:177 includes/elements/gallery.php:180
+#: includes/elements/image.php:16 includes/elements/image.php:156
+#: includes/elements/image.php:159 includes/layout/base.php:88
+#: includes/layout/base.php:92
+msgid "Image"
+msgstr ""
+
+#: includes/elements/gallery.php:185 includes/elements/image.php:170
+msgid "Alternative text"
+msgstr ""
+
+#: includes/elements/gallery.php:186 includes/elements/image.php:171
+msgid ""
+"Alternative text is required for SEO. By default it uses the image filename."
+msgstr ""
+
+#: includes/elements/gallery.php:191 includes/elements/gallery.php:277
+#: includes/elements/image.php:165 includes/elements/image.php:211
+msgid "Caption"
+msgstr ""
+
+#: includes/elements/gallery.php:196
+msgid "Author"
+msgstr ""
+
+#: includes/elements/gallery.php:200
+msgid "Images"
+msgstr ""
+
+#: includes/elements/gallery.php:218
+msgid "Masonry"
+msgstr ""
+
+#: includes/elements/gallery.php:219
+msgid "Offset"
+msgstr ""
+
+#: includes/elements/gallery.php:224
+msgid "Column count"
+msgstr ""
+
+#: includes/elements/gallery.php:231 includes/elements/list.php:184
+msgid "Gap"
+msgstr ""
+
+#: includes/elements/gallery.php:240 includes/elements/map.php:151
+#: includes/elements/video.php:207
+msgid "Height"
+msgstr ""
+
+#: includes/elements/gallery.php:258
+msgid "Caption on hover ?"
+msgstr ""
+
+#: includes/elements/gallery.php:270
+msgid "Rotate"
+msgstr ""
+
+#: includes/elements/icon.php:200
+msgid "Colors"
+msgstr ""
+
+#: includes/elements/icon.php:232 includes/elements/image.php:247
+#: includes/elements/text.php:313 includes/layout/base.php:211
+msgid "Padding"
+msgstr ""
+
+#: includes/elements/list.php:16 includes/elements/list.php:174
+msgid "List"
+msgstr ""
+
+#: includes/elements/list.php:143
+msgid "Item"
+msgstr ""
+
+#: includes/elements/list.php:151
+msgid "Vertical alignment"
+msgstr ""
+
+#: includes/elements/list.php:156
+msgid "Middle"
+msgstr ""
+
+#: includes/elements/list.php:166
+msgid "Items"
+msgstr ""
+
+#: includes/elements/list.php:185
+msgid "Define the gap between items."
+msgstr ""
+
+#: includes/elements/list.php:194
+msgid "Text indent"
+msgstr ""
+
+#: includes/elements/map.php:16
 msgid "Google map"
 msgstr ""
 
-#: includes/class-comet-elements.php:203
+#: includes/elements/map.php:46
+msgid "No map to show"
+msgstr ""
+
+#: includes/elements/map.php:117
 msgid "Address"
 msgstr ""
 
-#: includes/class-comet-elements.php:208
+#: includes/elements/map.php:123
 msgid "Zoom level"
 msgstr ""
 
-#: includes/class-comet-elements.php:209
+#: includes/elements/map.php:124
 msgid ""
 "The initial resolution at which to display the map is set by the zoom "
 "property, where zoom 0 corresponds to a map of the Earth fully zoomed out, "
 "and higher zoom levels zoom in at a higher resolution."
 msgstr ""
 
-#: includes/class-comet-elements.php:216
+#: includes/elements/map.php:132
 msgid "Map type"
 msgstr ""
 
-#: includes/class-comet-elements.php:220
+#: includes/elements/map.php:136
 msgid "Roadmap"
 msgstr ""
 
-#: includes/class-comet-elements.php:221
+#: includes/elements/map.php:137
 msgid "Satellite"
 msgstr ""
 
-#: includes/class-comet-elements.php:225 includes/class-comet-elements.php:704
-#: includes/class-comet-elements.php:1031
-msgid "Height"
-msgstr ""
-
-#: includes/class-comet-elements.php:248 includes/class-comet-elements.php:255
-#: includes/class-comet-elements.php:756
-msgid "Button"
-msgstr ""
-
-#: includes/class-comet-elements.php:260
-msgid "Hello"
-msgstr ""
-
-#: includes/class-comet-elements.php:263 includes/class-comet-elements.php:511
-#: includes/class-comet-elements.php:514 includes/class-comet-elements.php:884
-#: includes/class-comet-elements.php:887
-msgid "Link"
-msgstr ""
-
-#: includes/class-comet-elements.php:268 includes/class-comet-elements.php:519
-#: includes/class-comet-elements.php:891
-msgid "Target"
-msgstr ""
-
-#: includes/class-comet-elements.php:271 includes/class-comet-elements.php:522
-#: includes/class-comet-elements.php:892
-msgid "Open the link in a new tab ?"
-msgstr ""
-
-#: includes/class-comet-elements.php:291
-msgid "Justified"
-msgstr ""
-
-#: includes/class-comet-elements.php:299 includes/class-comet-elements.php:302
-#: includes/class-comet-elements.php:421 includes/class-comet-elements.php:586
-#: includes/class-comet-elements.php:841 includes/class-comet-elements.php:848
-#: includes/class-comet-elements.php:851 includes/class-comet-elements.php:907
-msgid "Icon"
-msgstr ""
-
-#: includes/class-comet-elements.php:329
-msgid "Flat"
-msgstr ""
-
-#: includes/class-comet-elements.php:334 includes/class-comet-elements.php:371
-#: includes/class-comet-elements.php:391
-msgid "Color (inactive)"
-msgstr ""
-
-#: includes/class-comet-elements.php:338 includes/class-comet-elements.php:375
-#: includes/class-comet-elements.php:395
-msgid "Color (active)"
-msgstr ""
-
-#: includes/class-comet-elements.php:342
-msgid "Gradient (inactive)"
-msgstr ""
-
-#: includes/class-comet-elements.php:346
-msgid "Gradient (active)"
-msgstr ""
-
-#: includes/class-comet-elements.php:432
-msgid "Animation"
-msgstr ""
-
-#: includes/class-comet-elements.php:435
-msgid "Effect"
-msgstr ""
-
-#: includes/class-comet-elements.php:436
-msgid "Play an effect on hovering the button."
-msgstr ""
-
-#: includes/class-comet-elements.php:441
-msgid "Zoom"
-msgstr ""
-
-#: includes/class-comet-elements.php:442
-msgid "Fade"
-msgstr ""
-
-#: includes/class-comet-elements.php:443
-msgid "Shrink"
-msgstr ""
-
-#: includes/class-comet-elements.php:444
-msgid "Pulse"
-msgstr ""
-
-#: includes/class-comet-elements.php:445
-msgid "Tada"
-msgstr ""
-
-#: includes/class-comet-elements.php:448
-msgid "Up"
-msgstr ""
-
-#: includes/class-comet-elements.php:449
-msgid "Down"
-msgstr ""
-
-#: includes/class-comet-elements.php:481 includes/class-comet-elements.php:532
-#: includes/class-comet-elements.php:1007
-#: includes/class-comet-elements.php:1076
-#: includes/class-comet-elements.php:1093
-msgid "Caption"
-msgstr ""
-
-#: includes/class-comet-elements.php:485 includes/class-comet-elements.php:1071
-msgid "Alternative text"
-msgstr ""
-
-#: includes/class-comet-elements.php:486 includes/class-comet-elements.php:1072
-msgid ""
-"Alternative text is required for SEO. By default it uses the image filename."
-msgstr ""
-
-#: includes/class-comet-elements.php:573 includes/class-comet-elements.php:613
-msgid "List"
-msgstr ""
-
-#: includes/class-comet-elements.php:577
-msgid "Items"
-msgstr ""
-
-#: includes/class-comet-elements.php:583
-msgid "Item"
-msgstr ""
-
-#: includes/class-comet-elements.php:590
-msgid "Vertical alignment"
-msgstr ""
-
-#: includes/class-comet-elements.php:595
-msgid "Middle"
-msgstr ""
-
-#: includes/class-comet-elements.php:622 includes/class-comet-elements.php:1023
-msgid "Gap"
-msgstr ""
-
-#: includes/class-comet-elements.php:623
-msgid "Define the gap between items."
-msgstr ""
-
-#: includes/class-comet-elements.php:631
-msgid "Text indent"
-msgstr ""
-
-#: includes/class-comet-elements.php:685
-msgid "YouTube"
-msgstr ""
-
-#: includes/class-comet-elements.php:686
-msgid "Vimeo"
-msgstr ""
-
-#: includes/class-comet-elements.php:692
-msgid "Filetypes supported for custom video: \"MP4\", \"WebM\" and \"Ogg\"."
-msgstr ""
-
-#: includes/class-comet-elements.php:714
-msgid "Options"
-msgstr ""
-
-#: includes/class-comet-elements.php:717 includes/class-comet-elements.php:814
-msgid "Autoplay"
-msgstr ""
-
-#: includes/class-comet-elements.php:718
-msgid "Enabling autoplay ?"
-msgstr ""
-
-#: includes/class-comet-elements.php:723
-msgid "Informations"
-msgstr ""
-
-#: includes/class-comet-elements.php:724
-msgid "Showing informations such as title, author, etc?"
-msgstr ""
-
-#: includes/class-comet-elements.php:729 includes/class-comet-elements.php:1001
-msgid "Lightbox"
-msgstr ""
-
-#: includes/class-comet-elements.php:730
-msgid "Play the video in lightbox"
-msgstr ""
-
-#: includes/class-comet-elements.php:739
-msgid "No"
-msgstr ""
-
-#: includes/class-comet-elements.php:740
-msgid "Yes"
-msgstr ""
-
-#: includes/class-comet-elements.php:744
-msgid "Poster"
-msgstr ""
-
-#: includes/class-comet-elements.php:764
-msgid "Background color"
-msgstr ""
-
-#: includes/class-comet-elements.php:769
-msgid "Border color"
-msgstr ""
-
-#: includes/class-comet-elements.php:774
-msgid "Border width"
-msgstr ""
-
-#: includes/class-comet-elements.php:782
-msgid "Border radius"
-msgstr ""
-
-#: includes/class-comet-elements.php:799 includes/class-comet-elements.php:806
-#: includes/class-comet-elements.php:809
-msgid "Audio"
-msgstr ""
-
-#: includes/class-comet-elements.php:810
-msgid "Filetypes supported: \"MP3\", \"Wav\" and \"Ogg\"."
-msgstr ""
-
-#: includes/class-comet-elements.php:817
-msgid "Playing as soon as audio player is ready ?"
-msgstr ""
-
-#: includes/class-comet-elements.php:820
-msgid "Loop"
-msgstr ""
-
-#: includes/class-comet-elements.php:823
-msgid "Start audio over again everytime it is finished ?"
-msgstr ""
-
-#: includes/class-comet-elements.php:904
-msgid "Colors"
-msgstr ""
-
-#: includes/class-comet-elements.php:955 includes/class-comet-elements.php:962
-#: includes/class-comet-elements.php:965
+#: includes/elements/shortcode.php:16 includes/elements/shortcode.php:83
+#: includes/elements/shortcode.php:86
 msgid "Shortcode"
 msgstr ""
 
-#: includes/class-comet-elements.php:985 includes/class-comet-elements.php:992
-msgid "Gallery"
+#: includes/elements/text.php:152
+msgid "HTML Tag"
 msgstr ""
 
-#: includes/class-comet-elements.php:995
-msgid "Columns"
+#: includes/elements/text.php:156
+msgid "Paragraph"
 msgstr ""
 
-#: includes/class-comet-elements.php:1002
-msgid "Open in a lightbox ?"
+#: includes/elements/text.php:157
+msgid "Heading 1"
 msgstr ""
 
-#: includes/class-comet-elements.php:1011
-msgid "Hide"
+#: includes/elements/text.php:158
+msgid "Heading 2"
 msgstr ""
 
-#: includes/class-comet-elements.php:1012
-msgid "Banner"
+#: includes/elements/text.php:159
+msgid "Heading 3"
 msgstr ""
 
-#: includes/class-comet-elements.php:1014
-msgid "Under"
+#: includes/elements/text.php:160
+msgid "Heading 4"
 msgstr ""
 
-#: includes/class-comet-elements.php:1020
-#: includes/class-comet-elements.php:1058
-msgid "Images"
+#: includes/elements/text.php:161
+msgid "Heading 5"
 msgstr ""
 
-#: includes/class-comet-elements.php:1039 includes/class-comet-utils.php:183
-#: includes/class-comet-utils.php:209
-msgid "Default"
+#: includes/elements/text.php:162
+msgid "Heading 6"
 msgstr ""
 
-#: includes/class-comet-elements.php:1044
-msgid "Custom height"
+#: includes/elements/text.php:163
+msgid "Blockquote"
 msgstr ""
 
-#: includes/class-comet-elements.php:1080
-msgid "Author"
+#: includes/elements/text.php:165
+msgid "Preformatted"
 msgstr ""
 
-#: includes/class-comet-includes.php:136
-msgid "Comet (full width)"
+#: includes/elements/text.php:190
+msgid "Content"
 msgstr ""
 
-#: includes/class-comet-utils.php:66
-msgid "Left top"
+#: includes/elements/text.php:197
+msgid "Typography"
 msgstr ""
 
-#: includes/class-comet-utils.php:69
-msgid "Left center"
+#: includes/elements/text.php:205
+msgid "Font"
 msgstr ""
 
-#: includes/class-comet-utils.php:72
-msgid "Left bottom"
+#: includes/elements/text.php:221
+msgid "Weight"
 msgstr ""
 
-#: includes/class-comet-utils.php:77
-msgid "Right top"
+#: includes/elements/text.php:222
+msgid ""
+"The weight property sets how thick or thin characters in text should be "
+"displayed."
 msgstr ""
 
-#: includes/class-comet-utils.php:80
-msgid "Right center"
+#: includes/elements/text.php:229
+msgid "Line height"
 msgstr ""
 
-#: includes/class-comet-utils.php:83
-msgid "Right bottom"
+#: includes/elements/text.php:230
+msgid "The line height property specifies the height of a line."
 msgstr ""
 
-#: includes/class-comet-utils.php:88
-msgid "Top center"
+#: includes/elements/text.php:240
+msgid "Letter spacing"
 msgstr ""
 
-#: includes/class-comet-utils.php:94
-msgid "Bottom center"
+#: includes/elements/text.php:249
+msgid "Text shadow"
 msgstr ""
 
-#: includes/class-comet-utils.php:102
-msgid "Repeat horizontally"
+#: includes/elements/video.php:16 includes/elements/video.php:178
+#: includes/elements/video.php:192 includes/layout/base.php:128
+#: includes/layout/base.php:131 includes/layout/base.php:140
+msgid "Video"
 msgstr ""
 
-#: includes/class-comet-utils.php:103
-msgid "Repeat vertically"
+#: includes/elements/video.php:185
+msgid "YouTube"
 msgstr ""
 
-#: includes/class-comet-utils.php:104
-msgid "Space"
+#: includes/elements/video.php:186
+msgid "Vimeo"
 msgstr ""
 
-#: includes/class-comet-utils.php:105
-msgid "Round"
+#: includes/elements/video.php:193
+msgid "Filetypes supported for custom video: \"MP4\", \"WebM\" and \"Ogg\"."
 msgstr ""
 
-#: includes/class-comet-utils.php:106
-msgid "No repeat"
+#: includes/elements/video.php:215
+msgid "Options"
 msgstr ""
 
-#: includes/class-comet-utils.php:114
-msgid "Solid"
+#: includes/elements/video.php:219
+msgid "Enabling autoplay ?"
 msgstr ""
 
-#: includes/class-comet-utils.php:115
-msgid "Dotted"
+#: includes/elements/video.php:225
+msgid "Informations"
 msgstr ""
 
-#: includes/class-comet-utils.php:116
-msgid "Dashed"
+#: includes/elements/video.php:226
+msgid "Showing informations such as title, author, etc?"
 msgstr ""
 
-#: includes/class-comet-utils.php:117
-msgid "Double"
+#: includes/elements/video.php:232
+msgid "Lightbox"
 msgstr ""
 
-#: includes/class-comet-utils.php:118
-msgid "Inset"
+#: includes/elements/video.php:233
+msgid "Play the video in lightbox"
 msgstr ""
 
-#: includes/class-comet-utils.php:119
-msgid "Outset"
+#: includes/elements/video.php:242
+msgid "No"
 msgstr ""
 
-#: includes/class-comet-utils.php:128
-msgid "1 column"
+#: includes/elements/video.php:243
+msgid "Yes"
 msgstr ""
 
-#: includes/class-comet-utils.php:156
-msgid "Custom image"
+#: includes/elements/video.php:248
+msgid "Poster"
 msgstr ""
 
-#: includes/class-comet-utils.php:157
-msgid "Disc"
+#: includes/elements/video.php:264
+msgid "Background color"
 msgstr ""
 
-#: includes/class-comet-utils.php:158
-msgid "Circle"
+#: includes/elements/video.php:270
+msgid "Border color"
 msgstr ""
 
-#: includes/class-comet-utils.php:159
-msgid "Square"
+#: includes/elements/video.php:276
+msgid "Border width"
 msgstr ""
 
-#: includes/class-comet-utils.php:160
-msgid "Armenian"
+#: includes/elements/video.php:285
+msgid "Border radius"
 msgstr ""
 
-#: includes/class-comet-utils.php:161
-msgid "Cjk ideographic"
+#: includes/layout/base.php:50
+msgid "Gradient type"
 msgstr ""
 
-#: includes/class-comet-utils.php:162
-msgid "Decimal"
+#: includes/layout/base.php:55
+msgid "Linear"
 msgstr ""
 
-#: includes/class-comet-utils.php:163
-msgid "Decimal leading zero"
+#: includes/layout/base.php:56
+msgid "Radial"
 msgstr ""
 
-#: includes/class-comet-utils.php:164
-msgid "Georgian"
+#: includes/layout/base.php:67
+msgid "Shape"
 msgstr ""
 
-#: includes/class-comet-utils.php:165
-msgid "Hebrew"
+#: includes/layout/base.php:72
+msgid "Side"
 msgstr ""
 
-#: includes/class-comet-utils.php:166
-msgid "Hiragana"
+#: includes/layout/base.php:73
+msgid "Corner"
 msgstr ""
 
-#: includes/class-comet-utils.php:167
-msgid "Hiragana iroha"
+#: includes/layout/base.php:112
+msgid "Auto"
 msgstr ""
 
-#: includes/class-comet-utils.php:168
-msgid "Katakana"
+#: includes/layout/base.php:113
+msgid "Cover"
 msgstr ""
 
-#: includes/class-comet-utils.php:169
-msgid "Katakana iroha"
+#: includes/layout/base.php:114
+msgid "Contain"
 msgstr ""
 
-#: includes/class-comet-utils.php:170
-msgid "Lower alpha"
+#: includes/layout/base.php:120
+msgid "Attachment"
 msgstr ""
 
-#: includes/class-comet-utils.php:171
-msgid "Lower greek"
+#: includes/layout/base.php:123
+msgid "Scroll"
 msgstr ""
 
-#: includes/class-comet-utils.php:172
-msgid "Lower latin"
+#: includes/layout/base.php:124
+msgid "Fixed"
 msgstr ""
 
-#: includes/class-comet-utils.php:173
-msgid "Lower roman"
+#: includes/layout/base.php:132
+msgid "Add a video on the background ?"
 msgstr ""
 
-#: includes/class-comet-utils.php:174
-msgid "Upper alpha"
+#: includes/layout/base.php:141
+msgid ""
+"There are 3 supported video formats: MP4, WebM, and Ogg. But MP4 is "
+"supported by all modern browsers."
 msgstr ""
 
-#: includes/class-comet-utils.php:175
-msgid "Upper latin"
+#: includes/layout/base.php:147 includes/layout/base.php:150
+msgid "Overlay"
 msgstr ""
 
-#: includes/class-comet-utils.php:176
-msgid "Upper roman"
+#: includes/layout/base.php:151
+msgid "Add an overlay on the background ?"
 msgstr ""
 
-#: includes/comet-elements.php:189
-msgid "No posts to show."
+#: includes/layout/base.php:165
+msgid ""
+"Set the width of the section's four borders. The values must be positive "
+"integers."
+msgstr ""
+
+#: includes/layout/base.php:181
+msgid "Sizing"
+msgstr ""
+
+#: includes/layout/base.php:212
+msgid ""
+"Padding properties are used to generate space around the content. The values "
+"must be positive integers."
+msgstr ""
+
+#: includes/layout/base.php:219
+msgid ""
+"Margin properties are used to generate space around the section. The values "
+"must be integers."
+msgstr ""
+
+#: includes/layout/row.php:43
+msgid "Align"
+msgstr ""
+
+#: includes/layout/row.php:50
+msgid "Stretch (full height)"
 msgstr ""

@@ -1,13 +1,13 @@
 === Comet - Page builder ===
-Contributors: blacklead
+Contributors: blacklead, intnico
 Donate link: https://blacklead.fr/comet
 Author URI: https://blacklead.fr
 Plugin URI: https://blacklead.fr/comet
 Tags: drag and drop, page builder, visual editor, columns, rows, sections, elements
-Requires at least: 4.7
-Tested up to: 4.9.7
-Requires PHP: 5.5
-Stable tag: 1.0.1
+Requires at least: 4.9
+Tested up to: 5.1.1
+Requires PHP: 5.6
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,12 +62,12 @@ Easily preview and adjust layouts for the wide array of tablets, smartphones and
 
 **High quality code.**
 
-Comet's speed and performance are among our top priorities. Comet has been carefully developed and wisely integrated with Wordpress.
+Comet's speed and performance are among our top priorities. Comet has been carefully developed and wisely integrated with Wordpress. It works perfectly with Gutenberg.
 
 
 **Translation ready.**
 
-Completely localized and Right-To-Left (RTL) ready so you can add your language easily.
+Completely localized so you can add your language easily.
 
 
 = Improve your designs through the icons. =
@@ -81,9 +81,9 @@ The library has countless icons to insert on your pages. Comet loads only the ic
 
 = Let your designs fit your site. =
 
-No more hard time trying to find your fonts, Comet gathers 850+ free fonts, you just have to choose and import through the fonts library. And if you don't use a font anymore, then remove it from your list.
+Import fonts from your favorite cloud font providers such Google Fonts, Adobe Fonts (TypeKit) or Typography.com (H&Co) through the new impressive fonts manager and use your fonts in your designs.
 
-* 850+ free webfonts
+* The best fonts providers
 * Easy to use
 * High quality
 
@@ -103,7 +103,7 @@ Create your own collection of templates by building templates from scratch or by
 * Real time changes
 * Save your own templates
 * Most intuitive page builder
-* Google fonts library
+* Fonts manager
 * Large icons library
 * Responsive designs
 * Modern interface
@@ -152,8 +152,8 @@ Comet is localized and ready to be translated into your own language. Please vis
 
 Comet is compatible with any theme. Please check the minimum requirements:
 
-* WordPress: 4.7;
-* PHP: 5.5;
+* WordPress: 4.9;
+* PHP: 5.6;
 * MySQL: 5.0;
 * Browser: Firefox 46 / Chrome 48 / Safari 8 / Edge 13.
 
@@ -178,10 +178,50 @@ No, Comet is really easy to use and you don't have to learn code.
 4. Background videos. Add more 'fun' to your designs with background videos.
 5. My templates. save your design as new template for a later use.
 6. Icons library. Enrich your pages with a really large collection of icons.
-7. Typography. Choose your custom typography among 850+ Google fonts.
 
 
 == Changelog ==
+
+= 1.1.5 - April 1, 2019 =
+* Fix - Switch control does not retrieve the value
+* Fix - Color picker field does not work
+* Fix - Move actions do not work
+* Fix - Clone actions do not render
+* Tweak - Add default value to Button border style
+* Tweak - Removing unnecessary AJAX requests
+
+= 1.1.4 - March 27, 2019 =
+* New - Adds switch controls
+* Tweak - Improves elements setting
+
+= 1.1.3 - March 22, 2019 =
+* Fix - Margin/Padding/Border do not work
+* Fix - Color picker obstruct after closing the panel
+* Fix - Impossible to close editor toolbar
+* Fix - Text tag doesn't change
+* Tweak - Menu position and style
+* Tweak - Reset tags only for comet
+
+= 1.1.2 - March 17, 2019 =
+* Fix - Saving still not works
+* Fix - Missing settings for some elements
+* Tweak - Get image metadata if it exists in the Wordpress media library before using getimagesize()
+
+= 1.1.1 - March 16, 2019 =
+* Fix - Encoding error
+* Fix - Fail while saving
+* Tweak - Prevent getimagesize() error
+* Remove useless Google API Key
+
+= 1.1.0 - March 16, 2019 =
+* Major code improvements (Deeply reviewed)
+* New - Fonts manager
+* New - Add Window 10 icons set
+
+= 1.0.2 - September 3, 2018 =
+* Fix - Return to dashboard link
+* Fix - comet-admin.js not minified correctly
+* Fix - Minor bug on comet-public.js
 
 = 1.0.1 - July 24, 2018 =
 * New - Added icon size and shadow for Button

@@ -1,0 +1,193 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+$bcolor: #BBB;
+
+.comet-editor .comet > .comet-sidebar {
+    width: 50px;
+    background: $daDark;
+    overflow: visible;
+    z-index: 1;
+    color: white;
+    text-align: left;
+
+    &.cpb-active {
+        width: 300px;
+
+        .comet-header {
+            padding: 20px;
+
+            .comet-btoggle {
+                width: auto;
+                position: absolute;
+                top: 27px;
+                right: 20px;
+                padding: 0;
+                font-size: 15px;
+
+                .cico {
+                    height: 20px;
+                    width: 20px;
+                }
+
+            }
+
+        }
+
+        .comet-listElements{
+            height: calc( 100% - 116px );
+            padding: 10px 20px;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            .comet-listElement{ width: 33.33%; }
+
+        }
+
+        .comet-footer > button { width: 50px; }
+
+    }
+
+    .comet-header {
+        display: block;
+        position: relative;
+
+        .comet-btoggle {
+            padding: 10px;
+            width: 100%;
+            font-size: 25px;
+            margin: 0;
+            border: 0;
+            background: none;
+            color: $bcolor;
+            cursor: pointer;
+
+            &:hover { color: white; }
+
+            .cico {
+                height: 25px;
+                width: 25px;
+                font-size: inherit;
+            }
+        }
+
+        .comet-searchbar {
+            border: 0;
+            background: none;
+            border-bottom: 2px solid $bcolor;
+            color: white;
+            padding: 5px 27px 5px 5px;
+            width: 100%;
+            font: 300 15px/1.5 sans-serif;
+            @include border_radius( 0 );
+            @include box_shadow( none );
+
+            &:focus { border-color: white; }
+
+            &::placeholder{ color: $bcolor; }
+            &:-ms-input-placeholder{ color: $bcolor; }
+            &::-webkit-input-placeholder{ color: $bcolor; }
+            &:-moz-placeholder{ color: $bcolor; }
+            &::-moz-placeholder{ color: $bcolor; }
+
+        }
+    }
+
+    .comet-listElements {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        align-items: flex-start;
+        width: 100%;
+        overflow: hidden;
+        padding: 10px 0;
+        max-height: 320px;
+    }
+
+    .comet-listElement{
+        text-align: center;
+        width: 100%;
+        background: none;
+        border: 0;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+
+        .cico {
+            width: 25px;
+            height: 25px;
+            font-size: 25px;
+        }
+
+        .comet-uiTitle{
+            display: block;
+            color: $bcolor;
+            font: 300 13px/1.1 sans-serif;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        &:hover .comet-uiTitle{ color: white; }
+
+    }
+
+    .comet-footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        border-top: 1px solid $liDark;
+
+        > button {
+            cursor: pointer;
+            color: white;
+            background: $daAccent;
+            padding: 10px;
+            width: 100%;
+            position: relative;
+            @include border_radius( 0 );
+
+            .comet-uiTitle {
+                display: none;
+
+                &:before {
+                    width: 0; 
+                    height: 0;
+                    border: 6px solid transparent;
+                    border-left: 0;
+                    border-right: 6px solid $liDark;
+                    position: absolute;
+                    top: 50%;
+                    right: 100%;
+                    margin-top: -5px;
+                    content: '';
+
+                }
+
+            }
+
+            &:hover {
+                background: #207DFF;
+
+                .comet-uiTitle {
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 100%;
+                    margin-left: 3px;
+                    background: $liDark;
+                    font: 300 13px/1.2 sans-serif;
+                    color: white;
+                    padding: 10px;
+                    z-index: 99;
+                    @include border_radius( 5px );
+                    @include transform( translate( 0, -50% ) );
+                }
+
+            }
+        }
+    }
+}
