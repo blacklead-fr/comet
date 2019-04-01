@@ -347,13 +347,6 @@ utils.getPostMeta = function(){
 
 };
 
-utils.getLib = function(){
-	const lib = __global().get( 'lib' );
-
-	return !utils.isObject( lib ) ? {} : lib;
-
-};
-
 utils.getSettings = function(){
 	const settings = __global().get( 'settings' );
 

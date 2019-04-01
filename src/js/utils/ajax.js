@@ -46,7 +46,10 @@ export default function( data ){
     }
     data.do = utils.trim( data.do );
     data.action = utils.isStringEmpty( __cometdata.user ) || __cometdata.user !== 'true' ? 'cometnoprivactions' : 'cometprivactions';
-    data.security = __cometdata.security;
+
+    if( 'security' in __cometdata ){
+        data.security = __cometdata.security;
+    }
 
     xhr = new XMLHttpRequest();
     xhr.open( 'POST' , __cometdata.ajax_url, true );

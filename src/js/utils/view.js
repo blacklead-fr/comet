@@ -75,7 +75,7 @@ import layout from './layout.js';
 	ajax( {
 		do: 'data',
 		id: _id,
-		public: true
+		public: 'true'
 
 	} ).done(function( response ){
 		const _default = [ 'post', 'settings', 'svgSets' ];

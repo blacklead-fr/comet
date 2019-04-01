@@ -23,56 +23,36 @@ export default function ( node ){
 
 	};
 
+
 	priv.insert = function( position, entry ){
+		const positions = [ 'beforebegin', 'afterbegin', 'beforeend', 'afterend' ];
 		const or = node;
-		var n;
 
-		if( !prop.isNode() || prop.isView() || !utils.isString( position ) || utils.isStringEmpty( ( position = utils.trim( position ) ) ) ){
+		if( !prop.isNode() || prop.isView() || !utils.isString( position ) ){
 			return false;
 
 		}
 
-		if( [ 'beforebegin', 'afterbegin', 'beforeend', 'afterend' ].indexOf( position ) < 0 ){
+		if( positions.indexOf( position = utils.trim( position.toLowerCase() ) ) < 0 ){
 			return false;
 
 		}
 
-		function _insert( _entry ){
-
-			if( !utils.isStringEmpty( _entry ) ){
-				node.insertAdjacentHTML( position, _entry );
-				return;
-
-			}
-			node.insertAdjacentElement( position, _entry );
+		if( utils.isString( entry ) ){
+			node.insertAdjacentHTML( position, entry );
+			return true;
 
 		}
 		node = entry;
 
-		if( prop.isNode() ){
+		if( utils.isObject( entry ) && !prop.isView() ){
 			node = or;
-			_insert();
+			node.insertAdjacentElement( position, entry );
 			return true;
 
 		}
 		node = or;
-
-		if( entry.length < 1 ){
-			return false;
-		}
-
-		for( n = 0; n < entry.length; n++ ){
-			node = entry[n];
-
-			if( !prop.isNode() ){
-				node = or;
-				continue;
-
-			}
-			node = or;
-			_insert( entry[n] );
-
-		}
+		return false;
 
 	};
 

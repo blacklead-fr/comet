@@ -9,8 +9,8 @@ class Comet_Ajax {
 
 	public function __construct(){
 
-        add_action( 'wp_ajax_cometprivactions', array( $this, 'priv' ) );
-        add_action( 'wp_ajax_nopriv_cometnoprivactions', array( $this, 'nopriv' ) );
+        add_action( 'wp_ajax_cometprivactions', [ $this, 'priv' ] );
+        add_action( 'wp_ajax_nopriv_cometnoprivactions', [ $this, 'nopriv' ] );
 
     }
 
@@ -40,7 +40,7 @@ class Comet_Ajax {
     }
 
     public function nopriv(){
-        $p = is_array( $_POST ) ? $_POST : array();
+        $p = is_array( $_POST ) ? $_POST : [];
 
         if( $p['action'] !== 'cometnoprivactions' || !isset( $p['do'] ) ){
             echo __( 'Error', 'comet' );
@@ -68,7 +68,7 @@ class Comet_Ajax {
     }
 
     public function priv(){
-        $p = is_array( $_POST ) ? $_POST : array();
+        $p = is_array( $_POST ) ? $_POST : [];
 
         if( $p['action'] !== 'cometprivactions' || !isset( $p['do'] ) ){
             echo __( 'Error', 'comet' );
@@ -77,7 +77,7 @@ class Comet_Ajax {
         }
 
         if( !isset( $p['security'] ) || !check_ajax_referer( 'comet-ajax-nonce', 'security', false ) ){
-            echo __( 'Access denied', 'comet');
+            echo __( 'Access denied', 'comet' );
             wp_die();
 
         }
@@ -108,8 +108,6 @@ class Comet_Ajax {
             break;
 
             case 'save':
-
-            //echo urldecode( $p['data'] );
 
             if( isset( $p['data'] ) && ( $data = comet_parse_json( $p['data'] ) ) ){
                 $id = isset( $p['id' ] ) ? $p['id'] : -1;

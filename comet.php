@@ -9,7 +9,7 @@
  * Plugin Name:       Comet
  * Plugin URI:        https://blacklead.fr/comet
  * Description:       The visual page builder that's light, fast and modern. Bring your ideas to life fast through the drag & drop and the advanced features.
- * Version:           1.1.3
+ * Version:           1.1.5
  * Author:            blacklead
  * Author URI:        https://blacklead.fr
  * License:           GPL-2.0+
@@ -23,7 +23,7 @@ if( !defined( 'WPINC' ) ){
 	die;
 }
 
-define( 'COMET_VERSION', '1.1.3' );
+define( 'COMET_VERSION', '1.1.5' );
 define( 'COMET_DEBUG', false );
 define( 'COMET_PATH', plugin_dir_path( __FILE__ ) );
 define( 'COMET_URL', plugin_dir_url( __FILE__ ) );

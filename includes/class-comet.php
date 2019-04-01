@@ -168,7 +168,6 @@ class Comet {
 		$this->autoload( 'Comet_Includes' );
 		$this->autoload( 'Comet_Ajax' );
 
-
 		if( is_admin() ){
 			require_once "{$path}admin/admin.php";
 			$this->autoload( 'Comet_Admin' );

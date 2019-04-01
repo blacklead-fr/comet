@@ -317,7 +317,7 @@ import __data from './data.js';
     public: false,
 
   } ).done(function( response ){
-    const _default = [ 'post', 'settings', 'lib', 'svgSets' ];
+    const _default = [ 'post', 'settings', 'svgSets' ];
     const data = parse.json( response );
     var n = 0;
     var i, slug;
@@ -339,7 +339,7 @@ import __data from './data.js';
 
     }
 
-    if( n < 4 ){
+    if( n < 3 ){
       alert( __cometi18n.messages.error.failed );
       throw new Error( __cometi18n.messages.error.failed );
 

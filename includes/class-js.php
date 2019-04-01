@@ -12,23 +12,15 @@ class Comet_Js {
 
 	private $public = false;
 
-	private $data = array();
+	private $data = [];
 
 	public function __construct( $id = null, $public = true ){
 
 		$this->id = ( is_int( $id = intval( $id ) ) && $id > -1 ? $id : null );
 		$this->public = is_bool( $public ) ? $public : true;
-
-		if( $this->public ){
-			$mth = [ 'post', 'settings', 'svgSets' ];
-
-		}else{
-			$mth = [ 'post', 'settings', 'lib', 'svgSets' ];
-
-		}
 		$this->data = !is_array( $this->data ) ? [] : $this->data;
 
-		foreach( $mth as $m ){
+		foreach( [ 'post', 'settings', 'svgSets' ] as $m ){
 
 			if( method_exists( $this, $m ) ){
 				$this->data[$m] = call_user_func( [ $this, $m ] );
@@ -55,30 +47,19 @@ class Comet_Js {
 
 		if( $this->public ){
 
-			return array(
+			return [
 				'elements'	=> $elements 
-			);
+			];
 
 		}
 		$layout = comet_layout();
 
-		return array(
+		return [
 			'elements'	=> $elements,
-			'section'	=> is_array( $data = $layout->get_type_data( 'section' ) ) ? $data['tabs'] : array(),
-			'row'		=> is_array( $data = $layout->get_type_data( 'row' ) ) ? $data['tabs'] : array(),
-			'column'	=> is_array( $data = $layout->get_type_data( 'column' ) ) ? $data['tabs'] : array()
-		);
-
-	}
-
-	private function lib(){
-		$opt = get_option( 'comet_settings' );
-		$api = 'googlekey';
-
-		return array(
-			'admin_url'	=> get_admin_url(),
-			'apikey'	=> ( is_array( $opt ) && ( $api = $opt[$api] ) !== null && is_string( $api ) ? trim( strip_tags( $api ) ) : '' )
-		);
+			'section'	=> is_array( $data = $layout->get_type_data( 'section' ) ) ? $data['tabs'] : [],
+			'row'		=> is_array( $data = $layout->get_type_data( 'row' ) ) ? $data['tabs'] : [],
+			'column'	=> is_array( $data = $layout->get_type_data( 'column' ) ) ? $data['tabs'] : []
+		];
 
 	}
 

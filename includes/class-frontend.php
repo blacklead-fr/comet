@@ -15,8 +15,8 @@ class Comet_Frontend extends Comet_Render{
 
 	public function __construct(){
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
-		add_filter( 'the_content', array( $this, 'content' ) );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+		add_filter( 'the_content', [ $this, 'content' ] );
 
 	}
 
@@ -73,18 +73,18 @@ class Comet_Frontend extends Comet_Render{
 		}
 		$url = COMET_URL;
 
-		$data = array(
+		$data = [
 			'id'		=> $this->post->get_id(),
-			'ajax_url'	=> admin_url( 'admin-ajax.php' ),
-			'security'	=> wp_create_nonce( 'comet-ajax-nonce' )
-		);
+			'ajax_url'	=> admin_url( 'admin-ajax.php' )
+			//'security'	=> wp_create_nonce( 'comet-ajax-nonce' )
+		];
 
 		if( is_user_logged_in() ){
 			$data['user'] = 'true';
 
 		}
 		wp_enqueue_style( $this->slug, "{$url}src/css/view.css", [], COMET_VERSION );
-        wp_add_inline_style( $this->slug, comet_get_fonts( 'publish', 'css' ) );
+		wp_add_inline_style( $this->slug, comet_get_fonts( 'publish', 'css' ) );
 		wp_register_script( $this->slug, "{$url}src/js/view.js", [], COMET_VERSION, true );
 		wp_localize_script( $this->slug, '__cometdata', $data );
 		wp_enqueue_script( $this->slug );

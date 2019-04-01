@@ -78,12 +78,12 @@ class preview extends Comet_Page {
         }
         $url = COMET_URL;
 
-        comet_localize( '__cometdata', array(
+        comet_localize( '__cometdata', [
             'id'        => $this->id,
             'ajax_url'  => admin_url( 'admin-ajax.php' ),
             'security'  => wp_create_nonce( 'comet-ajax-nonce' ),
             'user'      => 'true',
-        ) );
+        ] );
 
         comet_print_script( "{$url}src/js/view.js", COMET_VERSION );
 
