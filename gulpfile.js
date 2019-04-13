@@ -1,38 +1,35 @@
 'use strict';
 
-var gulp = require('gulp');
-var webpack = require('webpack-stream');
-var csslint = require( 'gulp-csslint' );
-var eslint = require( 'gulp-eslint' );
-var sourcemaps = require('gulp-sourcemaps');
-var sass = require('gulp-sass');
-const named = require('vinyl-named');
+const { src, dest, watch } = require( 'gulp' );
+const _sass = require( 'gulp-sass' );
+const _webpack = require('webpack-stream');
+const _csslint = require( 'gulp-csslint' );
+const _eslint = require( 'gulp-eslint' );
+const _named = require('vinyl-named');
 
-sass.compiler = require('node-sass');
+function cssLint(){
+    return src( [ 'src/css/*.css' ] )
+    .pipe( _csslint())
+    .pipe( _csslint.formatter());
+    
+}
 
-gulp.task('css:compile', function(){
-    return gulp.src(['src/css/admin/admin.scss', 'src/css/editor/editor.scss', 'src/css/utils/view.scss' ])
-    .pipe(sourcemaps.init())
-    .pipe(sass.sync({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(sourcemaps.write( '.' ))
-    .pipe(gulp.dest('src/css/'));
-});
+function cssCompile(){
+    return src( ['src/css/admin/admin.scss', 'src/css/editor/editor.scss', 'src/css/utils/view.scss' ], { sourcemaps: true })
+    .pipe( _sass.sync( { outputStyle: 'compressed' } ).on( 'error', _sass.logError ) )
+    .pipe( dest( 'src/css/' ), { sourcemaps: '.' } );
 
-gulp.task( 'css:watch', function(){
-    gulp.watch( 'src/css/**/*.scss', [ 'css:compile' ] );
-});
+}
 
-gulp.task( 'css:verify', function(){
-    return gulp.src( [ 'src/css/*.css' ] )
-    .pipe(csslint())
-    .pipe(csslint.formatter());
-});
+function cssWatch(){
+    watch( 'src/css/**/*.scss', { ignoreInitial: false }, cssCompile );
 
-gulp.task( 'js:verify', function(){
+}
 
-    return gulp.src( [ 'src/js/**/*.js', '!src/js/*js', '!src/js/utils/viewport.js', '!src/js/utils/ui/viewport.js', '!src/js/utils/book.js' ] )
+function jsLint(){
 
-    .pipe(eslint({
+    return src( [ 'src/js/**/*.js', '!src/js/*js', '!src/js/utils/viewport.js', '!src/js/utils/ui/viewport.js', '!src/js/utils/book.js' ] )
+    .pipe( _eslint({
         'env': {
             'browser': true,
         },
@@ -85,28 +82,33 @@ gulp.task( 'js:verify', function(){
             'no-inner-declarations': 'warn',
         }
     }))
-    .pipe(eslint.format())
+    .pipe( _eslint.format())
     //.pipe(eslint.failOnError());
 
-});
+}
 
-
-gulp.task( 'js:compile', function(){
-	return gulp.src( [ 'src/js/editor/editor.js', 'src/js/utils/view.js', 'src/js/admin/admin.js' ] )
-    .pipe( named() )
-    .pipe( webpack( {
+function jsCompile(){
+    return src( [ 'src/js/editor/editor.js', 'src/js/utils/view.js', 'src/js/admin/admin.js' ] )
+    .pipe( _named() )
+    .pipe( _webpack( {
         //watch: true,
         target: 'web',
         mode: 'production',/*'development',*/
         devtool: 'source-map',
     } ) )
-    .pipe( gulp.dest( 'src/js/' ) );
-} );
+    .pipe( dest( 'src/js/' ) );
 
-gulp.task( 'js:watch', function() {
-  gulp.watch([ 'src/js/**/*.js' ], { delay: 60000 }, [ 'js:compile' ] );
-});
+}
 
-gulp.task( 'default', [ 'css:verify', 'js:verify', 'css:compile', 'js:compile' ] );
+function jsWatch(){
+    watch( 'src/js/**/*.js', { ignoreInitial: false }, jsCompile );
 
+}
 
+module.exports = {
+    css: cssWatch,
+    js: jsWatch,
+    lcss: cssLint,
+    ljs: jsLint
+
+};
