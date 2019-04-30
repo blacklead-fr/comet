@@ -3,7 +3,6 @@ import f_color from '../../utils/ui/color-picker.js';
 import sanitize from '../../utils/sanitize.js';
 import f_range from '../../utils/ui/range.js';
 import f_numbers from './fields/numbers.js';
-import global from '../../utils/global.js';
 import layout from '../../utils/layout.js';
 import parse from '../../utils/parse.js';
 import utils from '../../utils/utils.js';
@@ -20,8 +19,6 @@ import __id from '../id.js';
 const __create = function( tabs, data ){
 
 	const _d = document;
-
-	const __fieldsJs = [];
 
 	const __core = {
 
@@ -356,8 +353,6 @@ const __create = function( tabs, data ){
 
 				}
 
-				global().set( 'panelFields', __fieldsJs, true );
-
 				return {
 					tabs: oTabs,
 					content: oContent
@@ -645,6 +640,36 @@ const __create = function( tabs, data ){
 
 					range: function(){
 
+						const onchange = function( ev, ui, e ){
+							var dren, val, tmp, x;
+
+							if( ( val = sanitize.number( e.source.value ) ) === null || ( tmp = e.source.parentNode ) === null ){
+								return;
+
+							}
+
+							if( ( dren = tmp.getElementsByClassName( 'comet-value' ) ).length < 1 ){
+								return;
+
+							}
+
+							for( x = 0; x < dren.length; x++ ){
+
+								if( !node( dren[x] ).isNode() ){
+									continue;
+
+								}
+								dren[x].innerHTML = val;
+
+							}
+							update( e.source );
+
+						};
+
+						const fragment = _d.createDocumentFragment();
+
+						const _unit = _d.createElement( 'span' );
+
 						const _node = _d.createElement( 'input' );
 						_node.type = 'hidden';
 						_node.name = slug;
@@ -653,14 +678,19 @@ const __create = function( tabs, data ){
 						_node.min = sanitize.number({ value: field.min, min: 0 });
 						_node.max = sanitize.number({ value: field.max, min: _node.min });
 						_node.step = sanitize.number({ value: field.step, min: 0.01 });
-						_node.dataset.unit = utils.isString( field.unit ) ? utils.stripTags( field.unit ) : '';
 
-						__fieldsJs[__fieldsJs.length] = {
-							type: field.type,
-							node: _node
-						}
+						_unit.className = 'comet-unit';
+						_unit.innerHTML = '<span class="comet-value">' + value + '</span>' + ( utils.isString( field.unit ) ? utils.stripTags( field.unit ) : '' );
 
-						return _node;
+						fragment.appendChild( _node );
+						fragment.appendChild( _unit );
+
+						f_range( _node, { 
+							buttons: true,
+							change: onchange
+						} );
+
+						return fragment;
 
 					},
 

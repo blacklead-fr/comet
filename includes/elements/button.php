@@ -54,7 +54,7 @@ class button extends Comet_Element {
 
         }
         $url = isset( $edata['link'] ) && is_string( $edata['link'] ) ? esc_url( trim( strip_tags( $edata['link'] ) ) ) : '#';
-        $tar = isset( $edata['tar'] ) && Comet_Utils::is_true( $edata['tar'] ) ? ' target="_blank"' : '';
+        $tar = isset( $edata['tar'] ) && Comet_Utils::is_enabled( $edata['tar'] ) ? ' target="_blank"' : '';
         $dir = isset( $edata['ipos'] ) && is_string( $edata['ipos'] ) && $edata['ipos'] === 'r' ? 'r' : 'l';
 
         $output .= "<a class=\"{$ca}\" href=\"{$url}\"{$tar}>";
