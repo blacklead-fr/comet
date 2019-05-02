@@ -22,8 +22,8 @@ class audio extends Comet_Element {
         $edata = is_array( $data['el'] ) ? $data['el'] : [];
         $src = isset( $edata['url'] ) && is_string( $edata['url'] ) ? esc_url( trim( strip_tags( $edata['url'] ) ) ) : '';
 
-        $loop = isset( $edata['loop'] ) && Comet_Utils::is_true( $edata['loop'] ) ? ' loop="true"' : '';
-        $autoplay = isset( $edata['aut'] ) && Comet_Utils::is_true( $edata['aut'] ) ? ' autoplay="true"' : '';
+        $loop = isset( $edata['loop'] ) && Comet_Utils::is_enabled( $edata['loop'] ) ? ' loop="true"' : '';
+        $autoplay = isset( $edata['aut'] ) && Comet_Utils::is_enabled( $edata['aut'] ) ? ' autoplay="true"' : '';
 
         $output = "<audio class=\"cpb-audio\" src=\"{$src}\" preload=\"metadata\" controls=\"true\"{$loop}{$autoplay}>";
         $output .= __( 'Your browser does not support audio', 'comet' );

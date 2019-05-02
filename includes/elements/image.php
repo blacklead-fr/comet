@@ -25,7 +25,7 @@ class image extends Comet_Element {
         $classes = 'cpb-image cpb-wrapper ' . Comet_Utils::get_alignment( isset( $edata['alg'] ) ? $edata['alg'] : 'c' );
 
         $output = "<div class=\"{$classes}\">";
-        $output .= "<{$tag} class=\"cpb-image cpb-inner\"" . ( $tag === 'a' ? " href=\"{$link}\"" . ( Comet_Utils::is_true( $edata['tar'] ) ? ' target="_blank"' : '' ) : '' ) . ">";
+        $output .= "<{$tag} class=\"cpb-image cpb-inner\"" . ( $tag === 'a' ? " href=\"{$link}\"" . ( Comet_Utils::is_enabled( $edata['tar'] ) ? ' target="_blank"' : '' ) : '' ) . ">";
 
         if( isset( $edata['img'] ) ){
             $output .= Comet_Utils::get_image( $edata['img'], isset( $edata['alt'] ) ? $edata['alt'] : '' );

@@ -33,7 +33,7 @@ class icon extends Comet_Element {
             $tag = 'a';
             $attr .= " href=\"{$url}\"";
 
-            if( isset( $edata['tar'] ) && Comet_Utils::is_true( $edata['tar'] ) ){
+            if( isset( $edata['tar'] ) && Comet_Utils::is_enabled( $edata['tar'] ) ){
                 $attr .= ' target="_blank"';
 
             }

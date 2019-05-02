@@ -274,7 +274,25 @@ class Comet_Utils {
 
     static protected function is_true( $entry ){
 
-        return ( in_array( $entry, [ 'true', 'TRUE', 1, true ] ) );
+        return self::is_enabled( $entry ) || $entry === true || $entry === 1;
+
+    }
+
+    static protected function is_false( $entry ){
+
+        return self::is_disabled( $entry ) || $entry === false || $entry === 0;
+
+    }
+
+    static protected function is_enabled( $entry ){
+
+        return in_array( $entry, [ 'true', 'TRUE', 'on', 'ON', '1' ] );
+
+    }
+
+    static protected function is_disabled( $entry ){
+
+        return in_array( $entry, [ 'false', 'FALSE', 'off', 'OFF', '0' ] );
 
     }
 

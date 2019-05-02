@@ -1,5 +1,4 @@
 /* Comet - Copyright (c) 2019 Blacklead */
-/* Last edit: Jan, 25 2019 */
 
 import contextualize from './contextualize.js';
 import __global from '../utils/global.js';
@@ -11,6 +10,7 @@ import utils from '../utils/utils.js';
 import post_elements from './post.js';
 import ajax from '../utils/ajax.js';
 import node from '../utils/node.js';
+import cockpit from './cockpit.js';
 import __data from './data.js';
 
 /* global document, window, Comet, alert, __cometi18n, __cometdata, setInterval, clearInterval */
@@ -53,7 +53,7 @@ import __data from './data.js';
 
     },
 
-    sidebar: function(){
+    /*sidebar: function(){
       const elements = utils.getElements();
       const sidebar = _doc.createElement( 'div' );
       const footer = _doc.createElement( 'div' );
@@ -132,59 +132,48 @@ import __data from './data.js';
     },
 
     cockpit: function(){
+      const fragment = _doc.createDocumentFragment();
       const cockpit = _doc.createElement( 'div' );
-      const inner = _doc.createElement( 'div' );
-      const header = _doc.createElement( 'div' );
-      const notes = _doc.createElement( 'div' );
-      const footer = _doc.createElement( 'div' );
       const buttons = {
         settings: 'cico-cog',
         save: 'cico-dir-upload',
         lib: 'cico-directory',
         exit: 'cico-power',
       };
-      var tmp, b, tmp1;
+      var wrap, inner, header, footer, tmp, b;
+
+      fragment.appendChild( cockpit );
 
       cockpit.id = 'comet-cockpit';
       cockpit.className = 'comet-cockpit comet-fixfull';
+      cockpit.innerHTML = '<div class="comet-inner"></div><div class="comet-sideToggleButton comet-eventToggle"></div>';
 
-      inner.className = 'comet-inner';
-      cockpit.appendChild( inner );
+      inner = '<div class="comet-header">';
+      inner += '<h4>' + __cometi18n.cockpit.title + '</h4>';
+      inner += '<button class="comet-button comet-eventToggle" aria-label="' + __cometi18n.ui.close + '">';
+      inner += '<span class="cico cico-x"></span>';
+      inner += '</button>';
+      inner += '<p>';
+      inner += '<button class="comet-header__clear">' + __cometi18n.cockpit.clearNx + '</button>';
+      inner += '</p>';
+      inner += '</div>';
+      inner += '<div id="comet-notifications" class="comet-notifications"></div>';
+      inner += '<div class="comet-footer"></div>';
 
-      header.className = 'comet-header';
-      inner.appendChild( header );
+      wrap = cockpit.firstChild;
+      wrap.innerHTML = inner;
 
-      header.innerHTML = '<h4>' + __cometi18n.cockpit.title + '</h4>';
+      header = wrap.children[0];
+      footer = wrap.children[2];
 
+      c__.toggle( cockpit.lastChild );
+      c__.toggle( header.children[1] );
 
-      notes.id = 'comet-notifications';
-      notes.className = 'comet-notifications';
-      inner.appendChild( notes );
-
-      tmp = _doc.createElement( 'button' );
-      tmp.className = 'comet-button comet-eventToggle';
-      tmp.name = 'to_cockpit';
-      tmp.setAttribute( 'aria-label', __cometi18n.ui.close );
-      tmp.innerHTML = '<span class="cico cico-x"></span>';
-      c__.toggle( tmp );
-      header.appendChild( tmp );
-
-      tmp1 = _doc.createElement( 'p' );
-      header.appendChild( tmp1 );
-
-      tmp = _doc.createElement( 'button' );
-      tmp.id = 'comet-clearNotifications';
-      tmp.innerHTML = __cometi18n.cockpit.clearNx;
-      tmp1.appendChild( tmp );
-
-      node( tmp ).on( 'click', function( ev ){
+      node( header.children[2].firstChild ).on( 'click', function( ev ){
         ev.preventDefault();
-        notes.innerHTML = '';
+        wrap.children[1].innerHTML = '';
         
       });
-
-      footer.className = 'comet-footer';
-      inner.appendChild( footer );
 
       for( b in buttons ){
 
@@ -204,19 +193,12 @@ import __data from './data.js';
         }
 
       }
-
-      tmp = _doc.createElement( 'button' );
-      tmp.className = 'comet-sideToggleButton comet-eventToggle';
-      tmp.name = 'to_cockpit';
-      c__.toggle( tmp );
-      cockpit.appendChild( tmp );
-
-      editor.appendChild( cockpit );
+      editor.appendChild( fragment );
 
       return g_.set( 'cockpit', cockpit, true );
 
 
-    },
+    },*/
 
     frame: function(){
       frame = _doc.createElement( 'div' );
@@ -356,7 +338,8 @@ import __data from './data.js';
     g_.set( 'generalSettings', settings, true );
 
     eb.frame();
-    eb.cockpit();
+    cockpit();
+    //eb.cockpit();
 
     if( utils.isStringEmpty( metaData._sections ) ){
       eb.post( post.post_content );
@@ -364,8 +347,8 @@ import __data from './data.js';
     }
     node( _doc.body ).addClass( 'comet-globalLevel' );
     layout( data_.getData() ).init( frame, null );
-    c__.settings( '#comet-closeGeneralSettings' );
-    eb.sidebar();
+    //c__.settings( '#comet-closeGeneralSettings' );
+    //eb.sidebar();
     eb.preload();
     contextualize();
 
