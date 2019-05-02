@@ -10,6 +10,7 @@ import utils from '../utils/utils.js';
 import post_elements from './post.js';
 import ajax from '../utils/ajax.js';
 import node from '../utils/node.js';
+import cockpit from './cockpit.js';
 import __data from './data.js';
 
 /* global document, window, Comet, alert, __cometi18n, __cometdata, setInterval, clearInterval */
@@ -52,7 +53,7 @@ import __data from './data.js';
 
     },
 
-    sidebar: function(){
+    /*sidebar: function(){
       const elements = utils.getElements();
       const sidebar = _doc.createElement( 'div' );
       const footer = _doc.createElement( 'div' );
@@ -197,7 +198,7 @@ import __data from './data.js';
       return g_.set( 'cockpit', cockpit, true );
 
 
-    },
+    },*/
 
     frame: function(){
       frame = _doc.createElement( 'div' );
@@ -337,7 +338,8 @@ import __data from './data.js';
     g_.set( 'generalSettings', settings, true );
 
     eb.frame();
-    eb.cockpit();
+    cockpit();
+    //eb.cockpit();
 
     if( utils.isStringEmpty( metaData._sections ) ){
       eb.post( post.post_content );
@@ -345,8 +347,8 @@ import __data from './data.js';
     }
     node( _doc.body ).addClass( 'comet-globalLevel' );
     layout( data_.getData() ).init( frame, null );
-    c__.settings( '#comet-closeGeneralSettings' );
-    eb.sidebar();
+    //c__.settings( '#comet-closeGeneralSettings' );
+    //eb.sidebar();
     eb.preload();
     contextualize();
 

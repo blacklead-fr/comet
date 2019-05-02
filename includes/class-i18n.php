@@ -147,17 +147,6 @@ class Comet_i18n {
 
 	private function editor(){
 
-		$this->add( 'cockpit', [
-			'title'		=> __( 'Cockpit', 'comet' ),
-			'clearNx'	=> __( 'Clear notifications', 'comet' ),
-			'options'	=> [
-				'settings'	=> __( 'General settings', 'comet' ),
-				'save'		=> __( 'Save as template', 'comet' ),
-				'lib'		=> __( 'Template library', 'comet' ),
-				'exit'		=> __( 'Exit', 'comet' ),
-			]
-		] );
-
 		$this->add( 'options', [
 			'section'	=> [
 				'title'	=> __( 'Section', 'comet' ),
@@ -220,6 +209,12 @@ class Comet_i18n {
 			'editItem'			=> __( 'Item settings', 'comet' ),
 			'addItem'			=> __( 'Add item', 'comet' ),
 			'sort'				=> __( 'Sort', 'comet' ),
+			'cockpit'			=> __( 'Cockpit', 'comet' ),
+			'settings'			=> __( 'General settings', 'comet' ),
+			'sTemplate'			=> __( 'Save as template', 'comet' ),
+			'templates'			=> __( 'Templates library', 'comet' ),
+			'exit'				=> __( 'Exit', 'comet' ),
+			'clearNx'			=> __( 'Clear notifications', 'comet' ),
 		] );
 
 		$this->add( 'messages', [
