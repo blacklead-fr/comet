@@ -10,6 +10,8 @@ import panel from '../panel.js';
 
 export default function( parentNode ){
 
+	const _d = document;
+
 	const __initialize = {
 
 		layout: function( _n ){
@@ -195,10 +197,10 @@ export default function( parentNode ){
 
 		function create( id, name, icon ){
 			const tmp = _d.createElement( 'button' );
-			tmp.className = __core.createClass( 'elements__list__element' );
+			tmp.className = 'comet-elements__list__element';
 			tmp.setAttribute( 'aria-label', name );
 			tmp.dataset.id = id;
-			tmp.innerHTML = '<span class="' + __core.createClass( 'elements__list__element__icon cico ' + icon ) + '"></span><span class="' + __core.createClass( 'elements__list__element__title' ) + '">' + name + '</span>';
+			tmp.innerHTML = '<span class="comet-elements__list__element__icon cico ' + icon + '"></span><span class="comet-elements__list__element__title"><span>' + name + '</span></span>';
 			parentNode.appendChild( tmp );
 
 		};

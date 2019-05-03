@@ -6,15 +6,6 @@
     background: rgba( 0, 106, 254, .3 );
 }
 
-%position{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    overflow: auto;
-
-} 
-
 .comet-editor {
 
     &.cpb-sorting .cpb-content {
@@ -69,12 +60,11 @@
     }
 
     .cpb-content {
-
-        @extend %position;
         width: 100%;
         background: whitesmoke;
         z-index: 0;
         position: relative;
+        order: 3;
 
         .cpb-element { min-height: 30px; }
 
@@ -197,15 +187,16 @@
         top: 0;
     }
 
-    .comet .is_toggled { display: block; }
+    //.comet .is_toggled { display: block; }
 
     #comet-editor{
         color: $liDark;
         background: $liDark;
         z-index: 0;
+        display: flex;
+
     }
 
-    #comet-panel,
-    .comet > .comet-sidebar { @extend %position; }
+    #comet-panel { order: 2; }
 
 }

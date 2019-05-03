@@ -50,6 +50,7 @@ export default function( parentNode ){
 			templates: {
 				title: __cometi18n.ui.templates,
 				icon: 'cico-directory',
+				expand: true,
 				event: library
 
 			},
@@ -57,6 +58,7 @@ export default function( parentNode ){
 			saveAs: {
 				title: __cometi18n.ui.sTemplate,
 				icon: 'cico-dir-upload',
+				expand: true,
 				event: evSave.saveAs
 
 			},
@@ -70,6 +72,7 @@ export default function( parentNode ){
 
 			exit: {
 				title: __cometi18n.ui.exit,
+				expand: true,
 				icon: 'cico-power',
 				event: function( ev ){
 
@@ -98,11 +101,11 @@ export default function( parentNode ){
 			const buttons = __core.buttons;
 			var b, tmp;
 
-			function button( title, icon ){
+			function button( title, icon, expand ){
 				const btn = _d.createElement( 'button' );
-				btn.className = 'comet-footer__button comet-button';
+				btn.className = 'comet-footer__button' + ( utils.isBool( expand ) && expand ? ' comet-cockpit__expand' : '' );
 				btn.setAttribute( 'aria-label', title );
-				btn.innerHTML = '<span class="comet-footer__button__icon cico ' + icon + '"></span><span class="comet-footer__button__title">' + title + '</span>';
+				btn.innerHTML = '<span class="comet-footer__button__icon cico ' + icon + '"></span><span class="comet-footer__button__title"><span>' + title + '</span></span>';
 
 				return btn;
 
@@ -111,16 +114,11 @@ export default function( parentNode ){
 
 
 			for( b in buttons ){
-
-				if( !( b in __cometi18n.cockpit.options ) ){
-					continue;
-
-				}
-				tmp = button( utils.trim( buttons[b].title ), utils.trim( buttons[b].icon ) );
+				tmp = button( utils.trim( buttons[b].title ), utils.trim( buttons[b].icon ), buttons[b].expand );
 				parentNode.appendChild( tmp );
 
 				if( utils.isFunction( buttons[b].event ) ){
-					node( ui ).on( 'click', buttons[b].event );
+					node( tmp ).on( 'click', buttons[b].event );
 
 				}
 
