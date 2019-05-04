@@ -1,7 +1,6 @@
 import initElements from './cockpit/elements.js';
 import initButtons from './cockpit/buttons.js';
-import notification from './notification.js';
-import message from '../utils/message.js';
+import initMenu from './cockpit/menu.js';
 import utils from '../utils/utils.js';
 import node from '../utils/node.js';
 
@@ -84,8 +83,8 @@ export default function(){
 				const cockpit = _d.createElement( 'div' );
 				const section = {
 					header: null,
-					notifications: null,
 					elements: null,
+					menu: null,
 					footer: null
 
 				};
@@ -105,25 +104,6 @@ export default function(){
 				inner += '<h4 class="' + expand + '">' + __cometi18n.ui.cockpit + '</h4>';
 				inner += '</header>';
 
-				inner += '<section class="' + __core.createClass( 'notifications' ) + ' ' + expand + '">';
-				inner += '<button class="' + __core.createClass( 'notifications__button' ) + '">';
-				inner += '<span>Notifications</span>';
-				inner += '<span class="' + __core.createClass( 'notifications__button__gauge' ) + '">0</span>';
-				inner += '</button>';
-				inner += '<div class="' + __core.createClass( 'notifications__all' ) + '">';
-				inner += '<header class="' + __core.createClass( 'notifications__all__header' ) + '">';
-				inner += '<h4>Notifications</h4>';
-				inner += '<button class="' + __core.createClass( 'notifications__all__close' ) + ' ' + __core.createClass( 'button' ) + '">';
-				inner += '<span class="' + __core.createClass( 'button__icon cico cico-x' ) + '"></span>';
-				inner += '<span class="' + __core.createClass( 'button__tooltip' ) + '">' + __cometi18n.ui.close + '</span>';
-				inner += '<p>';
-				inner += '<button class="' + __core.createClass( 'notifications__all__clear' ) + '">' + __cometi18n.ui.clearNx + '</button>';
-				inner += '</p>';
-				inner += '</header>';
-				inner += '<section class="' + __core.createClass( 'notifications__all__list' ) + '"></section>';
-				inner += '</div>';
-				inner += '</section>';
-
 				inner += '<section class="' + __core.createClass( 'elements' ) + '">';
 				inner += '<div class="' + __core.createClass( 'elements__searchbox' ) + ' ' + expand + '">';
 				inner += '<input type="text" class="' + __core.createClass( 'elements__searchbox__bar' ) + '" value="" placeholder="' + __cometi18n.ui.search + '" />';
@@ -132,16 +112,19 @@ export default function(){
 				inner += '<div class="' + __core.createClass( 'elements__list' ) + '"></div>';
 				inner += '</section>';
 
+				inner += '<section class="' + __core.createClass( 'exmenu' ) + ' ' + expand + '"></section>';
+
 				inner += '<footer class="' + __core.createClass( 'footer' ) + '"></footer>';
 
 				cockpit.innerHTML = inner;
 
 				section.header = cockpit.children[0];
-				section.notifications = cockpit.children[1];
-				section.elements = cockpit.children[2];
+				section.elements = cockpit.children[1];
+				section.menu = cockpit.children[2];
 				section.footer = cockpit.children[3];
 
 				initElements( section.elements.lastChild );
+				initMenu( section.menu );
 				initButtons( section.footer );
 				node( section.header.firstChild ).on( 'click', __core.events.toggle );
 

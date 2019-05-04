@@ -1,9 +1,9 @@
 /* Comet - Copyright (c) 2019 Blacklead */
 
 import contextualize from './contextualize.js';
+import notifications from './notifications.js';
 import __global from '../utils/global.js';
 import layout from '../utils/layout.js';
-//import c__ from './actions/cockpit.js';
 //import s__ from './actions/sidebar.js';
 import parse from '../utils/parse.js';
 import utils from '../utils/utils.js';
@@ -204,8 +204,6 @@ import __data from './data.js';
       frame = _doc.createElement( 'div' );
       frame.id = 'cpb-content';
       frame.className = 'cpb cpb-content cpb-editArea cpb-backendMode';
-      frame.style.width = 'calc( 100% - 50px )';
-      frame.style.left = '50px';
       editor.appendChild( frame );
 
       return g_.set( 'frame', frame, true );
@@ -338,6 +336,7 @@ import __data from './data.js';
     g_.set( 'generalSettings', settings, true );
 
     eb.frame();
+    notifications();
     cockpit();
     //eb.cockpit();
 

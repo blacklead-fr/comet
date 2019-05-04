@@ -10,7 +10,7 @@ import __data from './data.js';
 
 const redefine = {
 
-	workflow: function(){
+	workflow: function(){/*
 		const ww = node( window ).width();
 		const frame = utils.getNode( 'frame' );
 		const sidebar = utils.getNode( 'sidebar' );
@@ -42,7 +42,7 @@ const redefine = {
 			_frame.addClass( 'cpb-desktopMode' );
 
 		}
-		frame.style.maxWidth = w + 'px';
+		frame.style.maxWidth = w + 'px';*/
 
 	},
 

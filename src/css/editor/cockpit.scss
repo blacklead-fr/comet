@@ -53,7 +53,7 @@
     }
 
     &.is_toggled {
-        width: 300px;
+        width: 250px;
 
         .comet-cockpit__expand {
             visibility: visible;
@@ -73,6 +73,11 @@
                 .comet-elements__list__element { width: 33.33%; }
 
             }
+        }
+
+        .comet-exmenu {
+            width: 100%;
+            padding: 7px;
         }
 
         .comet-footer {
@@ -139,109 +144,6 @@
 
     }
 
-    .comet-notifications {
-
-        .comet-notifications__button {
-            background: $liDark;
-            padding: 10px;
-            width: calc( 100% - 14px );
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 7px;
-            font: 300 14px/1.2 sans-serif;
-            cursor: pointer;
-            color: white;
-            @include border_radius( 5px );
-
-            .comet-notifications__button__gauge {
-                background: red;
-                width: 16px;
-                height: 16px;
-                padding: 1px;
-                @include border_radius( 20px );
-
-            }
-
-        }
-
-        .comet-notifications__all {
-            position: absolute;
-            top: 0;
-            left: -9999em;
-            width: 100%;
-            height: 100%;
-            background: $daDark;
-
-            .comet-notifications__all__header {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                padding: 10px;
-                align-items: center;
-                color: white;
-
-                > p {
-                    text-align: center;
-                    width: 100%;
-                    padding: 5px 0;
-
-                    button {
-                        padding: 0;
-                        margin: 0;
-                        border: 0;
-                        font: 300 13px/1.2 sans-serif;
-                        background: none;
-                        cursor: pointer;
-
-                    }
-                }
-
-                button {
-                    color: white;
-                    opacity: .7;
-
-                    &:hover { opacity: 1; }
-
-                }
-
-                .comet-notifications__all__close {
-                    position: relative;
-                    padding: 5px;
-                    cursor: pointer;
-
-                    .comet-button__icon {
-                        width: 15px;
-                        height: 15px;
-                        line-height: 15px;
-                        font-size: 15px;
-                        padding: 0;
-                        display: block;
-
-                    }
-
-                    .comet-button__tooltip {
-                        position: absolute;
-                        top: 0;
-                        left: -9999em;
-                        color: white;
-                        @include transition( top .1s ease-in-out );
-
-                    }
-
-                    &:hover .comet-button__tooltip {
-                        top: 100%;
-                        left: 0;
-                    }
-
-                }
-
-            }
-
-        }
-
-    }
-
     .comet-elements {
 
         .comet-elements__searchbox {
@@ -251,13 +153,25 @@
                 background: $liDark;
                 border-color: $liDark;
                 color: white;
-                padding-left: 30px;
-                opacity: .6;
+                opacity: .8;
+                padding: 10px 10px 10px 40px;
+                height: auto;
+                line-height: 1.2;
 
-                &:hover, &:focus {
+                &:hover {
                     opacity: 1;
                     border-color: $liDark;
-                    @include box_shadow( 0 0 10px -3px rgba( 0, 0, 0, .8 ) );
+                    @include box_shadow( none );
+                }
+
+                &:focus {
+                    border-color: white;
+                    background: white;
+                    color: $liDark;
+                    opacity: 1;
+                    @include box_shadow( none );
+
+                    + .comet-elements__searchbox__icon { color: $liDark; }
 
                 }
 
@@ -265,8 +179,8 @@
 
             .comet-elements__searchbox__icon {
                 position: absolute;
-                top: 7px;
-                left: 5px;
+                top: 10px;
+                left: 10px;
                 color: white;
             }
 
@@ -323,6 +237,30 @@
 
         }
 
+    }
+
+    .comet-exmenu {
+
+        .comet-exmenu__button {
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+            background: rgba( 0, 106, 254, .2 );
+            font: 500 14px/1.2 sans-serif;
+            color: white;
+            cursor: pointer;
+            @include border_radius( 5px );
+
+            .comet-exmenu__button__icon {
+                background: $daAccent;
+                padding: 5px;
+                font-size: 16px;
+                height: 16px;
+                width: 16px;
+                margin-right: 10px;
+                @include border_radius( 40px );
+            }
+        }
     }
 
     .comet-footer {

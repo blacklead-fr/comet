@@ -1,0 +1,175 @@
+@import '../utils/variables';
+@import '../utils/mixins';
+
+.comet-notifications {
+	position: fixed;
+	top: 0;
+	left: -9999em;
+	width: 250px;
+	height: 100%;
+	background: $daDark;
+	@include transition( left .1s ease-in-out );
+
+	&.comet-notifications--open {
+		left: 0;
+		z-index: 2;
+	}
+
+	.comet-notifications__header {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding: 10px;
+		align-items: center;
+		color: white;
+
+		> p {
+			text-align: center;
+			width: 100%;
+			padding: 5px 0;
+
+			button { font: 300 13px/1.2 sans-serif; }
+
+		}
+
+		button {
+			padding: 0;
+			margin: 0;
+			border: 0;
+			color: white;
+			opacity: .7;
+			background: none;
+			cursor: pointer;
+
+			&:hover { opacity: 1; }
+
+		}
+
+		.comet-notifications__close {
+			position: relative;
+			padding: 5px;
+
+			.comet-notifications__close__icon {
+				width: 15px;
+				height: 15px;
+				line-height: 15px;
+				font-size: 15px;
+				padding: 0;
+				display: block;
+
+			}
+
+			.comet-notifications__close__tooltip {
+				position: absolute;
+				top: 0;
+				left: -9999em;
+				color: white;
+				@include transition( top .1s ease-in-out );
+
+			}
+
+			&:hover .comet-notifications__close__tooltip {
+				top: 100%;
+				left: 0;
+			}
+
+		}
+
+	}
+
+	.comet-notifications__list {
+		padding: 7px;
+		height: calc( 100% - 100px );
+		overflow: hidden;
+
+		.comet-notifications__list__note {
+			background: $liDark;
+			padding: 10px;
+			margin-bottom: 10px;
+			position: relative;
+
+			.comet-notifications__list__note__remove {
+				padding: 0;
+				position: absolute;
+				top: 4px;
+				right: 999999em;
+				margin: 0;
+				background: none;
+				cursor: pointer;
+				opacity: .8;
+
+				.comet-notifications__list__note__remove__icon {
+					width: 15px;
+					height: 15px;
+					font-size: 15px;
+					color: white;
+
+				}
+
+				.comet-notifications__list__note__remove__tooltip {
+					
+				}
+
+				&:hover { opacity: 1; }
+
+			}
+
+			&:hover .comet-notifications__list__note__remove { right: 4px; }
+
+
+		}
+
+	}
+
+}
+
+/*.comet-notification {
+	padding: 10px;
+	margin-bottom: 10px;
+	position: relative;
+	overflow: hidden;
+	background: rgba( 0, 0, 0, .2 );
+
+	.comet-close {
+		padding: 0;
+		position: absolute;
+		top: 4px;
+		right: 999999em;
+		line-height: 12px;
+		height: auto;
+
+		.cico {
+			color: $daLight;
+			font-size: 12px;
+			width: 12px;
+			height: 12px;
+		}
+
+
+		&:hover .cico { color: white; }
+
+	}
+
+	&:hover .comet-close { right: 4px; }
+
+	&.success p{
+
+		&, * { color: #ADE995; }
+
+	}
+
+	&.error p{
+
+		&, * { color: #E36F6A; }
+
+	}
+
+	&.warning p {
+
+		&, * { color: #F3D567; }
+
+	}
+
+}
+
+}*/

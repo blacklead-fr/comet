@@ -215,7 +215,8 @@ class Comet_i18n {
 			'templates'			=> __( 'Templates library', 'comet' ),
 			'exit'				=> __( 'Exit', 'comet' ),
 			'clearNx'			=> __( 'Clear notifications', 'comet' ),
-			'collapse'			=> __( 'Collapse Cockpit', 'comet' )
+			'collapse'			=> __( 'Collapse Cockpit', 'comet' ),
+			'notifications'		=> __( 'Notifications', 'comet' )
 		] );
 
 		$this->add( 'messages', [

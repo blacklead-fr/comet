@@ -1,7 +1,6 @@
 import dialog from '../../utils/dialog.js';
 import utils from '../../utils/utils.js';
 import node from '../../utils/node.js';
-import library from './library.js';
 import evSave from './save.js';
 
 export default function( parentNode ){
@@ -47,11 +46,11 @@ export default function( parentNode ){
 
 			},
 
-			templates: {
-				title: __cometi18n.ui.templates,
-				icon: 'cico-directory',
+			notifications: {
+				title: __cometi18n.ui.notifications,
+				icon: 'cico-exclamation',
 				expand: true,
-				event: library
+				event: utils.notifications().toggle
 
 			},
 

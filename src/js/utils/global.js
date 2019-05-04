@@ -40,6 +40,17 @@ export default function (){
 
 			return ( !this.get( to ) ? false : true );
 
+		},
+
+		unset: function( to ){
+
+			if( !this.isSet( to ) ){
+				return false;
+
+			}
+			delete Comet[to];
+			return true;
+
 		}
 
 

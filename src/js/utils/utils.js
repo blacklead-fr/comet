@@ -377,9 +377,16 @@ utils.getElement = function( slug ){
 
 utils.getNode = function( slug ){
 	const g_ = __global();
-	const types = [ 'editor', 'frame', 'cockpit', 'sidebar', 'panel', 'generalSettings' ];
+	const types = [ 'editor', 'frame', 'cockpit', 'panel', 'generalSettings' ];
 
 	return !utils.isStringEmpty( slug ) && types.indexOf( slug = utils.trim( slug ) ) > -1 ? g_.get( slug ) : false;
+
+};
+
+utils.notifications = function(){
+	const notifications = __global().get( 'notifications' );
+
+	return utils.isObject( notifications ) ? notifications : false;
 
 };
 

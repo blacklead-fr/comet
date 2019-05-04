@@ -264,11 +264,6 @@ export default function( _ev_ ){
 		}
 	};
 
-	if( !node( _node ).isNode() ){
-		return;
-
-	}
-
 	_ev_.preventDefault();
 
 	(function(){
