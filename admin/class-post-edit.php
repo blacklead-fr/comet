@@ -315,28 +315,32 @@ class Comet_Post_Edit extends Comet_Metaboxes{
         do_action( 'add_meta_boxes', $post_type, $post );
         do_action( "add_meta_boxes_{$post_type}", $post );
 
-        echo '<div id="comet-generalSettings" class="comet-generalSettings comet-fixfull">';
-        echo '<form id="comet-postSettings">';
-        echo '<div class="comet-header">';
+        echo '<div id="comet-generalSettings" class="comet-general-settings">';
+        echo '<form id="comet-postSettings" class="comet-general-settings__form">';
+        echo '<header class="comet-general-settings__header comet-header">';
         echo '<h4>' . __( 'Post settings', 'comet' ) . '</h4>';
-        echo '<button id="comet-closeGeneralSettings" class="comet-button" aria-label="' . __( 'Close settings', 'comet' ) . '">';
-        echo '<span class="cico cico-x"></span>';
+        echo '<button class="comet-general-settings__close" aria-label="' . __( 'Close', 'comet' ) . '">';
+        echo '<span class="comet-general-settings__close__icon cico cico-x"></span>';
+        echo '<span class="comet-general-settings__close__tooltip">' . __( 'Close', 'comet' ) . '</span>';
         echo '</button>';
-        echo '</div>';
-        echo '<div class="comet-inner">';
+        echo '</header>';
+        echo '<section class="comet-general-settings__main comet-inner">';
 
         $this->do_meta_boxes( 'advanced', $post );
         $this->do_meta_boxes( 'side', $post );
         $this->do_meta_boxes( 'normal', $post );
 
-        echo '</div>';
+        echo '</section>';
         echo '</form>';
         echo '</div>';
 
         echo '</div>';
 
         echo '<div id="comet-preloader" class="comet-preloader">';
-        echo '<div><span class="cico cico-comet"></span><span class="comet-preloadertext">' . __( 'Loading...', 'comet' ) . '</span></div>';
+        echo '<div>';
+        echo '<span class="comet-preloader__icon cico cico-comet"></span>';
+        echo '<span class="comet-preloader__text comet-preloadertext">' . __( 'Loading...', 'comet' ) . '</span>';
+        echo '</div>';
         echo '</div>';
 
     }

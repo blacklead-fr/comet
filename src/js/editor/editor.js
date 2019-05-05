@@ -1,5 +1,6 @@
 /* Comet - Copyright (c) 2019 Blacklead */
 
+import generalSettings from './general-settings.js';
 import contextualize from './contextualize.js';
 import notifications from './notifications.js';
 import __global from '../utils/global.js';
@@ -26,7 +27,6 @@ import __data from './data.js';
   const g_ = __global();
   const data_ = __data();
   const editor = _doc.getElementById( 'comet-editor' );
-  const settings = _doc.getElementById( 'comet-generalSettings' );
 
   var post = {};
   var metaData = {};
@@ -267,7 +267,7 @@ import __data from './data.js';
 
   window.Comet = Comet || {};
 
-  if( !node( editor ).isNode() || !node( settings ).isNode() ){
+  if( !node( editor ).isNode() ){
     alert( __cometi18n.messages.error.failed );
     return false;
 
@@ -333,9 +333,9 @@ import __data from './data.js';
     };*/
 
     g_.set( 'editor', editor, true );
-    g_.set( 'generalSettings', settings, true );
 
     eb.frame();
+    generalSettings();
     notifications();
     cockpit();
     //eb.cockpit();
@@ -346,8 +346,6 @@ import __data from './data.js';
     }
     node( _doc.body ).addClass( 'comet-globalLevel' );
     layout( data_.getData() ).init( frame, null );
-    //c__.settings( '#comet-closeGeneralSettings' );
-    //eb.sidebar();
     eb.preload();
     contextualize();
 

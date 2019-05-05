@@ -59,18 +59,17 @@
 
 			}
 
-			.comet-notifications__close__tooltip {
-				position: absolute;
-				top: 0;
-				left: -9999em;
-				color: white;
-				@include transition( top .1s ease-in-out );
+			.comet-notifications__close__tooltip { @include tooltip(); }
 
-			}
+			&:hover { 
 
-			&:hover .comet-notifications__close__tooltip {
-				top: 100%;
-				left: 0;
+				&:after {
+					content: '';
+					@include arrow();
+
+				}
+
+				.comet-notifications__close__tooltip { left: 50%; }
 			}
 
 		}
@@ -79,8 +78,9 @@
 
 	.comet-notifications__list {
 		padding: 7px;
-		height: calc( 100% - 100px );
-		overflow: hidden;
+		height: calc( 100% - 77px );
+		overflow-x: hidden;
+		overflow-y: auto;
 
 		.comet-notifications__list__note {
 			background: $liDark;

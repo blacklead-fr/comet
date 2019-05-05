@@ -6,6 +6,15 @@ export default function( parentNode ){
 
 	const _d = document;
 
+	const className = 'comet-cockpit__exmenu__button';
+
+	const __classes = {
+		main: className,
+		icon: className + '__icon',
+		title: className + '__title'
+
+	};
+
 	const __core = {
 
 		buttons: {
@@ -23,11 +32,10 @@ export default function( parentNode ){
 			var b, tmp;
 
 			function button( id, title, icon ){
-				const mainClassName = 'comet-exmenu__button';
 				const btn = _d.createElement( 'button' );
-				btn.className = mainClassName + ' ' + mainClassName + '--' + id;
+				btn.className = __classes.main + ' ' + __classes.main + '--' + id;
 				btn.setAttribute( 'aria-label', title );
-				btn.innerHTML = '<span class="' + mainClassName + '__icon cico ' + icon + '"></span><span class="' + mainClassName + '__title">' + title + '</span>';
+				btn.innerHTML = '<span class="' + __classes.icon + ' cico ' + icon + '"></span><span class="' + __classes.title + '">' + title + '</span>';
 
 				return btn;
 

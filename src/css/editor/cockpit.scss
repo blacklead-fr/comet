@@ -29,9 +29,12 @@
 
 }
 
-.comet-cockpit {
+$className: '.comet-cockpit';
+
+#{$className} {
     height: 100%;
     width: 50px;
+    flex: 0 0 50px;
     background: $daDark;
     overflow: visible;
     z-index: 1;
@@ -45,17 +48,18 @@
     align-content: space-between;
     order: 1;
 
-    .comet-cockpit__expand { 
+    #{$className + '__expand'} { 
         visibility: hidden;
         height: 0;
         width: 0;
         overflow: hidden;
     }
 
-    &.is_toggled {
+    &#{$className + '--open'} {
         width: 250px;
+        flex: 0 0 250px;
 
-        .comet-cockpit__expand {
+        #{$className + '__expand'} {
             visibility: visible;
             height: auto;
             width: auto;
@@ -63,29 +67,29 @@
 
         }
 
-        .comet-elements {
+        #{$className + '__elements'} {
             margin: 7px;
 
-            .comet-elements__list {
+            #{$className + '__elements__list'} {
                 overflow-y: auto;
                 overflow-x: hidden;
 
-                .comet-elements__list__element { width: 33.33%; }
+                #{$className + '__elements__list__element'} { width: 33.33%; }
 
             }
         }
 
-        .comet-exmenu {
+        #{$className + '__exmenu'} {
             width: 100%;
             padding: 7px;
         }
 
-        .comet-footer {
+        #{$className + '__footer'} {
             padding: 7px;
 
-            .comet-footer__button {
+            #{$className + '__footer__button'} {
 
-                &, &.comet-cockpit__expand {
+                &, &#{$className + '__expand'} {
                     width: 33.33%;
                     padding: 10px;
                 }
@@ -96,13 +100,13 @@
 
     }
 
-    .comet-cockpit__header {
+    #{$className + '__header'} {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         width: 100%;
 
-        .comet-cockpit__header__switch {
+        #{$className + '__header__switch'} {
             background: $daAccent;
             padding: 5px;
             margin: 7px;
@@ -110,7 +114,7 @@
             cursor: pointer;
             @include border_radius( 40px );
 
-            .comet-cockpit__header__switch__icon {
+            #{$className + '__header__switch__icon'} {
                 width: 25px;
                 height: 25px;
                 font-size: 25px;
@@ -118,7 +122,7 @@
 
             }
 
-            .comet-cockpit__header__switch__tooltip {
+            #{$className + '__header__switch__tooltip'} {
                 visibility: hidden;
                 position: absolute;
                 top: 7px;
@@ -133,7 +137,7 @@
 
             }
 
-            &:hover .comet-cockpit__header__switch__tooltip {
+            &:hover #{$className + '__header__switch__tooltip'} {
                 visibility: visible;
 
                 > span { left: 10px; }
@@ -144,12 +148,12 @@
 
     }
 
-    .comet-elements {
+    #{$className + '__elements'} {
 
-        .comet-elements__searchbox {
+        #{$className + '__elements__searchbox'} {
             position: relative;
 
-            .comet-elements__searchbox__bar {
+            #{$className + '__elements__searchbox__bar'} {
                 background: $liDark;
                 border-color: $liDark;
                 color: white;
@@ -171,13 +175,13 @@
                     opacity: 1;
                     @include box_shadow( none );
 
-                    + .comet-elements__searchbox__icon { color: $liDark; }
+                    + #{$className + '__elements__searchbox__icon'} { color: $liDark; }
 
                 }
 
             }
 
-            .comet-elements__searchbox__icon {
+            #{$className + '__elements__searchbox__icon'} {
                 position: absolute;
                 top: 10px;
                 left: 10px;
@@ -187,7 +191,7 @@
         }
 
 
-        .comet-elements__list {
+        #{$className + '__elements__list'} {
             display: flex;
             flex-wrap: wrap;
             align-content: flex-start;
@@ -197,7 +201,7 @@
             overflow: hidden;
             max-height: 290px;
 
-            .comet-elements__list__element {
+            #{$className + '__elements__list__element'} {
                 text-align: center;
                 width: 100%;
                 background: none;
@@ -205,15 +209,18 @@
                 color: white;
                 padding: 10px;
                 cursor: pointer;
+                opacity: .7;
 
-                .comet-elements__list__element__icon {
+                &#{$className + '__elements__list__element--hidden'} { display: none; }
+
+                #{$className + '__elements__list__element__icon'} {
                     width: 25px;
                     height: 25px;
                     font-size: 25px;
                     color: white;
                 }
 
-                .comet-elements__list__element__title {
+                #{$className + '__elements__list__element__title'} {
                     visibility: hidden;
                     position: absolute;
 
@@ -226,10 +233,15 @@
 
                 }
 
-                &:hover .comet-elements__list__element__title {
-                    visibility: visible;
+                &:hover {
+                    opacity: 1;
 
-                    > span { left: 10px; }
+                    #{$className + '__elements__list__element__title'} {
+                        visibility: visible;
+
+                        > span { left: 10px; }
+
+                    }
 
                 }
 
@@ -239,9 +251,9 @@
 
     }
 
-    .comet-exmenu {
+    #{$className + '__exmenu'} {
 
-        .comet-exmenu__button {
+        #{$className + '__exmenu__button'} {
             width: 100%;
             padding: 10px;
             text-align: left;
@@ -251,7 +263,7 @@
             cursor: pointer;
             @include border_radius( 5px );
 
-            .comet-exmenu__button__icon {
+            #{$className + '__exmenu__button__icon'} {
                 background: $daAccent;
                 padding: 5px;
                 font-size: 16px;
@@ -263,7 +275,7 @@
         }
     }
 
-    .comet-footer {
+    #{$className + '__footer'} {
         border-top: 1px solid $liDark;
         display: flex;
         justify-content: flex-start;
@@ -271,21 +283,22 @@
         overflow: hidden;
         flex-wrap: wrap;
 
-        .comet-footer__button {
+        #{$className + '__footer__button'} {
             width: 100%;
             color: white;
             background: none;
             margin: 0;
             cursor: pointer;
             padding: 10px;
+            opacity: .7;
 
-            &.comet-cockpit__expand {
+            &#{$className + '__expand'} {
                 width: 0;
                 padding: 0;
 
             }
 
-            .comet-footer__button__title {
+            #{$className + '__footer__button__title'} {
                 position: absolute;
                 visibility: hidden;
 
@@ -296,10 +309,15 @@
                 }
             }
 
-            &:hover .comet-footer__button__title {
-                visibility: visible;
+            &:hover {
+                opacity: 1;
 
-                > span { left: 10px; }
+                #{$className + '__footer__button__title'} {
+                    visibility: visible;
+
+                    > span { left: 10px; }
+
+                }
 
             }
 

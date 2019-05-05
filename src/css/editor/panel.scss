@@ -5,9 +5,9 @@
 	top: 0;
 	font: 300 15px/1.2 sans-serif;
 	width: 250px;
+	flex: 0 0 250px;
 	background: white;
 	height: 100%;
-	border-right: 1px solid $daLight;
 
 	> .comet-header{
 		border-bottom: 1px solid $daLight;

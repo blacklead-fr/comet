@@ -12,6 +12,18 @@ export default function( parentNode ){
 
 	const _d = document;
 
+	const className = 'comet-cockpit__elements__list';
+
+	const __classes = {
+		main: className,
+		button: className + '__element',
+		icon: className + '__element__icon',
+		title: className + '__element__title'
+
+	};
+
+	const __elements = [];
+
 	const __initialize = {
 
 		layout: function( _n ){
@@ -197,13 +209,15 @@ export default function( parentNode ){
 
 		function create( id, name, icon ){
 			const tmp = _d.createElement( 'button' );
-			tmp.className = 'comet-elements__list__element';
+			tmp.className = __classes.button;
 			tmp.setAttribute( 'aria-label', name );
 			tmp.dataset.id = id;
-			tmp.innerHTML = '<span class="comet-elements__list__element__icon cico ' + icon + '"></span><span class="comet-elements__list__element__title"><span>' + name + '</span></span>';
+			tmp.innerHTML = '<span class="' + __classes.icon + ' cico ' + icon + '"></span><span class="' + __classes.title + '"><span>' + name + '</span></span>';
 			parentNode.appendChild( tmp );
+			__elements[__elements.length] = tmp;
+			return tmp;
 
-		};
+		}
 
 		btn = create( 'layout', __cometi18n.ui.layout, 'cico-layout' );
 		__initialize.layout( btn );
@@ -220,5 +234,7 @@ export default function( parentNode ){
 		}
 
 	})();
+
+	return __elements;
 
 }

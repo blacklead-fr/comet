@@ -7,6 +7,17 @@ export default function( parentNode ){
 
 	const _d = document;
 
+	const className = 'comet-cockpit__footer';
+
+	const __classes = {
+		main: className,
+		expand: 'comet-cockpit__expand',
+		button: className + '__button',
+		icon: className + '__button__icon',
+		title: className + '__button__title',
+
+	};
+
 	const __core = {
 
 		buttons: {
@@ -23,26 +34,7 @@ export default function( parentNode ){
 			settings: {
 				title: __cometi18n.ui.settings,
 				icon: 'cico-cog',
-				event: function( ev ){
-					const pit = utils.getNode( 'generalSettings' );
-					const toggled = 'is_toggled';
-					var _pit;
-
-					ev.preventDefault();
-
-					if( !pit || !( ( _pit = node( pit ) ).isNode() ) ){
-						return false;
-
-					}
-
-					if( _pit.hasClass( toggled ) ){
-						_pit.removeClass( toggled );
-						return;
-
-					}
-					_pit.addClass( toggled );
-					
-				}
+				event: utils.generalSettings().toggle
 
 			},
 
@@ -102,12 +94,11 @@ export default function( parentNode ){
 
 			function button( title, icon, expand ){
 				const btn = _d.createElement( 'button' );
-				btn.className = 'comet-footer__button' + ( utils.isBool( expand ) && expand ? ' comet-cockpit__expand' : '' );
+				btn.className = __classes.button + ( utils.isBool( expand ) && expand ? ' ' + __classes.expand : '' );
 				btn.setAttribute( 'aria-label', title );
-				btn.innerHTML = '<span class="comet-footer__button__icon cico ' + icon + '"></span><span class="comet-footer__button__title"><span>' + title + '</span></span>';
+				btn.innerHTML = '<span class="' + __classes.icon + ' cico ' + icon + '"></span><span class="' + __classes.title + '"><span>' + title + '</span></span>';
 
 				return btn;
-
 
 			}
 
