@@ -1,7 +1,9 @@
 @import '../utils/variables';
 @import '../utils/mixins';
 
-.comet-notifications {
+$className: '.comet-notifications';
+
+#{$className} {
 	position: fixed;
 	top: 0;
 	left: -9999em;
@@ -10,12 +12,12 @@
 	background: $daDark;
 	@include transition( left .1s ease-in-out );
 
-	&.comet-notifications--open {
+	&#{$className + '--open'} {
 		left: 0;
 		z-index: 2;
 	}
 
-	.comet-notifications__header {
+	#{$className + '__header'} {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
@@ -45,11 +47,11 @@
 
 		}
 
-		.comet-notifications__close {
+		#{$className + '__close'} {
 			position: relative;
 			padding: 5px;
 
-			.comet-notifications__close__icon {
+			#{$className + '__close__icon'} {
 				width: 15px;
 				height: 15px;
 				line-height: 15px;
@@ -59,7 +61,7 @@
 
 			}
 
-			.comet-notifications__close__tooltip { @include tooltip(); }
+			#{$className + '__close__tooltip'} { @include tooltip(); }
 
 			&:hover { 
 
@@ -69,107 +71,73 @@
 
 				}
 
-				.comet-notifications__close__tooltip { left: 50%; }
+				#{$className + '__close__tooltip'} { left: 50%; }
 			}
 
 		}
 
 	}
 
-	.comet-notifications__list {
+	#{$className + '__list'} {
 		padding: 7px;
 		height: calc( 100% - 77px );
 		overflow-x: hidden;
 		overflow-y: auto;
 
-		.comet-notifications__list__note {
-			background: $liDark;
-			padding: 10px;
-			margin-bottom: 10px;
-			position: relative;
+	}
 
-			.comet-notifications__list__note__remove {
-				padding: 0;
-				position: absolute;
-				top: 4px;
-				right: 999999em;
-				margin: 0;
-				background: none;
-				cursor: pointer;
-				opacity: .8;
+	#{$className + '__list__note'} {
+		background: $liDark;
+		padding: 10px;
+		margin-bottom: 10px;
+		position: relative;
 
-				.comet-notifications__list__note__remove__icon {
-					width: 15px;
-					height: 15px;
-					font-size: 15px;
-					color: white;
+		&:hover #{$className + '__list__note__remove'} { right: 4px; }
 
-				}
+		> p { color: white; }
 
-				.comet-notifications__list__note__remove__tooltip {
-					
-				}
+		&#{$className + '__list__note--success'} > p { color: #ADE995; }
 
-				&:hover { opacity: 1; }
+		&#{$className + '__list__note--error'} > p { color: #E36F6A; }
 
-			}
-
-			&:hover .comet-notifications__list__note__remove { right: 4px; }
-
-
-		}
+		&#{$className + '__list__note--warning'} > p  { color: #F3D567; }
 
 	}
 
-}
-
-/*.comet-notification {
-	padding: 10px;
-	margin-bottom: 10px;
-	position: relative;
-	overflow: hidden;
-	background: rgba( 0, 0, 0, .2 );
-
-	.comet-close {
+	#{$className + '__list__note__remove'} {
 		padding: 0;
 		position: absolute;
 		top: 4px;
 		right: 999999em;
-		line-height: 12px;
-		height: auto;
+		margin: 0;
+		background: none;
+		cursor: pointer;
+		opacity: .8;
 
-		.cico {
-			color: $daLight;
-			font-size: 12px;
-			width: 12px;
-			height: 12px;
+		#{$className + '__list__note__remove__icon'} {
+			width: 11px;
+			height: 11px;
+			font-size: 11px;
+			color: white;
+			padding: 5px;
+
 		}
 
+		#{$className + '__list__note__remove__tooltip'} { @include tooltip( left, white, $liDark ); }
 
-		&:hover .cico { color: white; }
+		&:hover {
+			opacity: 1;
 
-	}
+			&:after {
+				content: '';
+				@include arrow( left, white );
 
-	&:hover .comet-close { right: 4px; }
+			}
 
-	&.success p{
+			#{$className + '__list__note__remove__tooltip'} { right: 100%; }
 
-		&, * { color: #ADE995; }
-
-	}
-
-	&.error p{
-
-		&, * { color: #E36F6A; }
-
-	}
-
-	&.warning p {
-
-		&, * { color: #F3D567; }
+		}
 
 	}
 
 }
-
-}*/

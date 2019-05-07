@@ -125,36 +125,55 @@
 
 }
 
-@mixin tooltip( $direction: bottom, $background: $liDark, $color: white ){
+@mixin tooltip( $position: bottom, $background: $liDark, $color: white, $css_pos: absolute, $transform: true ){
 
-	position: absolute;
-	@if( $direction == bottom ){
+	position: $css_pos;
+	@if( $position == bottom ){
 		top: 100%;
 		left: -9999em;
-		@include transform( translate( -50%, 0 ) );
-	}
-	@else if( $direction == left ){
-		top: 50%;
-		left: -9999em;
-		@include transform( translate( 0, -50% ) );
+
+		@if( $transform == true ){
+			@include transform( translate( -50%, 0 ) );
+
+		}
 
 	}
-	@else if( $direction == right ){
+	@else if( $position == left ){
 		top: 50%;
 		right: 9999em;
-		@include transform( translate( 0, -50% ) );
+
+		@if( $transform == true ){
+			@include transform( translate( 0, -50% ) );
+
+		}
+
+	}
+	@else if( $position == right ){
+		top: 50%;
+		left: -9999em;
+
+		@if( $transform == true ){
+			@include transform( translate( 0, -50% ) );
+
+		}
+
 	}
 	@else {
 		bottom: 100%;
 		left: -9999em;
-		@include transform( translate( -50%, 0 ) );
+
+		@if( $transform == true ){
+			@include transform( translate( -50%, 0 ) );
+
+		}
 
 	}
 	padding: 5px;
 	margin: 0;
 	background: $background;
 	color: $color;
-	font: 300 13px/1.2 sans-serif;
+	font: 300 12px/1.2 sans-serif;
+    z-index: 99;
 	@include border_radius( 3px );
 
 }

@@ -64,7 +64,37 @@ export default function(){
 
 		},
 
-		serialize: function(){
+		getFormData: function(){
+			const n_names = [ 'input', 'select', 'textarea' ];
+			const i_types = [ 'text', 'number', 'range', 'hidden', 'date', 'color', 'checkbox', 'radio', 'email', 'image', 'file', 'month', 'password', 'search', 'tel', 'time', 'url', 'week' ];
+			const f_data = {};
+			var fields, field, a, index;
+
+			if( __data.form === null || ( fields = __data.form.elements ).length < 1 ){
+				return f_data;
+
+			}
+
+			for( a = 0; a < fields.length; a++ ){
+
+				if( !node( field = fields[a] ).isNode() || ( index = n_names.indexOf( field.nodeName.toLowerCase() ) ) < 0 ){
+					continue;
+
+				}
+
+				if( utils.isStringEmpty( field.name ) ){
+					continue;
+
+				}
+
+				if( index === 0 && i_types.indexOf( field.type.toLowerCase() ) < 0 ){
+					continue;
+
+				}
+				f_data[field.name] = utils.encode_chars( field.value );
+
+			}
+			return f_data;
 
 		}
 

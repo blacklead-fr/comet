@@ -1,6 +1,6 @@
 import sanitize from '../../utils/sanitize.js';
-import notification from '../notification.js';
 import message from '../../utils/message.js';
+import parse from '../../utils/parse.js';
 import modal from '../../utils/modal.js';
 import utils from '../../utils/utils.js';
 import node from '../../utils/node.js';
@@ -9,7 +9,7 @@ import __data from '../data.js';
 
 export default {
 
-	save: function( ev ){
+	save: function( ev, ui ){
 
 		var is_saving = false;
 
@@ -33,42 +33,6 @@ export default {
 				}
 				_button.removeClass( waitwhile );
 
-			},
-
-			catch_data: function(){
-				const form = _d.getElementById( 'comet-postSettings' );
-				const n_names = [ 'input', 'select', 'textarea' ];
-				const i_types = [ 'text', 'number', 'range', 'hidden', 'date', 'color', 'checkbox', 'radio', 'email', 'image', 'file', 'month', 'password', 'search', 'tel', 'time', 'url', 'week' ];
-				const f_data = {};
-				var fields, field, a, index;
-
-				if( !node( form ).isNode() || form.nodeName.toLowerCase() !== 'form' || ( fields = form.elements ).length < 1 ){
-					return f_data;
-
-				}
-
-				for( a = 0; a < fields.length; a++ ){
-
-					if( !node( field = fields[a] ).isNode() || ( index = n_names.indexOf( field.nodeName.toLowerCase() ) ) < 0 ){
-						continue;
-
-					}
-
-					if( utils.isStringEmpty( field.name ) ){
-						continue;
-
-					}
-
-					if( index === 0 && i_types.indexOf( field.type.toLowerCase() ) < 0 ){
-						continue;
-
-					}
-					f_data[field.name] = utils.encode_chars( field.value );
-
-				}
-
-				return f_data;
-
 			}
 
 		};
@@ -83,7 +47,7 @@ export default {
 			}
 			is_saving = true;
 			__core.toggle( ui, true );
-			e_data = __core.catch_data();
+			e_data = utils.generalSettings().getFormData();
 			e_data.meta = __data().getData();
 			e_data.post_content = sanitize.content();
 
@@ -101,7 +65,7 @@ export default {
 					code = 200;
 
 				}
-				notification( msg, code );
+				utils.notifications().add( msg, code );
 				is_saving = false;
 				__core.toggle( ui, false );
 
@@ -207,8 +171,7 @@ export default {
 
 					}
 					edata.modal.destroy();
-					notification( msg, code );
-
+					utils.notifications().add( msg, code );
 
 				});
 

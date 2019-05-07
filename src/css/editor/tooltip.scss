@@ -31,25 +31,3 @@
     }
 
 }
-
-.comet-sidebar .comet-footer .comet-tooltip {
-    left: 100%;
-    right: auto;
-    top: 50%;
-    margin-left: 6px;
-    margin-top: 0;
-    @include transform( translateY(-50%) );
-
-    &:before {
-        border-top: 6px solid transparent;
-        border-bottom: 6px solid transparent; 
-        border-right: 6px solid $liDark; 
-        content:'';
-        height: 0;
-        left: -6px;
-        position: absolute;
-        top: 50%;
-        width: 0;
-        @include transform( translateY(-50%) );
-    }
-}

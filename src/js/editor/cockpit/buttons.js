@@ -1,6 +1,7 @@
 import dialog from '../../utils/dialog.js';
 import utils from '../../utils/utils.js';
 import node from '../../utils/node.js';
+import device from './device.js';
 import evSave from './save.js';
 
 export default function( parentNode ){
@@ -25,9 +26,10 @@ export default function( parentNode ){
 			responsive: {
 				title: __cometi18n.ui.desktop,
 				icon: 'cico-desktop',
-				event: function(){
-
-				}
+				dataset: {
+					device: 'desktop'
+				},
+				event: device
 
 			},
 
@@ -87,30 +89,37 @@ export default function( parentNode ){
 
 		},
 
-		create: function(){
-			const slug = 'comet';
-			const buttons = __core.buttons;
-			var b, tmp;
+		button: function( data ){
+			const button = _d.createElement( 'button' );
+			var a;
 
-			function button( title, icon, expand ){
-				const btn = _d.createElement( 'button' );
-				btn.className = __classes.button + ( utils.isBool( expand ) && expand ? ' ' + __classes.expand : '' );
-				btn.setAttribute( 'aria-label', title );
-				btn.innerHTML = '<span class="' + __classes.icon + ' cico ' + icon + '"></span><span class="' + __classes.title + '"><span>' + title + '</span></span>';
+			button.className = __classes.button + ( utils.isBool( data.expand ) && data.expand ? ' ' + __classes.expand : '' );
+			button.setAttribute( 'aria-label', data.title );
+			button.innerHTML = '<span class="' + __classes.icon + ' cico ' + data.icon + '"></span><span class="' + __classes.title + '"><span>' + data.title + '</span></span>';
 
-				return btn;
+			if( utils.isObject( data.dataset ) ){
+
+				for( a in data.dataset ){
+					button.dataset[a] = data.dataset[a];
+
+				}
 
 			}
 
+			if( utils.isFunction( data.event ) ){
+				node( button ).on( 'click', data.event );
 
-			for( b in buttons ){
-				tmp = button( utils.trim( buttons[b].title ), utils.trim( buttons[b].icon ), buttons[b].expand );
+			}
+			return button;
+
+		},
+
+		create: function(){
+			var b, tmp;
+
+			for( b in __core.buttons ){
+				tmp = __core.button(  __core.buttons[b] );
 				parentNode.appendChild( tmp );
-
-				if( utils.isFunction( buttons[b].event ) ){
-					node( tmp ).on( 'click', buttons[b].event );
-
-				}
 
 			}
 

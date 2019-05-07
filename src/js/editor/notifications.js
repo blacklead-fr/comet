@@ -116,6 +116,8 @@ export default function(){
 
 				node( notification.lastChild ).on( 'click', __core.events.remove );
 
+				__core.events.toggle();
+
 			},
 
 			remove: function( ev, ui ){
