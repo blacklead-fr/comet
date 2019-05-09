@@ -1,5 +1,5 @@
-import utils from '../../utils/utils.js';
-import node from '../../utils/node.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
 import library from './library.js';
 
 export default function( parentNode ){

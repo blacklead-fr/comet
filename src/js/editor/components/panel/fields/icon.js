@@ -1,8 +1,8 @@
-import utils from '../../../utils/utils.js';
-import modal from '../../../utils/modal.js';
-import _icon from '../../../utils/icon.js';
-import node from '../../../utils/node.js';
-import update from '../../update.js';
+import utils from '../../../../utils/utils.js';
+import modal from '../../../../utils/modal.js';
+import _icon from '../../../../utils/icon.js';
+import node from '../../../../utils/node.js';
+import update from '../../../update.js';
 
 /* global document, __cometi18n */
 

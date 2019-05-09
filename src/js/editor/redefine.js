@@ -10,42 +10,6 @@ import __data from './data.js';
 
 const redefine = {
 
-	workflow: function(){/*
-		const ww = node( window ).width();
-		const frame = utils.getNode( 'frame' );
-		const sidebar = utils.getNode( 'sidebar' );
-		const panel = utils.getNode( 'panel' );
-		const rtl = __cometdata.rtl === 'true' ? 'right' : 'left';
-		var sw, mw, w, _panel, _frame;
-
-		sw = mw = 0;
-
-		if( !( ( _frame = node( frame ) ).isNode() ) ){
-			return false;
-
-		}
-
-		if( node( sidebar ).isNode() ){
-			sw = node( sidebar ).width();
-
-		}
-
-		if( ( _panel = node( panel ) ).isNode() ){
-			panel.style[rtl] = sw + 'px';
-			mw = _panel.width();
-
-		}
-		w = ww - sw - mw;
-		frame.style[rtl] = ( sw + mw ) + 'px';
-
-		if( !_frame.hasClass( 'cpb-desktopMode' ) ){
-			_frame.addClass( 'cpb-desktopMode' );
-
-		}
-		frame.style.maxWidth = w + 'px';*/
-
-	},
-
 	gradient: function( comp ){
 		const o = [];
 		var _p, colors, c, fields, f, _color, val, _g, stop, encode;

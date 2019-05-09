@@ -1,19 +1,19 @@
-import f_gradient from '../../utils/ui/gradient.js';
-import f_color from '../../utils/ui/color-picker.js';
-import sanitize from '../../utils/sanitize.js';
-import f_range from '../../utils/ui/range.js';
+import f_gradient from '../../../utils/ui/gradient.js';
+import f_color from '../../../utils/ui/color-picker.js';
+import sanitize from '../../../utils/sanitize.js';
+import f_range from '../../../utils/ui/range.js';
 import f_numbers from './fields/numbers.js';
-import global from '../../utils/global.js';
-import layout from '../../utils/layout.js';
-import parse from '../../utils/parse.js';
-import utils from '../../utils/utils.js';
-import node from '../../utils/node.js';
+import global from '../../../utils/global.js';
+import layout from '../../../utils/layout.js';
+import parse from '../../../utils/parse.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
 import f_icon from './fields/icon.js';
-import __target from '../target.js';
-import update from '../update.js';
-import panel from '../panel.js';
-import __data from '../data.js';
-import __id from '../id.js';
+import __target from '../../target.js';
+import update from '../../update.js';
+import panel from './index.js';
+import __data from '../../data.js';
+import __id from '../../id.js';
 
 /* global document, wp, __cometi18n */
 

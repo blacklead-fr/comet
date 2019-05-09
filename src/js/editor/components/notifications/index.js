@@ -1,6 +1,7 @@
-import _global from '../utils/global.js';
-import utils from '../utils/utils.js';
-import node from '../utils/node.js';
+import { frameset as getFrameset } from '../stored.js';
+import _global from '../../../utils/global.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
 
 export default function(){
 
@@ -8,7 +9,7 @@ export default function(){
 
 	const slug = 'notifications';
 
-	const editor = utils.getNode( 'editor' );
+	const frameset = getFrameset();
 
 	const __global = _global();
 
@@ -150,7 +151,7 @@ export default function(){
 
 	};
 
-	if( !editor ){
+	if( !frameset ){
 		return false;
 
 	}
@@ -188,7 +189,7 @@ export default function(){
 		node( wrap.firstChild.children[1] ).on( 'click', __core.events.toggle );
 		node( wrap.firstChild.lastChild.lastChild ).on( 'click', __core.events.clear );
 
-		editor.appendChild( fragment );
+		frameset.append( fragment );
 
 	})();
 

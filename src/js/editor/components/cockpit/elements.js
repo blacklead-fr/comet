@@ -1,12 +1,12 @@
-import layout from '../../utils/layout.js';
-import parse from '../../utils/parse.js';
-import utils from '../../utils/utils.js';
-import node from '../../utils/node.js';
-import sort from '../../utils/sort.js';
+import layout from '../../../utils/layout.js';
+import parse from '../../../utils/parse.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
+import sort from '../../../utils/sort.js';
 import __tabs from '../panel/tabs.js';
-import __target from '../target.js';
-import __data from '../data.js';
-import panel from '../panel.js';
+import __target from '../../target.js';
+import panel from '../panel/index.js';
+import __data from '../../data.js';
 
 export default function( parentNode ){
 
@@ -30,11 +30,11 @@ export default function( parentNode ){
 
 			sort({
 				handle: _n,
-				connectWith: '#cpb-content, .cpb-sectionContent, .cpb-rowContent',
+				connectWith: '.comet-frame--main, .cpb-sectionContent, .cpb-rowContent',
 				items: '.cpb-row, .cpb-column, .cpb-section',
 				placeholder: 'cpb-edPlaceholder',
 				cursor: 'cpb-elementCursor',
-				containment: '#cpb-content',
+				containment: '.comet-frame--main',
 				stop: function( e, ui ){
 					const data_ = __data();
 					const _ui = node( ui );
@@ -55,7 +55,7 @@ export default function( parentNode ){
 					}
 					re = {};
 
-					if( p.id === 'cpb-content' ){
+					if( p.id === 'comet-frame--main' ){
 						position = next( '.cpb-section' );
 						sid = data_.create( 'sections', 0, position );
 
@@ -129,7 +129,7 @@ export default function( parentNode ){
 				items: '.cpb-element',
 				placeholder: 'cpb-edSortPlaceholder',
 				cursor: 'cpb-elementCursor',
-				containment: '#cpb-content',
+				containment: '.comet-frame--main',
 				stop: function( ev, ui, current ){
 					const data_ = __data();
 					const target_ = __target();

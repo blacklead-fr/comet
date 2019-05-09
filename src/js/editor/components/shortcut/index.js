@@ -1,13 +1,14 @@
-import layout from '../utils/layout.js';
-import utils from '../utils/utils.js';
-import parse from '../utils/parse.js';
-import __tabs from './panel/tabs.js';
-import redefine from './redefine.js';
-import node from '../utils/node.js';
-import __target from './target.js';
-import __data from './data.js';
-import panel from './panel.js';
-import __id from './id.js';
+import { frame as getFrame } from '../stored.js';
+import layout from '../../../utils/layout.js';
+import utils from '../../../utils/utils.js';
+import parse from '../../../utils/parse.js';
+import __tabs from '../panel/tabs.js';
+import redefine from '../../redefine.js';
+import node from '../../../utils/node.js';
+import __target from '../../target.js';
+import __data from '../../data.js';
+import panel from '../panel/index.js';
+import __id from '../../id.js';
 
 /* global document, window, __cometi18n */
 
@@ -17,7 +18,7 @@ export default function(){
 
     const _w = window;
 
-    const frame = utils.getNode( 'frame' );
+    const frame = getFrame();
 
     const types = [ 'element', 'column', 'row', 'section' ];
 
@@ -273,8 +274,8 @@ export default function(){
             var menuWidth = menu.offsetWidth + 154;
             var menuHeight = menu.offsetHeight + 4;
 
-            var windowWidth = frame.offsetWidth;
-            var windowHeight = frame.offsetHeight;
+            var windowWidth = frame.target.offsetWidth;
+            var windowHeight = frame.target.offsetHeight;
 
             if( ( windowWidth - clickCoordsX ) < menuWidth ){
                 menu.style.left = windowWidth - menuWidth + 'px';
@@ -775,8 +776,13 @@ export default function(){
         }
 
     };
+
+    if( !frame ){
+        return;
+
+    }
     node( _d.documentElement ).on( 'contextmenu click', __menu.create );
     node( _w ).on( 'resize', __menu.destroy );
-    node( frame ).on( 'scroll', __menu.destroy );
+    frame.targetNode.on( 'scroll', __menu.destroy );
 
 }

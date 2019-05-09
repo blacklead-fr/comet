@@ -383,20 +383,6 @@ utils.getNode = function( slug ){
 
 };
 
-utils.notifications = function(){
-	const notifications = __global().get( 'notifications' );
-
-	return utils.isObject( notifications ) ? notifications : false;
-
-};
-
-utils.generalSettings = function(){
-	const generalSettings = __global().get( 'generalSettings' );
-
-	return utils.isObject( generalSettings ) ? generalSettings : false;
-
-}
-
 utils.foreachItem = function( data, onitem ){
 	var o = '';
 	var ids, i;

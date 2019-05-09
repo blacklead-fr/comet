@@ -1,6 +1,7 @@
-import _global from '../utils/global.js';
-import utils from '../utils/utils.js';
-import node from '../utils/node.js';
+import { frameset as getFrameset } from '../stored.js';
+import _global from '../../../utils/global.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
 
 export default function(){
 
@@ -8,9 +9,9 @@ export default function(){
 
 	const slug = 'generalSettings';
 
-	const editor = utils.getNode( 'editor' );
-
 	const __global = _global();
+
+	const frameset = getFrameset();
 
 	const __classes = {
 		main: 'comet-general-settings',
@@ -102,7 +103,7 @@ export default function(){
 
 	var target, form;
 
-	if( !editor || ( target = editor.getElementsByClassName( __classes.main ) ).length < 1 ){
+	if( !frameset || ( target = frameset.target.getElementsByClassName( __classes.main ) ).length < 1 ){
 		return;
 
 	}

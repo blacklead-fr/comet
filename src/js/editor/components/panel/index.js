@@ -1,17 +1,22 @@
-import sanitize from '../utils/sanitize.js';
-import __global from '../utils/global.js';
-import fields from './panel/fields.js';
-import utils from '../utils/utils.js';
-import redefine from './redefine.js';
-import node from '../utils/node.js';
+import { frameset as getFrameset } from '../stored.js';
+import sanitize from '../../../utils/sanitize.js';
+import __global from '../../../utils/global.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
+import fields from './fields.js';
 
 /* global document, __cometi18n */
 
 export default function( options ){
+
 	const _d = document;
+
 	const _global = __global();
-	const editor = utils.getNode( 'editor' );
+
+	const frameset = getFrameset();
+
 	const id = 'comet-panel';
+
 	const fragment = _d.createDocumentFragment();
 
 	const __core = {
@@ -22,7 +27,6 @@ export default function( options ){
 
 		loadAfter: function(){
 			fields();
-			redefine.workflow();
 
 		},
 
@@ -98,7 +102,7 @@ export default function( options ){
 				body.innerHTML = __cometi18n.messages.error.unreach;
 
 			}
-			editor.appendChild( fragment );
+			frameset.append( fragment );
 			_global.set( 'panel', panel, true );
 			__core.loadAfter();
 
@@ -107,7 +111,6 @@ export default function( options ){
 		destroy: function(){
 			node( __core.data.panel ).remove();
 			_global.set( 'panel', false, true );
-			redefine.workflow();
 
 		}
 

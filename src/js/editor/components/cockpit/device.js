@@ -1,12 +1,13 @@
-import utils from '../../utils/utils.js';
-import parse from '../../utils/parse.js';
-import node from '../../utils/node.js';
+import { frame as Frame } from '../stored.js';
+import utils from '../../../utils/utils.js';
+import parse from '../../../utils/parse.js';
+import node from '../../../utils/node.js';
 
 export default function( ev_source, source ){
 
 	const _d = document;
 
-	const frame = utils.getNode( 'frame' );
+	const frame = Frame();
 
 	const device = parse.dataset( source, 'device' );
 
@@ -14,6 +15,7 @@ export default function( ev_source, source ){
 
 	const __devices = {
 		desktop: {
+			width: '100%',
 			name: __cometi18n.ui.desktop,
 			classes: {
 				name: className + '--desktop',
@@ -21,6 +23,7 @@ export default function( ev_source, source ){
 			}
 		},
 		tablet: {
+			width: '800px',
 			name: __cometi18n.ui.tablet,
 			classes: {
 				name: className + '--tablet',
@@ -28,6 +31,7 @@ export default function( ev_source, source ){
 			}
 		},
 		mobile: {
+			width: '400px',
 			name: __cometi18n.ui.mobile,
 			classes: {
 				name: className + '--mobile',
@@ -41,7 +45,7 @@ export default function( ev_source, source ){
 
 	ev_source.preventDefault();
 
-	if( !device || !( device in __devices ) ){
+	if( !Frame || !device || !( device in __devices ) ){
 		return;
 
 	}

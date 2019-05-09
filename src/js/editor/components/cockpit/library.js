@@ -1,11 +1,11 @@
-import notification from '../notification.js';
-import layout from '../../utils/layout.js';
-import parse from '../../utils/parse.js';
-import modal from '../../utils/modal.js';
-import utils from '../../utils/utils.js';
-import node from '../../utils/node.js';
-import ajax from '../../utils/ajax.js';
-import __data from '../data.js';
+import { frame as Frame, notifications as Notifications } from '../stored.js';
+import layout from '../../../utils/layout.js';
+import parse from '../../../utils/parse.js';
+import modal from '../../../utils/modal.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
+import ajax from '../../../utils/ajax.js';
+import __data from '../../data.js';
 
 /* global document, __cometi18n, __cometdata */
 
@@ -38,6 +38,8 @@ export default function( _ev_ ){
 		},
 
 		insert:  function( e, ui, id ){
+
+			const _Notifications = Notifications();
 
 			const __ins = {
 
@@ -124,7 +126,7 @@ export default function( _ev_ ){
 			e.preventDefault();
 
 			if( ( id = parse.id( id ) ) ){
-				notification( __cometi18n.messages.warning.ltemplate, 300 );
+				_Notifications.add( __cometi18n.messages.warning.ltemplate, 300 );
 
 				ajax({
 					id: id,
@@ -132,22 +134,22 @@ export default function( _ev_ ){
 					do: 'get'
 
 				}).done( function( r ){
-					const frame = utils.getNode( 'frame' );
+					const _Frame = Frame();
 					var data, from;
 
-					if( !frame || frame === null ){
-						notification( __cometi18n.messages.error.ltemplate, 400 );
+					if( !_Frame ){
+						_Notifications.add( __cometi18n.messages.error.ltemplate, 400 );
 						return;
 
 					}
 
 					if( r === '0' || !utils.isObject( data = parse.json( r ) ) || !utils.isObject( data['meta'] ) ){
-						notification( __cometi18n.messages.error.ltemplate, 400 );
+						_Notifications.add( __cometi18n.messages.error.ltemplate, 400 );
 
 					}
 					from = __ins.clone( data['meta'] );
-					layout( __data().getData() ).init( frame, from );
-					notification( __cometi18n.messages.success.ltemplate, 200 );
+					layout( __data().getData() ).init( _Frame.target, from );
+					_Notifications.add( __cometi18n.messages.success.ltemplate, 200 );
 
 				} );
 

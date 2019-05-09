@@ -1,8 +1,9 @@
-import initElements from './cockpit/elements.js';
-import initButtons from './cockpit/buttons.js';
-import initMenu from './cockpit/menu.js';
-import utils from '../utils/utils.js';
-import node from '../utils/node.js';
+import { frameset as getFrameset } from '../stored.js';
+import utils from '../../../utils/utils.js';
+import initElements from './elements.js';
+import node from '../../../utils/node.js';
+import initButtons from './buttons.js';
+import initMenu from './menu.js';
 
 export default function(){
 
@@ -12,7 +13,7 @@ export default function(){
 
 	const slug = 'cockpit';
 
-	const editor = utils.getNode( 'editor' );
+	const frameset = getFrameset();
 
 	const __cockpit = {
 		target: null,
@@ -173,7 +174,7 @@ export default function(){
 				node( section.header.firstChild ).on( 'click', __core.events.toggle );
 				node( section.elements.firstChild.firstChild ).on( 'input', __core.events.search );
 
-				editor.appendChild( fragment );
+				frameset.append( fragment );
 
 			},
 
@@ -194,7 +195,7 @@ export default function(){
 
 	};
 
-	if( !editor ){
+	if( !frameset ){
 		return false;
 
 	}

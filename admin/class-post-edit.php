@@ -17,7 +17,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
      * @access   protected
      * @var      string    $slug
      */
-    protected $slug = 'comet';
+    protected $slug = 'editor';
 
     /**
      * The menu title.
@@ -117,11 +117,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
 	 */
     public function __construct( $post ){
         global $current_screen, $hook_suffix;
-
-        if( empty( $current_screen ) ){
-            set_current_screen();
-
-        }
+        
         $this->current_screen = $current_screen;
         $this->hook_suffix = $hook_suffix;
 
@@ -146,8 +142,9 @@ class Comet_Post_Edit extends Comet_Metaboxes{
     }
 
     public function body_class(){
+        $id = $this->id;
 
-        return 'comet-editor comet-editor-wrapper comet-editor-main comet-upper-level';
+        return "post-{$id}";
 
     }
 
@@ -268,21 +265,19 @@ class Comet_Post_Edit extends Comet_Metaboxes{
     }
 
     public function styles(){
-        $slug = $this->slug;
         $base_url = COMET_URL;
 
         wp_enqueue_media();
         wp_enqueue_style( 'cico', "{$base_url}src/css/cico.min.css", [], COMET_VERSION );
-        wp_enqueue_style( "{$slug}-editor", "{$base_url}src/css/editor.css", [], COMET_VERSION );
-        wp_enqueue_style( "{$slug}-view", "{$base_url}src/css/view.css", [], COMET_VERSION );
-        wp_add_inline_style( "{$slug}-view", comet_get_fonts( 'publish', 'css' ) );
+        wp_enqueue_style( "comet-editor", "{$base_url}src/css/editor.css", [], COMET_VERSION );
+        wp_enqueue_style( "comet-view", "{$base_url}src/css/view.css", [], COMET_VERSION );
+        wp_add_inline_style( "comet-view", comet_get_fonts( 'publish', 'css' ) );
         // @TODO RTL
 
     }
 
     public function scripts(){
-        $slug = $this->slug;
-        $editor_slug = "{$slug}-editor";
+        $editor_slug = "comet-editor";
         $i18n = comet_get_i18n( 'editor' );
 
         wp_localize_script( $editor_slug, '__cometdata', [
@@ -294,23 +289,20 @@ class Comet_Post_Edit extends Comet_Metaboxes{
             'rtl'           => is_rtl() ? 'true' : 'false',
             'user'          => 'true'
         ] );
-        wp_localize_script( $editor_slug, $i18n->get_id(), $i18n->get() ); 
+        wp_localize_script( $editor_slug, $i18n->get_id(), $i18n->get() );
         wp_enqueue_script( $editor_slug, COMET_URL . 'src/js/editor.js', [], COMET_VERSION, true );
 
     }
 
     public function body(){
-
-        $id = $this->id;
         $post = $this->post;
         $post_type = $post->post_type;
-        $classes = "comet comet-absfull wrap post-{$id}";
 
         if( is_rtl() ){
             $classes .= ' rtl';
 
         }
-        echo '<div id="comet-editor" class="' . $classes . '">';
+        echo '<div id="comet-editor" class="comet-frameset">';
 
         do_action( 'add_meta_boxes', $post_type, $post );
         do_action( "add_meta_boxes_{$post_type}", $post );
@@ -339,7 +331,7 @@ class Comet_Post_Edit extends Comet_Metaboxes{
         echo '<div id="comet-preloader" class="comet-preloader">';
         echo '<div>';
         echo '<span class="comet-preloader__icon cico cico-comet"></span>';
-        echo '<span class="comet-preloader__text comet-preloadertext">' . __( 'Loading...', 'comet' ) . '</span>';
+        echo '<span class="comet-preloader__text">' . __( 'Loading...', 'comet' ) . '</span>';
         echo '</div>';
         echo '</div>';
 

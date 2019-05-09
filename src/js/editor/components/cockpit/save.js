@@ -1,11 +1,12 @@
-import sanitize from '../../utils/sanitize.js';
-import message from '../../utils/message.js';
-import parse from '../../utils/parse.js';
-import modal from '../../utils/modal.js';
-import utils from '../../utils/utils.js';
-import node from '../../utils/node.js';
-import ajax from '../../utils/ajax.js';
-import __data from '../data.js';
+import { generalSettings as GeneralSettings, notifications as Notifications } from '../stored.js';
+import sanitize from '../../../utils/sanitize.js';
+import message from '../../../utils/message.js';
+import parse from '../../../utils/parse.js';
+import modal from '../../../utils/modal.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
+import ajax from '../../../utils/ajax.js';
+import __data from '../../data.js';
 
 export default {
 
@@ -47,7 +48,7 @@ export default {
 			}
 			is_saving = true;
 			__core.toggle( ui, true );
-			e_data = utils.generalSettings().getFormData();
+			e_data = GeneralSettings().getFormData();
 			e_data.meta = __data().getData();
 			e_data.post_content = sanitize.content();
 
@@ -65,7 +66,7 @@ export default {
 					code = 200;
 
 				}
-				utils.notifications().add( msg, code );
+				Notifications().add( msg, code );
 				is_saving = false;
 				__core.toggle( ui, false );
 
@@ -171,7 +172,7 @@ export default {
 
 					}
 					edata.modal.destroy();
-					utils.notifications().add( msg, code );
+					Notifications().add( msg, code );
 
 				});
 

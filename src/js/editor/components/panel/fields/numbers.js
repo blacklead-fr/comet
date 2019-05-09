@@ -1,9 +1,10 @@
-import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
-import redefine from '../../redefine.js';
-import update from '../../update.js';
-import __target from '../../target.js';
-import __data from '../../data.js';
+import { frame as getFrame } from '../../stored.js';
+import utils from '../../../../utils/utils.js';
+import node from '../../../../utils/node.js';
+import redefine from '../../../redefine.js';
+import update from '../../../update.js';
+import __target from '../../../target.js';
+import __data from '../../../data.js';
 
 /* global document, __cometi18n */
 
@@ -25,7 +26,7 @@ export default function( id, field, data ){
 		desktop: []
 	};
 
-	const frame = utils.getNode( 'frame' );
+	const frame = getFrame();
 
 	const classes = {
 		active: 'comet-active',

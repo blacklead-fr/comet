@@ -1,8 +1,8 @@
-import __global from '../../utils/global.js';
-import range from '../../utils/ui/range.js';
-import utils from '../../utils/utils.js';
-import node from '../../utils/node.js';
-import update from '../update.js';
+import __global from '../../../utils/global.js';
+import range from '../../../utils/ui/range.js';
+import utils from '../../../utils/utils.js';
+import node from '../../../utils/node.js';
+import update from '../../update.js';
 
 export default function(){
 
