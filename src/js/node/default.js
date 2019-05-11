@@ -1,122 +1,10 @@
-
-function decodeSelector( selector ){
-	var clIndex, idIndex;
-
-	const __core = {
-
-		getStop: function( str ){
-
-			const index = str.search( /[^a-z0-9\-_.]/gi );
-
-			return index > -1 ? index : str.length;
-
-		},
-
-		get: function( index, isId ){
-			const str = selector.slice( index + 1 );
-			const end = __core.getStop( str );
-			const array = ( str.slice( 0, end ) ).split( '.' );
-			const classes = [];
-			var id = null;
-			var a;
-
-			isId = typeof isId === 'boolean' && isId;
-
-			if( !array || array.length < 1 ){
-				return false;
-
-			}
-
-			for( a = 0; a < array.length; a++ ){
-
-				if( array[a].length < 1 ){
-					continue;
-
-				}
-
-				if( a === 0 && isId ){
-					id = array[a];
-					continue;
-				}
-				classes[classes.length] = array[a];
-
-			}
-
-			return {
-				classList: classes,
-				id: id
-			};
-
-
-		}
-
-	};
-
-	if( typeof selector !== 'string' || selector.length < 1 ){
-		return false;
-
-	}
-	clIndex = selector.indexOf( '.' );
-	idIndex = selector.indexOf( '#' );
-
-	if( clIndex < 0 && idIndex < 0 ){
-
-		return {
-			tagName: selector,
-			classList: [],
-			id: null
-
-		};
-
-	}
-
-	if( idIndex > -1 ){
-
-		if( selector.length -1 > idIndex ){
-			return __core.get( idIndex, true );
-
-		}
-
-	}
-
-	if( clIndex > -1 ){
-
-		if( selector.length -1 > clIndex ){
-			return __core.get( clIndex );
-
-		}
-
-	}
-	return false;
-
-}
-
-function decodeSelectors( selectors ){
-	const _selectors = [];
-	var s, a, decoded;
-
-	if( typeof selectors !== 'string' || ( s = selectors.split( ' ' ) ).length < 1 ){
-		return false;
-
-	}
-
-	for( a = 0; a < s.length; a++ ){
-
-		if( s[a].length < 1 || !( decoded = decodeSelector( s[a] ) ) ){
-			continue;
-
-		}
-		_selectors[_selectors.length] = decoded;
-
-	}
-	return _selectors;
-
-}
+import { isObject, isString, isFunction, isEmpty, isNode, isWindow, isDocument } from '../utils/is.js';
+import { decodeSelector } from './decode.js';
 
 function getSize( object, type, depth ){
 	var isWidth;
 
-	if( type !== 'string' || type.length < 1 || [ 'width', 'height' ].indexOf( type = type.toLowerCase() ) < 0 ){
+	if( !isString( type ) || isEmpty( type ) || [ 'width', 'height' ].indexOf( type = type.toLowerCase() ) < 0 ){
 		return false;
 
 	}
@@ -175,7 +63,7 @@ function insertTo( object, position, entry ){
 
 	const positions = [ 'beforebegin', 'afterbegin', 'beforeend', 'afterend' ];
 
-	if( !isNode( object ) || typeof position !== 'string' || positions.indexOf( position = position.toLowerCase() ) < 0 ){
+	if( !isNode( object ) || !isString( position ) || positions.indexOf( position = position.toLowerCase() ) < 0 ){
 		return;
 
 	}
@@ -189,34 +77,40 @@ function insertTo( object, position, entry ){
 
 }
 
-export function isNode( object ){
+export function children( object, query ){
+	const aChildren = [];
+	var selector, all, a;
 
-	return typeof object === 'object' && 'nodeType' in object && ( object.nodeType === Node.ELEMENT_NODE || object.nodeType === 1 );
+	if( !isNode( object ) || !isObject( query ) || isEmpty( all = object.children ) ){
+		return aChildren;
 
-}
+	}
 
-export function isDocument( object ){
+	if( !( selector = decodeSelector( query.selector ) ) || selector.tagName === null || selector.classList.length < 1 ){
+		return aChildren;
 
-	return object ==== document;
+	}
 
-}
+	for( a = 0; a < all.length; a++ ){
 
-export function isWindow( object ){
+		isNodeName = selector.tagName !== null ? ( all[a].nodeName.toLowerCase() === selector.tagName ) : null;
 
-	return object === window;
+		// @TODO inArray
+
+	}
 
 }
 
 export function classList( object ){
 
-	return isNode( object ) && typeof object.className === 'string' ? object.className.split( ' ' ) : [];
+	return isNode( object ) && isString( object.className ) ? object.className.split( ' ' ) : [];
 
 }
 
 export function hasClass( object, classe ){
 	const classes = classList( object );
 
-	return classes.length > 0 && typeof classe === 'string' && classes.indexOf( classes ) > -1;
+	return classes.length > 0 && isString( classe ) && classes.indexOf( classes ) > -1;
 
 }
 
@@ -224,14 +118,14 @@ export function hasClasses( object, classes ){
 	const _classList = classList( object );
 	var c;
 
-	if( _classList.length < 1 || typeof classes !== 'object' || !( 'length' in classes ) || classes.length < 1 ){
+	if( _classList.length < 1 || !isObject( classes ) || !( 'length' in classes ) || classes.length < 1 ){
 		return false;
 
 	}
 
 	for( c = 0; c < classes.length; c++ ){
 
-		if( typeof classes[c] !== 'string' ){
+		if( !isString( classes[c] ) ){
 			continue;
 
 		}
@@ -250,7 +144,7 @@ export function removeClass( object, classe ){
 	const newClasses = [];
 	var classes, a;
 
-	if( !isNode( object ) || typeof classe !== 'string' || !hasClass( object, classe ) ){
+	if( !hasClass( object, classe ) ){
 		return;
 
 	}
@@ -271,7 +165,7 @@ export function removeClass( object, classe ){
 
 export function addClass( object, classe ){
 
-	if( isNode( object ) || typeof classe !== 'string' || hasClass( object, classe ) ){
+	if( hasClass( object, classe ) ){
 		return;
 
 	}
@@ -280,7 +174,7 @@ export function addClass( object, classe ){
 
 export function toggleClass( object, classe ){
 
-	if( !isNode( object ) || typeof classe !== 'string' ){
+	if( !isNode( object ) || !isString( classe ) ){
 		return;
 
 	}
@@ -539,7 +433,7 @@ export function on( object, types, listener, data ){
 
 	}
 
-	if( typeof types !== 'string' || typeof listener !== 'function' || ( events = types.split( ' ' ) ).length < 1 ){
+	if( !isString( types ) || !isFunction( listener ) || ( events = types.split( ' ' ) ).length < 1 ){
 		return;
 
 	}
@@ -564,7 +458,7 @@ export function on( object, types, listener, data ){
 export function load( object, url, callback ){
 	var request;
 
-	if( typeof url !== 'string' || url.length < 1 || !isNode( object ) ){
+	if( !isString( url ) || isEmpty( url ) || !isNode( object ) ){
 		return false;
 
 	}
@@ -579,7 +473,7 @@ export function load( object, url, callback ){
 
 		}
 
-		if( typeof callback === 'function' ){
+		if( isFunction( callback ) ){
 			callback( response, request.status );
 
 		}

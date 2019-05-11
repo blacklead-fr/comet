@@ -1,10 +1,11 @@
 import { generalSettings as GeneralSettings, notifications as Notifications } from '../stored.js';
+import { isBool, isNode, isString, isEmpty, isObject } from '../../../utils/is.js';
 import sanitize from '../../../utils/sanitize.js';
 import message from '../../../utils/message.js';
 import parse from '../../../utils/parse.js';
 import modal from '../../../utils/modal.js';
 import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import node from '../../../node/index.js';
 import ajax from '../../../utils/ajax.js';
 import __data from '../../data.js';
 
@@ -22,12 +23,12 @@ export default {
 				const waitwhile = 'comet-waitwhile';
 				const _button = node( button );
 
-				if( !_button.isNode() ){
+				if( !_button ){
 					return;
 
 				}
 
-				if( utils.isBool( state ) && state ){
+				if( isBool( state ) && state ){
 					_button.addClass( waitwhile );
 					return;
 
@@ -89,12 +90,12 @@ export default {
 				const waitwhile = 'comet-waitwhile';
 				const _button = node( button );
 
-				if( !_button.isNode() ){
+				if( !_button ){
 					return;
 
 				}
 
-				if( utils.isBool( saving ) && saving ){
+				if( isBool( saving ) && saving ){
 					_button.addClass( waitwhile );
 					button.innerHTML = '<span class="cico cico-spin"></span>';
 					return;
@@ -112,24 +113,24 @@ export default {
 				
 				ev.preventDefault();
 
-				if( !utils.isObject( edata ) || is_saving ){
+				if( !isObject( edata ) || is_saving ){
 					return;
 
 				}
 				is_saving = true;
 				__core.toggle( ui, true );
 
-				if( !node( edata.input ).isNode() ){
+				if( !isNode( edata.input ) ){
 					m = __cometi18n.messages.error.savePost + '<br>';
 
 				}
 
-				if( !utils.isObject( metaData ) || utils.isStringEmpty( metaData._sections ) ){
+				if( !isObject( metaData ) || isEmpty( metaData._sections ) ){
 					m = __cometi18n.messages.error.noContent + '<br>';
 
 				}
 
-				if( !utils.isString( val = edata.input.value ) || ( val = utils.trim( utils.stripTags( val ) ) ).length < 1 ){
+				if( !isString( val = edata.input.value ) || isEmpty( val = ( utils.stripTags( val ) ).trim() ) ){
 					m += __cometi18n.messages.error.title;
 
 				}

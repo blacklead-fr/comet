@@ -1,3 +1,4 @@
+import { isNode, isObject, isString, isEmpty } from '../../../utils/is.js';
 import layout from '../../../utils/layout.js';
 import parse from '../../../utils/parse.js';
 import utils from '../../../utils/utils.js';
@@ -37,20 +38,18 @@ export default function( parentNode ){
 				containment: '.comet-frame--main',
 				stop: function( e, ui ){
 					const data_ = __data();
-					const _ui = node( ui );
-					var sid, rid, cid, columns, _column, sibid, nb, _p, p, re, a, w, tmp, position;
+					var sid, rid, cid, columns, _ui, sibid, nb, _p, p, re, a, w, tmp, position;
 
-					if( !( _p = node( ui.parentNode ) ).isNode() || !_ui.isNode() || !( p = _p.prop() ) ){
+					if( !( _ui = node( ui ) ) || !( _p = node( ui.parentNode ) ) ){
 						return;
 
 					}
 
 					function next( items ){
 						const closest = _ui.next( items );
-						const _closest = node( closest );
 						var t;
 
-						return ( _closest.isNode() && ( t = parse.dataset( _closest.prop(), 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last' );
+						return ( isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last' );
 
 					}
 					re = {};
@@ -84,7 +83,7 @@ export default function( parentNode ){
 
 						position = next( '.cpb-column' );
 						cid = data_.create( 'columns', rid, position );
-						columns = _p.children( 'cpb-column' );
+						columns = _p.children( 'cpb-column' ); // @TODO
 						w = 100;
 						nb = 1;
 
@@ -94,7 +93,7 @@ export default function( parentNode ){
 
 							for( a in columns ){
 
-								if( !( ( _column = node( columns[a] ) ).isNode() ) || !( sibid = parse.dataset( _column.prop(), 'id' ) ) || !( sibid = parse.id( sibid ) ) ){
+								if( !isNode( columns[a] ) || !( sibid = parse.dataset( columns[a], 'id' ) ) || !( sibid = parse.id( sibid ) ) ){
 									continue;
 
 								}
@@ -133,34 +132,31 @@ export default function( parentNode ){
 				stop: function( ev, ui, current ){
 					const data_ = __data();
 					const target_ = __target();
-					var preload, _ui, closest, _closest, id, t, pid, defname, lyt, element, tabs, edata;
+					var preload, closest, id, t, pid, defname, lyt, element, tabs, edata;
 
-					if( !( defname = parse.dataset( current, 'id' ) ) || utils.isStringEmpty( defname ) ){
+					if( !isString( defname = parse.dataset( current, 'id' ) ) || isEmpty( defname = defname.trim() ) ){
 						return;
 
 					}
-					defname = utils.trim( defname );
 
 					if( !( pid = parse.dataset( ui.parentNode.parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) || !data_.get( pid, 'columns' ) ){
 						return;
 
 					}
-					_ui = node( ui );
-					closest = _ui.next( '.cpb-element' );
-					_closest = node( closest );
-					t = _closest.isNode() && ( t = parse.dataset( _closest.prop(), 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+					closest = node( ui ).next( '.cpb-element' );
+					t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
 
 					if( !( id = data_.create( defname, pid, t ) ) || !( lyt = layout( data_.getData() ).element( id ) ) ){
 						return;
 
 					}
-					preload = document.createElement( 'div' );
+					preload = _d.createElement( 'div' );
 					preload.appendChild( lyt );
 					element = preload.firstChild;
 
 					ui.parentNode.replaceChild( element, ui );
 
-					if( !utils.isObject( edata = utils.getElement( defname ) ) || !utils.isObject( edata.tabs ) ){
+					if( !isObject( edata = utils.getElement( defname ) ) || !isObject( edata.tabs ) ){
 						return;
 
 					}
@@ -193,7 +189,7 @@ export default function( parentNode ){
 
 	};
 
-	if( !node( parentNode ).isNode() ){
+	if( !isNode( parentNode ) ){
 		return false;
 
 	}
@@ -202,7 +198,7 @@ export default function( parentNode ){
 		const elements = utils.getElements();
 		var btn, e, element;
 
-		if( !utils.isObject( elements ) ){
+		if( !isObject( elements ) ){
 			return;
 
 		}
@@ -224,11 +220,11 @@ export default function( parentNode ){
 
 		for( e in elements ){
 
-			if( !utils.isObject( element = elements[e] ) || utils.isStringEmpty( element.name ) || utils.isStringEmpty( e ) ){
+			if( isEmpty( e ) || !isObject( element = elements[e] ) || !isString( element.name ) || isEmpty( element.name ) ){
 				continue;
 
 			}
-			btn = create( e, utils.trim( element.name ), utils.trim( element.icon ) );
+			btn = create( e, element.name.trim(), element.icon.trim() );
 			__initialize.element( btn );
 
 		}

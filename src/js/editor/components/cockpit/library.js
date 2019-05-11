@@ -1,9 +1,10 @@
 import { frame as Frame, notifications as Notifications } from '../stored.js';
+import { isString, isEmpty, isObject } from '../../../utils/is.js';
+import node from '../../../node/index.js';
 import layout from '../../../utils/layout.js';
 import parse from '../../../utils/parse.js';
 import modal from '../../../utils/modal.js';
 import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
 import ajax from '../../../utils/ajax.js';
 import __data from '../../data.js';
 
@@ -24,7 +25,7 @@ export default function( _ev_ ){
 			
 			e.preventDefault();
 
-			if( !utils.isObject( edata ) || !( id = parse.id( edata.id ) ) ){
+			if( !isObject( edata ) || !( id = parse.id( edata.id ) ) ){
 				return;
 
 			}
@@ -47,12 +48,12 @@ export default function( _ev_ ){
 					var from = false;
 					var ids, a, count, id_;
 
-					if( !utils.isObject( data ) || utils.isStringEmpty( data._sections ) ){
+					if( !isObject( data ) || isEmpty( data._sections ) ){
 						return false;
 
 					}
 
-					if( !utils.isArray( ( ids = parse.ids( data._sections, 'array' ) ), 1 ) ){
+					if( !isArray( ids = parse.ids( data._sections, 'array' ) ) ){
 						return false;
 
 					}
@@ -82,17 +83,17 @@ export default function( _ev_ ){
 					var children = [];
 					var childtype, _childtype, n_id, a;
 
-					if( !utils.isString( type ) || types.indexOf( type.toLowerCase() ) < 0 ){
+					if( !isString( type ) || types.indexOf( type.toLowerCase() ) < 0 ){
 						return false;
 
 					}
 
-					if( !utils.isObject( data ) || !utils.isObject( data[type] ) ){
+					if( !isObject( data ) || !isObject( data[type] ) ){
 						return false;
 
 					}
 
-					if( !utils.isObject( data[type][id_] ) ){
+					if( !isObject( data[type][id_] ) ){
 						data[type][id_] = {};
 
 					}
@@ -103,13 +104,13 @@ export default function( _ev_ ){
 					}
 					childtype = _data.getChild( type );
 
-					if( childtype && ( _childtype = '_' + childtype ) && utils.isObject( data[type][id_] ) && !utils.isStringEmpty( data[type][id_][_childtype] ) ){
+					if( childtype && ( _childtype = '_' + childtype ) && isObject( data[type][id_] ) && !isEmpty( data[type][id_][_childtype] ) ){
 						children = parse.ids( data[type][id_][_childtype], 'array' );
 
 					}
 					__data().removeIds( n_id, type );
 
-					if( !utils.isArray( children, 1 ) ){
+					if( !isArray( children, 1 ) ){
 						return n_id;
 
 					}
@@ -143,7 +144,7 @@ export default function( _ev_ ){
 
 					}
 
-					if( r === '0' || !utils.isObject( data = parse.json( r ) ) || !utils.isObject( data['meta'] ) ){
+					if( r === '0' || !isObject( data = parse.json( r ) ) || !isObject( data['meta'] ) ){
 						_Notifications.add( __cometi18n.messages.error.ltemplate, 400 );
 
 					}
@@ -160,7 +161,7 @@ export default function( _ev_ ){
 		},
 
 		search: function( ev, ui ){
-			const v = utils.isString( ui.value ) ? utils.trim( ui.value ) : '';
+			const v = isString( ui.value ) ? ui.value.trim() : '';
 			var regex, i;
 
 			if( loaded.length < 1 ){
@@ -171,7 +172,7 @@ export default function( _ev_ ){
 
 			for( i = 0; i < loaded.length; i++ ){
 
-				if( !utils.isObject( loaded[i] ) ){
+				if( !isObject( loaded[i] ) ){
 					continue;
 
 				}
@@ -190,7 +191,7 @@ export default function( _ev_ ){
 		switch: function( ev, ui ){
 			var set;
 
-			if( utils.isStringEmpty( set = ui.value ) || [ 'pre', 'cus' ].indexOf( set = utils.trim( set ) ) < 0 ){
+			if( isEmpty( set = ui.value ) || [ 'pre', 'cus' ].indexOf( set = set.trim() ) < 0 ){
 				return;
 
 			}
@@ -201,7 +202,7 @@ export default function( _ev_ ){
 
 		load: function( set ){
 
-			if( utils.isStringEmpty( set ) || [ 'cus', 'pre' ].indexOf( set = utils.trim( set ) ) < 0 ){
+			if( isEmpty( set ) || [ 'cus', 'pre' ].indexOf( set = set.trim() ) < 0 ){
 				return false;
 
 			}
@@ -215,7 +216,7 @@ export default function( _ev_ ){
 				const fragment = _d.createDocumentFragment();
 				var t, template, id, title, buttonset, inner, scope;
 
-				if( templates === '0' || body === null || !utils.isArray( ( templates = parse.json( templates ) ), 1 ) ){
+				if( templates === '0' || body === null || !isArray( templates = parse.json( templates ) ) ){
 					return;
 
 				}
@@ -228,7 +229,7 @@ export default function( _ev_ ){
 						continue;
 
 					}
-					title = utils.isString( template.post_title ) ? utils.trim( template.post_title ) : '';
+					title = isString( template.post_title ) ? template.post_title.trim() : '';
 
 					scope = _d.createElement( 'div' );
 					scope.className = 'comet-template comet-scope comet-collection';

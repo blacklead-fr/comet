@@ -1,5 +1,5 @@
-import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import { isFunction, isNode } from '../../../utils/is.js';
+import node from '../../../node/index.js';
 import library from './library.js';
 
 export default function( parentNode ){
@@ -44,10 +44,10 @@ export default function( parentNode ){
 
 
 			for( b in buttons ){
-				tmp = button( b, utils.trim( buttons[b].title ), utils.trim( buttons[b].icon ) );
+				tmp = button( b, buttons[b].title.trim(), buttons[b].icon.trim() );
 				parentNode.appendChild( tmp );
 
-				if( utils.isFunction( buttons[b].event ) ){
+				if( isFunction( buttons[b].event ) ){
 					node( tmp ).on( 'click', buttons[b].event );
 
 				}
@@ -64,7 +64,7 @@ export default function( parentNode ){
 
 	};
 
-	if( !node( parentNode ).isNode() ){
+	if( !isNode( parentNode ) ){
 		return false;
 
 	}

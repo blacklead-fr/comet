@@ -1,7 +1,7 @@
+import { isString, isEmpty, isObject, isNode } from '../../../utils/is.js';
 import { frameset as getFrameset } from '../stored.js';
-import utils from '../../../utils/utils.js';
+import node from '../../../node/index.js';
 import initElements from './elements.js';
-import node from '../../../utils/node.js';
 import initButtons from './buttons.js';
 import initMenu from './menu.js';
 
@@ -63,9 +63,9 @@ export default function(){
 		events: {
 
 			search: function( ev, ui ){
-				const value = utils.isString( ui.value ) ? utils.trim( ui.value ) : '';
-				const isEmpty = value.length < 1;
-				var a, element, _element, regex, title;
+				const value = isString( ui.value ) ? ui.value.trim() : '';
+				const empty = isEmpty( value );
+				var a, element, regex, title;
 
 				ev.preventDefault();
 
@@ -77,22 +77,22 @@ export default function(){
 
 				for( a = 0; a < __cockpit.elements.length; a++ ){
 
-					if( ( element = __cockpit.elements[a] ) === null || !( ( _element = node( element ) ).isNode() ) ){
+					if( ( element = __cockpit.elements[a] ) === null || !isNode( element ) ){
 						continue;
 
 					}
 
-					if( !utils.isString( title = element.getAttribute( 'aria-label' ) ) ){
+					if( !isString( title = element.getAttribute( 'aria-label' ) ) ){
 						continue;
 
 					}
 
-					if( !isEmpty && title.search( regex ) === -1 ){
-						_element.addClass( __classes.elements.hidden );
+					if( !empty && title.search( regex ) === -1 ){
+						node( element ).addClass( __classes.elements.hidden );
 						continue;
 
 					}
-					_element.removeClass( __classes.elements.hidden );
+					node( element ).removeClass( __classes.elements.hidden );
 
 				}
 
@@ -102,15 +102,16 @@ export default function(){
 			toggle: function( ev, ui ){
 				var n_cockpit;
 
-				if( utils.isObject( ev ) ){
+				if( isObject( ev ) ){
 					ev.preventDefault();
 
 				}
 
-				if( __cockpit.target === null || !( ( n_cockpit = node( __cockpit.target ) ).isNode() ) ){
+				if( !isNode( __cockpit.target ) ){
 					return false;
 
 				}
+				n_cockpit = node( __cockpit.target );
 
 				if( n_cockpit.hasClass( __classes.open ) && __cockpit.open ){
 					n_cockpit.removeClass( __classes.open );
