@@ -1,14 +1,13 @@
+import { isNode, isObject, isFunction } from '../../../utils/is.js';
 import __global from '../../../utils/global.js';
 import range from '../../../utils/ui/range.js';
-import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
 import update from '../../update.js';
 
 export default function(){
 
 	var fi = 0;
 
-	const _d = document;
+	const DOCUMENT = document;
 
 	const _global = __global();
 
@@ -38,17 +37,17 @@ export default function(){
 
 	for( fi; fi < globalList.length; fi++ ){
 
-		if( !utils.isObject( globalList[fi] ) ){
+		if( !isObject( globalList[fi] ) ){
 			continue;
 
 		}
 
-		if( !( 'type' in globalList[fi] ) || !utils.isFunction( __core[globalList[fi].type] ) ){
+		if( !( 'type' in globalList[fi] ) || !isFunction( __core[globalList[fi].type] ) ){
 			continue;
 
 		}
 
-		if( !( 'node' in globalList[fi] ) || !node( globalList[fi].node ).isNode() ){
+		if( !( 'node' in globalList[fi] ) || !isNode( globalList[fi].node ) ){
 			continue;
 
 		}

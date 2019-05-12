@@ -1,7 +1,7 @@
 import { generalSettings as GeneralSettings, notifications as Notifications } from '../stored.js';
+import { isNode, isBool, isObject, isFunction } from '../../../utils/is.js';
 import dialog from '../../../utils/dialog.js';
-import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import node from '../../../dom/element.js';
 import device from './device.js';
 import evSave from './save.js';
 
@@ -94,11 +94,11 @@ export default function( parentNode ){
 			const button = _d.createElement( 'button' );
 			var a;
 
-			button.className = __classes.button + ( utils.isBool( data.expand ) && data.expand ? ' ' + __classes.expand : '' );
+			button.className = __classes.button + ( isBool( data.expand ) && data.expand ? ' ' + __classes.expand : '' );
 			button.setAttribute( 'aria-label', data.title );
 			button.innerHTML = '<span class="' + __classes.icon + ' cico ' + data.icon + '"></span><span class="' + __classes.title + '"><span>' + data.title + '</span></span>';
 
-			if( utils.isObject( data.dataset ) ){
+			if( isObject( data.dataset ) ){
 
 				for( a in data.dataset ){
 					button.dataset[a] = data.dataset[a];
@@ -107,7 +107,7 @@ export default function( parentNode ){
 
 			}
 
-			if( utils.isFunction( data.event ) ){
+			if( isFunction( data.event ) ){
 				node( button ).on( 'click', data.event );
 
 			}
@@ -133,7 +133,7 @@ export default function( parentNode ){
 
 	};
 
-	if( !node( parentNode ).isNode() ){
+	if( !isNode( parentNode ) ){
 		return false;
 
 	}

@@ -1,6 +1,6 @@
 import { isString, isEmpty, isObject, isNode } from '../../../utils/is.js';
 import { frameset as getFrameset } from '../stored.js';
-import node from '../../../node/index.js';
+import node from '../../../dom/element.js';
 import initElements from './elements.js';
 import initButtons from './buttons.js';
 import initMenu from './menu.js';

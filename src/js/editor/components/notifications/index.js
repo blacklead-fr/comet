@@ -1,7 +1,7 @@
+import { isString, isObject, isNode } from '../../../utils/is.js';
 import { frameset as getFrameset } from '../stored.js';
 import _global from '../../../utils/global.js';
-import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import node from '../../../dom/element.js';
 
 export default function(){
 
@@ -27,12 +27,12 @@ export default function(){
 			const prefix = 'comet';
 			var tmp;
 
-			if( !utils.isString( name ) ){
+			if( !isString( name ) ){
 				return false;
 
 			}
 
-			if( __data.classes.indexOf( tmp = prefix + '-' + utils.trim( name ) ) > -1 ){
+			if( __data.classes.indexOf( tmp = prefix + '-' + name.trim() ) > -1 ){
 				return tmp;
 
 			}
@@ -47,15 +47,16 @@ export default function(){
 				const c_open = __core.createClass( slug + '--open' );
 				var _target;
 
-				if( utils.isObject( ev ) ){
+				if( isObject( ev ) ){
 					ev.preventDefault();
 
 				}
 
-				if( !( ( _target = node( __data.target ) ).isNode() ) ){
+				if( !isNode( __data.target ) ){
 					return false;
 
 				}
+				_target = node( __data.target )
 
 				if( _target.hasClass( c_open ) && __data.open ){
 					_target.removeClass( c_open );
@@ -82,7 +83,7 @@ export default function(){
 			add: function( note, status ){
 				var mainClass, notification, inner;
 
-				if( !utils.isString( note ) ){
+				if( !isString( note ) ){
 					return false;
 
 				}

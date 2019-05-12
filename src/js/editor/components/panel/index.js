@@ -1,8 +1,8 @@
+import { isNode, isString, isObject, isFunction } from '../../../utils/is.js';
 import { frameset as getFrameset } from '../stored.js';
 import sanitize from '../../../utils/sanitize.js';
 import __global from '../../../utils/global.js';
-import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import node from '../../../dom/element.js';
 import fields from './fields.js';
 
 /* global document, __cometi18n */
@@ -35,7 +35,7 @@ export default function( options ){
 
 			__core.destroy();
 
-			if( utils.isFunction( options.close.do ) ){
+			if( isFunction( options.close.do ) ){
 				options.close.do( ev, ui );
 
 			}
@@ -47,14 +47,14 @@ export default function( options ){
 
 			forceCreate = forceCreate === false ? false : true;
 
-			if( ( ( panel = node( _d.getElementById( id ) ) ).isNode() ) ){
+			if( isNode( panel = _d.getElementById( id ) ) ){
 				__core.data.panel = panel;
 
 				if( !forceCreate ){
 					return;
 
 				}
-				panel.remove();
+				panel.parentNode.removeChild( panel );
 
 			}
 			panel = _d.createElement( 'div' );
@@ -79,10 +79,10 @@ export default function( options ){
 			header.firstChild.appendChild( button );
 			node( button ).on( 'click', __core.onclose );
 
-			if( !utils.isStringEmpty( options.title ) ){
+			if( isString( options.title ) ){
 				title = _d.createElement( 'span' );
 				title.className = 'comet-title';
-				title.innerHTML = utils.trim( options.title );
+				title.innerHTML = options.title;
 				header.firstChild.appendChild( title );
 
 			}
@@ -109,20 +109,25 @@ export default function( options ){
 		},
 
 		destroy: function(){
-			node( __core.data.panel ).remove();
+
+			if( __core.data.panel === null || __core.data.panel.parentNode === null ){
+				return;
+
+			}
+			__core.data.panel.parentNode.removeChild( __core.data.panel );
 			_global.set( 'panel', false, true );
 
 		}
 
 	};
 
-	if( !utils.isObject( options ) ){
+	if( !isObject( options ) ){
 		options = {};
 
 	}
-	options.close = utils.isObject( options.close ) ? options.close : {};
-	options.close.title = !utils.isStringEmpty( options.close.title ) ? utils.trim( options.close.title ) : __cometi18n.ui.close;
-	options.close.inner = !utils.isStringEmpty( options.close.inner ) ? utils.trim( options.close.inner ) : '<span class="cico cico-x"></span>';
+	options.close = isObject( options.close ) ? options.close : {};
+	options.close.title = isString( options.close.title ) ? options.close.title : __cometi18n.ui.close;
+	options.close.inner = isString( options.close.inner ) ? options.close.inner : '<span class="cico cico-x"></span>';
 
 	__core.create();
 

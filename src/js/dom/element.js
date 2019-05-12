@@ -74,18 +74,23 @@ function getMethods( node ){
 
 			},
 
-			next: function( target ){
-				return __core.next( node, target );
+			children: function( query ){
+				return __core.children( node, query );
 
 			},
 
-			prev: function( target ){
-				return __core.prev( node, target );
+			next: function( query ){
+				return __core.next( node, query );
 
 			},
 
-			closest: function( target ){
-				return __core.closest( node, target );
+			prev: function( query ){
+				return __core.prev( node, query );
+
+			},
+
+			closest: function( query ){
+				return __core.closest( node, query );
 
 			},
 

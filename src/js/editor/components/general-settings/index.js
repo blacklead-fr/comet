@@ -1,7 +1,9 @@
+import { isObject, isString, isEmpty, isNode } from '../../../utils/is.js';
 import { frameset as getFrameset } from '../stored.js';
 import _global from '../../../utils/global.js';
+import nodes from '../../../dom/elements.js';
 import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import node from '../../../dom/element.js';
 
 export default function(){
 
@@ -33,15 +35,16 @@ export default function(){
 
 			var n_target;
 
-			if( utils.isObject( ev ) ){
+			if( isObject( ev ) ){
 				ev.preventDefault();
 
 			}
 
-			if( __data.target === null || !( ( n_target = node( __data.target ) ).isNode() ) ){
+			if( __data.target === null || !isNode( __data.target ) ){
 				return;
 
 			}
+			n_target = node( __data.target );
 
 			if( n_target.hasClass( __classes.open ) && __data.open ){
 				n_target.removeClass( __classes.open );
@@ -78,12 +81,12 @@ export default function(){
 
 			for( a = 0; a < fields.length; a++ ){
 
-				if( !node( field = fields[a] ).isNode() || ( index = n_names.indexOf( field.nodeName.toLowerCase() ) ) < 0 ){
+				if( !isNode( field = fields[a] ) || ( index = n_names.indexOf( field.nodeName.toLowerCase() ) ) < 0 ){
 					continue;
 
 				}
 
-				if( utils.isStringEmpty( field.name ) ){
+				if( !isString( field.name ) || isEmpty( field.name ) ){
 					continue;
 
 				}
@@ -116,7 +119,7 @@ export default function(){
 	}
 	form = form[0];
 	__data.form = form;
-	node( target.getElementsByClassName( __classes.close ) ).on( 'click', __data.toggle );
+	nodes( target.getElementsByClassName( __classes.close ) ).on( 'click', __data.toggle );
 	__global.set( slug, __data, true );
 
 	return __data;

@@ -1,6 +1,6 @@
 import { frame as Frame, notifications as Notifications } from '../stored.js';
 import { isString, isEmpty, isObject } from '../../../utils/is.js';
-import node from '../../../node/index.js';
+import node from '../../../dom/element.js';
 import layout from '../../../utils/layout.js';
 import parse from '../../../utils/parse.js';
 import modal from '../../../utils/modal.js';

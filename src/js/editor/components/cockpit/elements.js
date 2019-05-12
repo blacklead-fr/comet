@@ -2,7 +2,7 @@ import { isNode, isObject, isString, isEmpty } from '../../../utils/is.js';
 import layout from '../../../utils/layout.js';
 import parse from '../../../utils/parse.js';
 import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import node from '../../../dom/element.js';
 import sort from '../../../utils/sort.js';
 import __tabs from '../panel/tabs.js';
 import __target from '../../target.js';
@@ -46,7 +46,7 @@ export default function( parentNode ){
 					}
 
 					function next( items ){
-						const closest = _ui.next( items );
+						const closest = _ui.next( { selector: items } );
 						var t;
 
 						return ( isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last' );
@@ -83,7 +83,7 @@ export default function( parentNode ){
 
 						position = next( '.cpb-column' );
 						cid = data_.create( 'columns', rid, position );
-						columns = _p.children( 'cpb-column' ); // @TODO
+						columns = _p.children( { selector: '.cpb-column' } );
 						w = 100;
 						nb = 1;
 
@@ -143,7 +143,7 @@ export default function( parentNode ){
 						return;
 
 					}
-					closest = node( ui ).next( '.cpb-element' );
+					closest = node( ui ).next( { selector: '.cpb-element' } );
 					t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
 
 					if( !( id = data_.create( defname, pid, t ) ) || !( lyt = layout( data_.getData() ).element( id ) ) ){

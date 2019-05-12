@@ -5,7 +5,7 @@ import message from '../../../utils/message.js';
 import parse from '../../../utils/parse.js';
 import modal from '../../../utils/modal.js';
 import utils from '../../../utils/utils.js';
-import node from '../../../node/index.js';
+import node from '../../../dom/element.js';
 import ajax from '../../../utils/ajax.js';
 import __data from '../../data.js';
 

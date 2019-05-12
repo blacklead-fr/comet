@@ -1,4 +1,5 @@
 import { isObject, isString, isFunction, isEmpty, isNode, isWindow, isDocument } from '../utils/is.js';
+import { arrayDiff } from '../utils/fill.js';
 import { decodeSelector } from './decode.js';
 
 function getSize( object, type, depth ){
@@ -79,23 +80,48 @@ function insertTo( object, position, entry ){
 
 export function children( object, query ){
 	const aChildren = [];
-	var selector, all, a;
+	var selector, all, a, classes;
 
 	if( !isNode( object ) || !isObject( query ) || isEmpty( all = object.children ) ){
 		return aChildren;
 
 	}
 
-	if( !( selector = decodeSelector( query.selector ) ) || selector.tagName === null || selector.classList.length < 1 ){
-		return aChildren;
+	if( !( selector = decodeSelector( query.selector ) ) ){
+		return all;
+
+	}
+
+	if( selector.tagName === null && selector.classList.length < 1 ){
+		return all;
 
 	}
 
 	for( a = 0; a < all.length; a++ ){
 
-		isNodeName = selector.tagName !== null ? ( all[a].nodeName.toLowerCase() === selector.tagName ) : null;
+		if( !isNode( all[a] ) ){
+			continue;
 
-		// @TODO inArray
+		}
+
+		if( selector.tagName !== null ){
+
+			if( all[a].tagName.toLowerCase() !== selector.tagName ){
+				continue;
+
+			}
+
+		}
+
+		if( selector.classList.length > 0 && ( classes = classList( all[a] ) ).length > 0 ){
+
+			if( arrayDiff( classes, selector.classList ).length > 0 ){
+				continue;
+
+			}
+
+		}
+		aChildren[aChildren.length] = all[a];
 
 	}
 
@@ -235,65 +261,121 @@ export function offset( object ){
 
 }
 
-export function next( object, target ){
-	const dtarget = decodeSelector( target );
+export function next( object, query ){
 	var nextSibling = null;
-	var isId = false;
+	var selector, classes;
 
 	if( !isNode( object ) || ( nextSibling = object.nextSibling ) === null ){
 		return false;
 
 	}
 
-	if( !dtarget || ( dtarget.id === null && dtarget.classList.length < 1 ) ){
+	if( !isObject( query ) || !( selector = decodeSelector( query.selector ) ) ){
 		return nextSibling;
 
 	}
-	isId = dtarget.id !== null;
+
+	if( selector.tagName === null && selector.classList.length < 1 && selector.id === null ){
+		return nextSibling;
+
+	}
 
 	while( nextSibling !== null ){
 
-		if( ( isId && nextSibling.id === dtarget.id ) || hasClasses( nextSibling, dtarget.classList ) ){
-			return nextSibling;
+		if( selector.tagName !== null ){
+
+			if( nextSibling.tagName.toLowerCase() !== selector.tagName ){
+				nextSibling = nextSibling.nextSibling;
+				continue;
+
+			}
 
 		}
-		nextSibling = nextSibling.nextSibling;
+
+		if( selector.id !== null ){
+
+			if( nextSibling.id !== selector.id ){
+				nextSibling = nextSibling.nextSibling;
+				continue;
+
+			}
+
+		}
+
+		if( selector.classList.length > 0 && ( classes = classList( nextSibling ) ).length > 0 ){
+
+			if( arrayDiff( classes, selector.classList ).length > 0 ){
+				nextSibling = nextSibling.nextSibling;
+				continue;
+
+			}
+
+		}
+		return nextSibling;
 
 	}
 	return false;
 
 }
 
-export function prev( object, target ){
-	const dtarget = decodeSelector( target );
+export function prev( object, query ){
 	var previousSibling = null;
-	var isId = false;
+	var selector, classes;
 
 	if( !isNode( object ) || ( previousSibling = object.previousSibling ) === null ){
 		return false;
 
 	}
 
-	if( !dtarget || ( dtarget.id === null && dtarget.classList.length < 1 ) ){
+	if( !isObject( query ) || !( selector = decodeSelector( query.selector ) ) ){
 		return previousSibling;
 
 	}
-	isId = dtarget.id !== null;
+
+	if( selector.tagName === null && selector.classList.length < 1 && selector.id === null ){
+		return previousSibling;
+
+	}
 
 	while( previousSibling !== null ){
 
-		if( ( isId && previousSibling.id === dtarget.id ) || hasClasses( previousSibling, dtarget.classList ) ){
-			return previousSibling;
+		if( selector.tagName !== null ){
+
+			if( previousSibling.tagName.toLowerCase() !== selector.tagName ){
+				previousSibling = previousSibling.previousSibling;
+				continue;
+
+			}
 
 		}
-		previousSibling = previousSibling.previousSibling;
+
+		if( selector.id !== null ){
+
+			if( previousSibling.id !== selector.id ){
+				previousSibling = previousSibling.previousSibling;
+				continue;
+
+			}
+
+		}
+
+		if( selector.classList.length > 0 && ( classes = classList( previousSibling ) ).length > 0 ){
+
+			if( arrayDiff( classes, selector.classList ).length > 0 ){
+				previousSibling = previousSibling.previousSibling;
+				continue;
+
+			}
+
+		}
+		return previousSibling;
 
 	}
 	return false;
 
 }
 
-export function closest( object, target ){
+export function closest( object, query ){
 	var tmp;
 
 	if( !isNode( object ) ){
@@ -301,12 +383,12 @@ export function closest( object, target ){
 
 	}
 
-	if( ( tmp = next( object, target ) ) ){
+	if( ( tmp = next( object, query ) ) ){
 		return tmp;
 
 	}
 
-	if( ( tmp = prev( object, target ) ) ){
+	if( ( tmp = prev( object, query ) ) ){
 		return tmp;
 
 	}

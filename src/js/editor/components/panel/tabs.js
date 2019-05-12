@@ -1,3 +1,4 @@
+import { isFunction, isObject, isString, isArray, isEmpty, isNode } from '../../../utils/is.js';
 import f_gradient from '../../../utils/ui/gradient.js';
 import f_color from '../../../utils/ui/color-picker.js';
 import sanitize from '../../../utils/sanitize.js';
@@ -5,9 +6,10 @@ import f_range from '../../../utils/ui/range.js';
 import f_numbers from './fields/numbers.js';
 import global from '../../../utils/global.js';
 import layout from '../../../utils/layout.js';
+import nodes from '../../../dom/elements.js';
 import parse from '../../../utils/parse.js';
 import utils from '../../../utils/utils.js';
-import node from '../../../utils/node.js';
+import node from '../../../dom/element.js';
 import f_icon from './fields/icon.js';
 import __target from '../../target.js';
 import update from '../../update.js';
@@ -44,8 +46,8 @@ const __create = function( tabs, data ){
 
 			tab: function( ev, ui, contentNode ){
 				ev.preventDefault();
-				node( ui.parentNode.children ).removeClass( __core.classes.active );
-				node( contentNode.parentNode.children ).removeClass( __core.classes.active );
+				nodes( ui.parentNode.children ).removeClass( __core.classes.active );
+				nodes( contentNode.parentNode.children ).removeClass( __core.classes.active );
 				node( contentNode ).addClass( __core.classes.active );
 				node( ui ).addClass( __core.classes.active );
 
@@ -65,7 +67,7 @@ const __create = function( tabs, data ){
 
 					ev.preventDefault();
 
-					if( !node( itemsNode ).isNode() || !( pid = target_.id() ) ){
+					if( !isNode( itemsNode )  || !( pid = target_.id() ) ){
 						return;
 
 					}
@@ -91,12 +93,12 @@ const __create = function( tabs, data ){
 
 					}
 
-					if( !utils.isObject( element = data_.get( tid, 'elements' ) ) || !utils.isObject( edata = utils.getElement( element._type ) ) ){
+					if( !isObject( element = data_.get( tid, 'elements' ) ) || !isObject( edata = utils.getElement( element._type ) ) ){
 						return;
 
 					}
 
-					if( !utils.isObject( edata.tabs ) || !utils.isObject( edata.tabs.items ) || !utils.isObject( edata.tabs.items.tabs ) ){
+					if( !isObject( edata.tabs ) || !isObject( edata.tabs.items ) || !isObject( edata.tabs.items.tabs ) ){
 						return;
 
 					}
@@ -147,7 +149,7 @@ const __create = function( tabs, data ){
 
 					ev.preventDefault();
 
-					if( !( ( _t = node( args.target ) ).isNode() ) || !( item_id = parse.id( args.id ) ) ){
+					if( !isNode( args.target ) || !( item_id = parse.id( args.id ) ) ){
 						return;
 
 					}
@@ -156,7 +158,7 @@ const __create = function( tabs, data ){
 						return;
 
 					}
-					_t.remove();
+					args.target.parentNode.removeChild( args.target );
 
 					if( ( elementNode = target_.node() ) && ( lyt = layout( data_.getData() ).element( element_id, true ) ) ){
 						elementNode.parentNode.replaceChild( lyt, elementNode );
@@ -188,7 +190,7 @@ const __create = function( tabs, data ){
 						stop: function( e, ui, item ){
 							const target_ = __target();
 							const id_ = __id(); 
-							var pid, t, re, _closest, closest, tnode;
+							var pid, t, re, closest, tnode;
 
 							item.removeAttribute( 'style' );
 
@@ -196,9 +198,8 @@ const __create = function( tabs, data ){
 								return;
 
 							}
-							closest = node( ui ).next( '.comet-item-sortable' );
-							_closest = node( closest );
-							t = _closest.isNode() && ( t = parse.dataset( _closest.prop(), 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+							closest = node( ui ).next( { selector: '.comet-item-sortable' } );
+							t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
 
 							id_.remove( id, 'items', pid );
 							id_.insert( id, 'items', pid, t );
@@ -231,19 +232,19 @@ const __create = function( tabs, data ){
 
 				for( a in sdata ){
 
-					if( !utils.isArray( sdata[a] ) ){
+					if( !isArray( sdata[a] ) || isEmpty( sdata[a] ) ){
 						continue;
 
 					}
 
 					for( b = 0; b < sdata[a].length; b++ ){
 
-						if( !( ( slug = sdata[a][b] ) in __core.data.controls.toggle ) || !utils.isObject( __core.data.controls.toggle[slug] ) ){
+						if( !( ( slug = sdata[a][b] ) in __core.data.controls.toggle ) || !isObject( __core.data.controls.toggle[slug] ) ){
 							__core.data.controls.toggle[slug] = {};
 
 						}
 
-						if( !utils.isArray( __core.data.controls.toggle[slug].values ) ){
+						if( !isArray( __core.data.controls.toggle[slug].values ) || isEmpty( __core.data.controls.toggle[slug].values ) ){
 							__core.data.controls.toggle[slug].values = [];
 
 						}
@@ -264,7 +265,7 @@ const __create = function( tabs, data ){
 					for( a in sdata ){
 						isValue = ( value === a );
 
-						if( !utils.isArray( sdata[a] ) ){
+						if( !isArray( sdata[a] ) ){
 							continue;
 
 						}
@@ -294,14 +295,14 @@ const __create = function( tabs, data ){
 			initControlsState: function(){
 				var a, _node, checkbox, checked;
 
-				if( !utils.isObject( __core.data.controls.toggle ) || !utils.isObject( __core.data.controls.all ) ){
+				if( !isObject( __core.data.controls.toggle ) || !isObject( __core.data.controls.all ) ){
 					return false;
 
 				}
 
 				for( a in __core.data.controls.toggle ){
 
-					if( !utils.isObject( __core.data.controls.toggle[a] ) ){
+					if( !isObject( __core.data.controls.toggle[a] ) ){
 						continue;
 
 					}
@@ -329,12 +330,12 @@ const __create = function( tabs, data ){
 				var count = 1;
 				var a, isItems, t, tab, content;
 
-				if( utils.isObject( tabs ) ){
+				if( isObject( tabs ) ){
 
 					for( a in tabs ){
 						isItems = ( a === 'items' );
 
-						if( !utils.isObject( t = tabs[a] ) || !utils.isString( t.name ) || ( !isItems && !utils.isObject( t.sections ) ) || ( isItems && !utils.isObject( t.tabs ) ) ){
+						if( !isObject( t = tabs[a] ) || !isString( t.name ) || ( !isItems && !isObject( t.sections ) ) || ( isItems && !isObject( t.tabs ) ) ){
 							continue;
 
 						}
@@ -369,14 +370,14 @@ const __create = function( tabs, data ){
 				const oTab = _d.createDocumentFragment();
 				var section, a, s, dataItem, ids, id;
 
-				if( utils.isBool( isItems ) && isItems ){
+				if( isBool( isItems ) && isItems ){
 
 					section = _d.createElement( 'div' );
 					section.className = 'comet-section comet-items comet-ui';
 					section.innerHTML = '<div class="comet-items comet-items-sortable"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
 					oTab.appendChild( section );
 
-					if( utils.isObject( data ) && !utils.isStringEmpty( data._items ) && utils.isArray( ( ids = parse.ids( data._items, 'array' ) ), 1 ) ){
+					if( isObject( data ) && !isString( data._items ) && !isEmpty( data._items ) && isArray( ( ids = parse.ids( data._items, 'array' ) ), 1 ) ){
 
 						for( a = 0; a < ids.length; a++ ){
 
@@ -395,11 +396,11 @@ const __create = function( tabs, data ){
 
 				}
 
-				if( utils.isObject( sections ) ){ 
+				if( isObject( sections ) ){ 
 
 					for( a in sections ){
 
-						if( !utils.isObject( s = sections[a] ) || !utils.isString( s.name ) || !utils.isObject( s.fields ) ){
+						if( !isObject( s = sections[a] ) || !isString( s.name ) || !isObject( s.fields ) ){
 							continue;
 
 						}
@@ -450,11 +451,11 @@ const __create = function( tabs, data ){
 				const oFields = _d.createDocumentFragment();
 				var f, a, field, meta, oField;
 
-				if( utils.isObject( fields ) ){
+				if( isObject( fields ) ){
 
 					for( a in fields ){
 
-						if( !utils.isObject( f = fields[a] ) || !utils.isString( f.type ) || !utils.isString( f.label ) ){
+						if( !isObject( f = fields[a] ) || !isString( f.type ) || !isString( f.label ) ){
 							continue;
 
 						}
@@ -462,15 +463,15 @@ const __create = function( tabs, data ){
 							continue;
 
 						}
-						f.type = utils.trim( utils.stripTags( f.type.toLowerCase() ) );
+						f.type = ( utils.stripTags( f.type.toLowerCase() ) ).trim();
 						field = _d.createElement( 'div' );
 						field.className = 'comet-control comet-control-' + f.type;
 						field.innerHTML = '<div class="comet-meta"></div><div class="comet-field-wrap"></div>';
 						oFields.appendChild( field );
 
-						meta = '<label>' + utils.trim( utils.stripTags( f.label ) ) + '</label>';
+						meta = '<label>' + ( utils.stripTags( f.label ) ).trim() + '</label>';
 
-						if( !utils.isStringEmpty( f.desc ) ){
+						if( isString( f.desc ) && !isEmpty( f.desc ) ){
 							meta += '<span class="comet-tooltip">';
 							meta += '<span class="comet-icon">?</span>';
 							meta += '<span class="comet-description comet-inner">' + utils.stripTags( f.desc, '<b><strong><i><a><span><sub><sup><ins>' ) + '</span>';
@@ -480,7 +481,7 @@ const __create = function( tabs, data ){
 						field.firstChild.innerHTML = meta;
 						field.lastChild.appendChild( oField );
 
-						if( !utils.isObject( __core.data.controls.all[a] ) ){
+						if( !isObject( __core.data.controls.all[a] ) ){
 							__core.data.controls.all[a] = {};
 
 						}
@@ -498,7 +499,7 @@ const __create = function( tabs, data ){
 
 				var value = '';
 
-				const isSwitch = ( 'switch' in field && utils.isObject( field.switch ) );
+				const isSwitch = ( 'switch' in field && isObject( field.switch ) );
 
 				const fields = {
 
@@ -535,11 +536,11 @@ const __create = function( tabs, data ){
 						_node.name = slug;
 						_node.className = fieldClass;
 
-						if( utils.isObject( values = field.values ) ){
+						if( isObject( values = field.values ) ){
 
 							for( v in values ){
 
-								if( !utils.isString( values[v] ) && !utils.isNumber( values[v] ) ){
+								if( !isString( values[v] ) && !isNumber( values[v] ) ){
 									continue;
 
 								}
@@ -598,7 +599,7 @@ const __create = function( tabs, data ){
 								return;
 
 							}
-							node( dren ).removeClass( __core.classes.active );
+							nodes( dren ).removeClass( __core.classes.active );
 							node( ui ).addClass( __core.classes.active );
 							update( ui.firstElementChild );
 
@@ -613,11 +614,11 @@ const __create = function( tabs, data ){
 
 						var _radio, values, v, inner;
 
-						if( utils.isObject( values = field.values ) ){
+						if( isObject( values = field.values ) ){
 
 							for( v in values ){
 
-								if( !utils.isObject( values[v] ) || !utils.isString( values[v].title ) || !utils.isString( values[v].icon ) ){
+								if( !isObject( values[v] ) || !isString( values[v].title ) || !isString( values[v].icon ) ){
 									continue;
 
 								}
@@ -625,8 +626,8 @@ const __create = function( tabs, data ){
 								_radio.className = 'comet-label comet-ui' + ( v === value ? ' ' + __core.classes.active : '' );
 								fragment.appendChild( _radio );
 								inner = '<input type="radio" class="' + fieldClass + '" name="' + slug + '"value="' + v + '" />';
-								inner += '<span class="comet-icon ' + utils.trim( utils.stripTags( values[v].icon ) ) + '"></span>';
-								inner += '<span class="comet-title">' + utils.trim( utils.stripTags( values[v].title, '<b><strong><i><span><u><ins>' ) ) + '</span>';
+								inner += '<span class="comet-icon ' + ( utils.stripTags( values[v].icon ) ).trim() + '"></span>';
+								inner += '<span class="comet-title">' + ( utils.stripTags( values[v].title, '<b><strong><i><span><u><ins>' ) ).trim() + '</span>';
 								_radio.innerHTML = inner;
 
 								if( v === value ){
@@ -653,7 +654,7 @@ const __create = function( tabs, data ){
 						_node.min = sanitize.number({ value: field.min, min: 0 });
 						_node.max = sanitize.number({ value: field.max, min: _node.min });
 						_node.step = sanitize.number({ value: field.step, min: 0.01 });
-						_node.dataset.unit = utils.isString( field.unit ) ? utils.stripTags( field.unit ) : '';
+						_node.dataset.unit = isString( field.unit ) ? utils.stripTags( field.unit ) : '';
 
 						__fieldsJs[__fieldsJs.length] = {
 							type: field.type,
@@ -678,7 +679,7 @@ const __create = function( tabs, data ){
 
 						fragment.appendChild( _node );
 
-						if( utils.isString( unit = field.unit ) ){
+						if( isString( unit = field.unit ) ){
 							_unit = _d.createElement( 'span' );
 							_unit.className = 'comet-unit';
 							_unit.innerHTML = utils.stripTags( unit );
@@ -728,7 +729,7 @@ const __create = function( tabs, data ){
 
 						const _node = _d.createElement( 'textarea' );
 						_node.name = slug;
-						_node.className = fieldClass + ( !utils.isStringEmpty( op = field.option ) && [ 'advanced', 'force_tag' ].indexOf( op = utils.trim( op ) ) > -1 ? ( op === 'advanced' ? ' comet-fieldEditorAdvanced' : ' comet-fieldEditorForceTag' ) : '' );
+						_node.className = fieldClass + ( isString( op = field.option ) && [ 'advanced', 'force_tag' ].indexOf( op = op.trim() ) > -1 ? ( op === 'advanced' ? ' comet-fieldEditorAdvanced' : ' comet-fieldEditorForceTag' ) : '' );
 						_node.innerHTML = value;
 						__core.actions.update( _node );
 
@@ -768,7 +769,7 @@ const __create = function( tabs, data ){
 
 						var input = null;
 
-						var _value = utils.isString( value ) ? utils.trim( utils.stripTags( value ) ) : '';
+						var _value = isString( value ) ? ( utils.stripTags( value ) ).trim() : '';
 
 						const wrapper = _d.createElement( 'div' );
 
@@ -806,7 +807,7 @@ const __create = function( tabs, data ){
 
 								media.on( 'select', function(){
 									const att = media.state().get('selection').first().toJSON();
-									_value = utils.isString( _value = att.url ) ? ( ( _value = utils.trim( utils.stripTags( _value ) ) ) !== '' ? _value : '' ) : '';
+									_value = isString( _value = att.url ) ? ( ( _value = ( utils.stripTags( _value ) ).trim() ) !== '' ? _value : '' ) : '';
 
 									input.value = _value;
 									__img.create();
@@ -891,20 +892,20 @@ const __create = function( tabs, data ){
 
 				}
 
-				if( !utils.isObject( __core.data.controls.all[slug] ) ){
+				if( !isObject( __core.data.controls.all[slug] ) ){
 					__core.data.controls.all[slug] = {};
 
 				}
 				__core.data.controls.all[slug].value = value;
 
-				return ( utils.isFunction( fields[field.type] ) ? fields[field.type]() : false );
+				return ( isFunction( fields[field.type] ) ? fields[field.type]() : false );
 
 			}
 
 		},
 
 	};
-	data = utils.isObject( data ) ? data : {};
+	data = isObject( data ) ? data : {};
 
 	return __core.create.tabs();
 

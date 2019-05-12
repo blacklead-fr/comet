@@ -1,5 +1,5 @@
 import { isFunction, isNode } from '../../../utils/is.js';
-import node from '../../../node/index.js';
+import node from '../../../dom/element.js';
 import library from './library.js';
 
 export default function( parentNode ){
