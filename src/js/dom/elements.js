@@ -1,5 +1,6 @@
-import { isString, isArray, isEmpty } from '../utils/is.js';
 import { on as bind, removeClass, addClass } from './default.js';
+import { isString, isArray, isEmpty } from '../utils/is.js';
+import sort from '../ui/sort/build.js';
 
 const DOCUMENT = document;
 
@@ -45,6 +46,20 @@ export default function( entry ){
 				bind( elements[a], types, listener, data );
 
 			}
+
+		},
+
+		sort: function( options ){
+			var a, _options;
+
+			for( a = 0; a < elements.length; a++ ){
+				_options = options;
+				_options.handle = elements[a];
+				sort( _options );
+
+			}
+
+
 
 		}
 

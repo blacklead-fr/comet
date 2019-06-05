@@ -1,3 +1,4 @@
+import { CORE, DOCUMENT, WINDOW } from './core.js';
 import { frame as getFrame } from '../stored.js';
 import layout from '../../../utils/layout.js';
 import utils from '../../../utils/utils.js';
@@ -11,6 +12,12 @@ import panel from '../panel/index.js';
 import __id from '../../id.js';
 
 /* global document, window, __cometi18n */
+
+/**
+ * @TODO    Rewrite contextmenu
+ *
+ */
+
 
 export default function(){
 
@@ -30,125 +37,6 @@ export default function(){
         row: 'cpb-row',
         column: 'cpb-column',
         element: 'cpb-element',
-
-    };
-
-    const __core = {
-
-        getPosition: function( e ){
-
-            var posx = 0;
-            var posy = 0;
-
-            if( !e ){
-                e = _w.event;
-
-            }
-
-            if( e.pageX || e.pageY ){
-                posx = e.pageX;
-                posy = e.pageY;
-
-            }else if( e.clientX || e.clientY ){
-                posx = e.clientX + _d.body.scrollLeft + _d.documentElement.scrollLeft;
-                posy = e.clientY + _d.body.scrollTop + _d.documentElement.scrollTop;
-
-            }
-
-            return {
-                x: posx,
-                y: posy
-            };
-
-        },
-
-        getTarget: function( target ){
-            const _target = node( target );
-
-            if( !_target.isNode() ){
-                return false;
-
-            }
-
-            if( _target.hasClass( classes.element ) ){
-                return {
-                    target: target,
-                    type: 'element',
-
-                };
-
-            }
-
-            if( _target.hasClass( classes.column ) ){
-                return {
-                    target: target,
-                    type: 'column',
-
-                };
-
-            }
-
-            if( _target.hasClass( classes.row ) ){
-                return {
-                    target: target,
-                    type: 'row',
-
-                };
-
-            }
-
-            if( _target.hasClass( classes.section ) ){
-                return {
-                    target: target,
-                    type: 'section',
-
-                };
-
-            }
-            return __core.getTarget( target.parentNode );
-
-        },
-
-        getParent: function( target, className ){
-            const _target = node( target );
-
-            return ( _target.isNode() ? ( _target.hasClass( className ) ? target : __core.getParent( target.parentNode, className ) ) : false );
-
-        },
-
-        preventType: function( type, checkType ){
-            var _types;
-
-            if( types.indexOf( checkType ) < 0 ){
-                return true;
-
-            }
-
-            switch( type ){
-                case 'section':
-                _types = [ 'row', 'column', 'element' ];
-                break;
-
-                case 'row':
-                _types = [ 'column', 'element' ];
-                break;
-
-                case 'column':
-                _types = [ 'element' ];
-                break;
-
-                case 'element':
-                _types = [];
-                break;
-
-                default:
-                _types = types;
-
-            }
-
-            return ( _types.indexOf( checkType ) > -1 );
-
-        },
 
     };
 

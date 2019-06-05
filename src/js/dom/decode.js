@@ -1,4 +1,4 @@
-import { isObject, isString, isBool, isArray } from '../utils/is.js';
+import { isObject, isString, isBool, isArray, isEmpty } from '../utils/is.js';
 
 export function decodeSelector( selector ){
 	var hasClass = false;

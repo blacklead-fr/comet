@@ -1,3 +1,4 @@
+import { isString } from '../../utils/is.js';
 import _global from '../../utils/global.js';
 
 const __global = _global();
@@ -9,40 +10,46 @@ function get( slug ){
 
 }
 
-function frameset(){
+export function frameset(){
 
 	return get( 'frameset' );
 	
 }
 
-function frame(){
+export function frame(){
 
 	return get( 'frame' );
 	
 }
 
-function cockpit(){
+export function cockpit(){
 
 	return get( 'cockpit' );
 	
 }
 
-function panel(){
+export function panel(){
 
 	return get( 'panel' );
 	
 }
 
-function generalSettings(){
+export function generalSettings(){
 
 	return get( 'generalSettings' );
 	
 }
 
-function notifications(){
+export function notifications(){
 
 	return get( 'notifications' );
 
 }
 
-export { frameset, frame, cockpit, panel, generalSettings, notifications };
+export function deviceType(){
+	var device = __global.get( 'deviceType' );
+	const devices = [ 'tablet', 'mobile' ];
+
+	return isString( device ) && devices.indexOf( device = ( device.trim() ).toLowerCase() ) > -1 ? device : 'desktop';
+
+}

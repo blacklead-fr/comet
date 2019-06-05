@@ -1,6 +1,7 @@
 @import 'mixins';
 
-.cpb-content{
+.cpb-content,
+.comet-frame.comet-frame--main {
 
     %reset_spaces {
         margin: 0;
@@ -875,7 +876,7 @@
 
 @media screen and (max-width: 800px) {
     
-    .cpb-row{
+    .cpb-row {
 
         .cpb-rowContent {
             flex-wrap: wrap;

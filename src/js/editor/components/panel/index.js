@@ -1,39 +1,92 @@
-import { isNode, isString, isObject, isFunction } from '../../../utils/is.js';
-import { frameset as getFrameset } from '../stored.js';
+import { isNode, isString, isObject, isFunction, isArray, isBool } from '../../../utils/is.js';
+import { frameset as getFrameset, panel as getPanel } from '../stored.js';
 import sanitize from '../../../utils/sanitize.js';
 import __global from '../../../utils/global.js';
+import { createControl } from './control.js';
 import node from '../../../dom/element.js';
-import fields from './fields.js';
+import { createItems } from './items.js';
+import { createTabs } from './tabs.js';
 
 /* global document, __cometi18n */
 
+const DOCUMENT = document;
+
+const ID = 'panel';
+
+const FRAGMENT = DOCUMENT.createDocumentFragment();
+
+const CLASSES = {
+	default: 'comet-panel',
+	close: 'comet-panel__close',
+	header: {
+		default: 'comet-panel__header',
+		top: 'comet-panel__header__top',
+		buttonset: 'comet-panel__header__buttonset',
+		title: 'comet-panel__header__title'
+
+	},
+	body: {
+		default: 'comet-panel__tabs'
+	}
+
+};
+
 export default function( options ){
 
-	const _d = document;
+	const FRAMESET = getFrameset();
 
-	const _global = __global();
+	const RDATA = {
+		target: null,
+		destroy: null,
+		controls: []
+	};
 
-	const frameset = getFrameset();
-
-	const id = 'comet-panel';
-
-	const fragment = _d.createDocumentFragment();
-
-	const __core = {
+	const CORE = {
 
 		data: {
 			panel: null,
+			controls: [],
+
 		},
 
 		loadAfter: function(){
-			fields();
+			const controls = CORE.data.controls;
+			var a, response;
+
+			if( !isArray( controls ) || controls.length < 1 ){
+				return;
+
+			}
+
+			for( a = 0; a < controls.length; a++ ){
+
+				if( !isObject( controls[a] ) || !isNode( controls[a].control ) ){
+					continue;
+
+				}
+
+				if( isBool( controls[a].items ) && controls[a].items && controls[a].id === 'items' ){
+					createItems( controls[a].control, options.data.current );
+					continue;
+
+				}
+				controls[a].current = options.data.current;
+				
+				if( ( response = createControl( controls[a] ) ) === null ){
+					continue;
+
+				}
+				controls[a].data.target = response;
+				RDATA.controls[RDATA.controls.length] = controls[a].data;
+
+			}
 
 		},
 
 		onclose: function( ev, ui ){
 			ev.preventDefault();
 
-			__core.destroy();
+			CORE.destroy();
 
 			if( isFunction( options.close.do ) ){
 				options.close.do( ev, ui );
@@ -42,86 +95,25 @@ export default function( options ){
 
 		},
 
-		create: function( forceCreate ){
-			var panel, body, header, button, title, tabs;
-
-			forceCreate = forceCreate === false ? false : true;
-
-			if( isNode( panel = _d.getElementById( id ) ) ){
-				__core.data.panel = panel;
-
-				if( !forceCreate ){
-					return;
-
-				}
-				panel.parentNode.removeChild( panel );
-
-			}
-			panel = _d.createElement( 'div' );
-			panel.id = id;
-			panel.className = 'comet-panel comet-ui';
-			panel.innerHTML = '<div class="comet-header"><div class="comet-top"></div></div><div class="comet-body"></div>';
-			panel.style.left = sanitize.number({ value: options.position, default: 0, min: 0 });
-			fragment.appendChild( panel );
-			__core.data.panel = panel;
-
-			header = panel.firstChild;
-			body = panel.lastChild;
-
-			button = _d.createElement( 'button' );
-			button.className = 'comet-button comet-close';
-
-			if( options.close.title !== '' ){
-				button.title = options.close.title;
-
-			}
-			button.innerHTML = options.close.inner;
-			header.firstChild.appendChild( button );
-			node( button ).on( 'click', __core.onclose );
-
-			if( isString( options.title ) ){
-				title = _d.createElement( 'span' );
-				title.className = 'comet-title';
-				title.innerHTML = options.title;
-				header.firstChild.appendChild( title );
-
-			}
-
-			if( 'tabs' in options && options.tabs ){
-				tabs = _d.createElement( 'div' );
-				tabs.className = 'comet-tabs';
-				tabs.appendChild( options.tabs );
-				header.appendChild( tabs );
-
-			}
-
-			if( 'content' in options && options.content ){
-				body.appendChild( options.content );
-
-			}else{
-				body.innerHTML = __cometi18n.messages.error.unreach;
-
-			}
-			frameset.append( fragment );
-			_global.set( 'panel', panel, true );
-			__core.loadAfter();
-
-		},
-
 		destroy: function(){
 
-			if( __core.data.panel === null || __core.data.panel.parentNode === null ){
+			if( CORE.data.panel === null || CORE.data.panel.parentNode === null ){
 				return;
 
 			}
-			__core.data.panel.parentNode.removeChild( __core.data.panel );
-			_global.set( 'panel', false, true );
+			CORE.data.panel.parentNode.removeChild( CORE.data.panel );
+			CORE.setToGlobal( false );
 
+		},
+
+		setToGlobal: function( options ){
+			return __global().set( ID, options, true );
 		}
 
 	};
+	var panel, body, header, button, title, tabs, buttons;
 
-	if( !isObject( options ) ){
+	if( !isObject( options ) || !isObject( options.data ) ){
 		options = {};
 
 	}
@@ -129,13 +121,59 @@ export default function( options ){
 	options.close.title = isString( options.close.title ) ? options.close.title : __cometi18n.ui.close;
 	options.close.inner = isString( options.close.inner ) ? options.close.inner : '<span class="cico cico-x"></span>';
 
-	__core.create();
+	if( isObject( panel = getPanel() ) && panel.target !== null ){
 
-	return {
-		target: __core.data.panel,
-		create: __core.create,
-		destroy: __core.destroy
+		if( options.forceCreate === false ){
+			return;
 
-	};
+		}
+		panel.destroy();
+
+	}
+	panel = DOCUMENT.createElement( 'div' );
+	panel.className = CLASSES.default;
+	panel.innerHTML = '<div class="' + CLASSES.header.default + '"><div class="' + CLASSES.header.top + '"></div></div><div class="' + CLASSES.body.default + '"></div>';
+	panel.style.left = sanitize.number({ value: options.position, default: 0, min: 0 });
+	FRAGMENT.appendChild( panel );
+	CORE.data.panel = panel;
+
+	header = panel.firstChild;
+	body = panel.lastChild;
+
+	button = DOCUMENT.createElement( 'button' );
+	button.className = CLASSES.close;
+
+	if( options.close.title !== '' ){
+		button.title = options.close.title;
+
+	}
+	button.innerHTML = options.close.inner;
+	header.firstChild.appendChild( button );
+	node( button ).on( 'click', CORE.onclose );
+
+	if( isString( options.title ) ){
+		title = DOCUMENT.createElement( 'span' );
+		title.className = CLASSES.header.title;
+		title.innerHTML = options.title;
+		header.firstChild.appendChild( title );
+
+	}
+	tabs = createTabs( options.data.tabs, options.data.current );
+
+	buttons = DOCUMENT.createElement( 'div' );
+	buttons.className = CLASSES.header.buttonset;
+	buttons.appendChild( tabs.buttons );
+	header.appendChild( buttons );
+
+	body.appendChild( tabs.tabs );
+
+	FRAMESET.append( FRAGMENT );
+	CORE.data.controls = tabs.controls;
+	CORE.loadAfter();
+
+	RDATA.target = panel;
+	RDATA.destroy = CORE.destroy;
+
+	return CORE.setToGlobal( RDATA );
 
 }

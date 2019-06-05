@@ -82,3 +82,9 @@ export function isEmpty( entry ){
 	}
 
 }
+
+export function isClassName( entry ){
+
+	return isString( entry ) && entry.search( /(^[^a-z]|[^a-z0-9\-_])/gi ) < 0;
+
+}

@@ -3,11 +3,12 @@ import __global from '../../../utils/global.js';
 import range from '../../../utils/ui/range.js';
 import update from '../../update.js';
 
+const DOCUMENT = document;
+
+
 export default function(){
 
 	var fi = 0;
-
-	const DOCUMENT = document;
 
 	const _global = __global();
 

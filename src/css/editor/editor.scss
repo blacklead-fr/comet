@@ -3,7 +3,7 @@
 @import '../utils/mixins';
 @import '../utils/reset';
 
-@include form_fields( '.comet-editor.comet-editor-main.comet-upper-level' );
+@include form_fields( '.comet-editor' );
 
 body {
 	background: $liDark;

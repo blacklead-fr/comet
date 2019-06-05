@@ -1,4 +1,5 @@
 import { isString, isNode, isDocument, isWindow } from '../utils/is.js';
+import sort from '../ui/sort/build.js';
 import * as __core from './default.js';
 
 const DOCUMENT = document;
@@ -102,6 +103,11 @@ function getMethods( node ){
 			load: function( object, url, callback ){
 				return __core.load( node, url, callback );
 
+			},
+
+			sort: function( options ){
+				options.handle = node;
+				sort( options );
 			}
 
 		};

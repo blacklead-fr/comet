@@ -1,5 +1,5 @@
 import { frame as Frame, notifications as Notifications } from '../stored.js';
-import { isString, isEmpty, isObject } from '../../../utils/is.js';
+import { isString, isEmpty, isObject, isArray } from '../../../utils/is.js';
 import node from '../../../dom/element.js';
 import layout from '../../../utils/layout.js';
 import parse from '../../../utils/parse.js';

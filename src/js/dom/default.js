@@ -136,7 +136,7 @@ export function classList( object ){
 export function hasClass( object, classe ){
 	const classes = classList( object );
 
-	return classes.length > 0 && isString( classe ) && classes.indexOf( classes ) > -1;
+	return classes.length > 0 && isString( classe ) && classes.indexOf( classe ) > -1;
 
 }
 
