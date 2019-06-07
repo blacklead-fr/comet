@@ -1,15 +1,15 @@
 import { isNode } from '../../../utils/is.js';
 import node from '../../../dom/element.js';
 
+const TYPES = [ 'element', 'column', 'row', 'section' ];
+
+const ROLES = [ 'edit', 'move', 'dup', 'del' ];
+
 export const DOCUMENT = document;
 
 export const WINDOW = window;
 
 export const CORE = {
-
-    types: [ 'element', 'column', 'row', 'section' ],
-
-    roles: [ 'edit', 'move', 'dup', 'del' ],
 
     classes: {
         menu: 'comet-contextmenu',
@@ -17,6 +17,16 @@ export const CORE = {
         row: 'cpb-row',
         column: 'cpb-column',
         element: 'cpb-element',
+
+    },
+
+    isRoleDefined: function( role ){
+        return isString( role ) && ROLES.indexOf( role ) > -1;
+
+    },
+
+    isTypeDefined: function( type ){
+        return isString( type ) && TYPES.indexOf( type ) > -1;
 
     },
 
@@ -104,7 +114,7 @@ export const CORE = {
     preventType: function( type, checkType ){
         var types;
 
-        if( CORE.types.indexOf( checkType ) < 0 ){
+        if( !CORE.isTypeDefined( checkType ) ){
             return true;
 
         }
@@ -131,7 +141,7 @@ export const CORE = {
 
         }
 
-        return ( types.indexOf( checkType ) > -1 );
+        return CORE.isTypeDefined( checkType );
 
     },
 

@@ -1,12 +1,12 @@
-import { isString } from '../../utils/is.js';
-import _global from '../../utils/global.js';
+import { isObject, isString } from '../../utils/is.js';
+import GLOBAL from '../../utils/global.js';
 
-const __global = _global();
+const Global = GLOBAL();
 
 function get( slug ){
-	const _get = __global.get( slug );
+	const GET = Global.get( slug );
 
-	return typeof _get === 'object' ? _get : false;
+	return isObject( GET ) ? GET : false;
 
 }
 
@@ -34,6 +34,12 @@ export function panel(){
 	
 }
 
+export function shortcut(){
+
+	return get( 'shortcut' );
+	
+}
+
 export function generalSettings(){
 
 	return get( 'generalSettings' );
@@ -47,7 +53,7 @@ export function notifications(){
 }
 
 export function deviceType(){
-	var device = __global.get( 'deviceType' );
+	var device = Global.get( 'deviceType' );
 	const devices = [ 'tablet', 'mobile' ];
 
 	return isString( device ) && devices.indexOf( device = ( device.trim() ).toLowerCase() ) > -1 ? device : 'desktop';
