@@ -1,66 +1,87 @@
+import { isFunction, isObject, isNode, isString, isEmpty } from './is.js';
+import node from '../dom/element.js';
 import utils from './utils.js';
-import node from './node.js';
 
 /* global document, __cometi18n */
 
-export default function( options ){
-	const _d = document;
-	const id = 'comet-confirm-box';
-	var fragment = false;
-	var confirm, inner, buttonset;
+const DOCUMENT = document;
 
-	if( !utils.isObject( options ) ){
+const ID = 'comet-confirm-box';
+
+const CORE = {
+
+	cancel: function( ev, ui, data ){
+		ev.preventDefault();
+
+		if( isFunction( data.cancel ) ){
+			data.cancel( ev, ui, data.node );
+
+		}
+		node( data.node ).remove();
+
+	},
+
+	confirm: function( ev, ui, data ){
+			ev.preventDefault();
+			data.function( ev, ui, data.data );
+
+	}
+
+};
+
+export default function( options ){
+	var fragment = DOCUMENT.createDocumentFragment();
+	var confirm = DOCUMENT.getElementById( ID );
+	var hasCancel = true;
+	var inner, buttonset;
+
+	if( !isObject( options ) ){
 		options = {};
 
 	}
 	
-	if( !utils.isObject( options.ui ) ){
+	if( !isObject( options.ui ) ){
 		options.ui = {};
 
 	}
+	hasCancel = options.hasCancel !== false;
 
-	if( node( confirm = _d.getElementById( id ) ).isNode() && confirm.parentNode !== null ){
-		confirm.parentNode.removeChild( confirm );
+	options.ui.cancel = !isString( options.ui.cancel ) || isEmpty( options.ui.cancel ) ? __cometi18n.ui.cancel : options.ui.cancel.trim();
+	options.ui.done = !isString( options.ui.done ) || isEmpty( options.ui.done ) ? __cometi18n.ui.done : options.ui.done.trim();
+	options.message = isString( options.message ) ? utils.stripTags( options.message, '<strong><i><b><a><ins><u><sup><sub>' ) : '';
+
+	if( !isNode( confirm ) ){
+		confirm = DOCUMENT.createElement( 'div' );
 
 	}
-	options.ui.cancel = utils.isStringEmpty( options.ui.cancel ) ? __cometi18n.ui.cancel : utils.trim( options.ui.cancel );
-	options.ui.done = utils.isStringEmpty( options.ui.done ) ? __cometi18n.ui.done : utils.trim( options.ui.done );
-	options.message = utils.isString( options.message ) ? utils.trim( utils.stripTags( options.message, '<strong><i><b><a><ins><u><sup><sub>' ) ) : '';
-	fragment = _d.createDocumentFragment();
-	confirm = _d.createElement( 'div' );
 	fragment.appendChild( confirm );
-	confirm.id = id;
-	confirm.className = 'comet-dialog comet-wrapper comet-alertbox';
 
 	inner = '<div class="comet-inner">';
 	inner += '<div class="comet-textbox"><p>' + options.message + '</p></div>';
 	inner += '<div class="comet-buttonset">';
 
-	if( options.hasCancel !== false ){
+	if( hasCancel ){
 		inner += '<button class="comet-button comet-cancel">' + options.ui.cancel + '</button>';
 		
 	}
 	inner += '<button class="comet-button comet-buttonPrimary comet-done">' + options.ui.done + '</button>';
 	inner += '</div>';
 	inner += '</div>';
+
+	confirm.id = ID;
+	confirm.className = 'comet-dialog comet-wrapper comet-alertbox';
 	confirm.innerHTML = inner;
 
 	buttonset = confirm.firstChild.lastChild;
 
-	node( buttonset.firstChild ).on( 'click', function( ev, ui ){
-		ev.preventDefault();
+	if( hasCancel ){
+		node( buttonset.firstChild ).on( 'click', CORE.cancel, { cancel: options.cancel, node: confirm } );
 
-		if( utils.isFunction( options.cancel ) ){
-			options.cancel( ev, ui );
+	}
 
-		}
-		node( confirm ).remove();
+	if( isFunction( options.confirm ) ){
 
-	});
-
-	if( utils.isFunction( options.confirm ) ){
-
-		options.data = utils.isObject( options.data ) ? options.data : { value: options.data };
+		options.data = isObject( options.data ) ? options.data : { value: options.data };
 		options.data.dialog = {
 			buttonset: {
 				cancel: buttonset.firstChild,
@@ -74,14 +95,10 @@ export default function( options ){
 			}
 		};
 
-		node( buttonset.lastChild ).on( 'click', function( ev, ui ){
-			ev.preventDefault();
-			options.confirm( ev, ui, options.data );
-
-		});
+		node( buttonset.lastChild ).on( 'click', CORE.confirm, { function: options.confirm, data: options.data } );
 
 	}
-	_d.body.appendChild( fragment );
+	DOCUMENT.body.appendChild( fragment );
 
 	return {
 		buttonset: {

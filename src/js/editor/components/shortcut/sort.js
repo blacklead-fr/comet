@@ -1,5 +1,5 @@
-import { shortcut as getShortcut } from '../stored.js';
 import { isNode, isFunction } from '../../../utils/is.js';
+import { shortcut as getShortcut } from '../stored.js';
 import parse from '../../../utils/parse.js';
 import node from '../../../dom/element.js';
 import { CORE } from './core.js';

@@ -1,54 +1,79 @@
-import global from '../utils/global.js';
+import { isObject, isArray, isEmpty, isString } from '../utils/is.js';
+import GLOBAL from '../utils/global.js';
 import parse from '../utils/parse.js';
 import utils from '../utils/utils.js';
-import __id from './id.js';
+import { ID } from './id.js';
 
-export default function (){
-	const prop = {};
-	const global_ = global();
+const CORE = {
 
-	prop.getData = function(){
-		var data = global_.get( 'data' );
-		return ( utils.isObject( data ) ? data : prop.setData( {} ) );
+	removeChildren: function( metaData, type ){
+		const children = DATA.getChild( type );
+		var ids, _children, cid, a;
 
-	};
+		if( children || !isObject( metaData[children] ) || !isObject( metaData[type][id] ) ){
+			return;
 
-	prop.setData = function( data ){
+		}
 
-		if( !utils.isObject( data ) ){
+		if( !( ( _children = '_' + children ) in metaData[type][id] ) ){
+			return;
+
+		}
+
+		if( !isArray( ( ids = parse.ids( metaData[type][id][_children], 'array' ) ) ) || ids.lenght < 1 ){
+			return;
+
+		}
+		for( a in ids ){
+
+			if( !( cid = parse.id( ids[a] ) ) || !( cid in metaData[children] ) ){
+				continue;
+
+			}
+			DATA.remove( cid, children );
+			delete metaData[children][cid];
+
+		}
+
+	}
+
+};
+
+export const DATA = {
+
+	getData: function(){
+		var data = GLOBAL().get( 'data' );
+		return ( isObject( data ) ? data : DATA.setData( {} ) );
+
+	},
+
+	setData: function( data ){
+
+		if( !isObject( data ) ){
 			return false;
 
 		}
-		return global_.set( 'data', data );
+		return GLOBAL().set( 'data', data );
 
-	};
+	},
 
-	prop.hasType = function( type ){
-		const metaData = prop.getData();
+	hasType: function( type ){
+		const metaData = DATA.getData();
 
-		if( !utils.isObject( metaData ) || !( type = parse.type( type ) ) || !utils.isObject( metaData[type] ) ){
-			return false;
+		return ( !isObject( metaData ) || !( type = parse.type( type ) ) || !isObject( metaData[type] ) ? false : type );
 
-		}
-		return type;
+	},
 
-	};
+	hasId: function( type, id ){
+		const metaData = DATA.getData();
 
-	prop.hasId = function( type, id ){
-		const metaData = prop.getData();
+		return ( !( type = DATA.hasType( type ) ) || !( id = parse.id( id ) ) || !( id in metaData[type] ) ? false : id );
 
-		if( !( type = this.hasType( type ) ) || !( id = parse.id( id ) ) || !( id in metaData[type] ) ){
-			return false;
+	},
 
-		}
-		return id;
+	getParent: function( type ){
 
-	};
-
-	prop.getParent = function( type ){
-		type = parse.type( type );
-
-		switch( type ){
+		switch( type = parse.type( type ) ){
 			case 'rows':
 			case 'sections':
 			return 'sections';
@@ -66,12 +91,11 @@ export default function (){
 			return false;
 		}
 
-	};
+	},
 
-	prop.getChild = function( type ){
-		type = parse.type( type );
+	getChild: function( type ){
 
-		switch( type ){
+		switch( type = parse.type( type ) ){
 			case 'sections':
 			return 'rows';
 
@@ -88,19 +112,18 @@ export default function (){
 			return false;
 		}
 
-	};
+	},
 
-	prop.create = function( type, pid, index, dd ){
-		const id_ = __id();
-		var metaData = prop.getData();
+	create: function( type, pid, index, dd ){
+		var metaData = DATA.getData();
 		var data, id, st;
 
-		if( ( pid = parse.id( pid ) ) === false || utils.isStringEmpty( type ) ){
+		if( ( pid = parse.id( pid ) ) === false || !isString( type ) || isEmpty( type ) ){
 			return false;
 
 		}
 
-		if( !utils.isObject( dd ) ){
+		if( !isObject( dd ) ){
 			dd = {};
 
 		}
@@ -121,17 +144,17 @@ export default function (){
 
 			case 'items':
 
-			if( !utils.isObject( metaData.elements ) || !utils.isObject( metaData.elements[pid] ) ){
+			if( !isObject( metaData.elements ) || !isObject( metaData.elements[pid] ) ){
 				return false;
 
 			}
 
-			if( utils.isStringEmpty( st = metaData.elements[pid]._type ) || !utils.isObject( st = utils.getElement( st ) ) ){
+			if( !isString( st = metaData.elements[pid]._type ) || !isObject( st = utils.getElement( st ) ) ){
 				return false;
 
 			}
 
-			if( !utils.isObject( st.tabs ) || !utils.isObject( st.tabs.items ) ){
+			if( !isObject( st.tabs ) || !isObject( st.tabs.items ) ){
 				return false;
 
 			}
@@ -140,7 +163,7 @@ export default function (){
 
 			default:
 
-			if( !utils.isObject( data = utils.getElement( type ) ) || !utils.isObject( data.tabs ) ){
+			if( !isObject( data = utils.getElement( type ) ) || !isObject( data.tabs ) ){
 				return false;
 
 			}
@@ -151,41 +174,41 @@ export default function (){
 
 		}
 
-		if( !( id = id_.create( type ) ) || !id_.insert( id, type, pid, index ) ){
+		if( !( id = ID.create( type ) ) || !ID.insert( id, type, pid, index ) ){
 			return false;
 
 		}
-		metaData = prop.getData();
+		metaData = DATA.getData();
 
-		if( !utils.isObject( metaData[type] ) ){
+		if( !isObject( metaData[type] ) ){
 			metaData[type] = {};
 
 		}
 
-		if( !utils.isObject( metaData[type][id] ) ){
+		if( !isObject( metaData[type][id] ) ){
 			metaData[type][id] = {};
 
 		}
 		metaData[type][id] = utils.extend( {}, dd );
-		this.setData( metaData );
+		DATA.setData( metaData );
 		return id;
 
-	};
+	},
 
-	prop.insert = function( id, type, data ){
-		var metaData = prop.getData();
+	insert: function( id, type, data ){
+		var metaData = DATA.getData();
 
 		if( !( type = parse.type( type ) ) || !( id = parse.id( id ) ) ){
 			return false;
 
 		}
 
-		if( !utils.isObject( metaData ) ){
+		if( !isObject( metaData ) ){
 			metaData = {};
 
 		}
 
-		if( !utils.isObject( metaData[type] ) ){
+		if( !isObject( metaData[type] ) ){
 			metaData[type] = {};
 
 		}
@@ -195,21 +218,21 @@ export default function (){
 
 		}
 		metaData[type][id] = utils.extend( {}, data );
-		this.setData( metaData );
+		DATA.setData( metaData );
 		return metaData[type][id];
 
-	};
+	},
 
-	prop.set = function( id, type, data ){
-		var metaData = prop.getData();
+	set: function( id, type, data ){
+		var metaData = DATA.getData();
 		var a;
 
-		if( !( type = this.hasType( type ) ) || !( id = parse.id( id ) ) || !utils.isObject( data ) ){
+		if( !( type = DATA.hasType( type ) ) || !( id = parse.id( id ) ) || !isObject( data ) ){
 			return false;
 
 		}
 
-		if( !utils.isObject( metaData[type][id] ) ){
+		if( !isObject( metaData[type][id] ) ){
 			metaData[type][id] = {};
 
 		}
@@ -218,128 +241,96 @@ export default function (){
 			metaData[type][id][a] = data[a];
 
 		}
-		this.setData( metaData );
+		DATA.setData( metaData );
 		return metaData[type][id];
 
-	};
+	},
 
-	prop.get = function( id, type ){
-		const metaData = prop.getData();
+	get: function( id, type ){
+		const metaData = DATA.getData();
 
-		if( !( id = parse.id( id ) ) || !( type = this.hasType( type ) ) || !utils.isObject( metaData[type][id] ) ){
+		return ( !( id = parse.id( id ) ) || !( type = this.hasType( type ) ) || !isObject( metaData[type][id] ) ? false : metaData[type][id] );
+
+	},
+
+	remove: function( id, type, pid ){
+		const metaData = DATA.getData();
+
+		if( !( id = parse.id( id ) ) || !( type = DATA.hasType( type ) ) || !( id in metaData[type] ) ){
 			return false;
 
 		}
-		return metaData[type][id];
-
-	};
-
-	prop.remove = function( id, type, pid ){
-		const metaData = prop.getData();
-		const id_ = __id();
-
-		if( !( id = parse.id( id ) ) || !( type = prop.hasType( type ) ) || !( id in metaData[type] ) ){
-			return false;
-
-		}
-
-		function removeChildren(){
-			const children = prop.getChild( type );
-			var ids, _children, cid, a;
-
-			if( children || !utils.isObject( metaData[children] ) || !utils.isObject( metaData[type][id] ) ){
-				return;
-
-			}
-
-			if( !( ( _children = '_' + children ) in metaData[type][id] ) ){
-				return;
-
-			}
-
-			if( !utils.isArray( ( ids = parse.ids( metaData[type][id][_children], 'array' ) ), 1 ) ){
-				return;
-
-			}
-			for( a in ids ){
-
-				if( !( cid = parse.id( ids[a] ) ) || !( cid in metaData[children] ) ){
-					continue;
-
-				}
-				prop.remove( cid, children );
-				delete metaData[children][cid];
-
-			}
-
-		}
-		removeChildren();
-		id_.remove( id, type, pid );
+		CORE.removeChildren( metaData, type );
+		ID.remove( id, type, pid );
 		
 		delete metaData[type][id];
-		prop.setData( metaData );
+		DATA.setData( metaData );
 		return true;
 
-	};
+	},
 
-	prop.removeIds = function( id, type ){
-		const metaData = prop.getData();
+	removeIds: function( id, type ){
+		const metaData = DATA.getData();
 		var children, _children;
 
-		if( !( id = this.hasId( type, id ) ) || !( type = parse.type( type ) ) || !( children = this.getChild( type ) ) ){
+		if( !( id = DATA.hasId( type, id ) ) || !( type = parse.type( type ) ) || !( children = DATA.getChild( type ) ) ){
 			return false;
 
 		}
 		_children = '_' + children;
 		metaData[type][id][_children] = '';
-		this.setData( metaData );
+		DATA.setData( metaData );
 		return true;
 
-	};
+	},
 
-	prop.clone = function( id, type, pid ){
-		const metaData = prop.getData();
-		const id_ = __id();
+	clone: function( id, type, pid ){
+		const metaData = DATA.getData();
 		var tmp = {};
 		var children, _children, cid, ids, nid, nnid, i;
 
 		pid = pid && ( pid = parse.id( pid ) ) ? pid : 0;
 
-		if( !( id = parse.id( id ) ) || !( type = this.hasType( type ) ) || !( id in metaData[type] ) ){
+		if( !( id = parse.id( id ) ) || !( type = DATA.hasType( type ) ) || !( id in metaData[type] ) ){
 			return false;
 
 		}
 
-		if( !( nid = id_.create( type ) ) || !id_.insert( nid, type, pid, 'last' ) ){
+		if( !( nid = ID.create( type ) ) || !ID.insert( nid, type, pid, 'last' ) ){
 			return false;
 
 		}
 
-		if( utils.isObject( metaData[type][id] ) ){
+		if( isObject( metaData[type][id] ) ){
 			tmp = metaData[type][id];
 
 		}
 
-		if( !this.insert( nid, type, tmp ) ){
+		if( !DATA.insert( nid, type, tmp ) ){
 			return false;
 
 		}
 
 
-		if( !utils.isObject( metaData[type][id] ) || !( children = this.hasType( this.getChild( type ) ) ) ){
+		if( !isObject( metaData[type][id] ) || !( children = DATA.hasType( DATA.getChild( type ) ) ) ){
 			return nid;
 
 		}
 		_children = '_' + children;
 		
-		if( utils.isStringEmpty( metaData[type][id][_children] ) || !utils.isArray( ids = parse.ids( metaData[type][id][_children], 'array' ), 1 ) ){
+		if( !isString( metaData[type][id][_children] ) || isEmpty( metaData[type][id][_children] ) ){
+			return nid;
+
+		}
+
+		if( !isArray( ids = parse.ids( metaData[type][id][_children], 'array' ) ) || ids.lenght < 1 ){
 			return nid;
 
 		}
 
 		for( i in ids ){
 
-			if( !( cid = parse.id( ids[i] ) ) || !utils.isObject( metaData[children][cid] ) || !( nnid = this.clone( cid, children ) ) ){
+			if( !( cid = parse.id( ids[i] ) ) || !isObject( metaData[children][cid] ) || !( nnid = DATA.clone( cid, children ) ) ){
 				continue;
 
 			}
@@ -347,11 +338,9 @@ export default function (){
 			metaData[type][nid][_children] = ids.join( ',' );
 
 		}
-		this.setData( metaData );
+		DATA.setData( metaData );
 		return nid;
 
-	};
+	}
 
-	return prop;
-
-}
+};

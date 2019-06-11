@@ -1,13 +1,31 @@
-import utils from './utils.js';
+import { isObject, isFunction, isString, isEmpty, isTrueValue } from './is.js';
 
 /* global __cometdata, XMLHttpRequest */
 
+const CORE = {
+
+    action: !isTrueValue( __cometdata.user ) ? 'cometnoprivactions' : 'cometprivactions',
+
+    encode: function( obj ){
+        var encoded = '';
+        var key;
+
+        for( key in obj ){
+            encoded += ( encoded.length > 0 ? '&' : '' ) + encodeURI( key + '=' + obj[key] );
+
+        }
+        return encoded;
+
+    }
+
+};
+
 export default function( data ){
-    const ret = {
+    const EVENTS = {
 
         done: function( todo ){
 
-            if( !utils.isFunction( todo ) || !utils.isObject( xhr ) ){
+            if( !isFunction( todo ) || !isObject( xhr ) ){
                 return;
 
             }
@@ -23,39 +41,22 @@ export default function( data ){
     };
     var xhr;
 
-    if( !utils.isObject( data ) || utils.isStringEmpty( data.do ) ){
-        return ret;
+    if( !isObject( data ) || !isString( data.do ) || isEmpty( data.do ) ){
+        return EVENTS;
 
     }
-
-    function encode( obj ){
-        var _eStr = '';
-        var prop;
-
-        for( prop in obj ){
-
-            if( !( prop in obj ) ){
-                continue;
-
-            }
-            _eStr += ( _eStr.length > 0 ? '&' : '' ) + encodeURI( prop + '=' + obj[prop] );
-
-        }
-        return _eStr;
-
-    }
-    data.do = utils.trim( data.do );
-    data.action = utils.isStringEmpty( __cometdata.user ) || __cometdata.user !== 'true' ? 'cometnoprivactions' : 'cometprivactions';
+    data.do = data.do.trim();
+    data.action = CORE.action;
 
     if( 'security' in __cometdata ){
         data.security = __cometdata.security;
-    }
 
+    }
     xhr = new XMLHttpRequest();
     xhr.open( 'POST' , __cometdata.ajax_url, true );
     xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+    xhr.send( CORE.encode( data ) );
 
-    xhr.send( encode( data ) );
+    return EVENTS;
 
-    return ret;
 }

@@ -78,8 +78,9 @@ function insertTo( object, position, entry ){
 
 }
 
-export function children( object, query ){
+export function children( object, query, onChild ){
 	const aChildren = [];
+	const hasOnChildFunction = isFunction( onChild );
 	var selector, all, a, classes;
 
 	if( !isNode( object ) || !isObject( query ) || isEmpty( all = object.children ) ){
@@ -123,7 +124,13 @@ export function children( object, query ){
 		}
 		aChildren[aChildren.length] = all[a];
 
+		if( hasOnChildFunction ){
+			hasOnChildFunction( all[a] );
+			
+		}
+
 	}
+	return aChildren;
 
 }
 

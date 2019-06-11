@@ -1,4 +1,4 @@
-
+import { isArray, isString } from './is.js';
 /**
 * Computes the difference of arrays.
 *
@@ -14,5 +14,11 @@ export function arrayDiff( array1, array2 ){
 		return array2.indexOf( i ) < 0;
 
 	});
+
+}
+
+export function inArray( array, value ){
+
+	return isArray( array ) && array.length > 0 && isString( value ) && array.indexOf( value ) > -1;
 
 }

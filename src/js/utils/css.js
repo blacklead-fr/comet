@@ -1,8 +1,10 @@
+import { isString, isNumber, isObject, isEmpty, isArray } from './is.js';
+import { inArray } from './fill.js';
 import sanitize from './sanitize.js';
 import gradient from './gradient.js';
 import utils from './utils.js';
 
-const __core = {
+const CORE = {
 
 	isMuvalues: function( entry ){
 		return ( entry !== '' && entry !== ' ' && entry !== 0 && entry !== '0' );
@@ -14,13 +16,13 @@ const __core = {
 		auto: function( entry ){
 			const auto = [ 'auto', 'AUTO', 'aut', 'AUT' ];
 
-			return ( utils.isString( entry ) && auto.indexOf( utils.trim( entry ) ) > -1 ? 'auto' : false );
+			return ( isString( entry ) && inArray( auto, entry.trim() ) ? 'auto' : false );
 
 		},
 
 		value: function( entry ){
 
-			return ( !__core.sanitize.auto() ? sanitize.number({ value: entry }) : 'auto' );
+			return ( !CORE.sanitize.auto( entry ) ? sanitize.number({ value: entry }) : 'auto' );
 
 		}
 
@@ -30,10 +32,10 @@ const __core = {
 		var x = false;
 		var y = false;
 		var o;
-		top = __core.sanitize.value( top );
-		right = __core.sanitize.value( right );
-		bottom = __core.sanitize.value( bottom );
-		left = __core.sanitize.value( left );
+		top = CORE.sanitize.value( top );
+		right = CORE.sanitize.value( right );
+		bottom = CORE.sanitize.value( bottom );
+		left = CORE.sanitize.value( left );
 		vunit = sanitize.unit( vunit );
 		hunit = sanitize.unit( hunit );
 
@@ -119,23 +121,23 @@ const __core = {
 
 		ruleset: function( target, properties, device ){
 			const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
-			const index = utils.isString( device ) ? devices.indexOf( device ) : -1;
+			const index = isString( device ) ? devices.indexOf( device ) : -1;
 			var classe;
 
-			if( !utils.isString( target ) || !utils.isString( properties ) ){
+			if( !isString( target ) || !isString( properties ) ){
 				return '';
 
 			}
 			classe = ( index > -1 ? ( '.cpb-devicetype-' + ( index <= 2 ? 'mobile' : 'tablet' ) + ' ' ) : '' );
-			classe += utils.isString( target ) ? ' ' + utils.trim( target ) : '';
+			classe += isString( target ) ? ' ' + target.trim() : '';
 
-			return classe + '{' + utils.trim( properties ) + '}';
+			return classe + '{' + properties.trim() + '}';
 
 		},
 
 		property: function( property, value ){
 
-			if( utils.isStringEmpty( property ) || ( !utils.isNumber( value ) && utils.isStringEmpty( value ) ) ){
+			if( !isString( property ) || isEmpty( property ) || ( !isNumber( value ) && ( !isString( value ) || isEmpty( value ) ) ) ){
 				return '';
 
 			}
@@ -149,15 +151,15 @@ const __core = {
 
 };
 
-const __css = {
+export const CSS = {
 
-	ruleset: __core.render.ruleset,
+	ruleset: CORE.render.ruleset,
 
-	property: __core.render.property,
+	property: CORE.render.property,
 
 	render: function( style, value ){
 
-		if( utils.isStringEmpty( style ) || ( !utils.isNumber( value ) && utils.isStringEmpty( value ) ) ){
+		if( !isString( style ) || isEmpty( style ) || ( !isNumber( value ) && ( !isString( value ) || isEmpty( value ) ) ) ){
 			return '';
 
 		}
@@ -167,28 +169,28 @@ const __css = {
 	},
 
 	padding: function( top, right, bottom, left, vunit, hunit ){
-		const _mu = __core.muvalues( top, right, bottom, left, vunit, hunit );
-		return ( __core.isMuvalues( _mu ) ? __css.property( 'padding', _mu ) : '' );
+		const _mu = CORE.muvalues( top, right, bottom, left, vunit, hunit );
+		return ( CORE.isMuvalues( _mu ) ? CSS.property( 'padding', _mu ) : '' );
 	},
 
 	margin: function( top, right, bottom, left, vunit, hunit ){
-		const _mu = __core.muvalues( top, right, bottom, left, vunit, hunit );
-		return ( __core.isMuvalues( _mu ) ? __css.property( 'margin', _mu ) : '' );
+		const _mu = CORE.muvalues( top, right, bottom, left, vunit, hunit );
+		return ( CORE.isMuvalues( _mu ) ? CSS.property( 'margin', _mu ) : '' );
 	},
 
 	borderWidth: function( top, right, bottom, left ){
-		const _mu = __core.muvalues( top, right, bottom, left, 'px', 'px' );
-		return ( __core.isMuvalues( _mu ) ? __css.property( 'border-width', _mu ) : '' );
+		const _mu = CORE.muvalues( top, right, bottom, left, 'px', 'px' );
+		return ( CORE.isMuvalues( _mu ) ? CSS.property( 'border-width', _mu ) : '' );
 	},
 
 	borderRadius: function( top, right, bottom, left ){
-		const _mu = __core.muvalues( top, right, bottom, left, 'px', 'px' );
+		const _mu = CORE.muvalues( top, right, bottom, left, 'px', 'px' );
 		var o;
 
-		if( __core.isMuvalues( _mu ) ){
-			o = __css.property( 'border-radius', _mu );
-			o += __css.property( '-webkit-border-radius', _mu );
-			o += __css.property( '-moz-border-radius', _mu );
+		if( CORE.isMuvalues( _mu ) ){
+			o = CSS.property( 'border-radius', _mu );
+			o += CSS.property( '-webkit-border-radius', _mu );
+			o += CSS.property( '-moz-border-radius', _mu );
 			return o;
 
 		}
@@ -200,7 +202,7 @@ const __css = {
 		const numb = { value: 0, min: 0, default: 0 };
 		var t, r, b , l, x, y, o, w;
 
-		if( !utils.isObject( entry ) ){
+		if( !isObject( entry ) ){
 			return '';
 
 		}
@@ -290,12 +292,12 @@ const __css = {
 				o = sanitize.valueUnit( y, 'px' );
 				o += ' ' + entry.style;
 				o += ' ' + entry.color;
-				return __css.property( 'border', o );
+				return CSS.property( 'border', o );
 
 			}
-			o = __css.property( 'border-width', sanitize.valueUnit( y, 'px' ) + ' ' + sanitize.valueUnit( x, 'px' ) );
-			o += __css.property( 'border-style', entry.style );
-			o += __css.property( 'border-color', entry.color );
+			o = CSS.property( 'border-width', sanitize.valueUnit( y, 'px' ) + ' ' + sanitize.valueUnit( x, 'px' ) );
+			o += CSS.property( 'border-style', entry.style );
+			o += CSS.property( 'border-color', entry.color );
 			return o;
 
 		}
@@ -309,9 +311,9 @@ const __css = {
 
 		}
 
-		o = __css.property( 'border-width', w );
-		o += __css.property( 'border-style', entry.style );
-		o += __css.property( 'border-color', entry.color );
+		o = CSS.property( 'border-width', w );
+		o += CSS.property( 'border-style', entry.style );
+		o += CSS.property( 'border-color', entry.color );
 		return o;
 
 	},
@@ -319,7 +321,7 @@ const __css = {
 	textShadow: function( entry ){
 		var w;
 
-		if( !utils.isObject( entry ) ){
+		if( !isObject( entry ) ){
 			return '';
 		}
 		entry.blur = sanitize.number( { value: entry.blur, default: 0, min: 0 } );
@@ -335,18 +337,18 @@ const __css = {
 		w += ' ' + sanitize.valueUnit( entry.blur, 'px' );
 		w += ' ' + entry.color;
 
-		return __css.property( 'text-shadow', w );
+		return CSS.property( 'text-shadow', w );
 
 	},
 
 	boxShadow: function( entry ){
 		var w, o;
 
-		if( !utils.isObject( entry ) ){
+		if( !isObject( entry ) ){
 			return '';
 		}
 		function isInset(){
-			const _in = utils.isString( entry.inset ) || utils.isNumber( entry.inset ) ? utils.trim( ( ( entry.inset ).toString() ).toLowerCase() ) : entry.inset;
+			const _in = isString( entry.inset ) || isNumber( entry.inset ) ? ( ( entry.inset.toString() ).toLowerCase() ).trim() : entry.inset;
 
 			switch( _in ){
 				case 'true':
@@ -377,9 +379,9 @@ const __css = {
 		w += ' ' + entry.color;
 		w += isInset() ? ' inset' : '';
 
-		o = __css.property( 'box-shadow', w );
-		o += __css.property( '-moz-box-shadow', w );
-		o += __css.property( '-webkit-box-shadow', w );
+		o = CSS.property( 'box-shadow', w );
+		o += CSS.property( '-moz-box-shadow', w );
+		o += CSS.property( '-webkit-box-shadow', w );
 
 		return o;
 
@@ -389,17 +391,17 @@ const __css = {
 		const tools = {};
 		var _grad, image, color, o, og, ou, tmp;
 
-		if( !utils.isObject( entry ) ){
+		if( !isObject( entry ) ){
 			return '';
 
 		}
 		_grad = image = color = false;
 		o = og = ou = '';
-		color = ( utils.isString( entry.type ) && utils.trim( entry.type ).toLowerCase() === 'color' );
+		color = ( isString( entry.type ) && ( entry.type.trim() ).toLowerCase() === 'color' );
 
 		tools.position = function( pos ){
 
-			pos = utils.isString( pos ) ? utils.trim( pos.toLowerCase() ) : '';
+			pos = isString( pos ) ? ( pos.toLowerCase() ).trim() : '';
 
 			switch( pos ){
 				case 'lt':
@@ -453,7 +455,7 @@ const __css = {
 
 		tools.repeat = function( rep ){
 
-			rep = utils.isString( rep ) ? utils.trim( rep.toLowerCase() ) : '';
+			rep = isString( rep ) ? ( rep.toLowerCase() ).trim() : '';
 
 			switch( rep ){
 				case 'no':
@@ -494,7 +496,7 @@ const __css = {
 
 		tools.size = function( size ){
 
-			size = utils.isString( size ) ? utils.trim( size.toLowerCase() ) : '';
+			size = isString( size ) ? ( size.toLowerCase() ).trim() : '';
 
 			switch( size ){
 
@@ -516,7 +518,7 @@ const __css = {
 
 		tools.attachment = function( att ){
 
-			att = utils.isString( att ) ? utils.trim( att.toLowerCase() ) : '';
+			att = isString( att ) ? ( att.toLowerCase() ).trim() : '';
 
 			switch( att ){
 				case 'fix':
@@ -529,26 +531,26 @@ const __css = {
 
 		};
 
-		if( !color && utils.isObject( entry.gradient ) && 'type' in entry.gradient && 'gradient' in entry.gradient && 'angle' in entry.gradient ){
-			og = __css.gradient( entry.gradient.type, entry.gradient.angle, entry.gradient.gradient );
-			_grad = !utils.isEmpty( og );
+		if( !color && isObject( entry.gradient ) && 'type' in entry.gradient && 'gradient' in entry.gradient && 'angle' in entry.gradient ){
+			og = CSS.gradient( entry.gradient.type, entry.gradient.angle, entry.gradient.gradient );
+			_grad = !isEmpty( og );
 
 		}
 
-		if( !utils.isEmpty( tmp = sanitize.color( entry.color ) ) && color ){
+		if( !isEmpty( tmp = sanitize.color( entry.color ) ) && color ){
 			o += tmp;
 
 		}
 
 
-		if( !utils.isStringEmpty( entry.url ) ){
+		if( isString( entry.url ) && !isEmpty( entry.url ) ){
 			image = true;
-			ou = 'url(' + utils.trim( entry.url ) + ')';
+			ou = 'url(' + entry.url.trim() + ')';
 
 		}
 
 		if( _grad ){
-			o += __css.property( 'background-image', ou + ( image ? ', ' : ' ' ) + og );
+			o += CSS.property( 'background-image', ou + ( image ? ', ' : ' ' ) + og );
 
 		}else if( !_grad && image ){
 
@@ -557,26 +559,26 @@ const __css = {
 
 		if( 'repeat' in entry && image ){
 			tmp = tools.repeat( entry.repeat );
-			o += !_grad ? ' ' + tmp : __css.property( 'background-repeat', tmp );
+			o += !_grad ? ' ' + tmp : CSS.property( 'background-repeat', tmp );
 
 		}
 
 		if( 'position' in entry && image ){
 			tmp = tools.position( entry.position );
-			o += !_grad ? ' ' + tmp : __css.property( 'background-position', tmp );
+			o += !_grad ? ' ' + tmp : CSS.property( 'background-position', tmp );
 
 		}
 
 		if( !_grad ){
-			o = __css.property( 'background', utils.trim( o ) );
+			o = CSS.property( 'background', o.trim() );
 		}
 
 		if( 'att' in entry && image ){
-			o += __css.property( 'background-attachment', tools.attachment( entry.att ) );
+			o += CSS.property( 'background-attachment', tools.attachment( entry.att ) );
 		}
 
 		if( 'size' in entry && image ){
-			o += __css.property( 'background-size', tools.size( entry.size ) );
+			o += CSS.property( 'background-size', tools.size( entry.size ) );
 
 		}
 
@@ -588,13 +590,13 @@ const __css = {
 	gradient: function( style, angle, colors ){
 		var c, color, g;
 
-		if( utils.isStringEmpty( colors ) || !utils.isArray( ( colors = gradient.decode( colors ) ), 2 ) ){
+		if( !isString( colors ) || isEmpty( colors ) || !isArray( colors = gradient.decode( colors ) ) || colors.length < 2 ){
 			return '';
 
 		}
 
 		if( style === 'radial' ){
-			angle = utils.isString( angle ) && [ 'side', 's', 'sd' ].indexOf( utils.trim( angle ) ) > -1 ? 'side' : 'corner';
+			angle = isString( angle ) && inArray( [ 'side', 's', 'sd' ], angle.trim() ) ? 'side' : 'corner';
 			g = 'radial-gradient( farthest-' + angle;
 
 		}else{
@@ -662,7 +664,7 @@ const __css = {
 		const devices = [ 'mobile', 'm', 'M', 'tablet', 't', 'T', 'TABLET' ];
 		var index;
 
-		if( utils.isStringEmpty( css ) || ( index = devices.indexOf( device ) ) < 0 ){
+		if( !isString( css ) || isEmpty( css ) || ( index = devices.indexOf( device ) ) < 0 ){
 			return '';
 
 		}
@@ -673,17 +675,15 @@ const __css = {
 	element: function( id, target, css, device ){
 		var classe;
 
-		if( !utils.isNumber( id ) ){
+		if( !isNumber( id ) ){
 			return '';
 
 		}
 		classe = '.cpb-element.cpb-elementNode' + id;
-		classe += utils.isString( target ) ? ' ' + utils.trim( target ) : '';
+		classe += isString( target ) ? ' ' + target.trim() : '';
 
-		return __core.render.ruleset( classe, css, device );
+		return CORE.render.ruleset( classe, css, device );
 
 	},
 
 };
-
-export default __css;

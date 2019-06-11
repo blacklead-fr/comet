@@ -1,164 +1,172 @@
+import { isString, isBool, isEmpty } from '../utils/is.js';
 import sanitize from '../utils/sanitize.js';
 import utils from '../utils/utils.js';
 
 /* global document */
 
-export default function( entry ){
+const DOCUMENT = document;
 
-	var fragment = null;
-	var current = false;
-	var div, tmp1;
+const CORE = {
 
-	const _d = document;
-	const tags = [ 'img', 'video', 'audio', 'p', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'ul', 'ol' ];
-	const allowed = '<span><br><del><u><strike><i><em><b><strong><ins><a><code><var><samp><kbd>';
-	const data = [];
+	tags: [ 'img', 'video', 'audio', 'p', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'ul', 'ol' ],
 
-	const _priv = {
+	allowedTags: '<span><br><del><u><strike><i><em><b><strong><ins><a><code><var><samp><kbd>',
 
-		img: function(){
-			var tmp;
+};
 
-			if( !current ){
-				return false;
+const ELEMENTS = {
 
-			}
+	img: function( current ){
+		var tmp;
 
-			return {
-				img: ( utils.isString( tmp = current.src ) ? utils.trim( utils.stripTags( tmp ) ) : '' ),
-				alt: ( utils.isString( tmp = current.alt ) ? utils.trim( utils.stripTags( tmp ) ) : '' ),
-				cap: ( utils.isString( tmp = current.title ) ? utils.trim( utils.stripTags( tmp ) ) : '' ),
-				_type: 'image'
+		if( !current ){
+			return false;
 
-			};
+		}
 
-		},
+		return {
+			img: ( isString( tmp = current.src ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
+			alt: ( isString( tmp = current.alt ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
+			cap: ( isString( tmp = current.title ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
+			_type: 'image'
 
-		ul: function( isOl ){
-			const items = [];
-			var tmp, i, citems;
+		};
 
-			if( !current || ( citems = current.children ).length < 1 ){
-				return false;
+	},
 
-			}
+	ul: function( current, isOl ){
+		const items = [];
+		var tmp, i, citems;
 
-			for( i = 0; i < citems; i++ ){
+		if( !current || ( citems = current.children ).length < 1 ){
+			return false;
 
-				if( !utils.isString( tmp = citems[i].nodeName ) || ( utils.trim( tmp ) ).toLowerCase() !== 'li' ){
-					continue;
+		}
 
-				}
-				items[items.length] = {
-					ctnt: ( utils.isString( tmp = citems[i].innerHTML ) ? utils.trim( utils.stripTags( tmp, allowed ) ) : '' )
+		for( i = 0; i < citems; i++ ){
 
-				};
+			if( !isString( tmp = citems[i].nodeName ) || ( tmp.toLowerCase() ).trim() !== 'li' ){
+				continue;
 
 			}
-			isOl = utils.isBool( isOl ) ? isOl : false;
-
-			return {
-				sty: isOl ? 'decimal' : 'disc',
-				_items: items,
-				_type: 'listItems'
-			
-			};
-
-		},
-
-		default: function( tag ){
-			var tmp;
-
-			if( !current || [ 'p', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre' ].indexOf( tag ) < 0 ){
-				return false;
-
-			}
-
-			return {
-				tag: tag,
-				content: ( utils.isString( tmp = current.innerHTML ) ? utils.trim( utils.stripTags( tmp, allowed ) ) : '' ),
-				_type: 'text'
-
-			};
-
-		},
-
-		video: function(){
-			var tmp;
-
-			if( !current ){
-				return false;
-
-			}
-
-			return {
-				type: 'c',
-				url: ( utils.isString( tmp = current.src ) ? utils.trim( utils.stripTags( tmp ) ) : '' ),
-				he: sanitize.number({ value: current.getAttribute( 'height' ) } ),
-				wi: sanitize.number({ value: current.getAttribute( 'width' ) } ),
-				_type: 'video'
-
-			};
-
-		},
-
-		audio: function(){
-			var tmp;
-
-			if( !current ){
-				return false;
-
-			}
-
-			return {
-				url: ( utils.isString( tmp = current.src ) ? utils.trim( utils.stripTags( tmp ) ) : '' ),
-				_type: 'audio'
+			items[items.length] = {
+				ctnt: ( isString( tmp = citems[i].innerHTML ) ? ( utils.stripTags( tmp, allowed ) ).trim() : '' )
 
 			};
 
 		}
+		isOl = isBool( isOl ) && isOl;
 
-	};
+		return {
+			sty: isOl ? 'decimal' : 'disc',
+			_items: items,
+			_type: 'listItems'
+			
+		};
 
-	if( utils.isStringEmpty( entry ) ){
+	},
+
+	default: function( current, tag ){
+		var tmp;
+
+		if( !current || [ 'p', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre' ].indexOf( tag ) < 0 ){
+			return false;
+
+		}
+
+		return {
+			tag: tag,
+			content: ( isString( tmp = current.innerHTML ) ? ( utils.stripTags( tmp, allowed ) ).trim() : '' ),
+			_type: 'text'
+
+		};
+
+	},
+
+	video: function( current ){
+		var tmp;
+
+		if( !current ){
+			return false;
+
+		}
+
+		return {
+			type: 'c',
+			url: ( isString( tmp = current.src ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
+			he: sanitize.number({ value: current.getAttribute( 'height' ) } ),
+			wi: sanitize.number({ value: current.getAttribute( 'width' ) } ),
+			_type: 'video'
+
+		};
+
+	},
+
+	audio: function( current ){
+		var tmp;
+
+		if( !current ){
+			return false;
+
+		}
+
+		return {
+			url: ( isString( tmp = current.src ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
+			_type: 'audio'
+
+		};
+
+	}
+
+};
+
+export default function( entry ){
+	var fragment, div;
+
+	const data = [];
+
+	if( !isString( entry ) || isEmpty( entry ) ){
 		return false;
 
 	}
-	fragment = _d.createDocumentFragment();
-	div = _d.createElement( 'div' );
+	fragment = DOCUMENT.createDocumentFragment();
+	div = DOCUMENT.createElement( 'div' );
 	div.innerHTML = entry;
 	fragment.appendChild( div );
 
-	tags.forEach(function( tag ){
+	CORE.tags.forEach( function( tag ){
 		const get = div.getElementsByTagName( tag );
-		var i = 0;
-		var nname;
+		var i, nname, current, tmp;
 
 		if( get.length < 1 ){
 			return;
 
 		}
 
-		for( i; i < get.length; i++ ){
-			current = get[i];
-			nname = ( utils.trim( current.nodeName ) ).toLowerCase();
+		for( i = 0; i < get.length; i++ ){
 
-			if( nname === 'ol' ){
-				tmp1 = _priv.ul( true );
-
-			}else if( nname in _priv ){
-				tmp1 = _priv[nname]();
-
-			}else{
-				tmp1 = _priv.default( nname );
-
-			}
-
-			if( !tmp1 ){
+			if( !isString( ( current = get[i] ).nodeName ) ){
 				continue;
 
 			}
-			data[data.length] = tmp1;
+			nname = ( current.nodeName.toLowerCase() ).trim();
+
+			if( nname === 'ol' ){
+				tmp = ELEMENTS.ul( current, true );
+
+			}else if( nname in _priv ){
+				tmp = ELEMENTS[nname]( current );
+
+			}else{
+				tmp = ELEMENTS.default( current, nname );
+
+			}
+
+			if( !tmp ){
+				continue;
+
+			}
+			data[data.length] = tmp;
 
 		}
 

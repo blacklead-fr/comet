@@ -8,6 +8,17 @@ export function isNode( object ){
 
 }
 
+export function isNodeName( nodeNames, value, index ){
+	var i;
+
+	if( !isArray( nodeNames ) || nodeNames.length < 0 || !isString( value ) || ( i = nodeNames.indexOf( ( value.toLowerCase() ).trim() ) ) < 0 ){
+		return false;
+
+	}
+	return ( isBool( index ) && index ? i : true );
+
+}
+
 export function isDocument( object ){
 
 	return object === DOCUMENT;
@@ -80,6 +91,12 @@ export function isEmpty( entry ){
 		return !isDefined( entry ) || ( ( isArray( entry ) || isString( entry ) ) && entry.length < 1 );
 
 	}
+
+}
+
+export function isTrueValue( value ){
+
+	return ( isString( value ) && ( value.toLowerCase() ).trim() === 'true' );
 
 }
 
