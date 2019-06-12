@@ -1,36 +1,77 @@
-import utils from './utils.js';
-import node from './node.js';
+import { isObject, isString, isArray, isFunction } from './is.js';
+import node from '../dom/element.js';
 
 /* global document, __cometi18n */
 
-export default function ( options ){
-	const _d = document;
-	const fragment = _d.createDocumentFragment();
-	var modal, inner, header, button, body;
+const DOCUMENT = document;
 
-	if( !utils.isObject( options ) ){
+const CORE = {
+
+	classes: {
+		default: 'comet-modal',
+		close: 'comet-modal__close',
+		frame: 'comet-modal__frame',
+		header: 'comet-modal__header',
+		body: 'comet-modal__body'
+	},
+
+	destroy: function( ev, ui, data ){
+		ev.preventDefault();
+
+		if( isFunction( data.done ) ){
+
+			if( data.done( ev, ui, data.target ) === 1 ){
+				return false;
+
+			}
+
+		}
+
+		if( data.target && data.target.parentNode !== null ){
+			data.target.parentNode.removeChild( data.target );
+
+		}
+
+	}
+
+};
+
+export default function ( options ){
+
+	const FRAGMENT = DOCUMENT.createDocumentFragment();
+	const MODAL = DOCUMENT.createElement( 'div' );
+
+	FRAGMENT.appendChild( MODAL );
+
+	var inner, header, button, body;
+
+	if( !isObject( options ) ){
 		options = {};
 
 	}
-	options.close = utils.isObject( options.close ) ? options.close : {};
-	options.close.title = !utils.isStringEmpty( options.close.title ) ? utils.trim( options.close.title ) : __cometi18n.ui.close;
-	options.close.icon = !utils.isStringEmpty( options.close.icon ) ? utils.trim( options.close.icon ) : '<span class="cico cico-x"></span>';
-
-	modal = _d.createElement( 'div' );
-	modal.className = 'comet-modal comet-ui' + ( !utils.isStringEmpty( options.classes ) ? ' ' + utils.trim( options.classes ) : ( utils.isArray( options.classes ) ? ' ' + ( options.classes ).join( ' ' ) : '' ) );
+	options.close = isObject( options.close ) ? options.close : {};
+	options.close.title = isString( options.close.title ) ? options.close.title.trim() : __cometi18n.ui.close;
+	options.close.icon = isString( options.close.icon ) ? options.close.icon.trim() : '<span class="cico cico-x"></span>';
 
 
-	inner = '<div class="comet-inner">';
+	inner = '<button class="comet-button comet-close" title="' + options.close.title + '">';
+	inner += options.close.icon;
+	inner += '</button>';
+
+
+	inner += '<div class="comet-inner">';
 	inner += '<div class="comet-header"></div>';
 	inner += '<div class="comet-body"></div>';
 	inner += '</div>';
-	modal.innerHTML = inner;
-	fragment.appendChild( modal );
 
-	header = modal.firstChild.firstChild;
-	body = modal.firstChild.lastChild;
+	MODAL.innerHTML = inner;
+	MODAL.className = 'comet-modal comet-ui' + ( isString( options.classes ) ? ' ' + options.classes.trim() : ( isArray( options.classes ) ? ' ' + ( options.classes ).join( ' ' ) : '' ) );
 
-	if( utils.isString( options.header ) ){
+	button = MODAL.firstChild;
+	header = modal.lastChild.firstChild;
+	body = modal.lastChild.lastChild;
+
+	if( isString( options.header ) ){
 		header.innerHTML = options.header;
 
 	}else{
@@ -38,49 +79,27 @@ export default function ( options ){
 
 	}
 
-	if( utils.isString( options.content ) ){
+	if( isString( options.content ) ){
 		body.innerHTML = options.content;
 
 	}else{
 		body.appendChild( options.content );
 
 	}
-	button = _d.createElement( 'button' );
-	button.className = 'comet-button comet-close';
-	button.title = options.close.title;
-	button.innerHTML = options.close.icon;
-	modal.appendChild( button );
 
-	node( button ).on( 'click', function( ev, ui ){
-		ev.preventDefault();
+	node( button ).on( 'click', CORE.destroy, { target: MODAL, done: options.done } );
 
-		if( utils.isFunction( options.done ) ){
-
-			if( options.done( ev, ui ) === 1 ){
-				return false;
-
-			}
-
-		}
-
-		if( modal && modal.parentNode !== null ){
-			modal.parentNode.removeChild( modal );
-
-		}
-
-	});
-
-	_d.body.appendChild( fragment );
+	DOCUMENT.body.appendChild( FRAGMENT );
 
 	return {
-		target: modal,
-		modal: modal.firstChild,
+		target: MODAL,
+		modal: MODAL.lastChild,
 		header: header,
 		body: body,
 		destroy: function(){
 
-			if( modal && modal.parentNode !== null ){
-				modal.parentNode.removeChild( modal );
+			if( MODAL && MODAL.parentNode !== null ){
+				MODAL.parentNode.removeChild( MODAL );
 
 			}
 

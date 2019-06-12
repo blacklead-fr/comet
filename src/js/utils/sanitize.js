@@ -1,30 +1,30 @@
-import utils from './utils.js';
-import parse from './parse.js';
-import node from './node.js';
+import { isArray, isNumber, isString, isObject, isNode, isBool } from './is.js';
+import { parseId, parseIds } from './parse.js';
+import { inArray } from './fill.js';
 
 /* global document */
 
-const sanitize = {};
+const DOCUMENT = document;
 
-sanitize.number = function( entry ){
+export function sanitizeNumber( entry ){
 	var value;
 
-	if( entry === null || !utils.isObject( entry ) ){
+	if( entry === null || !isObject( entry ) ){
 		entry = {
 			value: entry
 		};
 
 	}
 
-	if( entry.value !== null && ( utils.isString( entry.value ) || utils.isNumber( entry.value ) ) ){
-		value = utils.isBool( entry.float ) && entry.float ? parseFloat( entry.value ) : parseInt( entry.value );
+	if( entry.value !== null && ( isString( entry.value ) || isNumber( entry.value ) ) ){
+		value = isBool( entry.float ) && entry.float ? parseFloat( entry.value ) : parseInt( entry.value );
 
-		if( utils.isNumber( entry.min ) && value < entry.min ){
+		if( isNumber( entry.min ) && value < entry.min ){
 			return entry.min;
 
 		}
 
-		if( utils.isNumber( entry.max ) && value > entry.max ){
+		if( isNumber( entry.max ) && value > entry.max ){
 			return entry.max;
 
 		}
@@ -34,30 +34,31 @@ sanitize.number = function( entry ){
 		}
 
 	}
-	return ( utils.isNumber( entry.default ) ? parseFloat( entry.default ) : null );
+	return ( isNumber( entry.default ) ? parseFloat( entry.default ) : null );
 
-};
+}
 
-sanitize.valueUnit = function( value, unit ){
-	const auto = [ 'auto', 'AUTO', 'AUT', 'aut' ];
+export function sanitizeValueUnit( value, unit ){
+	const auto = [ 'auto', 'aut' ];
 
-	if( utils.isString( value ) ){
+	if( isString( value ) ){
 
-		if( auto.indexOf( utils.trim( value ) ) > -1 ){
+		if( inArray( auto, ( value.toLowerCase() ).trim() ) ){
 			return 'auto';
 
 		}
 
 	}
-	unit = utils.isString( unit ) ? sanitize.unit( unit ) : '';
-	value = sanitize.number( { value: value, float: ( unit !== 'px' ) } );
+	unit = isString( unit ) ? sanitizeUnit( unit ) : '';
+	value = sanitizeNumber( { value: value, float: ( unit !== 'px' ) } );
 
 	return ( value === null || value === 0 ? '0' : value + unit );
-};
 
-sanitize.unit = function( unit ){
+}
 
-	unit = utils.isString( unit ) ? utils.trim( unit.toLowerCase() ) : unit;
+export function sanitizeUnit( unit ){
+
+	unit = isString( unit ) ? ( unit.toLowerCase() ).trim() : unit;
 
 	switch( unit ){
 		case 'px':
@@ -104,61 +105,56 @@ sanitize.unit = function( unit ){
 		return '';
 	}
 
-};
+}
 
-sanitize.value = function( entry, def ){
+export function sanitizeValue( entry, def ){
 	const typeE = typeof entry;
 	const typeD = typeof def;
 	var output = '';
 
 	if( typeE === 'number' ){
-		output = sanitize.number( entry );
+		output = sanitizeNumber( entry );
 
 	}else if( typeE === 'string' ){
-		output = utils.trim( entry );
+		output = entry.trim();
 	}
 
 	if( output === '' && def !== null ){
 		if( typeD === 'number' ){
-			output = sanitize.number( def );
+			output = sanitizeNumber( def );
 
 		}else if( typeD === 'string' ){
-			output = utils.trim( def );
+			output = def.trim();
 		}
 	}
 
 	return output;
 
-};
+}
 
-sanitize.color = function( str ){
+export function sanitizeColor( str ){
 	const regex = /^(#[0-9a-f]{3}|#(?:[0-9a-f]{2}){2,4}|(rgb|hsl)a?\((-?\d+%?[,\s]+){2,3}\s*[\d.]+%?\))$/i;
 
-	if( !utils.isStringEmpty( str ) && regex.test( str = utils.trim( str ) ) ){
-		return str;
+	return isString( str ) && regex.test( str = str.trim() ) ? str : '';
 
-	}
-	
-	return '';
+}
 
-};
-
-sanitize.data = function( data, id ){
+export function sanitizeData( data, id ){
 	const d = {};
 	var ids, idsa, a;
 
-	if( !utils.isObject( data )  || !utils.isObject( data.elements ) || !( id = parse.id( id ) ) || !utils.isObject( data.elements[id] ) ){
+	if( !isObject( data )  || !isObject( data.elements ) || !( id = parseId( id ) ) || !isObject( data.elements[id] ) ){
 		return d;
 
 	}
 	d.el = data.elements[id];
 
-	if( !utils.isStringEmpty( d.el._items ) && utils.isObject( data.items ) && utils.isArray( ( ids = parse.ids( d.el._items, 'array' ) ), 1 ) ){
+	if( isString( d.el._items ) && isObject( data.items ) && isArray( ids = parseIds( d.el._items, 'array' ) ) && ids.length > 0 ){
 		d.items = {};
 
 		for( a = 0; a < ids.length; a++ ){
 
-			if( !( idsa = parse.id( ids[a] ) ) || !utils.isObject( data.items[idsa] ) ){
+			if( !( idsa = parseId( ids[a] ) ) || !isObject( data.items[idsa] ) ){
 				continue;
 
 			}
@@ -169,10 +165,10 @@ sanitize.data = function( data, id ){
 	}
 	return d;
 
-};
+}
 
-sanitize.content = function(){
-	const elements = document.getElementsByClassName( 'cpb-elementContent' );
+export function sanitizeContent(){
+	const elements = DOCUMENT.getElementsByClassName( 'cpb-elementContent' );
 	const __core = {
 
 		map: {
@@ -187,7 +183,7 @@ sanitize.content = function(){
 	};
 	var o, e;
 
-	if( !utils.isObject( elements ) ){
+	if( elements.length < 1 ){
 		return '';
 
 	}
@@ -195,7 +191,7 @@ sanitize.content = function(){
 
 	for( e in elements ){
 
-		if( !node( elements[e] ).isNode() ){
+		if( !isNode( elements[e] ) ){
 			continue;
 
 		}
@@ -204,24 +200,24 @@ sanitize.content = function(){
 	}
 	return o.replace(/[']/g, __core.callback );
 
-};
+}
 
-sanitize.post = function( str ){
+export function sanitizePost( str ){
 	const allowed = '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><sub><sup><title>';
 
-	return ( !utils.isStringEmpty( str ) ? utils.stripTags( str, allowed ) : '' );
+	return ( isString( str ) ? utils.stripTags( str, allowed ) : '' );
 
-};
+}
 
-sanitize.class = function( str, prefix ){
+export function sanitizeClass( str, prefix ){
 
-	return ( utils.toClass( utils.isString( prefix ) ? prefix : '' ) + utils.toClass( str ) );
+	return ( utils.toClass( isString( prefix ) ? prefix : '' ) + utils.toClass( str ) );
 
-};
+}
 
-sanitize.alignment = function( entry ){
+export function sanitizeAlignment( entry ){
 	const c = 'cpb-align';
-	entry = utils.isString( entry ) ? utils.trim( entry.toLowerCase() ) : entry;
+	entry = isString( entry ) ? ( entry.toLowerCase() ).trim() : entry;
 
 	switch( entry ){
 		case 'l':
@@ -257,6 +253,4 @@ sanitize.alignment = function( entry ){
 		return c + 'center';
 	}
 
-};
-
-export default sanitize;
+}

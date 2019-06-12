@@ -1,4 +1,4 @@
-import utils from './utils.js';
+import { isString, isBool, isDefined, isEmpty } from './is.js';
 
 /* global window, Comet */
 
@@ -6,45 +6,43 @@ export default function (){
 
 	window.Comet = typeof Comet !== 'object' ? {} : Comet;
 
-	const prop = {
+	const CORE = {
 
 		get: function( from ){
 
-			if( utils.isStringEmpty( from  ) || !( ( from = utils.trim( from ) ) in Comet ) ){
+			if( !isString( from ) || !( ( from = from.trim() ) in Comet ) ){
 				return false;
 
 			}
-
 			return Comet[from];
 
 		},
 
 		set: function( to, data, forceErase ){
 
-			if( utils.isStringEmpty( to ) ){
+			if( !isString( to ) || isEmpty( to = to.trim() ) ){
 				return false;
 
 			}
-			to = utils.trim( to );
-			forceErase = utils.isBool( forceErase ) ? forceErase : false;
+			forceErase = isBool( forceErase ) && forceErase;
 
 			if( ( to in Comet && forceErase ) || !( to in Comet ) ){
 				Comet[to] = data;
 
 			}
-			return this.get( to );
+			return CORE.get( to );
 
 		},
 
 		isSet: function( to ){
 
-			return ( !this.get( to ) ? false : true );
+			return ( !CORE.get( to ) ? false : true );
 
 		},
 
 		unset: function( to ){
 
-			if( !this.isSet( to ) ){
+			if( !CORE.isSet( to ) ){
 				return false;
 
 			}
@@ -55,6 +53,6 @@ export default function (){
 
 
 	};
+	return CORE;
 
-	return prop;
 }

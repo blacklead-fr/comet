@@ -5,44 +5,6 @@ import parse from './parse.js';
 
 const utils = {};
 
-utils.isString = function( entry ){
-	return typeof entry === 'string';
-
-};
-
-utils.isObject = function( entry ){
-	return typeof entry === 'object';
-
-};
-
-utils.isNumber = function( entry ){
-	return typeof entry === 'number';
-
-};
-
-utils.isBool = function( entry ){
-	return typeof entry === 'boolean';
-
-};
-
-utils.isFunction = function( entry ){
-	return typeof entry === 'function';
-
-};
-
-utils.isSet = function( entry ){
-	return typeof entry !== 'undefined';
-
-};
-
-utils.isArray = function( entry, length ){
-
-	length = this.isSet( length ) ? ( this.isNumber( length = parseInt( length ) ) && !isNaN( length ) && length > 0 ? length : false ) : false;
-
-	return Array.isArray( entry ) && ( ( length && entry.length >= length ) || !length );
-
-};
-
 utils.toObject = function( entry ){
 	const obj = {};
 	var i = 0;
@@ -57,129 +19,6 @@ utils.toObject = function( entry ){
 
 	}
 	return obj;
-
-};
-
-utils.trim = function( entry ){
-	const type = typeof entry;
-	var s = '', c;
-
-	if( type === 'string' ){
-		return entry.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '' );
-
-	}
-
-	if( type === 'object' && 'str' in entry ){
-		s = entry.str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '' );
-
-		if( typeof entry.char === 'string' ){
-			c = entry.char === ']' ? '\\]' : c;
-			c = entry.char === '\\' ? '\\\\' : c;
-			s.replace( new RegExp( '^[' + c + ']+|[' + c + ']+$', 'g' ), '');
-		}
-
-	}
-	return s;
-
-};
-
-utils.isEmpty = function( entry ){
-
-	switch( entry ){
-		case '':
-		case 'undefined':
-		case 'null':
-		case '0':
-		case 0:
-		case false:
-		case null:
-		case 0.0:
-		return true;
-		default:
-
-		return ( !utils.isSet( entry ) && !utils.isArray( entry, 1 ) && isNaN( entry ) );
-	}
-
-};
-
-utils.isStringEmpty = function( str ){
-	const isStr = utils.isString( str );
-
-	return ( !isStr || ( isStr && ( utils.trim( str ) ).length < 1 ) );
-
-};
-
-utils.capitalize = function( str ){
-
-	return !utils.isStringEmpty( str ) ? ( utils.trim( str ) ).charAt(0).toUpperCase() + str.slice(1) : '';
-
-};
-
-utils.escUrl = function( url ){
-	var strip;
-
-	function _deepReplace( search, subject ){
-		var s;
-		if( typeof search === 'object' ){
-			for( s in search ) {
-				subject = subject.replace( search[s], '' );
-			}
-		}
-		return subject;
-	}
-	
-	if( this.isStringEmpty( url = this.trim( url.toString() ) ) ){
-		return url;
-	}
-	
-	if ( url.indexOf( 'mailto:' ) !== 0 ) {
-		strip = [ '%0d', '%0a', '%0D', '%0A' ];
-		url = _deepReplace( strip, url);
-		
-	}
-	url = url.replace( '&', '&#038;' ).replace( '\'', '&#039;' );
-
-	return encodeURI( url );
-
-};
-
-utils.json_encode = function( obj, raw ){
-
-	if( !utils.isObject( obj ) || utils.isArray( obj ) ){
-		return '';
-
-	}
-	raw = utils.isBool( raw ) ? raw : true;
-
-	if( raw ){
-		return encodeURIComponent( JSON.stringify( obj ) );
-
-	}
-	return JSON.stringify( obj );
-
-};
-
-utils.encode_chars = function( str ){
-	const __core = {
-
-		map: {
-			'\\': '&#92;',
-			"'": '&#39;',
-			'"': '&#34;',
-		},
-
-		callback: function( m ){
-			return __core.map[m];
-
-		}
-
-	};
-
-	if( !utils.isString( str ) ){
-		return str;
-
-	}
-	return str.replace(/[\\'"]/g, __core.callback );
 
 };
 
@@ -219,39 +58,6 @@ utils.getVideo = function( url, media ){
 
 };
 
-utils.stripTags = function( str, allowed ){
-	const tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-	const mallowedTags = /<[a-z][a-z0-9]*>/g; 
-	const commentsTags = /<!--[\s\S]*?-->|<\?(?:php)?[\s\S]*?\?>/gi;
-
-	if( !utils.isString( str ) ){
-		return '';
-
-	}
-	allowed = (((allowed || '') + '').toLowerCase().match( mallowedTags) || [] ).join('');
-
-	return str.replace( commentsTags, '' ).replace( tags, function( $0, $1 ){
-		return allowed.indexOf('<' + $1.toLowerCase() + '>') > -1 ? $0 : '';
-	});
-
-};
-
-utils.stripOnly = function( str, only ){
-	const tags = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
-	const onlyTags = /<[a-z][a-z0-9]*>/g;
-
-	if( !utils.isString( str ) ){
-		return '';
-
-	}
-	only = (((only || '') + '').toLowerCase().match( onlyTags) || [] ).join('');
-
-	return str.replace( tags, function( $0, $1 ){
-  		return only.indexOf('<' + $1.toLowerCase() + '>') > -1 ? '' : $0;// : '';
-  	});
-
-};
-
 utils.toClass = function( entry ){
 	var o = '';
 	var e;
@@ -272,39 +78,6 @@ utils.toClass = function( entry ){
 	}
 
 	return '';
-
-};
-
-utils.extend = function( out ){
-	const args = arguments;
-	var i, obj, key;
-	out = utils.isObject( out ) ? out : {};
-
-	for( i = 1; i < args.length; i++ ){
-
-		if( !( obj = args[i] ) ){
-			continue;
-
-		}
-
-		for( key in obj ){
-
-			if( !obj.hasOwnProperty(key) ){
-				continue;
-
-			}
-
-			if( utils.isObject( obj[key] ) ){
-				out[key] = utils.extend( out[key], obj[key] );
-				continue;
-
-			}
-			out[key] = obj[key];
-
-		}
-		
-	}
-	return out;
 
 };
 
