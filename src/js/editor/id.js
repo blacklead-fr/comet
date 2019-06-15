@@ -1,6 +1,6 @@
 import { isArray, isObject, isString, isEmpty } from '../utils/is.js';
-import parse from '../utils/parse.js';
-import utils from '../utils/utils.js';
+import { parseType, parseId, parseIds } from '../utils/parse.js';
+import { xtrim } from '../utils/fill.js';
 import { DATA } from './data.js';
 
 const CORE = {
@@ -9,14 +9,14 @@ const CORE = {
 		const nids = [];
 		var a, cid, ids;
 
-		if( !isArray( ids = parse.ids( str, 'array' ) ) || ids.length < 1 ){
+		if( !isArray( ids = parseIds( str, 'array' ) ) || ids.length < 1 ){
 			return false;
 
 		}
 
 		for( a = 0; a < ids.length; a++ ){
 
-			if( !( cid = parse.id( ids[a] ) ) || cid === id  ){
+			if( !( cid = parseId( ids[a] ) ) || cid === id  ){
 				continue;
 
 			}
@@ -45,7 +45,7 @@ const CORE = {
 			}
 			str = id + str;
 
-		}else if( ( position = parse.id( position ) ) !== false && ( tp = str.indexOf( position, 0 ) ) > -1 ){
+		}else if( ( position = parseId( position ) ) !== false && ( tp = str.indexOf( position, 0 ) ) > -1 ){
 			b = str.slice( 0, tp );
 			a = str.slice( tp );
 			str = b + id + ',' + a;
@@ -87,7 +87,7 @@ export const ID = {
 		const metaData = DATA.getData();
 		var max = 0;
 
-		if( !( type = parse.type( type ) ) ){
+		if( !( type = parseType( type ) ) ){
 			return false;
 
 		}
@@ -96,7 +96,7 @@ export const ID = {
 			metaData[type] = {};
 
 		}
-		max = !( max = parse.id( metaData[type]._max ) ) || max < 0 ? 0 : max;
+		max = !( max = parseId( metaData[type]._max ) ) || max < 0 ? 0 : max;
 		max = max + 1;
 
 		metaData[type]._max = max;
@@ -111,7 +111,7 @@ export const ID = {
 		const metaData = DATA.getData();
 		var _in, cat, ids, r;
 
-		if( !( id = parse.id( id ) ) || ( catId = parse.id( catId ) ) === false || !( type = DATA.hasType( type ) ) ){
+		if( !( id = parseId( id ) ) || ( catId = parseId( catId ) ) === false || !( type = DATA.hasType( type ) ) ){
 			return false;
 
 		}
@@ -160,7 +160,7 @@ export const ID = {
 		const metaData = DATA.getData();
 		var _in, parent, tmp; 
 
-		if( !( id = parse.id( id ) ) || !( type = parse.type( type ) ) ){
+		if( !( id = parseId( id ) ) || !( type = parseType( type ) ) ){
 			return false;
 
 		}
@@ -169,7 +169,7 @@ export const ID = {
 
 		if( type === 'sections' && isString( metaData[_in] ) && !isEmpty( metaData[_in] ) ){
 
-			if( !( tmp = IdsString( utils.trim( metaData[_in], ',' ) ).remove( id ) ) ){
+			if( !( tmp = IdsString( xtrim( metaData[_in], ',' ) ).remove( id ) ) ){
 				return false;
 
 			}
@@ -179,7 +179,7 @@ export const ID = {
 
 		}else if( ( pid = DATA.hasId( parent, pid ) ) && isString( metaData[parent][pid][_in] ) && !isEmpty( metaData[parent][pid][_in] ) ){
 
-			if( !( tmp = IdsString( utils.trim( metaData[parent][pid][_in], ',' ) ).remove( id ) ) ){
+			if( !( tmp = IdsString( xtrim( metaData[parent][pid][_in], ',' ) ).remove( id ) ) ){
 				return false;
 
 			}
@@ -196,7 +196,7 @@ export const ID = {
 		const metaData = DATA.getData();
 		var _in, parent, str;
 
-		if( !( id = parse.id( id ) ) || !( nid = parse.id( nid ) ) || ( pid = parse.id( pid ) ) === false || !( type = parse.type( type ) ) ){
+		if( !( id = parseId( id ) ) || !( nid = parseId( nid ) ) || ( pid = parseId( pid ) ) === false || !( type = parseType( type ) ) ){
 			return false;
 
 		}
@@ -205,14 +205,14 @@ export const ID = {
 
 		if( type === 'sections' ){
 			str = isString( metaData[_in] ) ? metaData[_in] : '';
-			str = ( utils.trim( str, ',' ) ).replace( id, nid );
+			str = ( xtrim( str, ',' ) ).replace( id, nid );
 			metaData[_in] = str;
 			DATA.setData( metaData );
 			return true;
 
 		}else if( ( pid = DATA.hasId( parent, pid ) ) ){
 			str = isString( metaData[parent][pid][_in] ) ? metaData[parent][pid][_in] : '';
-			str = ( utils.trim( str, ',' ) ).replace( id, nid );
+			str = ( xtrim( str, ',' ) ).replace( id, nid );
 			metaData[parent][pid][_in] = str;
 			DATA.setData( metaData );
 			return true;

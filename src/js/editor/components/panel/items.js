@@ -1,11 +1,11 @@
+import { parseId, parseIds, parseDataset } from '../../../utils/parse.js';
 import { isObject, isNode } from '../../../utils/is.js';
 import layout from '../../../utils/layout.js';
-import utils from '../../../utils/utils.js';
-import parse from '../../../utils/parse.js';
 import node from '../../../dom/element.js';
-import __target from '../../target.js';
-import __data from '../../data.js';
-import __id from '../../id.js';
+import { getElement } from '../stored.js';
+import { TARGET } from '../../target.js';
+import { DATA } from '../../data.js';
+import { ID } from '../../id.js';
 import panel from './index.js';
 
 const DOCUMENT = document;
@@ -34,17 +34,16 @@ const CORE = {
 	},
 
 	add: function( ev, ui, itemsNode ){
-		const target_ = __target();
 		var pid, id;
 
 		ev.preventDefault();
 
-		if( !isNode( itemsNode )  || !( pid = target_.id() ) ){
+		if( !isNode( itemsNode )  || !( pid = TARGET.id() ) ){
 			return;
 
 		}
 
-		if( target_.type() === null || !( id = __data().create( 'items', pid, 'last' ) ) ){
+		if( TARGET.type() === null || !( id = DATA.create( 'items', pid, 'last' ) ) ){
 			return;
 
 		}
@@ -53,18 +52,16 @@ const CORE = {
 	},
 
 	edit: function( ev, ui, args ){
-		const target_ = __target();
-		const data_ = __data();
 		var id, tabs1, tid, element, edata;
 
 		ev.preventDefault();
 
-		if( !( id = parse.id( args.id ) ) || !( tid = target_.id() ) ){
+		if( !( id = parseId( args.id ) ) || !( tid = TARGET.id() ) ){
 			return;
 
 		}
 
-		if( !isObject( element = data_.get( tid, 'elements' ) ) || !isObject( edata = utils.getElement( element._type ) ) ){
+		if( !isObject( element = DATA.get( tid, 'elements' ) ) || !isObject( edata = getElement( element._type ) ) ){
 			return;
 
 		}
@@ -73,8 +70,8 @@ const CORE = {
 			return;
 
 		}
-		tabs1 = __create( edata.tabs.items.tabs, data_.get( id, 'items' ) );
-		target_.set( { state: 'items', item: id } );
+		tabs1 = __create( edata.tabs.items.tabs, DATA.get( id, 'items' ) );
+		TARGET.set( { state: 'items', item: id } );
 
 		panel({
 			title: __cometi18n.ui.editItem,
@@ -90,7 +87,7 @@ const CORE = {
 
 					}
 					const tabs2 = __create( edata.tabs, element );
-					target_.set( { state: null, item: null } );
+					TARGET.set( { state: null, item: null } );
 
 					panel({
 						title: __cometi18n.options.element.edit,
@@ -98,7 +95,7 @@ const CORE = {
 						content: tabs2.content,
 						close: {
 							do: function(){
-								target_.reset();
+								TARGET.reset();
 
 							}
 
@@ -113,25 +110,23 @@ const CORE = {
 	},
 
 	delete: function( ev, ui, args ){
-		const data_ = __data();
-		const target_ = __target();
 		var element_id, item_id, elementNode;
 		var _t, lyt;
 
 		ev.preventDefault();
 
-		if( !isNode( args.target ) || !( item_id = parse.id( args.id ) ) ){
+		if( !isNode( args.target ) || !( item_id = parseId( args.id ) ) ){
 			return;
 
 		}
 
-		if( !data_.remove( item_id, 'items', ( element_id = target_.id() ) ) ){
+		if( !DATA.remove( item_id, 'items', ( element_id = TARGET.id() ) ) ){
 			return;
 
 		}
 		args.target.parentNode.removeChild( args.target );
 
-		if( ( elementNode = target_.node() ) && ( lyt = layout( data_.getData() ).element( element_id, true ) ) ){
+		if( ( elementNode = TARGET.node() ) && ( lyt = layout( DATA.getData() ).element( element_id, true ) ) ){
 			elementNode.parentNode.replaceChild( lyt, elementNode );
 
 		}
@@ -160,24 +155,22 @@ const CORE = {
 
 			},
 			stop: function( e, ui, item ){
-				const target_ = __target();
-				const id_ = __id(); 
 				var pid, t, re, closest, tnode;
 
 				item.removeAttribute( 'style' );
 
-				if( !( pid = target_.id() ) ){
+				if( !( pid = TARGET.id() ) ){
 					return;
 
 				}
 				closest = node( ui ).next( { selector: '.comet-item-sortable' } );
-				t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+				t = isNode( closest ) && ( t = parseDataset( closest, 'id' ) ) && ( t = parseId( t ) ) ? t : 'last';
 
-				id_.remove( id, 'items', pid );
-				id_.insert( id, 'items', pid, t );
+				ID.remove( id, 'items', pid );
+				ID.insert( id, 'items', pid, t );
 				ui.parentNode.replaceChild( item , ui );
 
-				if( !( tnode = target_.node() ) || tnode === null || !( re = layout( __data().getData() ).element( pid, true ) ) ){
+				if( !( tnode = TARGET.node() ) || tnode === null || !( re = layout( DATA.getData() ).element( pid, true ) ) ){
 					return;
 
 				}
@@ -236,14 +229,14 @@ export function createItems( section, data ){
 
 	node( section.lastChild.firstChild ).on( 'click', CORE.add, items );
 
-	if( !isObject( data ) || !isString( data._items ) || isEmpty( data._items ) || ( ids = parse.ids( data._items, 'array' ) ).length < 1 ){
+	if( !isObject( data ) || !isString( data._items ) || isEmpty( data._items ) || ( ids = parseIds( data._items, 'array' ) ).length < 1 ){
 		return;
 
 	}
 
 	for( a = 0; a < ids.length; a++ ){
 
-		if( !( id = parse.id( ids[a] ) ) || !( dataItem = __data().get( id, 'items' ) ) ){
+		if( !( id = parseId( ids[a] ) ) || !( dataItem = DATA.get( id, 'items' ) ) ){
 			continue;
 
 		}

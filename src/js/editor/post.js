@@ -1,6 +1,6 @@
 import { isString, isBool, isEmpty } from '../utils/is.js';
-import sanitize from '../utils/sanitize.js';
-import utils from '../utils/utils.js';
+import { sanitizeNumber } from '../utils/sanitize.js';
+import { stripTags } from '../utils/fill.js';
 
 /* global document */
 
@@ -25,9 +25,9 @@ const ELEMENTS = {
 		}
 
 		return {
-			img: ( isString( tmp = current.src ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
-			alt: ( isString( tmp = current.alt ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
-			cap: ( isString( tmp = current.title ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
+			img: ( isString( tmp = current.src ) ? ( stripTags( tmp ) ).trim() : '' ),
+			alt: ( isString( tmp = current.alt ) ? ( stripTags( tmp ) ).trim() : '' ),
+			cap: ( isString( tmp = current.title ) ? ( stripTags( tmp ) ).trim() : '' ),
 			_type: 'image'
 
 		};
@@ -50,7 +50,7 @@ const ELEMENTS = {
 
 			}
 			items[items.length] = {
-				ctnt: ( isString( tmp = citems[i].innerHTML ) ? ( utils.stripTags( tmp, allowed ) ).trim() : '' )
+				ctnt: ( isString( tmp = citems[i].innerHTML ) ? ( stripTags( tmp, allowed ) ).trim() : '' )
 
 			};
 
@@ -76,7 +76,7 @@ const ELEMENTS = {
 
 		return {
 			tag: tag,
-			content: ( isString( tmp = current.innerHTML ) ? ( utils.stripTags( tmp, allowed ) ).trim() : '' ),
+			content: ( isString( tmp = current.innerHTML ) ? ( stripTags( tmp, allowed ) ).trim() : '' ),
 			_type: 'text'
 
 		};
@@ -93,9 +93,9 @@ const ELEMENTS = {
 
 		return {
 			type: 'c',
-			url: ( isString( tmp = current.src ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
-			he: sanitize.number({ value: current.getAttribute( 'height' ) } ),
-			wi: sanitize.number({ value: current.getAttribute( 'width' ) } ),
+			url: ( isString( tmp = current.src ) ? ( stripTags( tmp ) ).trim() : '' ),
+			he: sanitizeNumber({ value: current.getAttribute( 'height' ) } ),
+			wi: sanitizeNumber({ value: current.getAttribute( 'width' ) } ),
 			_type: 'video'
 
 		};
@@ -111,7 +111,7 @@ const ELEMENTS = {
 		}
 
 		return {
-			url: ( isString( tmp = current.src ) ? ( utils.stripTags( tmp ) ).trim() : '' ),
+			url: ( isString( tmp = current.src ) ? ( stripTags( tmp ) ).trim() : '' ),
 			_type: 'audio'
 
 		};

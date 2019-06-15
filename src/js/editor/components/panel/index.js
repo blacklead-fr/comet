@@ -1,7 +1,7 @@
 import { isNode, isString, isObject, isFunction, isArray, isBool } from '../../../utils/is.js';
 import { frameset as getFrameset, panel as getPanel } from '../stored.js';
-import sanitize from '../../../utils/sanitize.js';
-import __global from '../../../utils/global.js';
+import { sanitizeNumber } from '../../../utils/sanitize.js';
+import Global from '../../../utils/global.js';
 import { createControl } from './control.js';
 import node from '../../../dom/element.js';
 import { createItems } from './items.js';
@@ -107,7 +107,7 @@ export default function( options ){
 		},
 
 		setToGlobal: function( options ){
-			return __global().set( ID, options, true );
+			return Global().set( ID, options, true );
 		}
 
 	};
@@ -133,7 +133,7 @@ export default function( options ){
 	panel = DOCUMENT.createElement( 'div' );
 	panel.className = CLASSES.default;
 	panel.innerHTML = '<div class="' + CLASSES.header.default + '"><div class="' + CLASSES.header.top + '"></div></div><div class="' + CLASSES.body.default + '"></div>';
-	panel.style.left = sanitize.number({ value: options.position, default: 0, min: 0 });
+	panel.style.left = sanitizeNumber({ value: options.position, default: 0, min: 0 });
 	FRAGMENT.appendChild( panel );
 	CORE.data.panel = panel;
 

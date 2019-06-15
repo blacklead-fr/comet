@@ -1,6 +1,6 @@
 import { isString, isEmpty, isObject, isNode } from '../../../utils/is.js';
 import { ClassName } from '../../../utils/className.js';
-import utils from '../../../utils/utils.js';
+import { stripTags } from '../../../utils/fill.js';
 
 
 const DOCUMENT = document;
@@ -33,7 +33,7 @@ const CORE = {
 			controlInner += '<div class="' + CORE.classes.meta.tooltip + '">';
 			controlInner += '<span class="' + CORE.classes.meta.icon + '">?</span>';
 			controlInner += '<span class="' + CORE.classes.meta.desc + '">';
-			controlInner += utils.stripTags( data.desc, '<b><strong><i><a><span><sub><sup><ins>' );
+			controlInner += stripTags( data.desc, '<b><strong><i><a><span><sub><sup><ins>' );
 			controlInner += '</span>';
 			controlInner += '</div>';
 
@@ -64,9 +64,9 @@ export function createControls( sectionBody, data ){
 			continue;
 
 		}
-		controlData.type = ( utils.stripTags( controlData.type.toLowerCase() ) ).trim();
-		controlData.label = ( utils.stripTags( controlData.label ) ).trim();
-		controlData.responsive = isString( controlData.responsive ) && [ 'true', 'TRUE', 'yes', 'YES' ].indexOf( controlData.responsive.trim() ) > -1;
+		controlData.type = ( stripTags( controlData.type.toLowerCase() ) ).trim();
+		controlData.label = ( stripTags( controlData.label ) ).trim();
+		controlData.responsive = isString( controlData.responsive ) && inArray( [ 'true', 'yes' ], ( controlData.responsive.toLowerCase() ).trim() );
 		response = CORE.createControl( id, controlData );
 		sectionBody.appendChild( response.wrapper );
 		delete response.wrapper;

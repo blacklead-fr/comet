@@ -1,4 +1,5 @@
 import { isNode, isString, isTrueValue } from '../../utils/is.js';
+import { stripTags } from '../../utils/fill.js';
 import node from '../../dom/element.js';
 
 const DOCUMENT = document;
@@ -32,7 +33,7 @@ export default function(){
 	background.className = bgClassName;
 
 	if( 'vid' in uidata && isTrueValue( uidata.vid ) && isString( uidata.vurl ) ){
-		inner += '<video class="cpb-backgroundVideo" src="' + ( utils.stripTags( uidata.vurl ) ).trim() + '" loop autoplay muted preload="auto"></video>';
+		inner += '<video class="cpb-backgroundVideo" src="' + ( stripTags( uidata.vurl ) ).trim() + '" loop autoplay muted preload="auto"></video>';
 
 	}
 

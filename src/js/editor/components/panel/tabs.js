@@ -2,7 +2,6 @@ import { isObject, isString, isBool, isEmpty, isArray } from '../../../utils/is.
 import { ClassName } from '../../../utils/className.js';
 import { createControls } from './controls.js';
 import nodes from '../../../dom/elements.js';
-import parse from '../../../utils/parse.js';
 import node from '../../../dom/element.js';
 import { createItems } from './items.js';
 
@@ -107,29 +106,7 @@ const CORE = {
 				items: true,
 				control: response.section
 			};
-			//createItems( response.section, data );
 			return { oTab, controls };
-
-			//section.innerHTML = '<div class="comet-items comet-items-sortable"></div><div class="comet-buttonset"><button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.addItem + '"><span class="cico cico-plus"></span><span class="comet-title">' + __cometi18n.ui.addItem + '</span></button></div>';
-			//oTab.appendChild( section );
-
-			/*if( isObject( data ) && isString( data._items ) && !isEmpty( data._items ) && ( ids = parse.ids( data._items, 'array' ) ).length > 0 ){
-				createItems( section, data );
-
-				for( a = 0; a < ids.length; a++ ){
-
-					if( !( id = parse.id( ids[a] ) ) || !( dataItem = __data().get( id, 'items' ) ) ){
-						continue;
-
-					}
-					section.firstChild.appendChild( createItem( id, dataItem.title ) );
-
-				}
-			}
-
-			node( section.lastChild.firstChild ).on( 'click', __core.actions.item.add, section.firstChild );
-
-			return oTab;*/
 
 		}
 
@@ -153,14 +130,6 @@ const CORE = {
 				}
 				controls = controls.concat( response.controls );
 
-				/*section = DOCUMENT.createElement( 'div' );
-				section.className = CORE.classes.section.default;
-				section.innerHTML = '<h4 class="' + CORE.classes.section.header + '">' + s.name + '</h4><div class="' + CORE.classes.section.body + '"></div>';
-				oTab.appendChild( section );
-
-				section.lastChild.appendChild( createFields( s.fields ) );
-
-				node( section.firstChild ).on( 'click', CORE.onSection, section.lastChild );*/
 			}
 		}
 		return { oTab, controls };

@@ -1,4 +1,4 @@
-import GLOBAL from '../../../utils/global.js';
+import Global from '../../../utils/global.js';
 import { isNode } from '../../../utils/is.js';
 import node from '../../../dom/element.js';
 
@@ -71,7 +71,7 @@ export function setFrameset(){
 
 		destroy: function(){
 			node( FRAMESET ).remove();
-			GLOBAL().unset( SLUG );
+			Global().unset( SLUG );
 			return true;
 
 		}
@@ -82,6 +82,6 @@ export function setFrameset(){
 		return;
 
 	}
-	return GLOBAL().set( SLUG, DATA, true );
+	return Global().set( SLUG, DATA, true );
 
 }

@@ -1,6 +1,6 @@
+import { parseId, parseDataset } from '../../utils/parse.js';
 import { isObject } from '../../utils/is.js';
 import layout from '../../utils/layout.js';
-import parse from '../../utils/parse.js';
 import node from '../../dom/element.js';
 import { DATA } from '../data.js';
 
@@ -10,7 +10,7 @@ const CORE = {
 
 	isSibling: function( target ){
 		var id;
-		return ( !node( target ).hasClass( 'cpb-column' ) || !( id = parse.dataset( target, 'id' ) ) || !( id = parse.id( id ) ) ? false : id );
+		return ( !node( target ).hasClass( 'cpb-column' ) || !( id = parseDataset( target, 'id' ) ) || !( id = parseId( id ) ) ? false : id );
 
 	},
 

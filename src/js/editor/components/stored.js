@@ -1,4 +1,5 @@
 import { isObject, isString } from '../../utils/is.js';
+import { inArray } from '../../utils/fill.js';
 import GLOBAL from '../../utils/global.js';
 
 const Global = GLOBAL();
@@ -7,6 +8,13 @@ function get( slug ){
 	const GET = Global.get( slug );
 
 	return isObject( GET ) ? GET : false;
+
+}
+
+function getObject( slug ){
+	const GET = get( slug );
+
+	return !GET ? {} : GET;
 
 }
 
@@ -52,10 +60,56 @@ export function notifications(){
 
 }
 
-export function deviceType(){
+export function getDeviceType(){
 	var device = Global.get( 'deviceType' );
-	const devices = [ 'tablet', 'mobile' ];
+	const DEVICES = [ 'tablet', 'mobile' ];
 
-	return isString( device ) && devices.indexOf( device = ( device.trim() ).toLowerCase() ) > -1 ? device : 'desktop';
+	return isString( device ) && inArray( DEVICES, ( device = ( device.trim() ).toLowerCase() ) ) ? device : 'desktop';
+
+}
+
+export function getSvgSets(){
+
+	return getObject( 'svgSets' );
+
+}
+
+export function getPost(){
+
+	return getObject( 'post' );
+
+};
+
+export function getPostMeta(){
+	const POST = getPpost();
+
+	return !isObject( POST.meta ) ? {} : POST.meta;
+
+}
+
+export function getSettings(){
+
+	return getObject( 'settings' );
+
+}
+
+export function getSettingsFrom( slug ){
+	const SETTINGS = getSettings();
+	const TYPES = [ 'section', 'row', 'column', 'elements' ];
+
+	return isString( slug ) && inArray( TYPES, ( slug = slug.trim() ) && isObject( settings[slug] ) ? settings[slug] : false;
+
+}
+
+export function getElements(){
+
+	return getSettingsFrom( 'elements' );
+
+}
+
+export function getElement( slug ){
+	const ELEMENTS = getElements();
+
+	return isString( slug ) && isObject( ELEMENTS[( slug = slug.trim() )] ) ? elements[slug] : false;
 
 }

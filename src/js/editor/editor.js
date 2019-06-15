@@ -1,10 +1,10 @@
 /* Comet - Copyright (c) 2019 Blacklead */
 import { isArray, isObject, isString, isEmpty } from '../utils/is.js';
+import { parseId, parseJson } from '../utils/parse.js';
 import { components } from './components/index.js';
+import { getParameters } from '../utils/url.js';
 import GLOBAL from '../utils/global.js';
 import layout from '../utils/layout.js';
-import parse from '../utils/parse.js';
-import utils from '../utils/utils.js';
 import post_elements from './post.js';
 import node from '../dom/element.js';
 import AJAX from '../utils/ajax.js';
@@ -91,7 +91,7 @@ const CORE = {
 
     initialize: function( response ){
         const _default = [ 'post', 'settings', 'svgSets' ];
-        const data = parse.json( response );
+        const data = parseJson( response );
         var n = 0;
         var i, slug, tmp, post, metaData, frame;
 
@@ -135,8 +135,6 @@ const CORE = {
 
     }
 
-
-
 }; 
 
 (function( cometEditor ) {
@@ -149,7 +147,7 @@ const CORE = {
 
     WINDOW.Comet = Comet || {};
 
-    if( !( get = utils.getParameters() ) || !( 'post' in get ) || !( 'action' in get ) || !( 'comet' in get ) ){
+    if( !( get = getParameters() ) || !( 'post' in get ) || !( 'action' in get ) || !( 'comet' in get ) ){
         alert( __cometi18n.messages.error.failed );
         return false;
 
@@ -161,7 +159,7 @@ const CORE = {
 
     }
 
-    if( !( id1 = parse.id( get.post ) ) || !( id2 = parse.id( __cometdata.post_id ) ) || id1 !== id2 ){
+    if( !( id1 = parseId( get.post ) ) || !( id2 = parseId( __cometdata.post_id ) ) || id1 !== id2 ){
         alert( __cometi18n.messages.error.failed );
         return false;
 

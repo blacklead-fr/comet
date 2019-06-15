@@ -1,19 +1,76 @@
 import { isString, isObject, isNode } from '../../../utils/is.js';
+import { ClassName } from '../../../utils/className.js';
 import { frameset as getFrameset } from '../stored.js';
-import _global from '../../../utils/global.js';
+import Global from '../../../utils/global.js';
 import node from '../../../dom/element.js';
+
+const DOCUMENT = document;
+
+const SLUG = 'notifications';
+
+const BASE = 'comet-' + SLUG;
+
+const NOTE_CLASSNAME = ClassName( BASE );
+
+const CORE = {
+
+	classes: {
+		open: NOTE_CLASSNAME.modifier( 'open' ),
+		header: NOTE_CLASSNAME.element( 'header' ),
+		close: {
+			main: NOTE_CLASSNAME.element( 'close' ),
+			icon: NOTE_CLASSNAME.element( 'close__icon' ),
+			tooltip: NOTE_CLASSNAME.element( 'close__tooltip' )
+
+		},
+		list: NOTE_CLASSNAME.element( 'list' ),
+		note: {
+			main: NOTE_CLASSNAME.element( 'note' ),
+			text: NOTE_CLASSNAME.element( 'note__text' ),
+			remove: {
+				main: NOTE_CLASSNAME.element( 'note__remove' ),
+				icon: NOTE_CLASSNAME.element( 'note__remove__icon' ),
+				tooltip: NOTE_CLASSNAME.element( 'note__remove__tooltip' )
+			}
+
+		},
+		clear: NOTE_CLASSNAME.element( 'clear' )
+
+	},
+
+	removeNote: function( ev, ui ){
+		const notification = ui.parentNode;
+
+		ev.preventDefault();
+
+		if( notification === null || notification.parentNode === null ){
+			return;
+
+		}
+		notification.parentNode.removeChild( notification );
+
+	},
+
+	clearBoard: function( ev, ui, target ){
+		ev.preventDefault();
+
+		target.innerHTML = '';
+
+	}
+
+};
 
 export default function(){
 
-	const _d = document;
+	const FRAGMENT = DOCUMENT.createDocumentFragment();
 
-	const slug = 'notifications';
+	const NOTIFICATIONS = DOCUMENT.createElement( 'div' );
 
-	const frameset = getFrameset();
+	const FRAMESET = getFrameset();
 
-	const __global = _global();
+	const GLOBAL = Global();
 
-	const __data = {
+	const DATA = {
 		target: null,
 		open: false,
 		classes: [],
@@ -21,179 +78,125 @@ export default function(){
 
 	};
 
-	const __core = {
+	const EVENTS = {
 
-		createClass: function( name ){
-			const prefix = 'comet';
-			var tmp;
+		toggle: function( ev ){
+			var _target;
 
-			if( !isString( name ) ){
+			if( isObject( ev ) ){
+				ev.preventDefault();
+
+			}
+
+			if( !isNode( DATA.target ) ){
+				return false;
+
+			}
+			_target = node( DATA.target )
+
+			if( _target.hasClass( CORE.classes.open ) && DATA.open ){
+				_target.removeClass( CORE.classes.open );
+				DATA.open = false;
+				return;
+
+			}
+			_target.addClass( CORE.classes.open );
+			DATA.open = true;
+
+		},
+
+		destroy: function(){
+
+			if( DATA.target === null || DATA.target.parentNode === null ){
+				return false;
+
+			}
+			DATA.target.parentNode.removeChild( DATA.target );
+			GLOBAL.unset( SLUG );
+
+		},
+
+		add: function( note, status ){
+			var mainClass, notification, ninner, statusClass;
+
+			if( !isString( note ) ){
 				return false;
 
 			}
 
-			if( __data.classes.indexOf( tmp = prefix + '-' + name.trim() ) > -1 ){
-				return tmp;
+			switch( parseInt( status ) ){
+				case 100:
+				status = 'note';
+				break;
+				case 200:
+				status = 'success';
+				break;
+				case 300:
+				status = 'warning';
+				break;
+				default:
+				status = 'error';
 
 			}
-			__data.classes[__data.classes.length] = tmp;
-			return tmp;
+			statusClass = ClassName( CORE.classes.note.main ).modifier( status );
+			notification = DOCUMENT.createElement( 'div' );
+			notification.className = ClassName( CORE.classes.note.main ).combineWith( [ statusClass ] );
+
+			ninner = '<p class="' + CORE.classes.note.text + '">' + note + '</p>';
+			ninner += '<button class="' + CORE.classes.note.remove.main + '" aria-label="' + __cometi18n.ui.remove + '">';
+			ninner += '<span class="' + ClassName( CORE.classes.note.remove.icon ).combineWith( [ 'cico', 'cico-x' ] ) + '"></span>';
+			ninner += '<span class="' + CORE.classes.note.remove.tooltip + '">' + __cometi18n.ui.remove + '</span>';
+			ninner += '</button>';
+
+			notification.innerHTML = ninner;
+
+			DATA.notifications.appendChild( notification );
+
+			node( notification.lastChild ).on( 'click', CORE.removeNote );
+
+			EVENTS.toggle();
 
 		},
 
-		events: {
-
-			toggle: function( ev ){
-				const c_open = __core.createClass( slug + '--open' );
-				var _target;
-
-				if( isObject( ev ) ){
-					ev.preventDefault();
-
-				}
-
-				if( !isNode( __data.target ) ){
-					return false;
-
-				}
-				_target = node( __data.target )
-
-				if( _target.hasClass( c_open ) && __data.open ){
-					_target.removeClass( c_open );
-					__data.open = false;
-					return;
-
-				}
-				_target.addClass( c_open );
-				__data.open = true;
-
-			},
-
-			destroy: function(){
-
-				if( __data.target === null || __data.target.parentNode === null ){
-					return false;
-
-				}
-				__data.target.parentNode.removeChild( __data.target );
-				__global.unset( slug );
-
-			},
-
-			add: function( note, status ){
-				var mainClass, notification, inner;
-
-				if( !isString( note ) ){
-					return false;
-
-				}
-
-				switch( parseInt( status ) ){
-					case 100:
-					status = 'note';
-					break;
-					case 200:
-					status = 'success';
-					break;
-					case 300:
-					status = 'warning';
-					break;
-					default:
-					status = 'error';
-
-				}
-				mainClass = __core.createClass( slug + '__list__note' );
-				notification = _d.createElement( 'div' );
-				notification.className = mainClass + ' ' + mainClass + '--' + status;
-
-				inner = '<p class="' + mainClass + '__text">' + note + '</p>';
-				inner += '<button class="' + mainClass + '__remove" aria-label="' + __cometi18n.ui.remove + '">';
-				inner += '<span class="' + mainClass + '__remove__icon cico cico-x"></span>';
-				inner += '<span class="' + mainClass + '__remove__tooltip">' + __cometi18n.ui.remove + '</span>';
-				inner += '</button>';
-
-				notification.innerHTML = inner;
-
-				__data.notifications.appendChild( notification );
-
-				node( notification.lastChild ).on( 'click', __core.events.remove );
-
-				__core.events.toggle();
-
-			},
-
-			remove: function( ev, ui ){
-				const notification = ui.parentNode;
-				ev.preventDefault();
-
-				if( notification === null || notification.parentNode === null ){
-					return;
-
-				}
-				notification.parentNode.removeChild( notification );
-
-			},
-
-			clear: function( ev ){
-				ev.preventDefault();
-				__data.notifications.innerHTML = '';
-
-			}
-
-		}
-
 	};
 
-	const __rData = {
-		target: null,
-		toggle: __core.events.toggle,
-		destroy: __core.events.destroy,
-		add: __core.events.add
+	var inner;
 
-	};
-
-	if( !frameset ){
+	if( !FRAMESET ){
 		return false;
 
 	}
 
-	(function(){
-		const fragment = _d.createDocumentFragment();
-		const wrap = _d.createElement( 'div' );
-		const mainClass = __core.createClass( slug );
-		const buttonClass = __core.createClass( slug + '__close' );
-		var inner;
+	FRAGMENT.appendChild( NOTIFICATIONS );
 
-		fragment.appendChild( wrap );
+	inner = '<header class="' + CORE.classes.header + '">';
+	inner += '<h4>' + __cometi18n.ui.notifications + '</h4>';
+	inner += '<button class="' + CORE.classes.close.main + '">';
+	inner += '<span class="' + ClassName( CORE.classes.close.icon ).combineWith( [ 'cico', 'cico-x' ] ) + '"></span>';
+	inner += '<span class="' + CORE.classes.close.toggle + '">' + __cometi18n.ui.close + '</span>';
+	inner += '</button>';
+	inner += '<p>';
+	inner += '<button class="' + CORE.classes.clear + '">' + __cometi18n.ui.clearNx + '</button>';
+	inner += '</p>';
+	inner += '</header>';
+	inner += '<section class="' + CORE.classes.list + '"></section>';
 
-		inner = '<header class="' + mainClass + '__header">';
-		inner += '<h4>' + __cometi18n.ui.notifications + '</h4>';
-		inner += '<button class="' + buttonClass + '">';
-		inner += '<span class="' + buttonClass + '__icon cico cico-x"></span>';
-		inner += '<span class="' + buttonClass + '__tooltip">' + __cometi18n.ui.close + '</span>';
-		inner += '</button>';
-		inner += '<p>';
-		inner += '<button class="' + mainClass + '__clear">' + __cometi18n.ui.clearNx + '</button>';
-		inner += '</p>';
-		inner += '</header>';
-		inner += '<section class="' + mainClass + '__list"></section>';
-
-		wrap.className = mainClass;
-		wrap.innerHTML = inner;
+	NOTIFICATIONS.className = BASE;
+	NOTIFICATIONS.innerHTML = inner;
 
 
-		__data.target = wrap;
-		__rData.target = wrap;
-		__data.notifications = wrap.lastChild;
-		__global.set( slug, __rData, true );
+	DATA.target = NOTIFICATIONS;
+	DATA.notifications = NOTIFICATIONS.lastChild;
 
-		node( wrap.firstChild.children[1] ).on( 'click', __core.events.toggle );
-		node( wrap.firstChild.lastChild.lastChild ).on( 'click', __core.events.clear );
+	EVENTS.target = NOTIFICATIONS;
 
-		frameset.append( fragment );
+	GLOBAL.set( SLUG, EVENTS, true );
 
-	})();
+	node( NOTIFICATIONS.firstChild.children[1] ).on( 'click', EVENTS.toggle );
+	node( NOTIFICATIONS.firstChild.lastChild.lastChild ).on( 'click', CORE.clearBoard, DATA.notifications );
 
-	return __rData;
-	
+	FRAMESET.append( FRAGMENT );
+
+	return EVENTS;
+
 }

@@ -1,29 +1,36 @@
 import { isObject, isString, isEmpty, isNode } from '../../../utils/is.js';
 import { frameset as getFrameset } from '../stored.js';
-import _global from '../../../utils/global.js';
+import { encodeChars } from '../../../utils/fill.js';
+import Global from '../../../utils/global.js';
 import nodes from '../../../dom/elements.js';
-import utils from '../../../utils/utils.js';
 import node from '../../../dom/element.js';
+
+const DOCUMENT = document;
+
+const SLUG = 'generalSettings';
+
+const BASE = 'comet-general-settings';
+
+const GS_CLASSNAME = ClassName( BASE );
+
+const CORE = {
+
+	classes: {
+		form: GS_CLASSNAME.element( 'form' ),
+		close: GS_CLASSNAME.element( 'close' ),
+		open: GS_CLASSNAME.modifier( 'open' )
+
+	}
+
+};
 
 export default function(){
 
-	const _d = document;
+	const GLOBAL = Global();
 
-	const slug = 'generalSettings';
+	const FRAMESET = getFrameset();
 
-	const __global = _global();
-
-	const frameset = getFrameset();
-
-	const __classes = {
-		main: 'comet-general-settings',
-		form: 'comet-general-settings__form',
-		close: 'comet-general-settings__close',
-		open: 'comet-general-settings--open'
-
-	};
-
-	const __data = {
+	const DATA = {
 
 		target: null,
 
@@ -40,31 +47,31 @@ export default function(){
 
 			}
 
-			if( __data.target === null || !isNode( __data.target ) ){
+			if( DATA.target === null || !isNode( DATA.target ) ){
 				return;
 
 			}
-			n_target = node( __data.target );
+			n_target = node( DATA.target );
 
-			if( n_target.hasClass( __classes.open ) && __data.open ){
-				n_target.removeClass( __classes.open );
-				__data.open = false;
+			if( n_target.hasClass( CORE.classes.open ) && DATA.open ){
+				n_target.removeClass( CORE.classes.open );
+				DATA.open = false;
 				return;
 
 			}
-			n_target.addClass( __classes.open );
-			__data.open = true;
+			n_target.addClass( CORE.classes.open );
+			DATA.open = true;
 
 		},
 
 		destroy: function(){
 
-			if( __data.target === null || __data.target.parentNode === null ){
+			if( DATA.target === null || DATA.target.parentNode === null ){
 				return false;
 
 			}
-			__data.target.parentNode.removeChild( __data.target );
-			__global.unset( slug );
+			DATA.target.parentNode.removeChild( DATA.target );
+			GLOBAL.unset( SLUG );
 
 		},
 
@@ -74,7 +81,7 @@ export default function(){
 			const f_data = {};
 			var fields, field, a, index;
 
-			if( __data.form === null || ( fields = __data.form.elements ).length < 1 ){
+			if( DATA.form === null || ( fields = DATA.form.elements ).length < 1 ){
 				return f_data;
 
 			}
@@ -95,7 +102,7 @@ export default function(){
 					continue;
 
 				}
-				f_data[field.name] = utils.encode_chars( field.value );
+				f_data[field.name] = encodeChars( field.value );
 
 			}
 			return f_data;
@@ -106,22 +113,22 @@ export default function(){
 
 	var target, form;
 
-	if( !frameset || ( target = frameset.target.getElementsByClassName( __classes.main ) ).length < 1 ){
+	if( !FRAMESET || ( target = FRAMESET.target.getElementsByClassName( BASE ) ).length < 1 ){
 		return;
 
 	}
 	target = target[0];
-	__data.target = target;
+	DATA.target = target;
 
-	if( ( form = target.getElementsByClassName( __classes.form ) ).length < 1 ){
+	if( ( form = target.getElementsByClassName( CORE.classes.form ) ).length < 1 ){
 		return;
 
 	}
 	form = form[0];
-	__data.form = form;
-	nodes( target.getElementsByClassName( __classes.close ) ).on( 'click', __data.toggle );
-	__global.set( slug, __data, true );
+	DATA.form = form;
+	nodes( target.getElementsByClassName( CORE.classes.close ) ).on( 'click', DATA.toggle );
+	GLOBAL.set( SLUG, DATA, true );
 
-	return __data;
+	return DATA;
 	
 }

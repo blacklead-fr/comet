@@ -1,11 +1,11 @@
 import { isNode, isString, isObject, isFunction, isArray, isBool, isNumber } from '../../../utils/is.js';
 import { __numbers, __range, __gradient, __colorPicker, __icon, __image } from '../../../ui/index.js';
+import { sanitizeNumber } from '../../../utils/sanitize.js';
 import { ClassName } from '../../../utils/className.js';
-import sanitize from '../../../utils/sanitize.js';
-import utils from '../../../utils/utils.js';
+import { stripTags } from '../../../utils/fill.js';
+import update from '../../control/update.js';
 import nodes from '../../../dom/elements.js';
 import node from '../../../dom/element.js';
-import update from '../../update.js';
 
 const DOCUMENT = document;
 
@@ -177,7 +177,7 @@ const CORE = {
 
 				}
 				select += '<option value="' + v + '"' + ( v === data.value ? ' selected' : '' ) + '>';
-				select += utils.stripTags( values[v].toString() );
+				select += stripTags( values[v].toString() );
 				select += '</option>';
 
 			}
@@ -234,8 +234,8 @@ const CORE = {
 					extra
 					);
 
-				inner += '<span class="comet-icon ' + ( utils.stripTags( values[v].icon ) ).trim() + '"></span>';
-				inner += '<span class="comet-title">' + ( utils.stripTags( values[v].title, '<b><strong><i><span><u><ins>' ) ).trim() + '</span>';
+				inner += '<span class="comet-icon ' + ( stripTags( values[v].icon ) ).trim() + '"></span>';
+				inner += '<span class="comet-title">' + ( stripTags( values[v].title, '<b><strong><i><span><u><ins>' ) ).trim() + '</span>';
 				radio.innerHTML = inner;
 
 				FRAGMENT.appendChild( radio );
@@ -257,11 +257,11 @@ const CORE = {
 				data.value,
 				BClassName.combineWith( [ CORE.classes.variants.range ] ),
 				{
-					min: sanitize.number({ value: data.data.min, min: 0 }),
-					max: sanitize.number({ value: data.data.max, min: data.data.min }),
-					step: sanitize.number({ value: data.data.step, min: 0.01 }),
+					min: sanitizeNumber({ value: data.data.min, min: 0 }),
+					max: sanitizeNumber({ value: data.data.max, min: data.data.min }),
+					step: sanitizeNumber({ value: data.data.step, min: 0.01 }),
 					dataset: {
-						unit: isString( data.data.unit ) ? utils.stripTags( data.data.unit ) : '',
+						unit: isString( data.data.unit ) ? stripTags( data.data.unit ) : '',
 					}
 				}
 				);
@@ -292,7 +292,7 @@ const CORE = {
 				);
 
 			if( isString( data.data.unit ) ){
-				inner += '<span class="' + CORE.classes.unit + '">' + utils.stripTags( data.data.unit ) + '</span>';
+				inner += '<span class="' + CORE.classes.unit + '">' + stripTags( data.data.unit ) + '</span>';
 
 			}
 			data.control.innerHTML = inner;

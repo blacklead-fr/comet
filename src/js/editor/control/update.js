@@ -1,11 +1,10 @@
-import { isString, isNode, isObject, isEmpty } from '../../utils/is.js';
+import { isString, isNode, isObject, isEmpty, isNodeName } from '../../utils/is.js';
+import { inArray, stripTags, stripOnly, encodeChars } from '../../utils/fill.js';
+import { parseId, parseType } from '../../utils/parse.js';
 import createBackground from './background.js';
 import layout from '../../utils/layout.js';
 import resizeColumns from './columns.js';
-import parse from '../../utils/parse.js';
-import utils from '../../utils/utils.js';
 import node from '../../dom/element.js';
-import { isNodeName } from './fill.js';
 import { TARGET } from '../target.js';
 import { DATA } from '../data.js';
 
@@ -17,9 +16,9 @@ export default function( ui ){
 
 	const data = {};
 
-	const CURRENT_ID = parse.id( TARGET.id() );
+	const CURRENT_ID = parseId( TARGET.id() );
 
-	const CURRENT_TYPE = parse.type( TARGET.type() );
+	const CURRENT_TYPE = parseType( TARGET.type() );
 
 	const CURRENT_NODE = TARGET.node();
 
@@ -33,12 +32,12 @@ export default function( ui ){
 
 	}
 
-	if( !isString( ui.name ) || isEmpty( slug = ( utils.stripTags( ui.name ) ).trim() ) ){
+	if( !isString( ui.name ) || isEmpty( slug = ( stripTags( ui.name ) ).trim() ) ){
 		return false;
 
 	}
 	uidata = isObject( uidata = DATA.get( CURRENT_ID, CURRENT_TYPE ) ) ? uidata : {};
-	data[slug] = utils.encode_chars( utils.stripOnly( ui.value, '<script><link><body><html><meta>' ) );
+	data[slug] = encodeChars( stripOnly( ui.value, '<script><link><body><html><meta>' ) );
 
 	if( index === 2 && ui.type ){
 
@@ -88,7 +87,7 @@ export default function( ui ){
 
 		case 'elements':
 
-		if( [ 'ITEMS', 'items' ].indexOf( TARGET.state() ) > -1 && ( _i_id = parse.id( TARGET.item() ) ) ){
+		if( inArray( [ 'ITEMS', 'items' ], TARGET.state() ) && ( _i_id = parseId( TARGET.item() ) ) ){
 			DATA.set( _i_id, 'items', data );
 
 		}else{

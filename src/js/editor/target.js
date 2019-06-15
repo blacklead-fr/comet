@@ -1,6 +1,7 @@
 import { isString, isObject, isEmpty } from '../utils/is.js';
+import { parseId } from '../utils/parse.js';
+import { inArray } from '../utils/fill.js';
 import GLOBAL from '../utils/global.js';
-import parse from '../utils/parse.js';
 
 const SLUG = 'target';
 
@@ -18,7 +19,7 @@ const CORE = {
 
 		for( key in data ){
 
-			if( CORE.properties.indexOf( key ) < 0 ){
+			if( !inArray( CORE.properties, key ) ){
 				return false;
 
 			}
@@ -91,7 +92,7 @@ export const TARGET = {
 		const target = TARGET.get();
 		var id;
 
-		return ( !( id = parse.id( target.id ) ) || id < 0 ? false : id );
+		return ( !( id = parseId( target.id ) ) || id < 0 ? false : id );
 
 	},
 
@@ -114,7 +115,7 @@ export const TARGET = {
 		const target = TARGET.get();
 		var id;
 
-		return ( !( id = parse.id( target.item ) ) || id < 0 ? false : id );
+		return ( !( id = parseId( target.item ) ) || id < 0 ? false : id );
 
 	},
 

@@ -1,21 +1,21 @@
 import { generalSettings as GeneralSettings, notifications as Notifications } from '../stored.js';
+import { encodeChars, jsonEncode, stripTags, escUrl } from '../../../utils/fill.js';
 import { isBool, isNode, isString, isEmpty, isObject } from '../../../utils/is.js';
-import sanitize from '../../../utils/sanitize.js';
+import { sanitizeContent } from '../../../utils/sanitize.js';
+import { parseId } from '../../../utils/parse.js';
 import message from '../../../utils/message.js';
-import parse from '../../../utils/parse.js';
 import modal from '../../../utils/modal.js';
-import utils from '../../../utils/utils.js';
 import node from '../../../dom/element.js';
 import ajax from '../../../utils/ajax.js';
-import __data from '../../data.js';
+import { DATA } from '../../data.js';
+
+const DOCUMENT = document;
 
 export default {
 
 	save: function( ev, ui ){
 
 		var is_saving = false;
-
-		const _d = document;
 
 		const __core = {
 
@@ -43,20 +43,20 @@ export default {
 		(function(){
 			var id, e_data;
 
-			if( !( id = parse.id( __cometdata.post_id ) ) || is_saving ){
+			if( !( id = parseId( __cometdata.post_id ) ) || is_saving ){
 				return;
 
 			}
 			is_saving = true;
 			__core.toggle( ui, true );
 			e_data = GeneralSettings().getFormData();
-			e_data.meta = __data().getData();
-			e_data.post_content = sanitize.content();
+			e_data.meta = DATA.getData();
+			e_data.post_content = sanitizeContent();
 
 			ajax({
 				do: 'save',
 				id: id,
-				data: utils.json_encode( e_data )
+				data: jsonEncode( e_data )
 
 			}).done(function( r ){
 				var code = 400;
@@ -107,7 +107,7 @@ export default {
 			},
 
 			save: function( ev, ui, edata ){
-				const metaData = __data().getData();
+				const metaData = DATA.getData();
 				var m = '';
 				var _message, val, pp;
 				
@@ -130,7 +130,7 @@ export default {
 
 				}
 
-				if( !isString( val = edata.input.value ) || isEmpty( val = ( utils.stripTags( val ) ).trim() ) ){
+				if( !isString( val = edata.input.value ) || isEmpty( val = ( stripTags( val ) ).trim() ) ){
 					m += __cometi18n.messages.error.title;
 
 				}
@@ -151,10 +151,10 @@ export default {
 
 				ajax({
 					do: 'save',
-					data: utils.json_encode({
-						post_title: utils.encode_chars( val ),
+					data: jsonEncode({
+						post_title: encodeChars( val ),
 						meta: metaData,
-						post_content: sanitize.content(),
+						post_content: sanitizeContent(),
 						post_type: 'comet_mytemplates',
 						post_status: 'publish'
 
@@ -187,10 +187,10 @@ export default {
 			var mod = false;
 			var content, inner, form;
 
-			content = _d.createElement( 'div' );
+			content = DOCUMENT.createElement( 'div' );
 			content.className = 'comet-savebox comet-wrapper';
 
-			inner = '<p>' + __cometi18n.messages.stemplate + ' <a href="' + utils.escUrl( 'https://blacklead.fr/support/docs/comet/my-templates/' ) + '" target="_blank">' + __cometi18n.messages.rmtemplate + '</a>.</p>';
+			inner = '<p>' + __cometi18n.messages.stemplate + ' <a href="' + escUrl( 'https://blacklead.fr/support/docs/comet/my-templates/' ) + '" target="_blank">' + __cometi18n.messages.rmtemplate + '</a>.</p>';
 			inner += '<div class="comet-saveform">';
 			inner += '<input type="text" class="comet-input comet-ui" placeholder="' + __cometi18n.ui.tempname + '" />';
 			inner += '<button class="comet-button comet-buttonPrimary" aria-label="' + __cometi18n.ui.save + '">' + __cometi18n.ui.save + '</button>';

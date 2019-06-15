@@ -1,9 +1,9 @@
+import { parseDataset, parseId } from '../../../utils/parse.js';
 import { isNode, isFunction } from '../../../utils/is.js';
 import { shortcut as getShortcut } from '../stored.js';
-import parse from '../../../utils/parse.js';
 import node from '../../../dom/element.js';
 import { CORE } from './core.js';
-import __id from '../../id.js';
+import { ID } from '../../id.js';
 
 const TYPES = {
 
@@ -21,7 +21,7 @@ const TYPES = {
 				const sectionNode = CORE.getParent( targetNode, classes.section );
 				var id;
 
-				if( !isNode( sectionNode ) || !( id = parse.dataset( sectionNode, 'id' ) ) || !parse.id( id ) ){
+				if( !isNode( sectionNode ) || !( id = parseDataset( sectionNode, 'id' ) ) || !parseId( id ) ){
 					return;
 
 				}
@@ -32,21 +32,20 @@ const TYPES = {
 			},
 
 			stop: function( e, ui, sectionNode ){
-				const id_ = __id();
 				var id, t, closest;
 
 				sectionNode.removeAttribute( 'style' );
 
-				if( !( id = parse.dataset( sectionNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+				if( !( id = parseDataset( sectionNode, 'id' ) ) || !( id = parseId( id ) ) ){
 					return;
 
 				}
 				t = 'last';
 				closest = node( ui ).next( '.cpb-section' );
-				t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+				t = isNode( closest ) && ( t = parseDataset( closest, 'id' ) ) && ( t = parseId( t ) ) ? t : 'last';
 
-				id_.remove( id, 'sections', id );
-				id_.insert( id, 'sections', id, t );
+				ID.remove( id, 'sections', id );
+				ID.insert( id, 'sections', id, t );
 				ui.parentNode.replaceChild( sectionNode , ui );
 
 			}
@@ -68,7 +67,7 @@ const TYPES = {
 				const rowNode = CORE.getParent( targetNode, classes.row );
 				var id;
 
-				if( !isNode( rowNode ) || !( id = parse.dataset( rowNode, 'id' ) ) || !parse.id( id ) ){
+				if( !isNode( rowNode ) || !( id = parseDataset( rowNode, 'id' ) ) || !parseId( id ) ){
 					return;
 
 				}
@@ -78,28 +77,27 @@ const TYPES = {
 
 			},
 			stop: function( e, ui, rowNode ){
-				const id_ = __id();
 				var id, sid, nsid, t, closest;
 
-				if( !isNode( rowNode ) || !( id = parse.dataset( rowNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+				if( !isNode( rowNode ) || !( id = parseDataset( rowNode, 'id' ) ) || !( id = parseId( id ) ) ){
 					return;
 
 				}
-				if( !( sid = parse.dataset( CORE.getParent( rowNode, classes.section ), 'id' ) ) || !( sid = parse.id( sid ) ) ){
+				if( !( sid = parseDataset( CORE.getParent( rowNode, classes.section ), 'id' ) ) || !( sid = parseId( sid ) ) ){
 					return;
 
 				}
 
-				if( !( nsid = parse.dataset( CORE.getParent( ui, classes.section ), 'id' ) ) || !( nsid = parse.id( nsid ) ) ){
+				if( !( nsid = parseDataset( CORE.getParent( ui, classes.section ), 'id' ) ) || !( nsid = parseId( nsid ) ) ){
 					return;
 
 				}
 				closest = node( ui ).next( '.cpb-row' );
-				t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+				t = isNode( closest ) && ( t = parseDataset( closest, 'id' ) ) && ( t = parseId( t ) ) ? t : 'last';
 
 				rowNode.removeAttribute( 'style' );
-				id_.remove( id, 'rows', sid );
-				id_.insert( id, 'rows', nsid, t );
+				ID.remove( id, 'rows', sid );
+				ID.insert( id, 'rows', nsid, t );
 				ui.parentNode.replaceChild( rowNode , ui );
 
 			}
@@ -122,7 +120,7 @@ const TYPES = {
 				const columnNode = CORE.getParent( targetNode, classes.column );
 				var id;
 
-				if( !isNode( columnNode ) || !( id = parse.dataset( columnNode, 'id' ) ) || !( parse.id( id ) ) ){
+				if( !isNode( columnNode ) || !( id = parseDataset( columnNode, 'id' ) ) || !( parseId( id ) ) ){
 					return;
 
 				}
@@ -132,29 +130,28 @@ const TYPES = {
 
 			},
 			stop: function( e, ui, columnNode ){
-				const id_ = __id();
 				var containerNode, uiContainerNode, id, rid, nrid, t, closest;
 
-				if( !isNode( columnNode ) || !( id = parse.dataset( columnNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+				if( !isNode( columnNode ) || !( id = parseDataset( columnNode, 'id' ) ) || !( id = parseId( id ) ) ){
 					return;
 
 				}
 
-				if( ( containerNode = columnNode.parentNode ) === null || !( rid = parse.dataset( containerNode.parentNode, 'id' ) ) || !( rid = parse.id( rid ) ) ){
+				if( ( containerNode = columnNode.parentNode ) === null || !( rid = parseDataset( containerNode.parentNode, 'id' ) ) || !( rid = parseId( rid ) ) ){
 					return;
 
 				}
 
-				if( !__data().get( rid, 'rows' ) || ( uiContainerNode = ui.parentNode ) === null || !( nrid = parse.dataset( uiContainerNode.parentNode, 'id' ) ) || !( nrid = parse.id( nrid ) ) ){
+				if( !__data().get( rid, 'rows' ) || ( uiContainerNode = ui.parentNode ) === null || !( nrid = parseDataset( uiContainerNode.parentNode, 'id' ) ) || !( nrid = parseId( nrid ) ) ){
 					return;
 
 				}
 				closest = node( ui ).next( '.cpb-column' );
-				t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+				t = isNode( closest ) && ( t = parseDataset( closest, 'id' ) ) && ( t = parseId( t ) ) ? t : 'last';
 
 				columnNode.removeAttribute( 'style' );
-				id_.remove( id, 'columns', rid );
-				id_.insert( id, 'columns', nrid, t );
+				ID.remove( id, 'columns', rid );
+				ID.insert( id, 'columns', nrid, t );
 				uiContainerNode.replaceChild( columnNode , ui );
 
 				if( rid !== nrid ){
@@ -182,7 +179,7 @@ const TYPES = {
 				const elementNode = CORE.getParent( targetNode, classes.element );
 				var id;
 
-				if( !isNode( elementNode ) || !( id = parse.dataset( elementNode, 'id' ) ) || !parse.id( id ) ){
+				if( !isNode( elementNode ) || !( id = parseDataset( elementNode, 'id' ) ) || !parseId( id ) ){
 					return;
 
 				}
@@ -192,29 +189,28 @@ const TYPES = {
 
 			},
 			stop: function( e, ui, elementNode ){
-				const id_ = __id();
 				var id, cid, ncid, t, closest;
 
-				if( !isNode( elementNode ) || !( id = parse.dataset( elementNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+				if( !isNode( elementNode ) || !( id = parseDataset( elementNode, 'id' ) ) || !( id = parseId( id ) ) ){
 					return;
 
 				}
 
-				if( !( cid = parse.dataset( CORE.getParent( elementNode, classes.column ), 'id' ) ) || !( cid = parse.id( cid ) ) ){
+				if( !( cid = parseDataset( CORE.getParent( elementNode, classes.column ), 'id' ) ) || !( cid = parseId( cid ) ) ){
 					return;
 
 				}
 
-				if( !__data().get( cid, 'columns' ) || !( ncid = parse.dataset( CORE.getParent( ui, classes.column ), 'id' ) ) || !( ncid = parse.id( ncid ) ) ){
+				if( !__data().get( cid, 'columns' ) || !( ncid = parseDataset( CORE.getParent( ui, classes.column ), 'id' ) ) || !( ncid = parseId( ncid ) ) ){
 					return;
 
 				}
 				closest = node( ui ).next( '.cpb-element' );
-				t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+				t = isNode( closest ) && ( t = parseDataset( closest, 'id' ) ) && ( t = parseId( t ) ) ? t : 'last';
 
 				elementNode.removeAttribute( 'style' );
-				id_.remove( id, 'elements', cid );
-				id_.insert( id, 'elements', ncid, t );
+				ID.remove( id, 'elements', cid );
+				ID.insert( id, 'elements', ncid, t );
 				ui.parentNode.replaceChild( elementNode , ui );
 
 			}

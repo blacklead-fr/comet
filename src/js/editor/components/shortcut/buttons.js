@@ -1,11 +1,10 @@
 import { isNode, isObject, isString, isEmpty,isFunction } from '../../../utils/is.js';
-import { shortcut as getShortcut } from '../stored.js';
-import utils from '../../../utils/utils.js';
-import parse from '../../../utils/parse.js';
+import { shortcut as getShortcut, getSettingsFrom, getElement } from '../stored.js';
+import { parseId, parseDataset } from '../../../utils/parse.js';
 import node from '../../../dom/element.js';
+import { TARGET } from '../../target.js';
 import panel from '../panel/index.js';
-import TARGET from '../../target.js';
-import DATA from '../../data.js';
+import { DATA } from '../../data.js';
 import { CORE } from './core.js';
 
 const TYPES = {
@@ -13,10 +12,9 @@ const TYPES = {
 	section: function( data ){
 		const type = 'sections';
 		const targetNode = CORE.getParent( data.target, 'cpb-section' );
-		const Data = DATA();
 		var id, nid, sdata, ret;
 
-		if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+		if( !targetNode || !( id = parseDataset( targetNode, 'id' ) ) || !( id = parseId( id ) ) ){
 			return false;
 
 		}
@@ -25,9 +23,9 @@ const TYPES = {
 
 			case 'edit':
 
-			sdata = utils.getSettingsFrom( 'section' );
+			sdata = getSettingsFrom( 'section' );
 
-			TARGET().set({
+			TARGET.set({
 				id: id,
 				type: type,
 				node: targetNode
@@ -37,20 +35,20 @@ const TYPES = {
 				title: __cometi18n.options.section.edit,
 				data: {
 					tabs: sdata,
-					current: Data.get( id, type )
+					current: DATA.get( id, type )
 				}
 
 			};
 
 			case 'del':
 
-			Data.remove( id, type );
+			DATA.remove( id, type );
 			node( targetNode ).remove();
 			return true;
 
 			case 'dup':
 
-			if( !( nid = Data.clone( id, type ) ) || !( ret = layout( Data.getData() ).section( nid ) ) ){
+			if( !( nid = DATA.clone( id, type ) ) || !( ret = layout( DATA.getData() ).section( nid ) ) ){
 				return false;
 
 			}
@@ -67,10 +65,9 @@ const TYPES = {
 	row: function( data ){
 		const type = 'rows';
 		const targetNode = CORE.getParent( data.target, 'cpb-row' );
-		const Data = DATA();
 		var id, parentNode, pid, nid, rdata, ret;
 
-		if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+		if( !targetNode || !( id = parseDataset( targetNode, 'id' ) ) || !( id = parseId( id ) ) ){
 			return false;
 
 		}
@@ -79,9 +76,9 @@ const TYPES = {
 
 			case 'edit':
 
-			rdata = utils.getSettingsFrom( 'row' );
+			rdata = getSettingsFrom( 'row' );
 
-			TARGET().set({
+			TARGET.set({
 				id: id,
 				type: type,
 				node: targetNode
@@ -91,28 +88,28 @@ const TYPES = {
 				title: __cometi18n.options.row.edit,
 				data: {
 					tabs: rdata,
-					current: Data.get( id, type )
+					current: DATA.get( id, type )
 				}
 			};
 
 			case 'del':
 
-			if( !( parentNode = CORE.getParent( targetNode, 'cpb-section' ) ) || !( pid = parse.dataset( parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) ){
+			if( !( parentNode = CORE.getParent( targetNode, 'cpb-section' ) ) || !( pid = parseDataset( parentNode, 'id' ) ) || !( pid = parseId( pid ) ) ){
 				return false;
 
 			}
-			Data.remove( id, type, pid );
+			DATA.remove( id, type, pid );
 			node( targetNode ).remove();
 			return true;
 
 			case 'dup':
 
-			if( !( parentNode = CORE.getParent( targetNode, 'cpb-section' ) ) || !( pid = parse.dataset( parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) ){
+			if( !( parentNode = CORE.getParent( targetNode, 'cpb-section' ) ) || !( pid = parseDataset( parentNode, 'id' ) ) || !( pid = parseId( pid ) ) ){
 				return false;
 
 			}
 
-			if( !( nid = Data.clone( id, type, pid ) ) || !( ret = layout( Data.getData() ).row( nid ) ) ){
+			if( !( nid = DATA.clone( id, type, pid ) ) || !( ret = layout( DATA.getData() ).row( nid ) ) ){
 				return false;
 
 			}
@@ -129,10 +126,9 @@ const TYPES = {
 	column: function( data ){
 		const type = 'columns';
 		const targetNode = CORE.getParent( data.target, 'cpb-column' );
-		const Data = DATA();
 		var id, parentNode, pid, nid, cdata, ret;
 
-		if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+		if( !targetNode || !( id = parseDataset( targetNode, 'id' ) ) || !( id = parseId( id ) ) ){
 			return false;
 
 		}
@@ -141,9 +137,9 @@ const TYPES = {
 
 			case 'edit':
 
-			cdata = utils.getSettingsFrom( 'column' );
+			cdata = getSettingsFrom( 'column' );
 
-			TARGET().set({
+			TARGET.set({
 				id: id,
 				type: type,
 				node: targetNode
@@ -153,30 +149,30 @@ const TYPES = {
 				title: __cometi18n.options.column.edit,
 				data: {
 					tabs: cdata,
-					current: Data.get( id, type ) 
+					current: DATA.get( id, type ) 
 				}
 			};
 
 			case 'del':
 
-			if( !( parentNode = CORE.getParent( targetNode, 'cpb-row' ) ) || !( pid = parse.dataset( parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) ){
+			if( !( parentNode = CORE.getParent( targetNode, 'cpb-row' ) ) || !( pid = parseDataset( parentNode, 'id' ) ) || !( pid = parseId( pid ) ) ){
 				return false;
 
 			}
 			parentNode = targetNode.parentNode;
-			Data.remove( id, type, pid );
+			DATA.remove( id, type, pid );
 			node( targetNode ).remove();
 			redefine.columns( parentNode );
 			return true;
 
 			case 'dup':
 
-			if( !( parentNode = CORE.getParent( targetNode, 'cpb-row' ) ) || !( pid = parse.dataset( parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) ){
+			if( !( parentNode = CORE.getParent( targetNode, 'cpb-row' ) ) || !( pid = parseDataset( parentNode, 'id' ) ) || !( pid = parseId( pid ) ) ){
 				return false;
 
 			}
 
-			if( !( nid = Data.clone( id, type, pid ) ) || !( ret = layout( Data.getData() ).column( nid ) ) ){
+			if( !( nid = DATA.clone( id, type, pid ) ) || !( ret = layout( DATA.getData() ).column( nid ) ) ){
 				return false;
 
 			}
@@ -194,10 +190,9 @@ const TYPES = {
 	element: function( data ){
 		const type = 'elements';
 		const targetNode = CORE.getParent( data.target, 'cpb-element' );
-		const Data = DATA();
 		var id, parentNode, pid, nid, _type, tmp, edata, ret;
 
-		if( !targetNode || !( id = parse.dataset( targetNode, 'id' ) ) || !( id = parse.id( id ) ) ){
+		if( !targetNode || !( id = parseDataset( targetNode, 'id' ) ) || !( id = parseId( id ) ) ){
 			return false;
 
 		}
@@ -206,17 +201,17 @@ const TYPES = {
 
 			case 'edit':
 
-			if( !isObject( tmp = Data.get( id, type ) ) || !isString( _type = tmp._type ) || isEmpty( _type ) ){
+			if( !isObject( tmp = DATA.get( id, type ) ) || !isString( _type = tmp._type ) || isEmpty( _type ) ){
 				return false;
 
 			}
 
-			if( !isObject( edata = utils.getElement( _type ) ) || !isObject( edata.tabs ) ){
+			if( !isObject( edata = getElement( _type ) ) || !isObject( edata.tabs ) ){
 				return false;
 
 			}
 
-			TARGET().set({
+			TARGET.set({
 				id: id,
 				type: type,
 				node: targetNode
@@ -232,22 +227,22 @@ const TYPES = {
 
 			case 'del':
 
-			if( !( parentNode = CORE.getParent( targetNode, 'cpb-column' ) ) || !( pid = parse.dataset( parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) ){
+			if( !( parentNode = CORE.getParent( targetNode, 'cpb-column' ) ) || !( pid = parseDataset( parentNode, 'id' ) ) || !( pid = parseId( pid ) ) ){
 				return false;
 
 			}
-			Data.remove( id, type, pid );
+			DATA.remove( id, type, pid );
 			node( targetNode ).remove();
 			return true;
 
 			case 'dup':
 
-			if( !( parentNode = CORE.getParent( targetNode, 'cpb-column' ) ) || !( pid = parse.dataset( parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) ){
+			if( !( parentNode = CORE.getParent( targetNode, 'cpb-column' ) ) || !( pid = parseDataset( parentNode, 'id' ) ) || !( pid = parseId( pid ) ) ){
 				return false;
 
 			}
 
-			if( !( nid = Data.clone( id, type, pid ) ) || !( ret = layout( Data.getData() ).element( nid ) ) ){
+			if( !( nid = DATA.clone( id, type, pid ) ) || !( ret = layout( DATA.getData() ).element( nid ) ) ){
 				console.log( ret );
 				return false;
 
@@ -295,7 +290,7 @@ export function onButtonsClick( event, ui, data ){
 		data: get.data,
 		close: {
 			do: function(){
-				TARGET().reset();
+				TARGET.reset();
 			}
 		}
 

@@ -1,3 +1,4 @@
+import { inArray } from '../../../utils/fill.js';
 import { isNode } from '../../../utils/is.js';
 import node from '../../../dom/element.js';
 
@@ -21,12 +22,12 @@ export const CORE = {
     },
 
     isRoleDefined: function( role ){
-        return isString( role ) && ROLES.indexOf( role ) > -1;
+        return inArray( ROLES, role );
 
     },
 
     isTypeDefined: function( type ){
-        return isString( type ) && TYPES.indexOf( type ) > -1;
+        return inArray( TYPES, type );
 
     },
 

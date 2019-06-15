@@ -1,7 +1,8 @@
+import { parseJson, parseId, parseType, parseIds } from '../utils/parse.js';
 import { isObject, isArray, isEmpty, isString } from '../utils/is.js';
+import { getElement } from './components/stored.js';
+import { extend } from '../utils/fill.js';
 import GLOBAL from '../utils/global.js';
-import parse from '../utils/parse.js';
-import utils from '../utils/utils.js';
 import { ID } from './id.js';
 
 const CORE = {
@@ -20,13 +21,13 @@ const CORE = {
 
 		}
 
-		if( !isArray( ( ids = parse.ids( metaData[type][id][_children], 'array' ) ) ) || ids.lenght < 1 ){
+		if( !isArray( ( ids = parseIds( metaData[type][id][_children], 'array' ) ) ) || ids.lenght < 1 ){
 			return;
 
 		}
 		for( a in ids ){
 
-			if( !( cid = parse.id( ids[a] ) ) || !( cid in metaData[children] ) ){
+			if( !( cid = parseId( ids[a] ) ) || !( cid in metaData[children] ) ){
 				continue;
 
 			}
@@ -60,20 +61,20 @@ export const DATA = {
 	hasType: function( type ){
 		const metaData = DATA.getData();
 
-		return ( !isObject( metaData ) || !( type = parse.type( type ) ) || !isObject( metaData[type] ) ? false : type );
+		return ( !isObject( metaData ) || !( type = parseType( type ) ) || !isObject( metaData[type] ) ? false : type );
 
 	},
 
 	hasId: function( type, id ){
 		const metaData = DATA.getData();
 
-		return ( !( type = DATA.hasType( type ) ) || !( id = parse.id( id ) ) || !( id in metaData[type] ) ? false : id );
+		return ( !( type = DATA.hasType( type ) ) || !( id = parseId( id ) ) || !( id in metaData[type] ) ? false : id );
 
 	},
 
 	getParent: function( type ){
 
-		switch( type = parse.type( type ) ){
+		switch( type = parseType( type ) ){
 			case 'rows':
 			case 'sections':
 			return 'sections';
@@ -95,7 +96,7 @@ export const DATA = {
 
 	getChild: function( type ){
 
-		switch( type = parse.type( type ) ){
+		switch( type = parseType( type ) ){
 			case 'sections':
 			return 'rows';
 
@@ -118,7 +119,7 @@ export const DATA = {
 		var metaData = DATA.getData();
 		var data, id, st;
 
-		if( ( pid = parse.id( pid ) ) === false || !isString( type ) || isEmpty( type ) ){
+		if( ( pid = parseId( pid ) ) === false || !isString( type ) || isEmpty( type ) ){
 			return false;
 
 		}
@@ -149,7 +150,7 @@ export const DATA = {
 
 			}
 
-			if( !isString( st = metaData.elements[pid]._type ) || !isObject( st = utils.getElement( st ) ) ){
+			if( !isString( st = metaData.elements[pid]._type ) || !isObject( st = getElement( st ) ) ){
 				return false;
 
 			}
@@ -163,7 +164,7 @@ export const DATA = {
 
 			default:
 
-			if( !isObject( data = utils.getElement( type ) ) || !isObject( data.tabs ) ){
+			if( !isObject( data = getElement( type ) ) || !isObject( data.tabs ) ){
 				return false;
 
 			}
@@ -189,7 +190,7 @@ export const DATA = {
 			metaData[type][id] = {};
 
 		}
-		metaData[type][id] = utils.extend( {}, dd );
+		metaData[type][id] = extend( {}, dd );
 		DATA.setData( metaData );
 		return id;
 
@@ -198,7 +199,7 @@ export const DATA = {
 	insert: function( id, type, data ){
 		var metaData = DATA.getData();
 
-		if( !( type = parse.type( type ) ) || !( id = parse.id( id ) ) ){
+		if( !( type = parseType( type ) ) || !( id = parseId( id ) ) ){
 			return false;
 
 		}
@@ -217,7 +218,7 @@ export const DATA = {
 			metaData[type][id] = {};
 
 		}
-		metaData[type][id] = utils.extend( {}, data );
+		metaData[type][id] = extend( {}, data );
 		DATA.setData( metaData );
 		return metaData[type][id];
 
@@ -227,7 +228,7 @@ export const DATA = {
 		var metaData = DATA.getData();
 		var a;
 
-		if( !( type = DATA.hasType( type ) ) || !( id = parse.id( id ) ) || !isObject( data ) ){
+		if( !( type = DATA.hasType( type ) ) || !( id = parseId( id ) ) || !isObject( data ) ){
 			return false;
 
 		}
@@ -249,14 +250,14 @@ export const DATA = {
 	get: function( id, type ){
 		const metaData = DATA.getData();
 
-		return ( !( id = parse.id( id ) ) || !( type = this.hasType( type ) ) || !isObject( metaData[type][id] ) ? false : metaData[type][id] );
+		return ( !( id = parseId( id ) ) || !( type = this.hasType( type ) ) || !isObject( metaData[type][id] ) ? false : metaData[type][id] );
 
 	},
 
 	remove: function( id, type, pid ){
 		const metaData = DATA.getData();
 
-		if( !( id = parse.id( id ) ) || !( type = DATA.hasType( type ) ) || !( id in metaData[type] ) ){
+		if( !( id = parseId( id ) ) || !( type = DATA.hasType( type ) ) || !( id in metaData[type] ) ){
 			return false;
 
 		}
@@ -273,7 +274,7 @@ export const DATA = {
 		const metaData = DATA.getData();
 		var children, _children;
 
-		if( !( id = DATA.hasId( type, id ) ) || !( type = parse.type( type ) ) || !( children = DATA.getChild( type ) ) ){
+		if( !( id = DATA.hasId( type, id ) ) || !( type = parseType( type ) ) || !( children = DATA.getChild( type ) ) ){
 			return false;
 
 		}
@@ -289,9 +290,9 @@ export const DATA = {
 		var tmp = {};
 		var children, _children, cid, ids, nid, nnid, i;
 
-		pid = pid && ( pid = parse.id( pid ) ) ? pid : 0;
+		pid = pid && ( pid = parseId( pid ) ) ? pid : 0;
 
-		if( !( id = parse.id( id ) ) || !( type = DATA.hasType( type ) ) || !( id in metaData[type] ) ){
+		if( !( id = parseId( id ) ) || !( type = DATA.hasType( type ) ) || !( id in metaData[type] ) ){
 			return false;
 
 		}
@@ -323,14 +324,14 @@ export const DATA = {
 
 		}
 
-		if( !isArray( ids = parse.ids( metaData[type][id][_children], 'array' ) ) || ids.lenght < 1 ){
+		if( !isArray( ids = parseIds( metaData[type][id][_children], 'array' ) ) || ids.lenght < 1 ){
 			return nid;
 
 		}
 
 		for( i in ids ){
 
-			if( !( cid = parse.id( ids[i] ) ) || !isObject( metaData[children][cid] ) || !( nnid = DATA.clone( cid, children ) ) ){
+			if( !( cid = parseId( ids[i] ) ) || !isObject( metaData[children][cid] ) || !( nnid = DATA.clone( cid, children ) ) ){
 				continue;
 
 			}

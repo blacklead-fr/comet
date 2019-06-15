@@ -1,39 +1,37 @@
 /* Comet - Copyright (c) 2019 Blacklead */
 
-import __global from './global.js';
-import parse from './parse.js';
-import utils from './utils.js';
-import ajax from './ajax.js';
+import { parseId, parseDataset, parseJson } from './parse.js';
+import { isObject, isBool } from './is.js';
+import Global from './global.js';
 import layout from './layout.js';
+import AJAX from './ajax.js';
 
 /* global document, window, Comet, __cometdata */
 
 'use strict';
 
-(function( cometView ) {
+const CORE = {
 
-	cometView( window, document );
+	document: null,
 
-}(function( _w, _d ){
+	window: null,
 
-	const g_ = __global();
+	capture: function( className ){
 
-	const capture = function( className ){
+		return CORE.document.getElementsByClassName( className );
 
-		return _d.getElementsByClassName( className );
+	},
 
-	};
-
-	const parser = function( data, nodes, type ){
-		const is_element = ( type === 'element' );
+	parser: function( data, nodes, type ){
+		const isElement = ( type === 'element' );
 		var i, id, a, _layout;
 
-		if( !nodes || !nodes.length || nodes.length < 1 ){
+		if( !nodes || nodes.length < 1 ){
 			return;
 
 		}
 
-		if( is_element ){
+		if( isElement ){
 			_layout = layout( data, false );
 
 		}else{
@@ -43,15 +41,15 @@ import layout from './layout.js';
 
 		for( i = 0; i < nodes.length; i++ ){
 
-			if( !( id = parse.dataset( nodes[i], 'id' ) ) || !( id = parse.id( id ) ) ){
+			if( !( id = parseDataset( nodes[i], 'id' ) ) || !( id = parseId( id ) ) ){
 				continue;
 
 			}
 
-			if( is_element ){
+			if( isElement ){
 				a = _layout.element( id, 'view' );
 
-				if( !utils.isBool( a ) ){
+				if( !isBool( a ) ){
 					nodes[i].parentNode.replaceChild( a, nodes[i] );
 
 				}
@@ -61,40 +59,27 @@ import layout from './layout.js';
 			a = _layout[type]( id );
 
 		}
+	},
 
-	};
-
-	var _id = null;
-
-	if( !utils.isObject( __cometdata ) || !( _id = parse.id( __cometdata.id ) ) ){
-		return false;
-
-	}
-	_w.Comet = Comet || {};
-
-	ajax( {
-		do: 'data',
-		id: _id,
-		public: 'true'
-
-	} ).done(function( response ){
-		const _default = [ 'post', 'settings', 'svgSets' ];
-		const data = parse.json( response );
+	initialize: function( response ){
+		const GLOBAL = GLOBAL();
+		const DATATYPES = [ 'post', 'settings', 'svgSets' ];
+		const DATA = parseJson( response );
 		var n = 0;
 		var i, slug, post, metadata;
 
-		if( !data || !utils.isObject( data ) ){
+		if( !isObject( DATA ) ){
 			return;
 
 		}
 
-		for( i in _default ){
+		for( i = 0; i < DATATYPES.length; i++ ){
 
-			if( !( ( slug = _default[i] ) in data ) ){
+			if( !( ( slug = DATATYPES[i] ) in DATA ) ){
 				continue;
 
 			}
-			g_.set( slug, data[slug], true );
+			GLOBAL.set( slug, DATA[slug], true );
 			n++;
 
 		}
@@ -103,14 +88,39 @@ import layout from './layout.js';
 			return;
 
 		}
-		post = g_.get( 'post' );
-		metadata = utils.isObject( post ) && utils.isObject( post.meta ) ? post.meta : {};
-		parser( metadata, capture( 'cpb-section' ), 'section' );
-		parser( metadata, capture( 'cpb-row' ), 'row' );
-		parser( metadata, capture( 'cpb-column' ), 'column' );
-		parser( metadata, capture( 'cpb-element' ), 'element' );
+		post = GLOBAL.get( 'post' );
+		metadata = isObject( post ) && isObject( post.meta ) ? post.meta : {};
+		CORE.parser( metadata, CORE.capture( 'cpb-section' ), 'section' );
+		CORE.parser( metadata, CORE.capture( 'cpb-row' ), 'row' );
+		CORE.parser( metadata, CORE.capture( 'cpb-column' ), 'column' );
+		CORE.parser( metadata, CORE.capture( 'cpb-element' ), 'element' );
 
-	});
+	}
 
+};
+
+(function( cometView ) {
+
+	cometView( window, document );
+
+}(function( WINDOW, DOCUMENT ){
+
+	var id = null;
+
+	CORE.document = DOCUMENT;
+	CORE.window = WINDOW;
+
+	if( !isObject( __cometdata ) || !( id = parseId( __cometdata.id ) ) ){
+		return false;
+
+	}
+	WINDOW.Comet = Comet || {};
+
+	AJAX( {
+		do: 'data',
+		id,
+		public: 'true'
+
+	} ).done( CORE.initialize );
 
 }));

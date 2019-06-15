@@ -1,5 +1,5 @@
 import { frameset as getFrameset } from '../stored.js';
-import GLOBAL from '../../../utils/global.js';
+import Global from '../../../utils/global.js';
 import node from '../../../dom/element.js';
 import { setFrameset } from './framset.js';
 
@@ -49,7 +49,7 @@ export function Frame(){
 
 		destroy: function(){
 			node( FRAME ).remove();
-			GLOBAL().unset( SLUG );
+			Global().unset( SLUG );
 			return true;
 
 		}
@@ -65,6 +65,6 @@ export function Frame(){
 	FRAME.className = 'comet-frame comet-frame--main';
 	frameset.append( FRAME );
 
-	return GLOBAL().set( SLUG, DATA, true );
+	return Global().set( SLUG, DATA, true );
 
 }
