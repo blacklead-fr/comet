@@ -2,10 +2,10 @@ import { isString, isBool, isArray, isNode, isObject } from '../../utils/is.js';
 import { deviceType as getDeviceType } from '../../editor/components/stored.js';
 import { createInputField } from '../../editor/components/panel/control.js';
 import { ClassName } from '../../utils/className.js';
-import __target from '../../editor/target.js';
-import update from '../../editor/update.js';
-import __data from '../../editor/data.js';
-import utils from '../../utils/utils.js';
+import update from '../../editor/control/update.js';
+import { stripTags } from '../../utils/fill.js';
+import { TARGET } from '../../editor/target.js';
+import { DATA } from '../../editor/data.js';
 import node from '../../dom/element.js';
 
 /* global document, __cometi18n */
@@ -46,7 +46,7 @@ const CORE = {
 
 	update: function( ev, ui, data ){
 		const currentDevice = getDeviceType();
-		var num, input, d, target_, t_id, t_type, data_, edata;
+		var num, input, d, t_id, t_type, edata;
 
 		ev.preventDefault();
 
@@ -61,10 +61,8 @@ const CORE = {
 			return;
 
 		}
-		target_ = __target();
 
-		if( ( t_id = target_.id() ) && ( t_type = target_.type() ) ){
-			data_ = __data();
+		if( ( t_id = TARGET.id() ) && ( t_type = TARGET.type() ) ){
 
 			for( d in data.devices[currentDevice] ){
 
@@ -80,7 +78,7 @@ const CORE = {
 				edata = {};
 				input.value = num;
 				edata[input.name] = num;
-				data_.set( t_id, t_type, edata );
+				DATA.set( t_id, t_type, edata );
 
 			}
 		}
@@ -168,7 +166,7 @@ export default function( data ){
 
 		response = CORE.createNumber( {
 			type: 'desktop',
-			label: isString( options[option].label ) ? utils.stripTags( options[option].label ) : '',
+			label: isString( options[option].label ) ? stripTags( options[option].label ) : '',
 			name: ( id = data.id + option ),
 			value: CORE.getValue( id, data )
 
@@ -187,7 +185,7 @@ export default function( data ){
 
 		response = CORE.createNumber( {
 			type: 'tablet',
-			label: isString( options[option].label ) ? utils.stripTags( options[option].label ) : '',
+			label: isString( options[option].label ) ? stripTags( options[option].label ) : '',
 			name: id + 't',
 			value: CORE.getValue( id + 't', data )
 
@@ -201,7 +199,7 @@ export default function( data ){
 
 		response = CORE.createNumber( {
 			type: 'mobile',
-			label: isString( options[option].label ) ? utils.stripTags( options[option].label ) : '',
+			label: isString( options[option].label ) ? stripTags( options[option].label ) : '',
 			name: id + 'm',
 			value: CORE.getValue( id + 'm', data )
 

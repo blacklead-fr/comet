@@ -1,10 +1,9 @@
 import { isArray, isObject, isString, isBool, isNumber, isEmpty, isTrueValue } from './is.js';
+import { sanitizeData, sanitizeColor, sanitizeNumber } from './sanitize.js';
+import { stripTags, capitalize, escUrl, inArray } from './fill.js';
+import { parseId, parseIds } from './parse.js';
 import { TARGET } from '../editor/target.js';
-import sanitize from './sanitize.js';
-import { inArray } from './fill.js';
 import Element from './element.js';
-import utils from './utils.js';
-import parse from './parse.js';
 import style from './style.js';
 import {
 	ruleset as __Ruleset,
@@ -105,7 +104,7 @@ const CORE = {
 			case 'rows':
 			o = '';
 
-			if( dt.width === 'cust' && ( tmp = sanitize.number({ value: dt.wsize, min: 300 }) ) !== null && tmp >= 300 ){
+			if( dt.width === 'cust' && ( tmp = sanitizeNumber({ value: dt.wsize, min: 300 }) ) !== null && tmp >= 300 ){
 				o += __Ruleset( classe, __Property( 'max-width', ( tmp + 'px' ) ) );
 
 			}
@@ -132,7 +131,7 @@ const CORE = {
 			case 'columns':
 			o = '';
 
-			if( ( tmp = sanitize.number({ value: dt.wsize, min: 10, max: 100 }) ) !== null ){
+			if( ( tmp = sanitizeNumber({ value: dt.wsize, min: 10, max: 100 }) ) !== null ){
 				o += __Ruleset( classe, __Property( 'width', ( tmp + '%' ) ) );
 
 			}
@@ -146,7 +145,7 @@ const CORE = {
 
 		if( 'ov' in dt && 'ovc' in dt ){
 
-			if( CORE.isEntry( dt.ov ) && !isEmpty( tmp = sanitize.color( dt.ovc ) ) ){
+			if( CORE.isEntry( dt.ov ) && !isEmpty( tmp = sanitizeColor( dt.ovc ) ) ){
 
 				o += classe + ' > .cpb-backgroundComponents > .cpb-backgroundOverlay{background:' + tmp + ';}';
 
@@ -177,11 +176,11 @@ const CORE = {
 	},
 
 	backgroundTags: function( dt ){
-		const url = isString( dt.vurl ) ? ( utils.stripTags( dt.vurl ) ).trim() : '';
+		const url = isString( dt.vurl ) ? ( stripTags( dt.vurl ) ).trim() : '';
 		var o = '<div class="cpb-backgroundComponents">';
 
 		if( isTrueValue( dt.vid ) && !isEmpty( url ) ){
-			o += '<video class="cpb-backgroundVideo" src="' + utils.escUrl( url ) + '" muted loop autoplay preload="auto"></video>';
+			o += '<video class="cpb-backgroundVideo" src="' + escUrl( url ) + '" muted loop autoplay preload="auto"></video>';
 
 		}
 
@@ -207,12 +206,12 @@ const METHODS = {
 
 		}
 
-		if( !isArray( ids = parse.ids( data._sections.trim(), 'array' ) ) || ids.length < 1 ){
+		if( !isArray( ids = parseIds( data._sections.trim(), 'array' ) ) || ids.length < 1 ){
 			return false;
 
 		}
 		_do = 0;
-		from = parse.id( from );
+		from = parseId( from );
 		fragment = DOCUMENT.createDocumentFragment();
 
 		for( s = 0; s < ids.length; s++ ){
@@ -238,7 +237,7 @@ const METHODS = {
 	section: function( data, css, id ){
 		var html, section, cl, r, ids, fragment, row;
 
-		if( !CORE.hasConnection( 'sections' ) || !( id = parse.id( id ) ) || !isObject( data.sections[id] ) ){
+		if( !CORE.hasConnection( 'sections' ) || !( id = parseId( id ) ) || !isObject( data.sections[id] ) ){
 			return false;
 
 		}
@@ -260,7 +259,7 @@ const METHODS = {
 		section.dataset.id = id;
 		section.innerHTML = html;
 
-		if( CORE.hasConnection( 'rows' ) && isString( data.sections[id]._rows ) && isArray( ids = parse.ids( data.sections[id]._rows.trim(), 'array' ) ) && ids.length > 0 ){
+		if( CORE.hasConnection( 'rows' ) && isString( data.sections[id]._rows ) && isArray( ids = parseIds( data.sections[id]._rows.trim(), 'array' ) ) && ids.length > 0 ){
 			fragment = DOCUMENT.createDocumentFragment();
 
 			for( r = 0; r < ids.length; r++ ){
@@ -282,7 +281,7 @@ const METHODS = {
 	row: function( data, css, id ){
 		var c, html, row, ids, cl, nb, fragment, column;
 
-		if( !CORE.hasConnection( 'rows' ) || !( id = parse.id( id ) ) || !isObject( data.rows[id] ) ){
+		if( !CORE.hasConnection( 'rows' ) || !( id = parseId( id ) ) || !isObject( data.rows[id] ) ){
 			return false;
 
 		}
@@ -307,7 +306,7 @@ const METHODS = {
 
 		nb = 0;
 
-		if( CORE.hasConnection( 'columns' ) && isString( data.rows[id]._columns ) && isArray( ids = parse.ids( data.rows[id]._columns.trim(), 'array' ) ) && ids.length > 0 ){
+		if( CORE.hasConnection( 'columns' ) && isString( data.rows[id]._columns ) && isArray( ids = parseIds( data.rows[id]._columns.trim(), 'array' ) ) && ids.length > 0 ){
 			fragment = DOCUMENT.createDocumentFragment();
 
 			for( c = 0; c < ids.length; c++ ){
@@ -330,7 +329,7 @@ const METHODS = {
 	column: function( data, css, id ){
 		var e, html, column, ids, cl, fragment, element;
 
-		if( !CORE.hasConnection( 'columns' ) || !( id = parse.id( id ) ) || !isObject( data.columns[id] ) ){
+		if( !CORE.hasConnection( 'columns' ) || !( id = parseId( id ) ) || !isObject( data.columns[id] ) ){
 			return false;
 
 		}
@@ -353,7 +352,7 @@ const METHODS = {
 		column.dataset.id = id;
 		column.innerHTML = html;
 
-		if( CORE.hasConnection( 'elements' ) && isString( data.columns[id]._elements ) && isArray( ids = parse.ids( data.columns[id]._elements.trim(), 'array' ) ) && ids.length > 0 ){
+		if( CORE.hasConnection( 'elements' ) && isString( data.columns[id]._elements ) && isArray( ids = parseIds( data.columns[id]._elements.trim(), 'array' ) ) && ids.length > 0 ){
 			fragment = DOCUMENT.createDocumentFragment();
 
 			for( e = 0; e < ids.length; e++ ){
@@ -374,12 +373,12 @@ const METHODS = {
 	element: function( data, css, id, state ){
 		var cl, element, fragment, el;
 
-		if( !CORE.hasConnection( 'elements' ) || !( id = parse.id( id ) ) || !isObject( data.elements[id] ) || !isString( data.elements[id]._type ) ){
+		if( !CORE.hasConnection( 'elements' ) || !( id = parseId( id ) ) || !isObject( data.elements[id] ) || !isString( data.elements[id]._type ) ){
 			return false;
 
 		}
 
-		if( !( el = Element( data.elements[id]._type.trim(), id, sanitize.data( data, id ) ) ) ){
+		if( !( el = Element( data.elements[id]._type.trim(), id, sanitizeData( data, id ) ) ) ){
 			return false;
 
 		}
@@ -394,7 +393,7 @@ const METHODS = {
 		fragment.appendChild( element );
 
 		cl = 'cpb-element';
-		cl += ' cpb-element' + utils.capitalize( data.elements[id]._type.trim() );
+		cl += ' cpb-element' + capitalize( data.elements[id]._type.trim() );
 		cl += ' cpb-elementNode' + id;
 
 		element.className = cl;

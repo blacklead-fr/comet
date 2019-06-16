@@ -1,7 +1,7 @@
 import { isNode, isNumber, isObject, isArray, isFunction, isWindow, isDocument } from '../../utils/is.js';
+import { gradientEncode, gradientDecode } from '../../utils/css/gradient.js';
+import { sanitizeNumber, sanitizeColor } from '../../utils/sanitize.js';
 import colorPicker from '../color-picker/index.js';
-import sanitize from '../../utils/sanitize.js';
-import gradient from '../../utils/gradient.js';
 import node from '../../dom/element.js';
 
 /* global document */
@@ -104,7 +104,7 @@ export default function( source, options ){
 		//handler.style.left = parseInt( ( ( parseFloat( ( delta / width ) * 100 ).toFixed( 2 ) ) * width ) / 100 ) + 'px';
 
 
-		delta = sanitize.number( { value: ( ev.pageX - x ), min: 0, max: width, default: 0 } );
+		delta = sanitizeNumber( { value: ( ev.pageX - x ), min: 0, max: width, default: 0 } );
 		setPosition( handler, ( ( delta / width ) * 100 ) );
 
 		if( typeof options.change === 'function' ){
@@ -227,11 +227,11 @@ export default function( source, options ){
 				//stop = sanitize.number( { value: draggers[x].style.left, min: 0, max: width, default: 0 } );
 				colors[colors.length] = {
 					stop: parseInt( draggers[x].getAttribute( 'aria-label' )/*( stop / width ) * 100*/ ),
-					color: ( 0 in ( tmp = draggers[x].getElementsByTagName( 'input' ) ) ? sanitize.color( tmp[0].value ) : '' )
+					color: ( 0 in ( tmp = draggers[x].getElementsByTagName( 'input' ) ) ? sanitizeColor( tmp[0].value ) : '' )
 				};
 
 			}
-			currentSource.value = gradient.encode( colors );
+			currentSource.value = gradientEncode( colors );
 
 		}
 
@@ -270,11 +270,11 @@ export default function( source, options ){
 					//stop = sanitize.number( { value: draggers[x].style.left, min: 0, max: width, default: 0 } );
 					colors[colors.length] = {
 						stop: parseInt( draggers[x].getAttribute( 'aria-label' ) ),//parseInt( ( stop / width ) * 100 ),
-						color: ( 0 in ( tmp = draggers[x].getElementsByTagName( 'input' ) ) ? sanitize.color( tmp[0].value ) : '' )
+						color: ( 0 in ( tmp = draggers[x].getElementsByTagName( 'input' ) ) ? sanitizeColor( tmp[0].value ) : '' )
 					};
 
 				}
-				data.source.value = gradient.encode( colors );
+				data.source.value = gradientEncode( colors );
 
 				if( isFunction( options.onchange ) ){
 					options.onchange( data.source, data.source.value );
@@ -288,7 +288,7 @@ export default function( source, options ){
 	function create( ui ){
 		const wrap = ui.parentNode;
 		const data = {};
-		var colors = gradient.decode( ui.value );
+		var colors = gradientDecode( ui.value );
 		var range, dragger, input, manager, c, item;
 		//var width, color, size;
 
@@ -339,7 +339,7 @@ export default function( source, options ){
 
 		for( c = 0; c < colors.length; c++ ){
 
-			if( !isObject( item = colors[c] ) || sanitize.color( item.color ) === '' ){
+			if( !isObject( item = colors[c] ) || sanitizeColor( item.color ) === '' ){
 				continue;
 
 			}

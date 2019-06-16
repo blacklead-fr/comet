@@ -1,7 +1,7 @@
 import { isNode, isString, isBool, isNumber } from './is.js';
 import nodes from '../dom/elements.js';
+import { stripTags } from './fill.js';
 import node from '../dom/element.js';
-import utils from './utils.js';
 
 /* global document */
 
@@ -96,7 +96,7 @@ export default function( message, status ){
 	const MSG = DOCUMENT.createElement( 'div' );
 
 	status = CORE.getStatusCode( status );
-	message = isString( message ) ? utils.stripTags( message, CORE.allowed ) : '';
+	message = isString( message ) ? stripTags( message, CORE.allowed ) : '';
 
 	MSG.className = CORE.getClasses( status );
 	MSG.innerHTML = '<p>' + message + '</p>';

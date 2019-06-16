@@ -1,7 +1,6 @@
-import { isString, isNumber, isEmpty } from './is.js';
-import { inArray } from './fill.js';
-import sanitize from './sanitize.js';
-import utils from './utils.js';
+import { sanitizeUnit, sanitizeNumber, sanitizeValueUnit } from '../sanitize.js';
+import { isString, isNumber, isEmpty } from '../is.js';
+import { inArray, xtrim } from '../fill.js';
 
 const CORE = {
 
@@ -14,7 +13,7 @@ const CORE = {
 
 	sanitizeValue: function( entry ){
 
-		return ( !CORE.sanitizeAuto( entry ) ? sanitize.number({ value: entry }) : 'auto' );
+		return ( !CORE.sanitizeAuto( entry ) ? sanitizeNumber({ value: entry }) : 'auto' );
 
 	}
 
@@ -28,8 +27,8 @@ export function renderMuValues( top, right, bottom, left, vunit, hunit ){
 	right = CORE.sanitizeValue( right );
 	bottom = CORE.sanitizeValue( bottom );
 	left = CORE.sanitizeValue( left );
-	vunit = sanitize.unit( vunit );
-	hunit = sanitize.unit( hunit );
+	vunit = sanitizeUnit( vunit );
+	hunit = sanitizeUnit( hunit );
 
 	if( top === bottom ){
 		y = top;
@@ -74,15 +73,15 @@ export function renderMuValues( top, right, bottom, left, vunit, hunit ){
 	}
 
 	if( y === false || x ===  false ){
-		o = sanitize.valueUnit( top, vunit );
+		o = sanitizeValueUnit( top, vunit );
 		o += ' ';
-		o += sanitize.valueUnit( right, hunit );
+		o += sanitizeValueUnit( right, hunit );
 		o += ' ';
-		o += sanitize.valueUnit( bottom, vunit );
+		o += sanitizeValueUnit( bottom, vunit );
 
 		if( x === false ){
 			o += ' ';
-			o += sanitize.valueUnit( left, hunit );
+			o += sanitizeValueUnit( left, hunit );
 		}
 
 		return o;
@@ -97,14 +96,14 @@ export function renderMuValues( top, right, bottom, left, vunit, hunit ){
 		}
 
 		if( vunit === hunit ){
-			return sanitize.valueUnit( y, vunit );
+			return sanitizeValueUnit( y, vunit );
 
 		}
 
 	}
-	o = sanitize.valueUnit( y, vunit );
+	o = sanitizeValueUnit( y, vunit );
 	o += ' ';
-	o += sanitize.valueUnit( x, hunit );
+	o += sanitizeValueUnit( x, hunit );
 	return o;
 
 }
@@ -131,6 +130,6 @@ export function renderProperty( property, value ){
 		return '';
 
 	}
-	return utils.trim( property, ':' ) + ':' + utils.trim( value, ';' ) + ';';
+	return xtrim( property, ':' ) + ':' + xtrim( value, ';' ) + ';';
 	
 }

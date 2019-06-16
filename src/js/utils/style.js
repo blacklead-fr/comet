@@ -1,6 +1,6 @@
 import { isNode, isString, isFunction } from './is.js';
+import { capitalize, stripTags } from './fill.js';
 import { parseId, parseType } from './parse.js';
-import utils from './utils.js';
 
 /* global document */
 
@@ -16,7 +16,7 @@ const CORE = {
 
 		}
 		s_id = 'cpb-style';
-		s_id += utils.capitalize( type );
+		s_id += capitalize( type );
 		s_id += id;
 
 		return s_id;
@@ -66,7 +66,7 @@ const CORE = {
 	create: function( s_id, css ){
 		var _style = null;
 
-		css = isString( css ) ? ( utils.stripTags( css ) ).trim() : null;
+		css = isString( css ) ? ( stripTags( css ) ).trim() : null;
 
 		if( !s_id || css === null ){
 			return false;

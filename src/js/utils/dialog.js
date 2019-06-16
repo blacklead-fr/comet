@@ -1,6 +1,6 @@
 import { isFunction, isObject, isNode, isString, isEmpty } from './is.js';
+import { stripTags } from './fill.js';
 import node from '../dom/element.js';
-import utils from './utils.js';
 
 /* global document, __cometi18n */
 
@@ -48,7 +48,7 @@ export default function( options ){
 
 	options.ui.cancel = !isString( options.ui.cancel ) || isEmpty( options.ui.cancel ) ? __cometi18n.ui.cancel : options.ui.cancel.trim();
 	options.ui.done = !isString( options.ui.done ) || isEmpty( options.ui.done ) ? __cometi18n.ui.done : options.ui.done.trim();
-	options.message = isString( options.message ) ? utils.stripTags( options.message, '<strong><i><b><a><ins><u><sup><sub>' ) : '';
+	options.message = isString( options.message ) ? stripTags( options.message, '<strong><i><b><a><ins><u><sup><sub>' ) : '';
 
 	if( !isNode( confirm ) ){
 		confirm = DOCUMENT.createElement( 'div' );

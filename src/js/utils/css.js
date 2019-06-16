@@ -2,7 +2,7 @@ import { isString, isNumber, isObject, isEmpty, isArray } from './is.js';
 import { inArray } from './fill.js';
 import sanitize from './sanitize.js';
 import gradient from './gradient.js';
-import utils from './utils.js';
+import { xtrim } from './fill.js';
 
 const CORE = {
 
@@ -141,7 +141,7 @@ const CORE = {
 				return '';
 
 			}
-			return utils.trim( property, ':' ) + ':' + utils.trim( value, ';' ) + ';';
+			return xtrim( property, ':' ) + ':' + xtrim( value, ';' ) + ';';
 
 		}
 
@@ -163,7 +163,7 @@ export const CSS = {
 			return '';
 
 		}
-		style = utils.trim( style, ':' );
+		style = xtrim( style, ':' );
 
 		return style + ':' + value + ';';
 	},

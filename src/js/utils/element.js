@@ -1,10 +1,9 @@
 import { isArray, isObject, isString, isNumber, isBool, isNode } from './is.js';
+import { getElement } from '../editor/components/stored.js';
+import { parseId } from './parse.js';
 import { inArray } from './fill.js';
-import sanitize from './sanitize.js';
-import utils from './utils.js';
-import parse from './parse.js';
-import _html from './html.js';
-import _css from './css.js';
+import _html from './html.js'; //@TODO
+import _css from './css.js'; //@TODO
 
 const CORE = {
 
@@ -70,9 +69,9 @@ const CORE = {
 
 export default function( slug, id, data ){
 
-	const element = utils.getElement( slug );
+	const element = getElement( slug );
 
-	if( !( id = parse.id( id ) ) || id < 0 || !element ){
+	if( !( id = parseId( id ) ) || id < 0 || !element ){
 		return false;
 
 	}

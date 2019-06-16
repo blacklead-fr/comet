@@ -1,302 +1,297 @@
 import { frame as Frame, notifications as Notifications } from '../stored.js';
 import { isString, isEmpty, isObject, isArray } from '../../../utils/is.js';
+import { parseId, parseIds, parseJson } from '../../../utils/parse.js';
+import { escUrl, inArray } from '../../../utils/fill.js';
+import { addQueryArgs } from '../../../utils/url.js';
 import node from '../../../dom/element.js';
 import layout from '../../../utils/layout.js';
-import parse from '../../../utils/parse.js';
 import modal from '../../../utils/modal.js';
-import utils from '../../../utils/utils.js';
 import ajax from '../../../utils/ajax.js';
-import __data from '../../data.js';
+import { DATA } from '../../data.js';
 
 /* global document, __cometi18n, __cometdata */
 
-export default function( _ev_ ){
+const DOCUMENT = document;
 
-	var tm_modal = false;
+const CORE = {
 
-	var loaded = [];
+	library: false,
 
-	const _d = document;
+	loaded: [],
 
-	const __core = {
+	preview: function( ev, ui, data ){
+		var id, url;
 
-		preview: function( e, ui, edata ){
-			var id, url;
-			
-			e.preventDefault();
+		ev.preventDefault();
 
-			if( !isObject( edata ) || !( id = parse.id( edata.id ) ) ){
-				return;
+		if( !isObject( data ) || !( id = parseId( data.id ) ) ){
+			return;
+
+		}
+		url = addQueryArgs( { id }, __cometdata.preview_url );
+
+		modal({
+			header: '<h4>' + data.title + ' (' + data.id + ')</h4>',
+			content: '<iframe src="' + escUrl( url ) + '"></iframe>'
+		});
+
+	},
+
+	search: function( ev, ui ){
+		const v = isString( ui.value ) ? ui.value.trim() : '';
+		var regex, i;
+
+		if( CORE.loaded.length < 1 ){
+			return false;
+
+		}
+		regex = new RegExp( v, 'i' );
+
+		for( i = 0; i < CORE.loaded.length; i++ ){
+
+			if( !isObject( CORE.loaded[i] ) ){
+				continue;
 
 			}
-			url = utils.addQueryArgs( { id: id }, __cometdata.preview_url );
 
-			modal({
-				header: '<h4>' + edata.title + ' (' + edata.id + ')</h4>',
-				content: '<iframe src="' + utils.escUrl( url ) + '"></iframe>'
-			});
+			if( v !== '' && CORE.loaded[i].title.search( regex ) === -1 ){
+				CORE.loaded[i].node.style.display = 'none';
+				continue;
 
-		},
+			}
+			CORE.loaded[i].node.style.display = 'block';
 
-		insert:  function( e, ui, id ){
+		}
 
-			const _Notifications = Notifications();
+	},
 
-			const __ins = {
+	switch: function( ev, ui ){
 
-				clone: function( data ){
-					var from = false;
-					var ids, a, count, id_;
+		CORE.load( ui.value );
 
-					if( !isObject( data ) || isEmpty( data._sections ) ){
-						return false;
+	},
 
-					}
+	load: function( set ){
 
-					if( !isArray( ids = parse.ids( data._sections, 'array' ) ) ){
-						return false;
+		if( !isString( set ) || !inArray( [ 'cus', 'pre' ], ( set = set.trim() ) ) ){
+			return false;
 
-					}
-					count = 0;
+		}
 
-					for( a = 0; a < ids.length; a++ ){
+		ajax({
+			do: 'templates',
+			data: set
 
-						if( !( id_ = __ins._clone( 'sections', ids[a], data, '0' ) ) ){
-							continue;
+		}).done( CORE.onLoaded );
 
-						}
+	},
 
-						if( count === 0 ){
-							from = id_;
+	onLoaded: function( templates ){
+		const body = CORE.library.body.firstElementChild;
+		const fragment = DOCUMENT.createDocumentFragment();
+		var t, template, id, title, buttonset, inner, scope;
 
-						}
-						count++;
+		if( templates === '0' || body === null || !isArray( templates = parseJson( templates ) ) ){
+			return;
 
-					}
-					return from;
+		}
+		CORE.loaded = [];
 
-				},
+		for( t = 0; t < templates.length; t++ ){
+			template = templates[t];
 
-				_clone: function( type, id_, data, pid ){
-					const _data = __data();
-					const types = [ 'items', 'elements', 'columns', 'rows', 'sections' ];
-					var children = [];
-					var childtype, _childtype, n_id, a;
+			if( !( id = parseId( template.ID ) ) ){
+				continue;
 
-					if( !isString( type ) || types.indexOf( type.toLowerCase() ) < 0 ){
-						return false;
+			}
+			title = isString( template.post_title ) ? template.post_title.trim() : '';
 
-					}
+			scope = DOCUMENT.createElement( 'div' );
+			scope.className = 'comet-template comet-scope comet-collection';
 
-					if( !isObject( data ) || !isObject( data[type] ) ){
-						return false;
+			inner = '<figure class="comet-figure">';
+			inner += '<span class="comet-id">' + id + '</span>';
+			inner += '<div class="comet-inner comet-meta comet-abs comet-buttonset">';
+			inner += '<button class="comet-button" title="' + __cometi18n.ui.insert + '" aria-label="' + __cometi18n.ui.insert + '"><span class="cico cico-dir-download"></span></button>';
+			inner += '<button class="comet-button" title="' + __cometi18n.ui.preview + '" aria-label="' + __cometi18n.ui.preview + '"><span class="cico cico-eye"></span></button>';
+			inner += '</div>';
+			inner +='</figure>';
+			inner += '<aside class="comet-aside">' + title + '</aside>';
 
-					}
+			scope.innerHTML = inner;
 
-					if( !isObject( data[type][id_] ) ){
-						data[type][id_] = {};
+			fragment.appendChild( scope );
 
-					}
+			CORE.loaded[CORE.loaded.length] = {
+				id: id,
+				title: title,
+				node: scope
+			};
 
-					if( !( n_id = __data().create( ( type === 'elements' ? data[type][id_]._type : type ), pid, 'last', data[type][id_] ) ) ){
-						return false;
+			buttonset = scope.firstChild.lastChild;
 
-					}
-					childtype = _data.getChild( type );
+			node( buttonset.firstChild ).on( 'click', CORE.insert, id );
+			node( buttonset.lastChild ).on( 'click', CORE.preview, { id, title } );
 
-					if( childtype && ( _childtype = '_' + childtype ) && isObject( data[type][id_] ) && !isEmpty( data[type][id_][_childtype] ) ){
-						children = parse.ids( data[type][id_][_childtype], 'array' );
+		}
+		body.innerHTML = '';
+		body.appendChild( fragment );
 
-					}
-					__data().removeIds( n_id, type );
+	},
 
-					if( !isArray( children, 1 ) ){
-						return n_id;
+	insert: {
 
-					}
+		clone: function( data ){
+			var from = false;
+			var ids, a, count, id;
 
-					for( a = 0; a < children.length; a++ ){
-						__ins._clone( childtype, children[a], data, n_id );
+			if( !isObject( data ) || isEmpty( data._sections ) ){
+				return false;
 
-					}
-					return n_id;
+			}
+
+			if( !isArray( ids = parseIds( data._sections, 'array' ) ) ){
+				return false;
+
+			}
+			count = 0;
+
+			for( a = 0; a < ids.length; a++ ){
+
+				if( !( id = CORE.insert._clone( 'sections', ids[a], data, '0' ) ) ){
+					continue;
 
 				}
 
-			};
-			e.preventDefault();
+				if( count === 0 ){
+					from = id;
 
-			if( ( id = parse.id( id ) ) ){
-				_Notifications.add( __cometi18n.messages.warning.ltemplate, 300 );
+				}
+				count++;
+
+			}
+			return from;
+
+		},
+
+		_clone: function( type, id, data, pid ){
+			const TYPES = [ 'items', 'elements', 'columns', 'rows', 'sections' ];
+			var children = [];
+			var childtype, _childtype, n_id, a;
+
+			if( !isString( type ) || !inArray( TYPES, ( type = ( type.toLowerCase() ).trim() ) ) ){
+				return false;
+
+			}
+
+			if( !isObject( data ) || !isObject( data[type] ) ){
+				return false;
+
+			}
+
+			if( !isObject( data[type][id] ) ){
+				data[type][id] = {};
+
+			}
+
+			if( !( n_id = DATA.create( ( type === 'elements' ? data[type][id]._type : type ), pid, 'last', data[type][id] ) ) ){
+				return false;
+
+			}
+			childtype = DATA.getChild( type );
+
+			if( childtype && ( _childtype = '_' + childtype ) && isObject( data[type][id] ) && !isEmpty( data[type][id][_childtype] ) ){
+				children = parseIds( data[type][id][_childtype], 'array' );
+
+			}
+			DATA.removeIds( n_id, type );
+
+			if( !isArray( children, 1 ) ){
+				return n_id;
+
+			}
+
+			for( a = 0; a < children.length; a++ ){
+				CORE.insert._clone( childtype, children[a], data, n_id );
+
+			}
+			return n_id;
+
+		},
+
+		init: function( ev, ui, id ){
+
+			ev.preventDefault();
+
+			if( ( id = parseId( id ) ) ){
+				Notifications().add( __cometi18n.messages.warning.ltemplate, 300 );
 
 				ajax({
-					id: id,
+					id,
 					meta: 'true',
 					do: 'get'
 
-				}).done( function( r ){
-					const _Frame = Frame();
-					var data, from;
-
-					if( !_Frame ){
-						_Notifications.add( __cometi18n.messages.error.ltemplate, 400 );
-						return;
-
-					}
-
-					if( r === '0' || !isObject( data = parse.json( r ) ) || !isObject( data['meta'] ) ){
-						_Notifications.add( __cometi18n.messages.error.ltemplate, 400 );
-
-					}
-					from = __ins.clone( data['meta'] );
-					layout( __data().getData() ).init( _Frame.target, from );
-					_Notifications.add( __cometi18n.messages.success.ltemplate, 200 );
-
-				} );
+				}).done( CORE.insert.onLoaded );
 
 			}
+			CORE.library.destroy();
 
-			tm_modal.destroy();
 
 		},
 
-		search: function( ev, ui ){
-			const v = isString( ui.value ) ? ui.value.trim() : '';
-			var regex, i;
+		onLoaded: function( response ){
+			const NOTIFICATIONS = Notifications();
+			const FRAME = Frame();
+			var data, from;
 
-			if( loaded.length < 1 ){
-				return false;
-
-			}
-			regex = new RegExp( v, 'i' );
-
-			for( i = 0; i < loaded.length; i++ ){
-
-				if( !isObject( loaded[i] ) ){
-					continue;
-
-				}
-
-				if( v !== '' && loaded[i].title.search( regex ) === -1 ){
-					loaded[i].node.style.display = 'none';
-					continue;
-
-				}
-				loaded[i].node.style.display = 'block';
-
-			}
-
-		},
-
-		switch: function( ev, ui ){
-			var set;
-
-			if( isEmpty( set = ui.value ) || [ 'pre', 'cus' ].indexOf( set = set.trim() ) < 0 ){
+			if( !FRAME ){
+				NOTIFICATIONS.add( __cometi18n.messages.error.ltemplate, 400 );
 				return;
 
 			}
-			__core.load( set );
 
-
-		},
-
-		load: function( set ){
-
-			if( isEmpty( set ) || [ 'cus', 'pre' ].indexOf( set = set.trim() ) < 0 ){
-				return false;
+			if( response === '0' || !isObject( data = parseJson( response ) ) || !isObject( data['meta'] ) ){
+				NOTIFICATIONS.add( __cometi18n.messages.error.ltemplate, 400 );
 
 			}
-
-			ajax({
-				do: 'templates',
-				data: set
-
-			}).done( function( templates ){
-				const body = tm_modal.body.firstElementChild;
-				const fragment = _d.createDocumentFragment();
-				var t, template, id, title, buttonset, inner, scope;
-
-				if( templates === '0' || body === null || !isArray( templates = parse.json( templates ) ) ){
-					return;
-
-				}
-				loaded = [];
-
-				for( t = 0; t < templates.length; t++ ){
-					template = templates[t];
-
-					if( !( id = parse.id( template.ID ) ) ){
-						continue;
-
-					}
-					title = isString( template.post_title ) ? template.post_title.trim() : '';
-
-					scope = _d.createElement( 'div' );
-					scope.className = 'comet-template comet-scope comet-collection';
-
-					inner = '<figure class="comet-figure">';
-					inner += '<span class="comet-id">' + id + '</span>';
-					inner += '<div class="comet-inner comet-meta comet-abs comet-buttonset">';
-					inner += '<button class="comet-button" title="' + __cometi18n.ui.insert + '" aria-label="' + __cometi18n.ui.insert + '"><span class="cico cico-dir-download"></span></button>';
-					inner += '<button class="comet-button" title="' + __cometi18n.ui.preview + '" aria-label="' + __cometi18n.ui.preview + '"><span class="cico cico-eye"></span></button>';
-					inner += '</div>';
-					inner +='</figure>';
-					inner += '<aside class="comet-aside">' + title + '</aside>';
-
-					scope.innerHTML = inner;
-
-					fragment.appendChild( scope );
-
-					loaded[loaded.length] = {
-						id: id,
-						title: title,
-						node: scope
-					};
-
-					buttonset = scope.firstChild.lastChild;
-
-					node( buttonset.firstChild ).on( 'click', __core.insert, id );
-					node( buttonset.lastChild ).on( 'click', __core.preview, { id: id, title: title } );
-
-				}
-				body.innerHTML = '';
-				body.appendChild( fragment );
-
-			});
+			from = CORE.insert.clone( data['meta'] );
+			layout( DATA.getData() ).init( FRAME.target, from );
+			NOTIFICATIONS.add( __cometi18n.messages.success.ltemplate, 200 );
 
 		}
-	};
 
-	_ev_.preventDefault();
+	}
 
-	(function(){
+};
 
-		var header, body, inner;
+export default function( ev ){
+	var header, body, inner;
 
-		header = _d.createElement( 'div' );
-		header.className = 'comet-searchbox';
+	ev.preventDefault();
 
-		inner = '<select class="comet-ui comet-select">';
-		inner += '<option value="cus">' + __cometi18n.ui.mytemplates + '</option>';
-		inner += '</select>';
+	header = DOCUMENT.createElement( 'div' );
+	header.className = 'comet-searchbox';
 
-		inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.sTemplate + '"/>';
-		header.innerHTML = inner;
+	inner = '<select class="comet-ui comet-select">';
+	inner += '<option value="cus">' + __cometi18n.ui.mytemplates + '</option>';
+	inner += '</select>';
 
-		body = _d.createElement( 'div' );
-		body.className = 'comet-templates comet-wrapper comet-mytemplates';
+	inner += '<input type="text" class="comet-ui comet-input" placeholder="' + __cometi18n.ui.sTemplate + '"/>';
+	header.innerHTML = inner;
 
-		tm_modal = modal({
-			header: header,
-			content: body
-		});
+	body = DOCUMENT.createElement( 'div' );
+	body.className = 'comet-templates comet-wrapper comet-mytemplates';
 
-		/* cus, pre */
-		__core.load( 'cus' );
+	CORE.library = modal({
+		header: header,
+		content: body
+	});
 
-		node( header.firstChild ).on( 'change', __core.switch );
-		node( header.lastChild ).on( 'input', __core.search );
-		
-	})();
+	CORE.loaded = [];
+	/* cus, pre */
+	CORE.load( 'cus' );
+
+	node( header.firstChild ).on( 'change', CORE.switch );
+	node( header.lastChild ).on( 'input', CORE.search );
 
 }

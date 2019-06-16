@@ -1,7 +1,7 @@
 import { isString, isArray, isEmpty, isNumber, isBool, isObject } from '../is.js';
+import { sanitizeValueUnit, sanitizeColor, sanitizeNumber } from '../sanitize.js';
 import { renderProperty, renderMuValues } from './render.js';
 import { inArray } from '../fill.js';
-import sanitize from '../sanitize.js';
 
 const CORE = {
 
@@ -35,19 +35,19 @@ export function shadow( entry ){
 		return '';
 
 	}
-	entry.blur = sanitize.number( { value: entry.blur, default: 0, min: 0 } );
-	entry.spread = sanitize.number( { value: entry.spread, default: 0 } );
-	entry.x = sanitize.number( { value: entry.x, default: 0 } );
-	entry.y = sanitize.number( { value: entry.y, default: 0 } );
+	entry.blur = sanitizeNumber( { value: entry.blur, default: 0, min: 0 } );
+	entry.spread = sanitizeNumber( { value: entry.spread, default: 0 } );
+	entry.x = sanitizeNumber( { value: entry.x, default: 0 } );
+	entry.y = sanitizeNumber( { value: entry.y, default: 0 } );
 
-	if( ( entry.blur < 1 && entry.x === 0 && entry.y === 0 && entry.spread === 0 ) || ( entry.color = sanitize.color( entry.color ) ) === '' ){
+	if( ( entry.blur < 1 && entry.x === 0 && entry.y === 0 && entry.spread === 0 ) || ( entry.color = sanitizeColor( entry.color ) ) === '' ){
 		return '';
 
 	}
-	w = sanitize.valueUnit( entry.x, 'px' );
-	w += ' ' + sanitize.valueUnit( entry.y, 'px' );
-	w += ' ' + sanitize.valueUnit( entry.blur, 'px' );
-	w += ' ' + sanitize.valueUnit( entry.spread, 'px' );
+	w = sanitizeValueUnit( entry.x, 'px' );
+	w += ' ' + sanitizeValueUnit( entry.y, 'px' );
+	w += ' ' + sanitizeValueUnit( entry.blur, 'px' );
+	w += ' ' + sanitizeValueUnit( entry.spread, 'px' );
 	w += ' ' + entry.color;
 	w += CORE.isInset( entry.inset ) ? ' inset' : '';
 

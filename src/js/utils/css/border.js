@@ -1,6 +1,6 @@
+import { sanitizeValueUnit, sanitizeColor, sanitizeNumber } from '../sanitize.js';
 import { renderProperty, renderMuValues } from './render.js';
 import { isObject, isString, isEmpty } from '../is.js';
-import sanitize from '../sanitize.js';
 
 const CORE = {
 
@@ -58,7 +58,7 @@ export function border( entry ){
 	const numb = { value: 0, min: 0, default: 0 };
 	var t, r, b , l, x, y, o, w;
 
-	if( !isObject( entry ) || ( entry.style = CORE.sanitizeBorderStyle( entry.style ) ) === 'none' || ( entry.color = sanitize.color( entry.color ) ) === '' ){
+	if( !isObject( entry ) || ( entry.style = CORE.sanitizeBorderStyle( entry.style ) ) === 'none' || ( entry.color = sanitizeColor( entry.color ) ) === '' ){
 		return '';
 
 	}
@@ -66,16 +66,16 @@ export function border( entry ){
 	x = y = null;
 
 	numb.value = entry.top;
-	t = sanitize.number( numb );
+	t = sanitizeNumber( numb );
 
 	numb.value = entry.right;
-	r = sanitize.number( numb );
+	r = sanitizeNumber( numb );
 
 	numb.value = entry.bottom;
-	b = sanitize.number( numb );
+	b = sanitizeNumber( numb );
 
 	numb.value = entry.left;
-	l = sanitize.number( numb );
+	l = sanitizeNumber( numb );
 
 	if( t === b ){
 		y = t;
@@ -95,25 +95,25 @@ export function border( entry ){
 				return '';
 
 			}
-			o = sanitize.valueUnit( y, 'px' );
+			o = sanitizeValueUnit( y, 'px' );
 			o += ' ' + entry.style;
 			o += ' ' + entry.color;
 			return renderProperty( 'border', o );
 
 		}
-		o = renderProperty( 'border-width', sanitize.valueUnit( y, 'px' ) + ' ' + sanitize.valueUnit( x, 'px' ) );
+		o = renderProperty( 'border-width', sanitizeValueUnit( y, 'px' ) + ' ' + sanitizeValueUnit( x, 'px' ) );
 		o += renderProperty( 'border-style', entry.style );
 		o += renderProperty( 'border-color', entry.color );
 		return o;
 
 	}
 
-	w = sanitize.valueUnit( t, 'px' );
-	w += ' ' + sanitize.valueUnit( r, 'px' );
-	w += ' ' + sanitize.valueUnit( b, 'px' );
+	w = sanitizeValueUnit( t, 'px' );
+	w += ' ' + sanitizeValueUnit( r, 'px' );
+	w += ' ' + sanitizeValueUnit( b, 'px' );
 
 	if( x === null ){
-		w += ' ' + sanitize.valueUnit( l, 'px' );
+		w += ' ' + sanitizeValueUnit( l, 'px' );
 
 	}
 

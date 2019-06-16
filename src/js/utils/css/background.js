@@ -1,6 +1,6 @@
 import { isString, isEmpty, isObject } from '../is.js';
+import { sanitizeColor } from '../sanitize.js';
 import { renderProperty } from './render.js';
-import sanitize from '../sanitize.js';
 
 const CORE = {
 
@@ -171,7 +171,7 @@ export function background( entry ){
 
 	}
 
-	if( !isEmpty( tmp = sanitize.color( entry.color ) ) && color ){
+	if( !isEmpty( tmp = sanitizeColor( entry.color ) ) && color ){
 		o += tmp;
 
 	}

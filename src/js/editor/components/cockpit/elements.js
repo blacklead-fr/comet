@@ -1,12 +1,12 @@
 import { isNode, isObject, isString, isEmpty } from '../../../utils/is.js';
+import { parseId, parseDataset } from '../../../utils/parse.js';
 import { ClassName } from '../../../utils/className.js';
+import { getElement, getElements } from '../stored.js';
 import layout from '../../../utils/layout.js';
-import parse from '../../../utils/parse.js';
-import utils from '../../../utils/utils.js';
 import node from '../../../dom/element.js';
-import __target from '../../target.js';
+import { TARGET } from '../../target.js';
 import panel from '../panel/index.js';
-import __data from '../../data.js';
+import { DATA } from '../../data.js';
 
 const DOCUMENT = document;
 
@@ -39,7 +39,6 @@ const CORE = {
 		} ],
 		containment: '.comet-frame--main',
 		stop: function( e, ui ){
-			const data_ = __data();
 			var sid, rid, cid, columns, _ui, sibid, nb, _p, p, re, a, w, tmp, position;
 
 			if( !( _ui = node( ui ) ) || !( _p = node( ui.parentNode ) ) ){
@@ -51,40 +50,40 @@ const CORE = {
 				const closest = _ui.next( { selector: items } );
 				var t;
 
-				return ( isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last' );
+				return ( isNode( closest ) && ( t = parseDataset( closest, 'id' ) ) && ( t = parseId( t ) ) ? t : 'last' );
 
 			}
 			re = {};
 
 			if( _p.hasClass( 'comet-frame--main' ) ){
 				position = next( '.cpb-section' );
-				sid = data_.create( 'sections', 0, position );
+				sid = DATA.create( 'sections', 0, position );
 
 				if( sid ){
-					tmp = data_.create( 'rows', sid, 'last' );
+					tmp = DATA.create( 'rows', sid, 'last' );
 
 					if( tmp ){
-						tmp = data_.create( 'columns', tmp, 'last' );
+						tmp = DATA.create( 'columns', tmp, 'last' );
 					}
-					re = layout( data_.getData() ).section( sid );
+					re = layout( DATA.getData() ).section( sid );
 
 				}
 
-			}else if( _p.hasClass( 'cpb-rows' ) && ( sid = parse.dataset( p.parentNode, 'id' ) ) && ( sid = parse.id( sid ) ) ){
+			}else if( _p.hasClass( 'cpb-rows' ) && ( sid = parseDataset( p.parentNode, 'id' ) ) && ( sid = parseId( sid ) ) ){
 
 				position = next( '.cpb-row' );
-				rid = data_.create( 'rows', sid, position );
+				rid = DATA.create( 'rows', sid, position );
 
 				if( rid ){
-					tmp = data_.create( 'columns', rid, 'last' );
-					re = layout( data_.getData() ).row( rid );
+					tmp = DATA.create( 'columns', rid, 'last' );
+					re = layout( DATA.getData() ).row( rid );
 
 				}
 
-			}else if( _p.hasClass( 'cpb-rowContent' ) && ( rid = parse.dataset( p.parentNode, 'id' ) ) && ( rid = parse.id( rid ) ) ){
+			}else if( _p.hasClass( 'cpb-rowContent' ) && ( rid = parseDataset( p.parentNode, 'id' ) ) && ( rid = parseId( rid ) ) ){
 
 				position = next( '.cpb-column' );
-				cid = data_.create( 'columns', rid, position );
+				cid = DATA.create( 'columns', rid, position );
 				columns = _p.children( { selector: '.cpb-column' } );
 				w = 100;
 				nb = 1;
@@ -95,18 +94,18 @@ const CORE = {
 
 					for( a in columns ){
 
-						if( !isNode( columns[a] ) || !( sibid = parse.dataset( columns[a], 'id' ) ) || !( sibid = parse.id( sibid ) ) ){
+						if( !isNode( columns[a] ) || !( sibid = parseDataset( columns[a], 'id' ) ) || !( sibid = parseId( sibid ) ) ){
 							continue;
 
 						}
-						data_.set( sibid, 'columns', { wsize: w } );
-						layout( data_.getData(), 'css' ).column( sibid );
+						DATA.set( sibid, 'columns', { wsize: w } );
+						layout( DATA.getData(), 'css' ).column( sibid );
 
 					}
 				}
-				data_.set( cid, 'columns', { wsize: w } );
+				DATA.set( cid, 'columns', { wsize: w } );
 				p.dataset.ncol = nb;
-				re = layout( data_.getData() ).column( cid );
+				re = layout( DATA.getData() ).column( cid );
 
 			}
 
@@ -127,23 +126,21 @@ const CORE = {
 		} ],
 		containment: '.comet-frame--main',
 		stop: function( ev, ui, current ){
-			const data_ = __data();
-			const target_ = __target();
 			var preload, closest, id, t, pid, defname, lyt, element, tabs, edata;
 
-			if( !isString( defname = parse.dataset( current, 'id' ) ) || isEmpty( defname = defname.trim() ) ){
+			if( !isString( defname = parseDataset( current, 'id' ) ) || isEmpty( defname = defname.trim() ) ){
 				return;
 
 			}
 
-			if( !( pid = parse.dataset( ui.parentNode.parentNode, 'id' ) ) || !( pid = parse.id( pid ) ) || !data_.get( pid, 'columns' ) ){
+			if( !( pid = parseDataset( ui.parentNode.parentNode, 'id' ) ) || !( pid = parseId( pid ) ) || !DATA.get( pid, 'columns' ) ){
 				return;
 
 			}
 			closest = node( ui ).next( { selector: '.cpb-element' } );
-			t = isNode( closest ) && ( t = parse.dataset( closest, 'id' ) ) && ( t = parse.id( t ) ) ? t : 'last';
+			t = isNode( closest ) && ( t = parseDataset( closest, 'id' ) ) && ( t = parseId( t ) ) ? t : 'last';
 
-			if( !( id = data_.create( defname, pid, t ) ) || !( lyt = layout( data_.getData() ).element( id ) ) ){
+			if( !( id = DATA.create( defname, pid, t ) ) || !( lyt = layout( DATA.getData() ).element( id ) ) ){
 				return;
 
 			}
@@ -153,13 +150,13 @@ const CORE = {
 
 			ui.parentNode.replaceChild( element, ui );
 
-			if( !isObject( edata = utils.getElement( defname ) ) || !isObject( edata.tabs ) ){
+			if( !isObject( edata = getElement( defname ) ) || !isObject( edata.tabs ) ){
 				return;
 
 			}
-			target_.reset();
+			TARGET.reset();
 
-			target_.set({
+			TARGET.set({
 				id: id,
 				type: 'elements',
 				node: element
@@ -169,11 +166,11 @@ const CORE = {
 				title: __cometi18n.options.element.edit,
 				data: {
 					tabs: edata.tabs,
-					current: data_.get( id, defname )
+					current: DATA.get( id, defname )
 				},
 				close: {
 					do: function(){
-						target_.reset();
+						TARGET.reset();
 					}
 				}
 
@@ -207,7 +204,7 @@ const CORE = {
 
 export default function( parentNode ){
 
-	const elements = utils.getElements();
+	const elements = getElements();
 
 	const __elements = [];
 

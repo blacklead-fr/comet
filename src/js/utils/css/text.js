@@ -1,5 +1,5 @@
+import { sanitizeValueUnit, sanitizeColor, sanitizeNumber } from '../sanitize.js';
 import { renderProperty } from './render.js';
-import sanitize from '../sanitize.js';
 import { isObject } from '../is.js';
 
 export function shadow( entry ){
@@ -9,17 +9,17 @@ export function shadow( entry ){
 		return '';
 
 	}
-	entry.blur = sanitize.number( { value: entry.blur, default: 0, min: 0 } );
-	entry.x = sanitize.number( { value: entry.x, default: 0 } );
-	entry.y = sanitize.number( { value: entry.y, default: 0 } );
+	entry.blur = sanitizeNumber( { value: entry.blur, default: 0, min: 0 } );
+	entry.x = sanitizeNumber( { value: entry.x, default: 0 } );
+	entry.y = sanitizeNumber( { value: entry.y, default: 0 } );
 
-	if( ( entry.blur < 1 && entry.x === 0 && entry.y === 0 ) || ( entry.color = sanitize.color( entry.color ) ) === '' ){
+	if( ( entry.blur < 1 && entry.x === 0 && entry.y === 0 ) || ( entry.color = sanitizeColor( entry.color ) ) === '' ){
 		return '';
 
 	}
-	w = sanitize.valueUnit( entry.x, 'px' );
-	w += ' ' + sanitize.valueUnit( entry.y, 'px' );
-	w += ' ' + sanitize.valueUnit( entry.blur, 'px' );
+	w = sanitizeValueUnit( entry.x, 'px' );
+	w += ' ' + sanitizeValueUnit( entry.y, 'px' );
+	w += ' ' + sanitizeValueUnit( entry.blur, 'px' );
 	w += ' ' + entry.color;
 
 	return renderProperty( 'text-shadow', w );

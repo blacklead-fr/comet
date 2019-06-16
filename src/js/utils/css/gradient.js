@@ -1,11 +1,11 @@
+import { sanitizeNumber, sanitizeColor } from '../sanitize.js';
 import { isString, isEmpty, isArray } from '../is.js';
 import { inArray } from '../fill.js';
-import sanitize from '../sanitize.js';
 
 const CORE = {
 
 	sanitizeAngle: function( value ){
-		value = sanitize.number( { value, min: 0, max: 360, default: 0 } );
+		value = sanitizeNumber( { value, min: 0, max: 360, default: 0 } );
 
 		switch( value ){
 			case 0:
@@ -53,11 +53,11 @@ export function encode( colors ){
 
 	for( a = 0; a < colors.length; a++ ){
 
-		if( !isObject( color = colors[a] ) || !( 'color' in color ) || !( c  = sanitize.color( color.color ) ) ){
+		if( !isObject( color = colors[a] ) || !( 'color' in color ) || !( c  = sanitizeColor( color.color ) ) ){
 			continue;
 
 		}
-		p = sanitize.number( { value: color.stop, min: 0, max: 100, default: 0, float: true } );
+		p = sanitizeNumber( { value: color.stop, min: 0, max: 100, default: 0, float: true } );
 		o += ( o.length > 0 ? '+' : '' ) + p + 'z' + c;
 		
 	}
@@ -78,12 +78,12 @@ export function decode( str ){
 
 	for( a = 0; a < depth1.length; a++ ){
 
-		if( !isString( crt = depth1[a] ) || isEmpty( crt ) || !isArray( depth2 = ( crt = crt.trim() ).split( d2 ) ) || depth2.length < 2 || !( c = sanitize.color( depth2[1] ) ) ){
+		if( !isString( crt = depth1[a] ) || isEmpty( crt ) || !isArray( depth2 = ( crt = crt.trim() ).split( d2 ) ) || depth2.length < 2 || !( c = sanitizeColor( depth2[1] ) ) ){
 			continue;
 
 		}
 		o[o.length] = {
-			stop: sanitize.number( { value: depth2[0], min: 0, max: 100, default: 0, float: true } ),
+			stop: sanitizeNumber( { value: depth2[0], min: 0, max: 100, default: 0, float: true } ),
 			color: c
 		};
 

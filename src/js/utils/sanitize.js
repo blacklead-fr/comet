@@ -1,6 +1,8 @@
 import { isArray, isNumber, isString, isObject, isNode, isBool } from './is.js';
 import { parseId, parseIds } from './parse.js';
-import { inArray } from './fill.js';
+import { inArray, stripTags } from './fill.js';
+
+// @TODO: utils.toClass
 
 /* global document */
 
@@ -195,7 +197,7 @@ export function sanitizeContent(){
 			continue;
 
 		}
-		o += utils.stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
+		o += stripTags( elements[e].innerHTML, '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><video><audio>' );
 
 	}
 	return o.replace(/[']/g, __core.callback );
@@ -205,7 +207,7 @@ export function sanitizeContent(){
 export function sanitizePost( str ){
 	const allowed = '<br><img><p><a><u><strike><b><strong><i><ins><del><hr><caption><span><h1><h2><h3><h4><h5><h6><sub><sup><title>';
 
-	return ( isString( str ) ? utils.stripTags( str, allowed ) : '' );
+	return ( isString( str ) ? stripTags( str, allowed ) : '' );
 
 }
 

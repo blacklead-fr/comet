@@ -1,6 +1,6 @@
 import { isString, isEmpty, isObject, isNode } from '../../utils/is.js';
-import update from '../../editor/update.js';
-import utils from '../../utils/utils.js';
+import { getSvgSets } from '../../editor/components/stored.js';
+import update from '../../editor/control/update.js';
 import modal from '../../utils/modal.js';
 import node from '../../dom/element.js';
 import Icon from '../../utils/icon.js';
@@ -109,7 +109,7 @@ export default function( source, data ){
 		},
 
 		open: function( ev ){
-			const sets = utils.getSvgSets();
+			const sets = getSvgSets();
 			var first_id = false;
 			var count = 1;
 			var id, header, inner, body;

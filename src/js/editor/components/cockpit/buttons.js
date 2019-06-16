@@ -1,147 +1,145 @@
 import { generalSettings as GeneralSettings, notifications as Notifications } from '../stored.js';
 import { isNode, isBool, isObject, isFunction } from '../../../utils/is.js';
+import { ClassName } from '../../../utils/className.js';
 import dialog from '../../../utils/dialog.js';
 import node from '../../../dom/element.js';
 import device from './device.js';
 import evSave from './save.js';
 
-export default function( parentNode ){
+const DOCUMENT = document;
 
-	const _d = document;
+const WINDOW = window;
 
-	const className = 'comet-cockpit__footer';
+const BASE = 'comet-cockpit__footer';
 
-	const __classes = {
-		main: className,
+const CLASSNAME = ClassName( BASE );
+
+const CORE = {
+
+	classes: {
+		main: BASE,
 		expand: 'comet-cockpit__expand',
-		button: className + '__button',
-		icon: className + '__button__icon',
-		title: className + '__button__title',
+		button: CLASSNAME.element( 'button' ),
+		icon: CLASSNAME.element( 'button__icon' ),
+		title: CLASSNAME.element( 'button__title' ),
 
-	};
+	},
 
-	const __core = {
+	buttons: {
 
-		buttons: {
-
-			responsive: {
-				title: __cometi18n.ui.desktop,
-				icon: 'cico-desktop',
-				dataset: {
-					device: 'desktop'
-				},
-				event: device
-
+		responsive: {
+			title: __cometi18n.ui.desktop,
+			icon: 'cico-desktop',
+			dataset: {
+				device: 'desktop'
 			},
-
-			settings: {
-				title: __cometi18n.ui.settings,
-				icon: 'cico-cog',
-				event: GeneralSettings().toggle
-
-			},
-
-			notifications: {
-				title: __cometi18n.ui.notifications,
-				icon: 'cico-exclamation',
-				expand: true,
-				event: Notifications().toggle
-
-			},
-
-			saveAs: {
-				title: __cometi18n.ui.sTemplate,
-				icon: 'cico-dir-upload',
-				expand: true,
-				event: evSave.saveAs
-
-			},
-
-			save: {
-				title: __cometi18n.ui.save,
-				icon: 'cico-update',
-				event: evSave.save
-
-			},
-
-			exit: {
-				title: __cometi18n.ui.exit,
-				expand: true,
-				icon: 'cico-power',
-				event: function( ev ){
-
-					ev.preventDefault();
-
-					dialog({
-
-						message: __cometi18n.messages.warning.exit,
-
-						confirm: function(){
-
-							window.location.replace( __cometdata.dashboard_url );
-
-						}
-
-					});
-					
-				}
-
-			},
+			event: device
 
 		},
 
-		button: function( data ){
-			const button = _d.createElement( 'button' );
-			var a;
-
-			button.className = __classes.button + ( isBool( data.expand ) && data.expand ? ' ' + __classes.expand : '' );
-			button.setAttribute( 'aria-label', data.title );
-			button.innerHTML = '<span class="' + __classes.icon + ' cico ' + data.icon + '"></span><span class="' + __classes.title + '"><span>' + data.title + '</span></span>';
-
-			if( isObject( data.dataset ) ){
-
-				for( a in data.dataset ){
-					button.dataset[a] = data.dataset[a];
-
-				}
-
-			}
-
-			if( isFunction( data.event ) ){
-				node( button ).on( 'click', data.event );
-
-			}
-			return button;
+		settings: {
+			title: __cometi18n.ui.settings,
+			icon: 'cico-cog',
+			event: GeneralSettings().toggle
 
 		},
 
-		create: function(){
-			var b, tmp;
+		notifications: {
+			title: __cometi18n.ui.notifications,
+			icon: 'cico-exclamation',
+			expand: true,
+			event: Notifications().toggle
 
-			for( b in __core.buttons ){
-				tmp = __core.button(  __core.buttons[b] );
-				parentNode.appendChild( tmp );
+		},
+
+		saveAs: {
+			title: __cometi18n.ui.sTemplate,
+			icon: 'cico-dir-upload',
+			expand: true,
+			event: evSave.saveAs
+
+		},
+
+		save: {
+			title: __cometi18n.ui.save,
+			icon: 'cico-update',
+			event: evSave.save
+
+		},
+
+		exit: {
+			title: __cometi18n.ui.exit,
+			expand: true,
+			icon: 'cico-power',
+			event: function( ev ){
+
+				ev.preventDefault();
+
+				dialog({
+
+					message: __cometi18n.messages.warning.exit,
+
+					confirm: function(){
+
+						WINDOW.location.replace( __cometdata.dashboard_url );
+
+					}
+
+				});
 
 			}
 
 		},
 
-		destroy: function(){
-			parentNode.innerHTML = '';
+	},
+
+	createButton: function( data ){
+		const BUTTON = DOCUMENT.createElement( 'button' );
+		var a;
+
+		BUTTON.className = CORE.classes.button + ( isBool( data.expand ) && data.expand ? ' ' + CORE.classes.expand : '' );
+		BUTTON.setAttribute( 'aria-label', data.title );
+		BUTTON.innerHTML = '<span class="' + CORE.classes.icon + ' cico ' + data.icon + '"></span><span class="' + CORE.classes.title + '"><span>' + data.title + '</span></span>';
+
+		if( isObject( data.dataset ) ){
+
+			for( a in data.dataset ){
+				BUTTON.dataset[a] = data.dataset[a];
+
+			}
 
 		}
 
-	};
+		if( isFunction( data.event ) ){
+			node( BUTTON ).on( 'click', data.event );
+
+		}
+		return BUTTON;
+
+	}
+
+};
+
+export default function( parentNode ){
+	var b, button;
 
 	if( !isNode( parentNode ) ){
 		return false;
 
 	}
-	__core.create();
+
+	for( b in CORE.buttons ){
+		button = CORE.createButton( CORE.buttons[b] );
+		parentNode.appendChild( button );
+
+	}
 
 	return {
 		target: parentNode,
-		destroy: __core.destroy
+		destroy: function(){
+			parentNode.innerHTML = '';
+
+		}
 
 	};
 

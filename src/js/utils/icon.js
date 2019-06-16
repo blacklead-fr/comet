@@ -1,10 +1,10 @@
 import { isString, isObject, isArray, isEmpty } from './is.js';
-import utils from './utils.js';
+import { getSvgSets } from '../editor/components/stored.js';
 
 const ICON = {
 
 	get_set: function( set_id ){
-		const sets = utils.getSvgSets();
+		const sets = getSvgSets();
 
 		return ( isObject( sets ) && isString( set_id ) && isObject( sets[set_id] ) ? sets[set_id] : {} );
 
@@ -41,7 +41,7 @@ const ICON = {
 	},
 
 	set_exists: function( set_id ){
-		const sets = utils.getSvgSets();
+		const sets = getSvgSets();
 
 		return ( isObject( sets ) && isString( set_id ) && isObject( sets[set_id] ) );
 

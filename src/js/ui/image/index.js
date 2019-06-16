@@ -1,6 +1,6 @@
 import { isString, isNode } from '../../utils/is.js';
-import update from '../../editor/update.js';
-import utils from '../../utils/utils.js';
+import update from '../../editor/control/update.js';
+import { stripTags } from '../../utils/fill.js';
 import node from '../../dom/element.js';
 
 /* global document, __cometi18n */
@@ -50,7 +50,7 @@ export default function( source, data ){
 
 			media.on( 'select', function(){
 				const att = media.state().get('selection').first().toJSON();
-				data.value = isString( data.value = att.url ) ? ( ( data.value = ( utils.stripTags( data.value ) ).trim() ) !== '' ? data.value : '' ) : '';
+				data.value = isString( data.value = att.url ) ? ( ( data.value = ( stripTags( data.value ) ).trim() ) !== '' ? data.value : '' ) : '';
 
 				source.value = data.value;
 				__img.create();
