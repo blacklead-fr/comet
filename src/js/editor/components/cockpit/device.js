@@ -1,4 +1,4 @@
-import { frame as getFrame, deviceType as getDeviceType, panel as getPanel } from '../stored.js';
+import { frame as getFrame, getDeviceType, panel as getPanel } from '../stored.js';
 import { isArray, isObject, isBool, isNode } from '../../../utils/is.js';
 import { ClassName } from '../../../utils/className.js';
 import Global from '../../../utils/global.js';

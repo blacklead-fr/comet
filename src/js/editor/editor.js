@@ -1,9 +1,10 @@
 /* Comet - Copyright (c) 2019 Blacklead */
 import { isArray, isObject, isString, isEmpty } from '../utils/is.js';
+import { createFrame } from './components/frameset/frame.js';
 import { parseId, parseJson } from '../utils/parse.js';
 import { components } from './components/index.js';
 import { getParameters } from '../utils/url.js';
-import GLOBAL from '../utils/global.js';
+import Global from '../utils/global.js';
 import layout from '../utils/layout.js';
 import post_elements from './post.js';
 import node from '../dom/element.js';
@@ -36,7 +37,7 @@ const CORE = {
 
     },
 
-    setPpost: function( content ){
+    setPost: function( content ){
         var tmp, tmpe, items, elements, i, x;
 
         if( !( tmp = DATA.create( 'sections', 0, 'last' ) ) ){
@@ -107,7 +108,7 @@ const CORE = {
                 continue;
 
             }
-            tmp = GLOBAL().set( slug, data[slug], true );
+            tmp = Global().set( slug, data[slug], true );
 
             if( slug === 'post' ){
                 post = tmp;
@@ -123,7 +124,7 @@ const CORE = {
 
         }
         metaData = DATA.setData( isObject( post ) ? ( isObject( post.meta ) && !Array.isArray( post.meta ) ? post.meta : {} ) : {} );
-        frame = Frame();
+        frame = createFrame();
 
         if( !isString( metaData._sections ) || isEmpty( metaData._sections ) ){
             CORE.setPost( post.post_content );

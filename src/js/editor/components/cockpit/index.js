@@ -14,6 +14,12 @@ const I_CLASSNAME = ClassName( BASE );
 
 const CORE = {
 
+	data: {
+		target: null,
+		elements: [],
+		open: false
+	},
+
 	classes: {
 		main: BASE,
 		open: I_CLASSNAME.modifier( 'open' ),

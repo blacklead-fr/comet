@@ -1,5 +1,5 @@
 import { isString, isNode, isDocument, isWindow } from '../utils/is.js';
-import sort from '../ui/sort/build.js';
+import sort from '../ui/sort/index.js';
 import * as __core from './default.js';
 
 const DOCUMENT = document;

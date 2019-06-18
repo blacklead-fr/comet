@@ -1,13 +1,13 @@
 import { frameset as getFrameset } from '../stored.js';
 import Global from '../../../utils/global.js';
 import node from '../../../dom/element.js';
-import { setFrameset } from './framset.js';
+import { setFrameset } from './frameset.js';
 
 const SLUG = 'frame';
 
 const DOCUMENT = document;
 
-export function Frame(){
+export function createFrame(){
 
 	const FRAME = DOCUMENT.createElement( 'div' );
 

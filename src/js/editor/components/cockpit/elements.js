@@ -24,7 +24,6 @@ const CORE = {
 	},
 
 	layout: {
-		handle: _n,
 		connectWith: [ {
 			selector: '.comet-frame--main',
 			items: '.cpb-section'

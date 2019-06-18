@@ -1,6 +1,6 @@
 import { isString, isBool, isArray, isNode, isObject } from '../../utils/is.js';
-import { deviceType as getDeviceType } from '../../editor/components/stored.js';
 import { createInputField } from '../../editor/components/panel/control.js';
+import { getDeviceType } from '../../editor/components/stored.js';
 import { ClassName } from '../../utils/className.js';
 import update from '../../editor/control/update.js';
 import { stripTags } from '../../utils/fill.js';

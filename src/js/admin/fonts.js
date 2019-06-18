@@ -1,15 +1,21 @@
+import { isString, isObject, isArray, isNode, isBool } from '../utils/is.js';
+import { capitalize, jsonEncode } from '../utils/fill.js';
 import message from '../utils/message.js';
 import dialog from '../utils/dialog.js';
 import modal from '../utils/modal.js';
-import utils from '../utils/utils.js';
 import ajax from '../utils/ajax.js';
-import node from '../utils/node.js';
+import node from '../dom/element.js';
 
 /* global document, __cometi18n, __cometdata, XMLHttpRequest */
 
-export default function(){
+/**
+* @TODO: Rewrite
+*
+*/
 
-	const _d = document;
+const DOCUMENT = document;
+
+export default function(){
 
 	const __core = {
 
@@ -51,9 +57,9 @@ export default function(){
 							matching: function( type ){
 								var m;
 
-								type = utils.isString( type ) ? utils.trim( type.toLowerCase() ) : false;
+								type = isString( type ) ? ( type.toLowerCase() ).trim() : false;
 
-								return ( !type || !( type in __try.regex ) || ( m = entry.match( __try.regex[type] ) ) === null || !utils.isString( m[1] ) ? false : utils.trim( m[1] ) );
+								return ( !type || !( type in __try.regex ) || ( m = entry.match( __try.regex[type] ) ) === null || !isString( m[1] ) ? false : m[1].trim() );
 
 
 							},
@@ -70,7 +76,7 @@ export default function(){
 
 						};
 
-						return ( utils.isString( entry ) ? ( !( url = __try.link() ) ? ( !( url = __try.import() ) ? false : url ) : url ) : false );
+						return ( isString( entry ) ? ( !( url = __try.link() ) ? ( !( url = __try.import() ) ? false : url ) : url ) : false );
 
 					},
 
@@ -87,9 +93,9 @@ export default function(){
 							matching: function( _raw, type ){
 								var m;
 
-								type = utils.isString( type ) ? utils.trim( type ) : false;
+								type = isString( type ) ? type.trim() : false;
 
-								return ( !utils.isString( _raw ) || !type || !( type in __try.regex ) || ( m = _raw.match( __try.regex[type] ) ) === null ? false : m );
+								return ( !isString( _raw ) || !type || !( type in __try.regex ) || ( m = _raw.match( __try.regex[type] ) ) === null ? false : m );
 
 
 							},
@@ -102,7 +108,7 @@ export default function(){
 
 							fontFamily: function( _raw ){
 								const m = __try.matching( _raw, 'fontFamily' );
-								return ( !m || !utils.isString( m[1] ) ? false : utils.trim( m[1] ) );
+								return ( !m || !isString( m[1] ) ? false : m[1].trim() );
 
 							},
 
@@ -155,13 +161,13 @@ export default function(){
 
 								}
 
-								if( !utils.isObject( __fonts.fonts[index].weight ) || utils.isArray( __fonts.fonts[index].weight ) ){
+								if( !isObject( __fonts.fonts[index].weight ) || isArray( __fonts.fonts[index].weight ) ){
 									__fonts.fonts[index].weight = {};
 
 								}
 
-								if( utils.isString( _raw ) ){
-									__raw = utils.isString( __raw = __fonts.fonts[index].weight[weight] ) ? __raw : '';
+								if( isString( _raw ) ){
+									__raw = isString( __raw = __fonts.fonts[index].weight[weight] ) ? __raw : '';
 									__fonts.fonts[index].weight[weight] = __raw + _raw;
 
 								}
@@ -171,7 +177,7 @@ export default function(){
 
 							sanitizeWeight: function( weight ){
 
-								weight = utils.isString( weight ) ? utils.trim( weight.toLowerCase() ) : weight;
+								weight = isString( weight ) ? ( weight.toLowerCase() ).trim() : weight;
 
 								switch( weight ){
 
@@ -235,7 +241,7 @@ export default function(){
 
 						};
 
-						return utils.isString( raw ) ? __fonts.get() : false;
+						return isString( raw ) ? __fonts.get() : false;
 
 					}
 
@@ -257,7 +263,7 @@ export default function(){
 						if( rawFile.status === 200 || rawFile.status === 0 ){
 							response = __file.catch.fonts( rawFile.responseText );
 
-							if( utils.isArray( response ) ){
+							if( isArray( response ) && response.length > 0 ){
 								__file.counter.length = response.length;
 								__file.counter.count = response.length;
 								__file.counter.failed = 0;
@@ -271,7 +277,7 @@ export default function(){
 										meta: response[i]
 									};
 
-									if( utils.isObject( gdata = __core.utils.getFontData( response[i].family ) ) ){
+									if( isObject( gdata = __core.utils.getFontData( response[i].family ) ) ){
 										__file.save( args, gdata.data.id, gdata.index );
 										continue;
 
@@ -301,7 +307,7 @@ export default function(){
 
 					const _data = {
 						do: 'save',
-						data: utils.json_encode( font )
+						data: jsonEncode( font )
 
 					};
 
@@ -309,10 +315,13 @@ export default function(){
 						_data.id = id;
 
 					}
+					console.log( font );
 
 					ajax( _data ).done(function( response ){
 						var args;
 						__file.counter.count--;
+
+						console.log( response );
 
 						if( ( id = parseInt( response ) ) < 1 ){
 							__file.counter.failed++;
@@ -378,21 +387,21 @@ export default function(){
 			},
 
 			is_resource: function( value ){
-				return ( utils.isString( value ) && value in __core.utils.resourceTypes );
+				return ( isString( value ) && value in __core.utils.resourceTypes );
 
 			},
 
 			isMessagesBox: function(){
-				return ( !__core.data.modal && node( __core.data.modal.fontBoxUi.messagesBox ).isNode() );
+				return ( !__core.data.modal && isNode( __core.data.modal.fontBoxUi.messagesBox ) );
 
 			},
 
 			getFontData: function( entry ){
 				var collection, i, isId;
 
-				__core.data.collection = !utils.isArray( __core.data.collection ) ? [] : __core.data.collection;
+				__core.data.collection = !isArray( __core.data.collection ) ? [] : __core.data.collection;
 				collection = __core.data.collection;
-				entry = ( isId = entry > 0 ) || utils.isString( entry ) ? entry : false;
+				entry = ( isId = entry > 0 ) || isString( entry ) ? entry : false;
 
 				if( false ){
 					return false;
@@ -419,8 +428,8 @@ export default function(){
 		actions: {
 
 			add: function( ev ){
-				const fragment = _d.createDocumentFragment();
-				const wrapper = _d.createElement( 'div' );
+				const fragment = DOCUMENT.createDocumentFragment();
+				const wrapper = DOCUMENT.createElement( 'div' );
 				var inner, wfields;
 
 				ev.preventDefault();
@@ -536,7 +545,7 @@ export default function(){
 
 								}
 
-								if( utils.isObject( gdata = __core.utils.getFontData( _data.id ) ) ){
+								if( isObject( gdata = __core.utils.getFontData( _data.id ) ) ){
 									__core.data.collection.splice( gdata.index, 1 );
 
 								}
@@ -572,7 +581,7 @@ export default function(){
 
 				}
 
-				if( !utils.isString( _data.embed.value ) ){
+				if( !isString( _data.embed.value ) ){
 					//@TODO: error
 					return;
 
@@ -620,22 +629,21 @@ export default function(){
 
 				state: function( importing ){
 					const button = __core.data.modal.fontBoxUi.import;
-					const _button = node( button );
-					importing = ( utils.isBool( importing ) && importing );
+					importing = ( isBool( importing ) && importing );
 					__core.data.isImporting = importing;
 
-					if( !_button.isNode() ){
+					if( !isNode( button ) ){
 						return false;
 
 					}
 
 					if( importing ){
-						_button.addClass( 'comet-waitwhile' );
+						node( button ).addClass( 'comet-waitwhile' );
 						button.innerHTML = '<span class="cico cico-spin"></span>';
 						return true;
 
 					}
-					_button.removeClass( 'comet-waitwhile' );
+					node( button ).removeClass( 'comet-waitwhile' );
 					button.innerHTML = __cometi18n.ui.import;
 					return true;
 
@@ -644,23 +652,23 @@ export default function(){
 			},
 
 			addCard: function( data ){
-				const fragment = _d.createDocumentFragment();
-				const card = _d.createElement( 'div' );
-				const name = utils.isObject( data ) && utils.isString( data.family ) ? data.family : false;
+				const fragment = DOCUMENT.createDocumentFragment();
+				const card = DOCUMENT.createElement( 'div' );
+				const name = isObject( data ) && isString( data.family ) ? data.family : false;
 				var inner, count;
 
 				if( !name ){
 					return;
 
 				}
-				count = utils.isArray( data.weight ) ? data.weight.length : ( utils.isObject( data.weight ) ? Object.keys( data.weight ).length : 0 );
+				count = isArray( data.weight ) ? data.weight.length : ( isObject( data.weight ) ? Object.keys( data.weight ).length : 0 );
 				fragment.appendChild( card );
 				inner = '<div class="comet-previewbox comet-sampletext">';
 				inner += '<p class="comet-inner comet-text" style="font-family:' + name + ';">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>';
 				inner += '</div>';
 				inner += '<div class="comet-info comet-wrapper">';
 				inner += '<div class="comet-fontinfo">';
-				inner += '<span class="comet-fontname">' + utils.capitalize( name ) + '</span>';
+				inner += '<span class="comet-fontname">' + capitalize( name ) + '</span>';
 				inner += '<span class="comet-fontstyle">' + ( count === 1 ? '1 style' : count + ' styles' ) + '</span>';
 				inner += '</div>';
 				inner += '<div class="comet-actions comet-ui">';
@@ -685,7 +693,7 @@ export default function(){
 			addCss: function( data ){
 				var css, inner, i;
 
-				if( !utils.isObject( data ) || !utils.isObject( data.weight ) ){
+				if( !isObject( data ) || !isObject( data.weight ) ){
 					return;
 
 				}
@@ -693,16 +701,16 @@ export default function(){
 
 				for( i in data.weight ){
 
-					if( utils.isString( data.weight[i] ) ){
+					if( isString( data.weight[i] ) ){
 						inner += data.weight[i];
 
 					}
 
 				}
-				css = _d.createElement( 'style' );
+				css = DOCUMENT.createElement( 'style' );
 				css.type = 'text/css';
 				css.innerHTML = inner;
-				_d.head.appendChild( css );
+				DOCUMENT.head.appendChild( css );
 
 			},
 
@@ -762,16 +770,16 @@ export default function(){
 	};
 
 	(function(){
-		const source = _d.getElementById( 'comet-sourceframe8679171600336466' );
+		const source = DOCUMENT.getElementById( 'comet-sourceframe8679171600336466' );
 		var fragment, header, h_inner, b_inner, body, i;
 
 		if( source === null || source.parentNode === null ){
 			return;
 
 		}
-		__core.data.collection = utils.isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
-		fragment = _d.createDocumentFragment();
-		header = _d.createElement( 'div' );
+		__core.data.collection = isArray( __cometdata.fonts ) ? __cometdata.fonts : [];
+		fragment = DOCUMENT.createDocumentFragment();
+		header = DOCUMENT.createElement( 'div' );
 		header.className = 'comet-header comet-top comet-wrapper';
 
 		h_inner = '<div class="comet-column">';
@@ -784,7 +792,7 @@ export default function(){
 
 		header.innerHTML = h_inner;
 
-		body = _d.createElement( 'div' );
+		body = DOCUMENT.createElement( 'div' );
 		body.className = 'comet-body comet-fontslist comet-wrapper';
 
 		fragment.appendChild( header );

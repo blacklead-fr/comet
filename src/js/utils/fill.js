@@ -1,4 +1,4 @@
-import { isArray, isString, isObject, isEmpty } from './is.js';
+import { isArray, isString, isObject, isEmpty, isBool } from './is.js';
 
 /**
 * Computes the difference of arrays.

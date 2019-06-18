@@ -2,9 +2,9 @@ const DOCUMENT = document;
 
 const WINDOW = window;
 
-export function isNode( object ){
-
-	return isObject( object ) && 'nodeType' in object && ( object.nodeType === Node.ELEMENT_NODE || object.nodeType === 1 );
+export function isNode( entry ){
+	
+	return isObject( entry ) && 'nodeType' in entry && ( entry.nodeType === Node.ELEMENT_NODE || entry.nodeType === 1 );
 
 }
 
@@ -19,15 +19,15 @@ export function isNodeName( nodeNames, value, index ){
 
 }
 
-export function isDocument( object ){
+export function isDocument( entry ){
 
-	return object === DOCUMENT;
+	return entry === DOCUMENT;
 
 }
 
-export function isWindow( object ){
+export function isWindow( entry ){
 
-	return object === WINDOW;
+	return entry === WINDOW;
 
 }
 
@@ -39,7 +39,7 @@ export function isString( entry ){
 
 export function isObject( entry ){
 
-	return typeof entry === 'object';
+	return typeof entry === 'object' && entry !== null;
 
 }
 

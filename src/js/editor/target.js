@@ -7,7 +7,7 @@ const SLUG = 'target';
 
 const CORE = {
 
-	properties: [ 'id', 'type', 'node', 'state', 'item' ];
+	properties: [ 'id', 'type', 'node', 'state', 'item' ],
 
 	isTarget: function( data ){
 		var key;

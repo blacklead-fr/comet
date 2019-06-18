@@ -1,4 +1,5 @@
 import { isFunction, isNode } from '../../../utils/is.js';
+import { ClassName } from '../../../utils/className.js';
 import node from '../../../dom/element.js';
 import library from './library.js';
 

@@ -1,5 +1,5 @@
 import { isNode, isNumber, isObject, isArray, isFunction, isWindow, isDocument } from '../../utils/is.js';
-import { gradientEncode, gradientDecode } from '../../utils/css/gradient.js';
+import { encode as gradientEncode, decode as gradientDecode } from '../../utils/css/gradient.js';
 import { sanitizeNumber, sanitizeColor } from '../../utils/sanitize.js';
 import colorPicker from '../color-picker/index.js';
 import node from '../../dom/element.js';

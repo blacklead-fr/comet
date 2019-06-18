@@ -211,11 +211,11 @@ export function sanitizePost( str ){
 
 }
 
-export function sanitizeClass( str, prefix ){
+/*export function sanitizeClass( str, prefix ){
 
 	return ( utils.toClass( isString( prefix ) ? prefix : '' ) + utils.toClass( str ) );
 
-}
+}*/
 
 export function sanitizeAlignment( entry ){
 	const c = 'cpb-align';

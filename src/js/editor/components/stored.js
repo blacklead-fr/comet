@@ -97,7 +97,7 @@ export function getSettingsFrom( slug ){
 	const SETTINGS = getSettings();
 	const TYPES = [ 'section', 'row', 'column', 'elements' ];
 
-	return isString( slug ) && inArray( TYPES, ( slug = slug.trim() ) && isObject( settings[slug] ) ? settings[slug] : false;
+	return isString( slug ) && inArray( TYPES, ( slug = slug.trim() ) ) && isObject( SETTINGS[slug] ) ? SETTINGS[slug] : false;
 
 }
 
@@ -110,6 +110,6 @@ export function getElements(){
 export function getElement( slug ){
 	const ELEMENTS = getElements();
 
-	return isString( slug ) && isObject( ELEMENTS[( slug = slug.trim() )] ) ? elements[slug] : false;
+	return isString( slug ) && isObject( ELEMENTS[( slug = slug.trim() )] ) ? ELEMENTS[slug] : false;
 
 }

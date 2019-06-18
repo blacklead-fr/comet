@@ -1,6 +1,6 @@
 import { on as bind, removeClass, addClass } from './default.js';
-import { isString, isArray, isEmpty } from '../utils/is.js';
-import sort from '../ui/sort/build.js';
+import { isString, isObject, isArray, isEmpty } from '../utils/is.js';
+import sort from '../ui/sort/index.js';
 
 const DOCUMENT = document;
 
@@ -12,7 +12,7 @@ export default function( entry ){
 
 	}
 
-	if( !isArray( elements ) || isEmpty( elements ) ){
+	if( !isObject( elements ) || elements.length < 1 ){
 		return false;
 
 	}

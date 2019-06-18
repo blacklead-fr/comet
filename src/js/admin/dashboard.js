@@ -1,101 +1,141 @@
-import node from '../utils/node.js';
+import { isNode, isFunction } from '../utils/is.js';
+import nodes from '../dom/elements.js';
+import node from '../dom/element.js';
 
 /* global document */
 
-export default function(){
+const DOCUMENT = document;
 
-	const _d = document;
+const CORE = {
 
-	const __ = {
+	sidebar: {
 
-		sidebar: function(){
+		target: DOCUMENT.getElementById( 'comet-dashboardSidebar' ),
 
-			const sidebar = _d.getElementById( 'comet-dashboardSidebar' );
+		open: DOCUMENT.getElementById( 'comet-doSidebarOpen' ),
 
-			const open = _d.getElementById( 'comet-doSidebarOpen' );
+		close: DOCUMENT.getElementById( 'comet-doSidebarClose' ),
 
-			const close = _d.getElementById( 'comet-doSidebarClose' );
+		onOpen: function( ev ){
+			ev.preventDefault();
+			CORE.sidebar.target.style.display = 'block';
 
-			const prop = {
+		},
 
-				open: function( ev ){
-					ev.preventDefault();
-					sidebar.style.display = 'block';
+		onClose: function( ev ){
+			ev.preventDefault();
+			CORE.sidebar.target.style.display = 'none';
 
-				},
+		},
 
-				close: function( ev ){
-					ev.preventDefault();
-					sidebar.style.display = 'none';
+		init: function(){
 
-				}
-
-			};
-
-			if( !sidebar || sidebar === null ){
+			if( !isNode( CORE.sidebar.target ) ){
 				return;
 
 			}
 
-			node( open ).on( 'click', prop.open );
-			node( close ).on( 'click', prop.close );
-		},
+			if( isNode( CORE.sidebar.open ) ){
+				node( CORE.sidebar.open ).on( 'click', CORE.sidebar.onOpen );
 
-		help: function(){
+			}
 
-			const tooltip = _d.getElementsByClassName( 'comet-tooltip' );
+			if( isNode( CORE.sidebar.close ) ){
+				node( CORE.sidebar.close ).on( 'click', CORE.sidebar.onClose );
 
-			node( tooltip ).on( 'click', function( ev, ui ){
-
-				node( ui ).toggleClass( 'comet-active' );
-
-			});
-		},
-
-		slider: function(){
-			const buttons = _d.getElementsByClassName( 'comet-dashboardSlideButton' );
-
-			node( buttons ).on( 'click', function( ev, ui ){
-				const slide = ui.parentNode.parentNode;
-				const _ui = node( ui );
-				const sc = 'comet-dashboardSlide';
-				var sibling = null;
-				var s, slides;
-
-				ev.preventDefault();
-
-                if( _ui.hasClass( 'comet-next' ) && ( sibling = slide.nextSibling ) === null ){
-                	return;
-
-                }
-
-                if( _ui.hasClass( 'comet-prev' ) && ( sibling = slide.previousSibling ) === null ){
-                	return;
-
-                }
-
-                if( !node( sibling ).isNode() || slide.parentNode === null || ( slides = slide.parentNode.children ).length < 1 ){
-                	return;
-
-                }
-
-                for( s = 0; s < slides.length; s++ ){
-
-                	if( node( slides[s] ).hasClass( sc ) ){
-                		slides[s].style.display = 'none';
-
-                	}
-
-                }
-                sibling.style.display = 'block';
-
-			});
+			}
 
 		}
 
-	};
-	__.sidebar();
-	__.help();
-	__.slider();
+	},
+
+	help: {
+
+		tooltip: DOCUMENT.getElementsByClassName( 'comet-tooltip' ),
+
+		onTooltip: function( ev, ui ){
+			node( ui ).toggleClass( 'comet-active' );
+
+		},
+
+		init: function(){
+			const NTOOLTIP = nodes( CORE.help.tooltip );
+
+			if( !NTOOLTIP ){
+				return;
+
+			}
+			NTOOLTIP.on( 'click', CORE.help.onTooltip );
+
+		}
+
+	},
+
+	slider: {
+
+		buttons: DOCUMENT.getElementsByClassName( 'comet-dashboardSlideButton' ),
+
+		onButton: function( ev, ui ){
+			const slide = ui.parentNode.parentNode;
+			const _ui = node( ui );
+			const sc = 'comet-dashboardSlide';
+			var sibling = null;
+			var s, slides;
+
+			ev.preventDefault();
+
+			if( _ui.hasClass( 'comet-next' ) && ( sibling = slide.nextSibling ) === null ){
+				return;
+
+			}
+
+			if( _ui.hasClass( 'comet-prev' ) && ( sibling = slide.previousSibling ) === null ){
+				return;
+
+			}
+
+			if( !isNode( sibling ) || slide.parentNode === null || ( slides = slide.parentNode.children ).length < 1 ){
+				return;
+
+			}
+
+			for( s = 0; s < slides.length; s++ ){
+
+				if( node( slides[s] ).hasClass( sc ) ){
+					slides[s].style.display = 'none';
+
+				}
+
+			}
+			sibling.style.display = 'block';
+
+		},
+
+		init: function(){
+			const NBTN = nodes( CORE.slider.buttons );
+
+			if( !NBTN ){
+				return;
+
+			}
+			NBTN.on( 'click', CORE.slider.onButton );
+
+		}
+
+	}
+
+};
+
+export default function(){
+	var a;
+
+	for( a in CORE ){
+
+		if( isFunction( CORE[a].init ) ){
+			CORE[a].init();
+
+		}
+
+	}
 	
 }

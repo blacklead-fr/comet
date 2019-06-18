@@ -68,8 +68,8 @@ export default function ( options ){
 	MODAL.className = 'comet-modal comet-ui' + ( isString( options.classes ) ? ' ' + options.classes.trim() : ( isArray( options.classes ) ? ' ' + ( options.classes ).join( ' ' ) : '' ) );
 
 	button = MODAL.firstChild;
-	header = modal.lastChild.firstChild;
-	body = modal.lastChild.lastChild;
+	header = MODAL.lastChild.firstChild;
+	body = MODAL.lastChild.lastChild;
 
 	if( isString( options.header ) ){
 		header.innerHTML = options.header;

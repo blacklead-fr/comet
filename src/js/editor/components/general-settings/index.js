@@ -1,4 +1,5 @@
 import { isObject, isString, isEmpty, isNode } from '../../../utils/is.js';
+import { ClassName } from '../../../utils/className.js';
 import { frameset as getFrameset } from '../stored.js';
 import { encodeChars } from '../../../utils/fill.js';
 import Global from '../../../utils/global.js';
@@ -111,7 +112,7 @@ export default function(){
 
 	};
 
-	var target, form;
+	var target, form, xTarget;
 
 	if( !FRAMESET || ( target = FRAMESET.target.getElementsByClassName( BASE ) ).length < 1 ){
 		return;
@@ -126,7 +127,12 @@ export default function(){
 	}
 	form = form[0];
 	DATA.form = form;
-	nodes( target.getElementsByClassName( CORE.classes.close ) ).on( 'click', DATA.toggle );
+	xTarget = nodes( target.getElementsByClassName( CORE.classes.close ) );
+
+	if( xTarget ){
+		xTarget.on( 'click', DATA.toggle );
+
+	}
 	GLOBAL.set( SLUG, DATA, true );
 
 	return DATA;

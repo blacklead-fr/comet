@@ -3,7 +3,7 @@ import { isObject, isString } from '../../../utils/is.js';
 import { CORE, DOCUMENT, WINDOW } from './core.js';
 import { getSortParameters } from './sort.js';
 import { onButtonsClick } from './buttons.js';
-import node from '../../../utils/node.js';
+import node from '../../../dom/element.js';
 
 /* global document, window, __cometi18n */
 
