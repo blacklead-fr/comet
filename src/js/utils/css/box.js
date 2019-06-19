@@ -19,7 +19,7 @@ const CORE = {
 
 export function padding( top, right, bottom, left, vunit, hunit ){
 	const MU = renderMuValues( top, right, bottom, left, vunit, hunit );
-	return ( !isEmpty( MU ) ? renderProperty( 'padding', _mu ) : '' );
+	return ( !isEmpty( MU ) ? renderProperty( 'padding', MU ) : '' );
 
 }
 

@@ -241,6 +241,16 @@ export function prepend( object, entry ){
 
 }
 
+export function remove( object ){
+
+	if( !isNode( object ) || object.parentNode === null ){
+		return;
+
+	}
+	object.parentNode.removeChild( object );
+
+}
+
 export function height( object, depth ){
 	return getSize( object, 'height', depth );
 

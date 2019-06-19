@@ -22,8 +22,8 @@ const CORE = {
 	},
 
 	confirm: function( ev, ui, data ){
-			ev.preventDefault();
-			data.function( ev, ui, data.data );
+		ev.preventDefault();
+		data.function( ev, ui, data.data );
 
 	}
 

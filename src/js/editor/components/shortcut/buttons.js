@@ -263,6 +263,8 @@ export function onButtonsClick( event, ui, data ){
 
 	const SHORTCUT = getShortcut();
 
+	var get;
+
 	event.preventDefault();
 
 	if( !isFunction( TYPES[data.type] ) || !CORE.isRoleDefined( data.role ) ){
@@ -276,6 +278,7 @@ export function onButtonsClick( event, ui, data ){
 	}
 
 	if( !isObject( get = TYPES[data.type]( data ) ) || !isObject( get.data ) || !isString( get.title ) ){
+		console.log( 'fa' );
 
 		if( SHORTCUT ){
 			SHORTCUT.destroy();
@@ -284,6 +287,7 @@ export function onButtonsClick( event, ui, data ){
 		return;
 
 	}
+	console.log( get );
 
 	panel({
 		title: get.title,

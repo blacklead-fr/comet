@@ -1,4 +1,5 @@
 import { isString, isEmpty, isObject } from '../is.js';
+import { gradient as Gradient } from './gradient.js';
 import { sanitizeColor } from '../sanitize.js';
 import { renderProperty } from './render.js';
 
@@ -166,7 +167,7 @@ export function background( entry ){
 	color = ( isString( entry.type ) && ( entry.type.trim() ).toLowerCase() === 'color' );
 
 	if( !color && isObject( entry.gradient ) && 'type' in entry.gradient && 'gradient' in entry.gradient && 'angle' in entry.gradient ){
-		og = gradient( entry.gradient.type, entry.gradient.angle, entry.gradient.gradient ); //@TODO
+		og = Gradient( entry.gradient.type, entry.gradient.angle, entry.gradient.gradient );
 		_grad = !isEmpty( og );
 
 	}

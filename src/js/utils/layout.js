@@ -201,7 +201,7 @@ const METHODS = {
 	init: function( data, css, parent, from ){
 		var _do, ids, s, fragment, section;
 
-		if( !isObject( data ) || !isString( data._sections ) || !CORE.hasConnection( 'sections' ) ){
+		if( !isObject( data ) || !isString( data._sections ) || !CORE.hasConnection( data, 'sections' ) ){
 			return false;
 
 		}
@@ -237,7 +237,7 @@ const METHODS = {
 	section: function( data, css, id ){
 		var html, section, cl, r, ids, fragment, row;
 
-		if( !CORE.hasConnection( 'sections' ) || !( id = parseId( id ) ) || !isObject( data.sections[id] ) ){
+		if( !CORE.hasConnection( data, 'sections' ) || !( id = parseId( id ) ) || !isObject( data.sections[id] ) ){
 			return false;
 
 		}
@@ -259,7 +259,7 @@ const METHODS = {
 		section.dataset.id = id;
 		section.innerHTML = html;
 
-		if( CORE.hasConnection( 'rows' ) && isString( data.sections[id]._rows ) && isArray( ids = parseIds( data.sections[id]._rows.trim(), 'array' ) ) && ids.length > 0 ){
+		if( CORE.hasConnection( data, 'rows' ) && isString( data.sections[id]._rows ) && isArray( ids = parseIds( data.sections[id]._rows.trim(), 'array' ) ) && ids.length > 0 ){
 			fragment = DOCUMENT.createDocumentFragment();
 
 			for( r = 0; r < ids.length; r++ ){
@@ -281,7 +281,7 @@ const METHODS = {
 	row: function( data, css, id ){
 		var c, html, row, ids, cl, nb, fragment, column;
 
-		if( !CORE.hasConnection( 'rows' ) || !( id = parseId( id ) ) || !isObject( data.rows[id] ) ){
+		if( !CORE.hasConnection( data, 'rows' ) || !( id = parseId( id ) ) || !isObject( data.rows[id] ) ){
 			return false;
 
 		}
@@ -306,7 +306,7 @@ const METHODS = {
 
 		nb = 0;
 
-		if( CORE.hasConnection( 'columns' ) && isString( data.rows[id]._columns ) && isArray( ids = parseIds( data.rows[id]._columns.trim(), 'array' ) ) && ids.length > 0 ){
+		if( CORE.hasConnection( data, 'columns' ) && isString( data.rows[id]._columns ) && isArray( ids = parseIds( data.rows[id]._columns.trim(), 'array' ) ) && ids.length > 0 ){
 			fragment = DOCUMENT.createDocumentFragment();
 
 			for( c = 0; c < ids.length; c++ ){
@@ -329,7 +329,7 @@ const METHODS = {
 	column: function( data, css, id ){
 		var e, html, column, ids, cl, fragment, element;
 
-		if( !CORE.hasConnection( 'columns' ) || !( id = parseId( id ) ) || !isObject( data.columns[id] ) ){
+		if( !CORE.hasConnection( data, 'columns' ) || !( id = parseId( id ) ) || !isObject( data.columns[id] ) ){
 			return false;
 
 		}
@@ -352,7 +352,7 @@ const METHODS = {
 		column.dataset.id = id;
 		column.innerHTML = html;
 
-		if( CORE.hasConnection( 'elements' ) && isString( data.columns[id]._elements ) && isArray( ids = parseIds( data.columns[id]._elements.trim(), 'array' ) ) && ids.length > 0 ){
+		if( CORE.hasConnection( data, 'elements' ) && isString( data.columns[id]._elements ) && isArray( ids = parseIds( data.columns[id]._elements.trim(), 'array' ) ) && ids.length > 0 ){
 			fragment = DOCUMENT.createDocumentFragment();
 
 			for( e = 0; e < ids.length; e++ ){
@@ -373,7 +373,7 @@ const METHODS = {
 	element: function( data, css, id, state ){
 		var cl, element, fragment, el;
 
-		if( !CORE.hasConnection( 'elements' ) || !( id = parseId( id ) ) || !isObject( data.elements[id] ) || !isString( data.elements[id]._type ) ){
+		if( !CORE.hasConnection( data, 'elements' ) || !( id = parseId( id ) ) || !isObject( data.elements[id] ) || !isString( data.elements[id]._type ) ){
 			return false;
 
 		}

@@ -40,7 +40,11 @@ const CORE = {
 		settings: {
 			title: __cometi18n.ui.settings,
 			icon: 'cico-cog',
-			event: GeneralSettings().toggle
+			event: function( ev, ui ){
+				ev.preventDefault();
+				GeneralSettings().toggle( ev, ui );
+				
+			}
 
 		},
 
@@ -48,7 +52,11 @@ const CORE = {
 			title: __cometi18n.ui.notifications,
 			icon: 'cico-exclamation',
 			expand: true,
-			event: Notifications().toggle
+			event: function( ev, ui ){
+				ev.preventDefault();
+				Notifications().toggle( ev, ui );
+
+			}
 
 		},
 

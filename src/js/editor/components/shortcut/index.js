@@ -3,11 +3,12 @@ import { isObject, isString } from '../../../utils/is.js';
 import { CORE, DOCUMENT, WINDOW } from './core.js';
 import { getSortParameters } from './sort.js';
 import { onButtonsClick } from './buttons.js';
+import Global from '../../../utils/global.js';
 import node from '../../../dom/element.js';
 
 /* global document, window, __cometi18n */
 
- const MENU = {
+const MENU = {
 
     create: function( ev ){
         var fragment, menuNode, target, position;
@@ -44,7 +45,7 @@ import node from '../../../dom/element.js';
 
     },
 
-    createButton: function( role, type, name ){
+    createButton: function( role, type, name, target ){
         var parameters;
         const button = DOCUMENT.createElement( 'button' );
 
@@ -80,7 +81,7 @@ import node from '../../../dom/element.js';
 
         for( option in options ){
 
-            if( !isObject( item = options[option] ) || !CORE.isTypeDefined( option ) || CORE.preventType( type, option ) ){
+            if( !isObject( item = options[option] ) || CORE.preventType( type, option ) ){
                 continue;
 
             }
@@ -91,25 +92,25 @@ import node from '../../../dom/element.js';
             body = _option.lastChild;
 
             if( 'edit' in item ){
-                body.appendChild( MENU.createButton( 'edit', option, item.edit ) );
+                body.appendChild( MENU.createButton( 'edit', option, item.edit, target ) );
                 count++;
 
             }
 
             if( 'move' in item ){
-                body.appendChild( MENU.createButton( 'move', option, item.move ) );
+                body.appendChild( MENU.createButton( 'move', option, item.move, target ) );
                 count++;
 
             }
 
             if( 'dup' in item ){
-                body.appendChild( MENU.createButton( 'dup', option, item.dup ) );
+                body.appendChild( MENU.createButton( 'dup', option, item.dup, target ) );
                 count++;
 
             }
 
             if( 'del' in item ){
-                body.appendChild( MENU.createButton( 'del', option, item.del ) );
+                body.appendChild( MENU.createButton( 'del', option, item.del, target ) );
                 count++;
 
             }
@@ -171,7 +172,7 @@ import node from '../../../dom/element.js';
     },
 
     setMenu: function( data ){
-        return GLOBAL().set( 'shortcut', data, true );
+        return Global().set( 'shortcut', data, true );
 
     }
 

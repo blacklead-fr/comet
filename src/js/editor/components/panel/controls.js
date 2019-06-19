@@ -1,6 +1,6 @@
 import { isString, isEmpty, isObject, isNode } from '../../../utils/is.js';
+import { stripTags, inArray } from '../../../utils/fill.js';
 import { ClassName } from '../../../utils/className.js';
-import { stripTags } from '../../../utils/fill.js';
 
 
 const DOCUMENT = document;

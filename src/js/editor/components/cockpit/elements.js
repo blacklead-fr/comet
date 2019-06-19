@@ -64,6 +64,7 @@ const CORE = {
 					if( tmp ){
 						tmp = DATA.create( 'columns', tmp, 'last' );
 					}
+					console.log( DATA.getData() );
 					re = layout( DATA.getData() ).section( sid );
 
 				}

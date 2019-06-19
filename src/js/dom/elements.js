@@ -1,4 +1,4 @@
-import { on as bind, removeClass, addClass } from './default.js';
+import { on as bind, removeClass, addClass, remove as removeNode } from './default.js';
 import { isString, isObject, isArray, isEmpty } from '../utils/is.js';
 import sort from '../ui/sort/index.js';
 
@@ -46,6 +46,17 @@ export default function( entry ){
 				bind( elements[a], types, listener, data );
 
 			}
+
+		},
+
+		remove: function(){
+			var a;
+
+			for( a = 0; a < elements.length; a++ ){
+				removeNode( elements[a] );
+
+			}
+
 
 		},
 

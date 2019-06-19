@@ -1,7 +1,7 @@
 import { isString, isObject, isEmpty } from '../utils/is.js';
 import { parseId } from '../utils/parse.js';
 import { inArray } from '../utils/fill.js';
-import GLOBAL from '../utils/global.js';
+import Global from '../utils/global.js';
 
 const SLUG = 'target';
 
@@ -26,6 +26,18 @@ const CORE = {
 
 		}
 		return true;
+
+	},
+
+	default: function(){
+		const DATA = {};
+		var a = 0;
+
+		for( a; a < CORE.properties.length; a++ ){
+			DATA[CORE.properties[a]] = null;
+
+		}
+		return DATA;
 
 	}
 
@@ -65,12 +77,12 @@ export const TARGET = {
 			target.state = data.state;
 
 		}
-		return GLOBAL().set( SLUG, target );
+		return Global().set( SLUG, target, true );
 
 	},
 
 	get: function(){
-		const data = GLOBAL().get( SLUG );
+		const data = Global().get( SLUG );
 
 		return !CORE.isTarget( data ) ? TARGET.reset() : data;
 
@@ -78,13 +90,7 @@ export const TARGET = {
 
 	reset: function(){
 
-		return TARGET.set({
-			id: null,
-			type: null,
-			item: null,
-			node: null,
-			state: null
-		});
+		return Global().set( SLUG, CORE.default(), true );
 
 	},
 

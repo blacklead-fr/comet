@@ -69,7 +69,7 @@ export const CORE = {
 
         if( Target.hasClass( CORE.classes.element ) ){
             return {
-                target: Target,
+                target,
                 type: 'element',
 
             };
@@ -78,7 +78,7 @@ export const CORE = {
 
         if( Target.hasClass( CORE.classes.column ) ){
             return {
-                target: Target,
+                target,
                 type: 'column',
 
             };
@@ -87,7 +87,7 @@ export const CORE = {
 
         if( Target.hasClass( CORE.classes.row ) ){
             return {
-                target: Target,
+                target,
                 type: 'row',
 
             };
@@ -96,7 +96,7 @@ export const CORE = {
 
         if( Target.hasClass( CORE.classes.section ) ){
             return {
-                target: Target,
+                target,
                 type: 'section',
 
             };
@@ -112,10 +112,10 @@ export const CORE = {
 
     },
 
-    preventType: function( type, checkType ){
+    preventType: function( type, current ){
         var types;
 
-        if( !CORE.isTypeDefined( checkType ) ){
+        if( !CORE.isTypeDefined( current ) ){
             return true;
 
         }
@@ -141,8 +141,7 @@ export const CORE = {
             types = CORE.types;
 
         }
-
-        return CORE.isTypeDefined( checkType );
+        return inArray( types, current );
 
     },
 

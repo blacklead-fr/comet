@@ -60,6 +60,11 @@ function getMethods( node ){
 
 			},
 
+			remove: function(){
+				__core.remove( node );
+
+			},
+
 			height: function( depth ){
 				return __core.height( node, depth );
 

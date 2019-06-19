@@ -30,7 +30,13 @@ const CORE = {
 	insert: function( id, position, str ){
 		var tp, a, b;
 
+		if( str.length < 1 ){
+			return id.toString();
+
+		}
+
 		if( position === 'last' ){
+
 			if( str.substring( -1, 1 ) !== ',' ){
 				str += ',';
 
@@ -62,8 +68,10 @@ function IdsString( str ){
 	if( !isString( str ) ){
 		str = '';
 
+	}else{
+		str = str.trim();
+
 	}
-	str = str.trim();
 
 	return {
 
