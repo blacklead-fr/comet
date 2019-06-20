@@ -303,7 +303,7 @@ export default function( source, options ){
 
             searchCP: function( current ){
 
-                if( !node( current ).isNode() || __picker.node === false ){
+                if( !isNode( current ) || __picker.node === false ){
                     return false;
 
                 }
@@ -323,7 +323,7 @@ export default function( source, options ){
 
             saturation: function( selector, data ){
 
-                if( !node( selector ).isNode() ){
+                if( !isNode( selector ) ){
                     return;
 
                 }
@@ -508,7 +508,7 @@ export default function( source, options ){
 
             hue: function( selector, data ){
 
-                if( !node( selector ).isNode( ) ){
+                if( !isNode( selector ) ){
                     return;
 
                 }
@@ -521,7 +521,7 @@ export default function( source, options ){
                         data.hsb = __color.hsb.values;
                         data.sat.style.backgroundColor = __core.utils.strcolor( 'hex', __core.convert.hsbhex( [ vhue, 1, 1 ] ) );
                         color = __core.actions.setComponents( { input: data.input, source: data.source, render: data.render } );
-
+console.log( dt );
                         if( isFunction( options.onchange ) ){
                             options.onchange( selector, data.source, color );
 
@@ -534,7 +534,7 @@ export default function( source, options ){
 
             opacity: function( selector, data ){
 
-                if( !node( selector ).isNode( ) ){
+                if( !isNode( selector ) ){
                     return;
 
                 }
@@ -560,7 +560,7 @@ export default function( source, options ){
 
             input: function( selector, data ){
 
-                if( !node( selector ).isNode() ){
+                if( !isNode( selector ) ){
                     return;
 
                 }

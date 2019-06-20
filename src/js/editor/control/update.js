@@ -12,7 +12,7 @@ export default function( ui ){
 
 	var uidata = false;
 
-	var _i_id, index, re, slug, cvalue;
+	var _i_id, index, re, slug, cvalue, vrData;
 
 	const data = {};
 
@@ -61,14 +61,14 @@ export default function( ui ){
 	switch( CURRENT_TYPE ){
 
 		case 'sections':
-		DATA.set( CURRENT_ID, 'sections', data );
-		createBackground( node( CURRENT_NODE ).child( 'cpb-sectionContent' ) );
+		vrData = DATA.set( CURRENT_ID, 'sections', data );
+		createBackground( node( CURRENT_NODE ).child( '.cpb-sectionContent' ), vrData );
 		layout( DATA.getData(), 'css' ).section( CURRENT_ID );
 		return;
 
 		case 'rows':
-		DATA.set( CURRENT_ID, 'rows', data );
-		createBackground( node( CURRENT_NODE ).child( 'cpb-rowContent' ) );
+		vrData = DATA.set( CURRENT_ID, 'rows', data );
+		createBackground( node( CURRENT_NODE ).child( '.cpb-rowContent' ), vrData );
 		layout( DATA.getData(), 'css' ).row( CURRENT_ID );
 		return;
 
@@ -80,8 +80,8 @@ export default function( ui ){
 		}
 		data[slug] = cvalue;
 		ui.value = cvalue;
-		DATA.set( CURRENT_ID, 'columns', data );
-		createBackground( node( CURRENT_NODE ).child( 'cpb-columnContent' ) );
+		vrData = DATA.set( CURRENT_ID, 'columns', data );
+		createBackground( node( CURRENT_NODE ).child( '.cpb-columnContent' ), vrData );
 		layout( DATA.getData(), 'css' ).column( CURRENT_ID );
 		return;
 

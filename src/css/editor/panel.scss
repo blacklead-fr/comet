@@ -170,8 +170,12 @@
 		/* Gradient */
 
 		&--gradient {
-			display: flex;
-			align-items: center;
+
+			#{$controlField} {
+				display: flex;
+				align-items: center;
+
+			}
 
 			.comet-eGRange {
 				position: relative;
@@ -269,7 +273,7 @@
 
 		/* Range */
 
-		&--range {
+		/*&--range {
 
 			.comet-range {
 				display: flex;
@@ -337,7 +341,7 @@
 
 			}
 
-			/*.comet-unit{
+			.comet-unit{
 				position: absolute;
 				bottom: 100%;
 				right: 0;
@@ -348,9 +352,9 @@
 
 			}
 
-			.comet-meta { padding-right: 70px; }*/
+			.comet-meta { padding-right: 70px; }
 
-		}
+		}*/
 
 		/* Items */
 

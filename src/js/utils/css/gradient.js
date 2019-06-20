@@ -1,5 +1,5 @@
+import { isString, isEmpty, isArray, isObject } from '../is.js';
 import { sanitizeNumber, sanitizeColor } from '../sanitize.js';
-import { isString, isEmpty, isArray } from '../is.js';
 import { inArray } from '../fill.js';
 
 const CORE = {

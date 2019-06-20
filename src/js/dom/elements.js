@@ -1,4 +1,4 @@
-import { on as bind, removeClass, addClass, remove as removeNode } from './default.js';
+import { on as bind, removeClass, addClass, remove as removeNode, trigger } from './default.js';
 import { isString, isObject, isArray, isEmpty } from '../utils/is.js';
 import sort from '../ui/sort/index.js';
 
@@ -70,11 +70,18 @@ export default function( entry ){
 
 			}
 
+		},
 
+		trigger: function( eventName ){
+			var a;
+
+			for( a = 0; a < elements.length; a++ ){
+				trigger( elements[a], eventName );
+
+			}
 
 		}
 
 	};
-
 
 }

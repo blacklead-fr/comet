@@ -85,6 +85,11 @@ function getMethods( node ){
 
 			},
 
+			child: function( selector ){
+				return __core.child( node, selector );
+
+			},
+
 			next: function( query ){
 				return __core.next( node, query );
 
@@ -113,6 +118,11 @@ function getMethods( node ){
 			sort: function( options ){
 				options.handle = node;
 				sort( options );
+			},
+
+			trigger: function( eventName ){
+				__core.trigger( node, eventName );
+				
 			}
 
 		};
@@ -126,6 +136,21 @@ function getMethods( node ){
 			on: function( types, listener, data ){
 				__core.on( node, types, listener, data );
 
+			},
+
+			children: function( query ){
+				return __core.children( node, query );
+
+			},
+
+			child: function( selector ){
+				return __core.child( node, selector );
+
+			},
+
+			trigger: function( eventName ){
+				__core.trigger( node, eventName );
+				
 			}
 
 		}
@@ -150,6 +175,11 @@ function getMethods( node ){
 				return __core.width( node, depth );
 
 			},
+
+			trigger: function( eventName ){
+				__core.trigger( node, eventName );
+				
+			}
 
 		};
 

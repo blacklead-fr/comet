@@ -10,8 +10,6 @@ const PREFIX = 'comet';
 
 const SLUG = 'sort';
 
-console.log( typeof nodes );
-
 const DFLT = {
 
 	className: {

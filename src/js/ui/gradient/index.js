@@ -7,7 +7,7 @@ import node from '../../dom/element.js';
 /* global document */
 
 /**
- * @TODO Rewrite and optimize the function
+ * @TODO Rewrite and optimize
  *
  */
 
@@ -220,7 +220,7 @@ export default function( source, options ){
 
 			for( x in draggers ){
 
-				if( !node( draggers[x] ).hasClass( 'comet-eGDragger' ) ){
+				if( !isNode( draggers[x] ) || !node( draggers[x] ).hasClass( 'comet-eGDragger' ) ){
 					continue;
 
 				}
@@ -263,7 +263,7 @@ export default function( source, options ){
 
 				for( x in draggers ){
 
-					if( !node( draggers[x] ).hasClass( 'comet-eGDragger' ) ){
+					if( !isNode( draggers[x] ) || !node( draggers[x] ).hasClass( 'comet-eGDragger' ) ){
 						continue;
 
 					}

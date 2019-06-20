@@ -319,6 +319,7 @@ const CORE = {
 				input: true,
 				clear: true,
 				onchange: function( ui, source ){
+					console.log( ui, source );
 					update( source );
 
 				}
@@ -347,7 +348,7 @@ const CORE = {
 
 		gradient: function( data ){
 
-			data.control.innerHTML = CORE.create.textarea(
+			data.control.innerHTML = CORE.create.input(
 				'hidden',
 				data.id,
 				data.value,

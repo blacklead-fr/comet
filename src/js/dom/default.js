@@ -2,6 +2,8 @@ import { isObject, isString, isFunction, isEmpty, isNode, isWindow, isDocument }
 import { arrayDiff } from '../utils/fill.js';
 import { decodeSelector } from './decode.js';
 
+const DOCUMENT = document;
+
 function getSize( object, type, depth ){
 	var isWidth;
 
@@ -131,6 +133,12 @@ export function children( object, query, onChild ){
 
 	}
 	return aChildren;
+
+}
+
+export function child( object, selector  ){
+
+	return !isNode( object ) && !isDocument( object ) ? null : object.querySelector( selector );
 
 }
 
@@ -481,47 +489,20 @@ export function slideDown( duration ){
 
 	}, duration);
 
-}
+}*/
 
-export function trigger( eventName ){
+export function trigger( object, eventName ){
+	var event;
 
-	var or = node;
-	var n, ns, nn;
-
-	function fire(){
-		const ev = _d.createEvent( 'HTMLEvents' );
-		ev.initEvent( eventName, false, true );
-		node.dispatchEvent( ev );
-
-	}
-
-	if( prop.isNode() || prop.isView() ){
-		fire();
+	if( !isNode( object ) && !isDocument( object ) && !isWindow( object ) ){
 		return;
 
 	}
+	event = DOCUMENT.createEvent( 'HTMLEvents' );
+	event.initEvent( eventName, false, true );
+	object.dispatchEvent( event );
 
-	if( !utils.isObject( node ) && !utils.isArray( node ) ){
-		return false;
-
-	}
-	ns = node;
-
-	for( n in ns ){
-		nn = ns[n];
-		node = nn;
-
-		if( !prop.isNode() && !prop.isView() ){
-			node = or;
-			continue;
-
-		}
-		fire();
-		node = or;
-
-	}
-
-}*/
+}
 
 export function on( object, types, listener, data ){
 	var e = 0;

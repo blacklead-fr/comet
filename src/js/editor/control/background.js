@@ -18,7 +18,7 @@ const CORE = {
 
 };
 
-export default function(){
+export default function( content, data ){
 	const bgClassName = 'cpb-backgroundComponents';
 	var inner = '';
 	var background;
@@ -32,12 +32,12 @@ export default function(){
 	background = DOCUMENT.createElement( 'div' );
 	background.className = bgClassName;
 
-	if( 'vid' in uidata && isTrueValue( uidata.vid ) && isString( uidata.vurl ) ){
-		inner += '<video class="cpb-backgroundVideo" src="' + ( stripTags( uidata.vurl ) ).trim() + '" loop autoplay muted preload="auto"></video>';
+	if( 'vid' in data && isTrueValue( data.vid ) && isString( data.vurl ) ){
+		inner += '<video class="cpb-backgroundVideo" src="' + ( stripTags( data.vurl ) ).trim() + '" loop autoplay muted preload="auto"></video>';
 
 	}
 
-	if( 'ov' in uidata && isTrueValue( uidata.ov ) && isString( uidata.ovc ) ){
+	if( 'ov' in data && isTrueValue( data.ov ) && isString( data.ovc ) ){
 		inner += '<div class="cpb-backgroundOverlay"></div>';
 
 	}
